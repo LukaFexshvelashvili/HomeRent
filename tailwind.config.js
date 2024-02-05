@@ -1,0 +1,73 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        main: "#3A86FF",
+        mainClear: "rgba(58, 134, 255, 0.1)",
+        LoginInputBg: "rgba(58, 134, 255, 0.05)",
+        navBg: "#FFFFFF",
+        sectionBg: "#FFFFFF",
+        bodyBg: "#F9F9F9",
+        whiteMain: "#FFFFFF",
+        navIcon: "rgba(0, 0, 0, 0.7)",
+        lineBg: "#EDEDED",
+
+        whiteLoad: "#ECECEC",
+
+        buttonBgFirst: "#3A86FF",
+        buttonBgLast: "#6DA5FF",
+
+        photoLabel: "rgba(255, 255, 255, 0.9)",
+        photoLabelDesc: "rgba(255, 255, 255, 0.8)",
+
+        textBlack: "#000000",
+        textHead: "rgba(0, 0, 0, 0.7)",
+        textDesc: "rgba(0, 0, 0, 0.6)",
+        textInfo: "rgba(0, 0, 0, 0.5)",
+        textPlaceholder: "rgba(0, 0, 0, 0.4)",
+
+        textHeadCard: "rgba(0, 0, 0, 0.8)",
+        textDescCard: "rgba(0, 0, 0, 0.5)",
+        cardBg: "#FFFFFF",
+        cardInfo: "#FFFFFF",
+        cardInfoBg: "rgba(0, 0, 0, 0.6)",
+        cardButtonBg: "#F5F5F5",
+        cardButtonIcon: "rgba(0, 0, 0, 0.5)",
+
+        footerBg: "#FFFFFF",
+
+        maclerMain: "#3DBE00",
+        maclerMain: "rgba(60, 190, 0, 0.1)",
+
+        orange: "#FF9900",
+        orangeClear: "rgba(255, 153, 0, 0.1)",
+        red: "#FF0000",
+        redClear: "rgba(255, 0, 0, 0.1)",
+        redClose: "#E20036",
+        pink: "#FF03A9",
+        pinkClear: "rgba(255, 3, 171, 0.1)",
+        purple: "#BD00FF",
+        purpleClear: "rgba(187, 0, 255, 0.1)",
+        green: "#00CD08",
+        greenClear: "rgba(0, 205, 7, 0.1)",
+        yellow: "#FFC700",
+        yellowClear: "rgba(255, 200, 0, 0.1)",
+        blue: "#0075FF",
+        blueClear: "rgba(0, 119, 255, 0.1)",
+        blueLight: "#4E7FFF",
+        cyan: "#00C2FF",
+        cyanClear: "rgba(0, 195, 255, 0.1)",
+
+        success: "#00E75C",
+        info: "#FFB800",
+        warning: "#FF003D",
+      },
+      boxShadow: {
+        sectionShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
+      },
+    },
+  },
+  plugins: [],
+};
