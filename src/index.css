@@ -2,8 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: mainSemiBold;
+  src: url("./assets/fonts/NotoSansGeorgian-SemiBold.ttf");
+}
+@font-face {
+  font-family: mainBold;
+  src: url("./assets/fonts/NotoSansGeorgian-Bold.ttf");
+}
+@font-face {
+  font-family: mainRegular;
+  src: url("./assets/fonts/NotoSansGeorgian-Regular.ttf");
+}
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+body {
+  font-family: mainSemiBold;
+  letter-spacing: 0.5px;
+}
+.content_container {
+  width: 100%;
+  max-width: 1390px;
+  margin: 0 auto;
 }
