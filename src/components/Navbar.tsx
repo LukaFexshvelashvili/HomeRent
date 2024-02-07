@@ -11,8 +11,11 @@ import {
   UserLinearIcon,
 } from "../assets/icons/Icons";
 import georgianFlag from "../assets/images/languages/georgia.png";
+import englishFlag from "../assets/images/languages/english.png";
 export default function Navbar() {
   const [activePop, setActivePop] = useState<null | string>(null);
+  const [activeLang, setActiveLang] = useState<boolean>(false);
+  const [langImg, setLangImg] = useState<string>(georgianFlag);
 
   return (
     <nav className="h-[70px] w-full sticky bg-navBg shadow-navbarShadow flex items-center ">
@@ -20,20 +23,59 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <div className="h-[40px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
           <div className="h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
-          <button className=" h-[26px] aspect-square rounded-circle border border-buttonStroke flex items-center justify-center cursor-pointer">
-            <img
-              className="max-h-[24px] aspect-square"
-              src={georgianFlag}
-              alt="georgia"
-            />
-          </button>
+          <div className="relative h-[36px] aspect-square flex items-center justify-center">
+            <button
+              onClick={() => setActiveLang((state) => !state)}
+              className=" h-[26px] aspect-square rounded-circle border border-buttonStroke flex items-center justify-center cursor-pointer"
+            >
+              <img
+                className="max-h-[20px] aspect-square"
+                src={langImg}
+                alt="georgia"
+              />
+            </button>
+            <div
+              className={` absolute h-auto w-[150px] overflow-hidden flex flex-col bg-white rounded-normal shadow-sectionShadow top-[60px] left-0 duration-200 transition-[opacity,visibility]  ${
+                activeLang ? "visible opacity-100" : "invisible opacity-0"
+              }`}
+            >
+              <button
+                onClick={() => {
+                  setActiveLang(false);
+                  setLangImg(georgianFlag);
+                }}
+                className="px-4 text-start py-3 transition-colors hover:bg-whiteHover text-Asmall flex items-center"
+              >
+                <img
+                  className="max-h-[20px] aspect-square mr-3"
+                  src={georgianFlag}
+                  alt="georgian flag"
+                />
+                ქართული
+              </button>
+              <button
+                onClick={() => {
+                  setActiveLang(false);
+                  setLangImg(englishFlag);
+                }}
+                className="px-4 text-start py-3 transition-colors hover:bg-whiteHover text-Asmall flex items-center"
+              >
+                <img
+                  className="max-h-[20px] aspect-square mr-3"
+                  src={englishFlag}
+                  alt="uk flag"
+                />
+                English
+              </button>
+            </div>
+          </div>
         </div>
         <div className="flex items-center gap-5">
-          <button className="flex items-center justify-center gap-3 font-mainBold tracking-wide w-[165px] h-[40px] bg-orangeClear text-orangeI rounded-normal text-[15px] transition-colors hover:bg-orangeHover">
+          <button className="flex items-center justify-center gap-3 tracking-wider w-[165px] h-[38px] bg-orangeClear text-orangeI rounded-normal text-[15px] transition-colors hover:bg-orangeHover">
             <HelpIcon className="h-[18px] aspect-square" />
             დახმარება
           </button>
-          <button className="flex items-center justify-center gap-3 font-mainBold tracking-wide w-[165px] h-[40px] bg-greenClear text-greenI rounded-normal text-[15px] transition-colors hover:bg-greenHover">
+          <button className="flex items-center justify-center gap-3 tracking-wider w-[165px] h-[38px] bg-greenClear text-greenI rounded-normal text-[15px] transition-colors hover:bg-greenHover">
             <PlusIcon className="h-[16px] aspect-square" />
             დამატება
           </button>
