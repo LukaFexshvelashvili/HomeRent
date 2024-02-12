@@ -80,10 +80,10 @@ export default function Navbar() {
             დამატება
           </button>
           <div className="flex mx-2 items-center justify-center gap-2">
-            <button className="relative h-[36px] aspect-square cursor-default">
+            <button className="relative h-[36px] aspect-square cursor-default flex items-center justify-center">
               <BookmarkIcon className="h-[21px] aspect-square stroke-navIcon cursor-pointer" />
             </button>
-            <button className="relative h-[36px] aspect-square cursor-default">
+            <div className="relative h-[36px] aspect-square cursor-default flex items-center justify-center">
               <NotificationIcon
                 onClick={() =>
                   setActivePop((state) =>
@@ -100,8 +100,11 @@ export default function Navbar() {
                 }`}
               >
                 <div className="flex flex-col ">
-                  {[0, 0, 0, 0].map(() => (
-                    <button className=" px-5 py-3 transition-colors hover:bg-whiteHover">
+                  {[0, 0, 0, 0].map((item, i) => (
+                    <button
+                      key={i}
+                      className=" px-5 py-3 transition-colors hover:bg-whiteHover"
+                    >
                       <div className="flex items-center ">
                         <div className="h-[32px] aspect-square bg-main rounded-md"></div>
                         <div className="flex flex-col text-start ml-3">
@@ -120,7 +123,7 @@ export default function Navbar() {
                   ყველას ნახვა
                 </button>
               </div>
-            </button>
+            </div>
           </div>
 
           <div className="h-[36px]  aspect-square rounded-circle outline outline-3 outline-main  flex justify-center items-center relative">

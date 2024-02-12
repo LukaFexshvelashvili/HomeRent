@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         main: "#3A86FF",
+        mainHover: "#317efa",
         mainClear: "rgba(58, 134, 255, 0.1)",
         LoginInputBg: "rgba(58, 134, 255, 0.05)",
         navBg: "#FFFFFF",
@@ -22,6 +23,15 @@ export default {
 
         photoLabel: "rgba(255, 255, 255, 0.9)",
         photoLabelDesc: "rgba(255, 255, 255, 0.8)",
+
+        sliderFadeStart: "rgba(0, 0, 0, 0.6)",
+        sliderFadeEnd: "rgba(0, 0, 0, 0)",
+        sliderHead: "rgba(255, 255, 255, 0.9)",
+        sliderDesc: "rgba(255, 255, 255, 0.8)",
+
+        WhiteFade: "rgba(255, 255, 255, 0.9)",
+
+        cardInfoBg: "rgba(0, 0, 0, 0.6)",
 
         textBlack: "#000000",
         textHead: "rgba(0, 0, 0, 0.7)",
@@ -80,7 +90,9 @@ export default {
       },
       boxShadow: {
         sectionShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
+        cardShadow: "0px 8px 30px rgba(0, 0, 0, 0.05)",
         navbarShadow: "0px 2px 40px rgba(0, 0, 0, 0.1)",
+        slideNavShadow: "0px 4px 15px rgba(58, 133, 255, 0.15)",
       },
       borderRadius: {
         circle: "50%",
@@ -95,6 +107,7 @@ export default {
         Asmallest: "11px",
         Asmaller: "12px",
         Asmall: "14px",
+        ABig: "22px",
       },
     },
   },

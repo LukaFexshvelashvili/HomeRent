@@ -28,3 +28,14 @@ body {
   max-width: 1390px;
   margin: 0 auto;
 }
+.DefButton {
+  @apply bg-main rounded-[5px] w-[190px] h-[38px] text-whiteMain text-[13px] tracking-widest transition-colors hover:bg-mainHover;
+}
+
+.swiper-pagination-bullet {
+  @apply bg-whiteMain opacity-80 transition-[background-color,opacity];
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-main outline outline-2 outline-whiteMain opacity-100;
+}
