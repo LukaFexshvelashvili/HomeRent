@@ -5,14 +5,14 @@ export default {
     extend: {
       colors: {
         main: "#3A86FF",
-        mainHover: "#317efa",
+        mainHover: "#4f92fe",
         mainClear: "rgba(58, 134, 255, 0.1)",
         LoginInputBg: "rgba(58, 134, 255, 0.05)",
         navBg: "#FFFFFF",
         sectionBg: "#FFFFFF",
         bodyBg: "#F9F9F9",
         whiteMain: "#FFFFFF",
-        navIcon: "rgba(0, 0, 0, 0.7)",
+        navIcon: "#4B4B4B",
         lineBg: "#EDEDED",
 
         whiteLoad: "#ECECEC",
@@ -107,7 +107,8 @@ export default {
         Asmallest: "11px",
         Asmaller: "12px",
         Asmall: "14px",
-        ABig: "22px",
+        Anormal: "18px",
+        Abig: "22px",
       },
     },
   },

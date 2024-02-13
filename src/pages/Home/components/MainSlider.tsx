@@ -2,16 +2,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
-import { EffectFade, Pagination } from "swiper/modules";
+import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import Apartment from "../../../assets/images/estates/1.jpg";
 
 export default function MainSlider() {
   return (
     <Swiper
-      modules={[EffectFade, Pagination]}
+      modules={[EffectFade, Pagination, Autoplay]}
       effect={"fade"}
       pagination={{ clickable: true }}
       rewind
+      autoplay={{ delay: 4000 }}
     >
       <SwiperSlide>
         <MainSliderCard
@@ -65,7 +66,7 @@ function MainSliderCard(props: TMainSliderCard) {
       <div className=" bg-gradient-to-t from-sliderFadeStart to-sliderFadeEnd z-[2] absolute h-full w-full object-cover top-0 left-0"></div>
       <div className="w-full flex justify-between z-[3] absolute bottom-6 px-8 items-end">
         <div className="flex flex-col gap-1">
-          <h1 className=" text-sliderHead text-ABig">{props.head}</h1>
+          <h1 className=" text-sliderHead text-Abig">{props.head}</h1>
           <h3 className=" text-sliderDesc ">{props.desc}</h3>
         </div>
         <button className="DefButton">სრულად ნახვა</button>

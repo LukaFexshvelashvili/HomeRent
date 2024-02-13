@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   BookmarkIcon,
   RoomIcon,
@@ -6,12 +7,16 @@ import {
 import CardPhoto from "../../assets/images/estates/card.jpg";
 
 export default function Card() {
+  const [favorite, setFavorite] = useState(false);
   return (
-    <div className="h-auto  w-[300px] bg-whiteMain shadow-cardShadow rounded-normal p-3 pb-14 relative">
+    <div className="h-auto  w-full bg-whiteMain border-2 border-[#F3F3F3] rounded-normal p-3 pb-14 relative">
       <div className="w-full h-[240px] rounded-normal bg-whiteLoad relative overflow-hidden">
+        <div className="absolute h-[25px] w-[60px] select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-whiteMain tracking-wider cursor-default top-2 right-2 z-[3]">
+          VIP+
+        </div>
         <img
           src={CardPhoto}
-          className="absolute h-full w-full object-cover top-0 left-0 "
+          className="absolute h-full w-full object-cover top-0 left-0 select-none"
           alt="estate-photo"
         />
         <div className="absolute bottom-2 left-2 flex items center gap-2">
@@ -35,8 +40,17 @@ export default function Card() {
           32 700$
         </div>
         <p className="text-textDescCard text-Asmall mx-3 ">მ² - 352$</p>
-        <button className="p-[5px] rounded-md absolute right-3">
-          <BookmarkIcon className="h-[20px] [&>path]:stroke-cardInfoBg" />
+        <button
+          onClick={() => setFavorite((state) => !state)}
+          className="p-[5px] rounded-md absolute right-3"
+        >
+          <BookmarkIcon
+            className={`h-[20px]  transition-all   ${
+              favorite
+                ? "fill-orangeI [&>path]:stroke-orangeI"
+                : "fill-transparent [&>path]:stroke-navIcon"
+            }`}
+          />
         </button>
       </div>
     </div>

@@ -1,67 +1,73 @@
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Swiper } from "swiper";
 import Card from "../../../components/global/Card";
 import "swiper/css";
+import "swiper/css/pagination";
 import { LeftArrowIcon } from "../../../assets/icons/Icons";
+import { Navigation } from "swiper/modules";
+import { useEffect, useState } from "react";
+import { SwiperSlide } from "swiper/react";
 export default function CardSlider() {
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  useEffect(() => {
+    if (!swiperInstance) {
+      const newSwiperInstance = new Swiper(".swiper-container", {
+        modules: [Navigation],
+        slidesPerView: 4.5,
+        spaceBetween: 25,
+        rewind: true,
+        navigation: true,
+      });
+      setSwiperInstance(newSwiperInstance);
+    }
+  }, [swiperInstance, setSwiperInstance]);
   return (
-    <div>
-      <Swiper
-        slidesPerView={4}
-        className=" pb-10 pt-2 items-center flex "
-        rewind
-      >
-        <SwiperSlide className="flex justify-center">
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide className="flex justify-center">
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide className="flex justify-center">
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide className="flex justify-center">
-          <Card />
-        </SwiperSlide>{" "}
-        <SwiperSlide className="flex justify-center">
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide className="flex justify-center">
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide className="flex justify-center">
-          <Card />
-        </SwiperSlide>{" "}
-        <SwiperSlide className="flex justify-center">
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide className="flex justify-center">
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide className="flex justify-center">
-          <Card />
-        </SwiperSlide>
-        <SlideButtons />
-      </Swiper>
-    </div>
-  );
-}
-function SlideButtons() {
-  const swiper = useSwiper();
-
-  return (
-    <>
+    <div className="relative flex items-center">
+      <div className="swiper swiper-container">
+        <div className="swiper-wrapper">
+          <SwiperSlide className="flex justify-center">
+            <Card />
+          </SwiperSlide>
+          <SwiperSlide className="flex justify-center">
+            <Card />
+          </SwiperSlide>
+          <SwiperSlide className="flex justify-center">
+            <Card />
+          </SwiperSlide>
+          <SwiperSlide className="flex justify-center">
+            <Card />
+          </SwiperSlide>{" "}
+          <SwiperSlide className="flex justify-center">
+            <Card />
+          </SwiperSlide>
+          <SwiperSlide className="flex justify-center">
+            <Card />
+          </SwiperSlide>
+          <SwiperSlide className="flex justify-center">
+            <Card />
+          </SwiperSlide>{" "}
+          <SwiperSlide className="flex justify-center">
+            <Card />
+          </SwiperSlide>
+          <SwiperSlide className="flex justify-center">
+            <Card />
+          </SwiperSlide>
+          <SwiperSlide className="flex justify-center">
+            <Card />
+          </SwiperSlide>
+        </div>
+      </div>
       <button
-        onClick={() => swiper.slidePrev()}
-        className="h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[1] left-3 shadow-slideNavShadow"
+        onClick={() => swiperInstance.slideNext()}
+        className="h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[1] left-0 -translate-x-2/4 shadow-slideNavShadow"
       >
         <LeftArrowIcon className="h-full aspect-square" />{" "}
       </button>{" "}
       <button
-        onClick={() => swiper.slideNext()}
-        className="h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[1] right-3 shadow-slideNavShadow"
+        onClick={() => swiperInstance.slideNext()}
+        className="h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[1] right-0 translate-x-2/4 shadow-slideNavShadow"
       >
         <LeftArrowIcon className="h-full aspect-square rotate-180" />{" "}
       </button>
-    </>
+    </div>
   );
 }
