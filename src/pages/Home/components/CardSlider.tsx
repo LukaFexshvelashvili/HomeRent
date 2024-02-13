@@ -6,23 +6,31 @@ import { LeftArrowIcon } from "../../../assets/icons/Icons";
 import { Navigation } from "swiper/modules";
 import { useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
-export default function CardSlider() {
+export default function CardSlider(props: { uniqueId: string | number }) {
+  const rand = Math.floor(Math.random() * 999999);
+  const rand2 = Math.floor(Math.random() * 999);
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
   useEffect(() => {
     if (!swiperInstance) {
-      const newSwiperInstance = new Swiper(".swiper-container", {
-        modules: [Navigation],
-        slidesPerView: 4.5,
-        spaceBetween: 25,
-        rewind: true,
-        navigation: true,
-      });
+      const newSwiperInstance = new Swiper(
+        `.A${rand}${props.uniqueId}${rand2}`,
+        {
+          modules: [Navigation],
+          slidesPerView: 4.5,
+          spaceBetween: 25,
+          rewind: true,
+          navigation: true,
+        }
+      );
       setSwiperInstance(newSwiperInstance);
     }
   }, [swiperInstance, setSwiperInstance]);
+
   return (
     <div className="relative flex items-center">
-      <div className="swiper swiper-container">
+      <div
+        className={`swiper swiper-container A${rand}${props.uniqueId}${rand2}`}
+      >
         <div className="swiper-wrapper">
           <SwiperSlide className="flex justify-center">
             <Card />
@@ -57,7 +65,7 @@ export default function CardSlider() {
         </div>
       </div>
       <button
-        onClick={() => swiperInstance.slideNext()}
+        onClick={() => swiperInstance.slidePrev()}
         className="h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[1] left-0 -translate-x-2/4 shadow-slideNavShadow"
       >
         <LeftArrowIcon className="h-full aspect-square" />{" "}

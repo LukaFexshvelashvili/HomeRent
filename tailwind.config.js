@@ -29,6 +29,9 @@ export default {
         sliderHead: "rgba(255, 255, 255, 0.9)",
         sliderDesc: "rgba(255, 255, 255, 0.8)",
 
+        sectionFadeStart: "rgba(0, 0, 0, 0.75)",
+        sectionFadeEnd: "rgba(0, 0, 0, 0.1)",
+
         WhiteFade: "rgba(255, 255, 255, 0.9)",
 
         cardInfoBg: "rgba(0, 0, 0, 0.6)",
@@ -97,6 +100,7 @@ export default {
       borderRadius: {
         circle: "50%",
         normal: "10px",
+        section: "12px",
       },
       fontFamily: {
         mainSemiBold: "mainSemiBold",

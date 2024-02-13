@@ -39,3 +39,11 @@ body {
 .swiper-pagination-bullet-active {
   @apply bg-main outline outline-2 outline-whiteMain opacity-100;
 }
+.maclerLinear {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    29deg,
+    rgba(255, 255, 255, 1) 56%,
+    rgba(239, 245, 255, 1) 56%
+  );
+}
