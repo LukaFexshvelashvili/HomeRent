@@ -1,13 +1,19 @@
-import { CrownIcon, NewsIcon } from "../../assets/icons/Icons";
+import {
+  CrownIcon,
+  ListIcon,
+  NewsIcon,
+  StarIcon,
+} from "../../assets/icons/Icons";
 import CardSlider from "./components/CardSlider";
 import ChooseSection from "./components/ChooseSection";
+import CreateOffer from "./components/CreateOffer";
 import MaclerCard from "./components/MaclerCard";
 import MainSlider from "./components/MainSlider";
 import SearchInput from "./components/SearchInput";
 
 export default function Home() {
   return (
-    <div className=" py-8">
+    <main className=" py-8">
       <MainSlider />
       <SearchInput />
 
@@ -23,6 +29,17 @@ export default function Home() {
       </div>
       <CardSlider uniqueId={2} />
       <MaclerCard />
-    </div>
+      <div className="flex items-center text-textHead font-mainBold text-Anormal my-4">
+        <StarIcon className=" h-[32px] [&>path]:fill-pinkI mr-2 translate-y-[-1px]" />{" "}
+        პოპულარული
+      </div>
+      <CardSlider uniqueId={3} />
+      <CreateOffer />
+      <div className="flex items-center text-textHead font-mainBold text-Anormal my-4">
+        <ListIcon className=" h-[36px] [&>path]:fill-orangeI mr-2 translate-y-[-1px]" />{" "}
+        <span className="text-orangeI mr-2">VIP</span> განცხადებები
+      </div>
+      <CardSlider uniqueId={3} />
+    </main>
   );
 }

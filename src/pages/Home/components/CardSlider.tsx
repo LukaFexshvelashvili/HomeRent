@@ -4,9 +4,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { LeftArrowIcon } from "../../../assets/icons/Icons";
 import { Navigation } from "swiper/modules";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
-export default function CardSlider(props: { uniqueId: string | number }) {
+function CardSlider(props: { uniqueId: string | number }) {
   const rand = Math.floor(Math.random() * 999999);
   const rand2 = Math.floor(Math.random() * 999);
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
@@ -18,8 +18,8 @@ export default function CardSlider(props: { uniqueId: string | number }) {
           modules: [Navigation],
           slidesPerView: 4.5,
           spaceBetween: 25,
-          rewind: true,
           navigation: true,
+          speed: 600,
         }
       );
       setSwiperInstance(newSwiperInstance);
@@ -79,3 +79,4 @@ export default function CardSlider(props: { uniqueId: string | number }) {
     </div>
   );
 }
+export default memo(CardSlider);

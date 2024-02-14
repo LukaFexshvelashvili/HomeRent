@@ -2,7 +2,7 @@ import BlueHouseDecoration from "../../../assets/images/decorations/bluehouse.pn
 
 export default function MaclerCard() {
   return (
-    <section className="my-[50px] w-full h-[500px] maclerLinear rounded-[20px] flex items-center p-8">
+    <section className="my-[60px] mb-[80px] w-full h-[500px] maclerLinear rounded-[20px] flex items-center p-8 shadow-[12px_12px_0px] shadow-mainClear">
       <div className="flex-1 flex items-center justify-center">
         <img
           src={BlueHouseDecoration}

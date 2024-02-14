@@ -18,10 +18,10 @@ export default function Navbar() {
   const [langImg, setLangImg] = useState<string>(georgianFlag);
 
   return (
-    <nav className="h-[70px] w-full sticky bg-navBg shadow-navbarShadow flex items-center ">
+    <nav className="h-[60px] w-full sticky bg-navBg shadow-navbarShadow flex items-center top-0 z-10">
       <div className="content_container flex justify-between">
         <div className="flex items-center gap-3">
-          <div className="h-[40px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
+          <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
           <div className="h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
           <div className="relative h-[36px] aspect-square flex items-center justify-center">
             <button
@@ -70,27 +70,35 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-5">
-          <button className="flex items-center justify-center gap-3 tracking-wider w-[165px] h-[38px] bg-orangeClear text-orangeI rounded-normal text-[15px] transition-colors hover:bg-orangeHover">
-            <HelpIcon className="h-[18px] aspect-square" />
+        <div className="flex items-center gap-6">
+          <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[160px] h-[36px] bg-orangeClear text-orangeI rounded-normal text-[14px] transition-colors hover:bg-orangeHover">
+            <HelpIcon className="h-[17px] aspect-square" />
             დახმარება
           </button>
-          <button className="flex items-center justify-center gap-3 tracking-wider w-[165px] h-[38px] bg-greenClear text-greenI rounded-normal text-[15px] transition-colors hover:bg-greenHover">
-            <PlusIcon className="h-[16px] aspect-square" />
+          <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[160px] h-[36px] bg-greenClear text-greenI rounded-normal text-[14px] transition-colors hover:bg-greenHover">
+            <PlusIcon className="h-[15px] aspect-square" />
             დამატება
           </button>
           <div className="flex mx-2 items-center justify-center gap-2">
-            <button className="relative h-[36px] aspect-square cursor-default flex items-center justify-center">
-              <BookmarkIcon className="h-[21px] aspect-square stroke-navIcon cursor-pointer" />
+            <button className="relative h-[34px] aspect-square cursor-default flex items-center justify-center select-none">
+              <BookmarkIcon className="h-[19px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon" />
             </button>
-            <div className="relative h-[36px] aspect-square cursor-default flex items-center justify-center">
+            <div
+              className={`relative h-[34px] aspect-square cursor-default flex items-center justify-center transition-colors ${
+                activePop == "notifications" ? "bg-mainClear" : "bg-transparent"
+              }   rounded-md `}
+            >
               <NotificationIcon
                 onClick={() =>
                   setActivePop((state) =>
                     state !== "notifications" ? "notifications" : null
                   )
                 }
-                className="h-[21px] aspect-square fill-navIcon cursor-pointer"
+                className={`h-[20px] aspect-square  cursor-pointer translate-y-[1px]  select-none ${
+                  activePop == "notifications"
+                    ? " [&>path]:fill-main"
+                    : " [&>path]:fill-navIcon"
+                }`}
               />
               <div
                 className={` absolute h-auto pb-[40px] w-[250px] overflow-hidden bg-white rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
@@ -126,14 +134,14 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="h-[36px]  aspect-square rounded-circle outline outline-3 outline-main  flex justify-center items-center relative">
+          <div className="h-[34px]  aspect-square rounded-circle outline outline-3 outline-main  flex justify-center items-center relative">
             <div
               onClick={() =>
                 setActivePop((state) =>
                   state !== "profile" ? "profile" : null
                 )
               }
-              className="h-[30px] aspect-square rounded-circle bg-main select-none cursor-pointer "
+              className="h-[28px] aspect-square rounded-circle bg-main select-none cursor-pointer "
             ></div>
             <div
               className={`absolute  overflow-hidden h-auto w-[250px] bg-white rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${

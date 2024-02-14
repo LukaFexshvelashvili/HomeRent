@@ -9,7 +9,7 @@ export default function ChooseSection() {
         <div className="flex flex-[2] flex-wrap gap-4 [&>div]:h-[270px]">
           <div className="flex w-full bg-whiteLoad overflow-hidden cursor-pointer group relative">
             <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest z-[3] ">
+            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] z-[3] ">
               კერძო სახლები
             </div>
             <img
@@ -20,7 +20,7 @@ export default function ChooseSection() {
           </div>
           <div className="flex flex-1 bg-whiteLoad overflow-hidden cursor-pointer group relative">
             <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest z-[3] ">
+            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] z-[3] ">
               იყიდება ბინები
             </div>
             <img
@@ -31,7 +31,7 @@ export default function ChooseSection() {
           </div>
           <div className="flex flex-1 bg-whiteLoad overflow-hidden cursor-pointer group relative">
             <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest z-[3] ">
+            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] z-[3] ">
               ქირავდება ბინები
             </div>
             <img
@@ -43,7 +43,7 @@ export default function ChooseSection() {
         </div>
         <div className="flex flex-1 bg-whiteLoad overflow-hidden cursor-pointer group relative">
           <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-          <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest z-[3] ">
+          <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] z-[3] ">
             სასტუმროები
           </div>
           <img
@@ -55,7 +55,7 @@ export default function ChooseSection() {
       </div>
       <div className="h-[270px] mt-4 bg-whiteLoad overflow-hidden cursor-pointer group rounded-section relative">
         <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-        <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest z-[3] ">
+        <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] z-[3] ">
           მიწის ნაკვეთები
         </div>
         <img

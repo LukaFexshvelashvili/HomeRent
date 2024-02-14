@@ -37,6 +37,7 @@ export default {
         cardInfoBg: "rgba(0, 0, 0, 0.6)",
 
         textBlack: "#000000",
+        textHeadBlack: "rgba(0, 0, 0, 0.9)",
         textHead: "rgba(0, 0, 0, 0.7)",
         textDesc: "rgba(0, 0, 0, 0.6)",
         textInfo: "rgba(0, 0, 0, 0.5)",
@@ -95,6 +96,7 @@ export default {
         sectionShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
         cardShadow: "0px 8px 30px rgba(0, 0, 0, 0.05)",
         navbarShadow: "0px 2px 40px rgba(0, 0, 0, 0.1)",
+        footerShadow: "0px -4px 30px rgba(0, 0, 0, 0.05)",
         slideNavShadow: "0px 4px 15px rgba(58, 133, 255, 0.15)",
       },
       borderRadius: {
