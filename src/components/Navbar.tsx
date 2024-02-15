@@ -117,7 +117,7 @@ export default function Navbar() {
                         <div className="h-[32px] aspect-square bg-main rounded-md"></div>
                         <div className="flex flex-col text-start ml-3">
                           <p className="text-Asmall font-mainBold text-userName">
-                            MESSAGE_TITLE
+                            MESSAGE_TITLE {item}
                           </p>
                           <p className="text-Asmaller font-mainBold text-userLastName">
                             MESSAGE_CR_DESCRIPTION

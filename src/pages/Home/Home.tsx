@@ -4,7 +4,7 @@ import {
   NewsIcon,
   StarIcon,
 } from "../../assets/icons/Icons";
-import CardSlider from "./components/CardSlider";
+import CardSlider from "../../components/global/CardSlider";
 import ChooseSection from "./components/ChooseSection";
 import CreateOffer from "./components/CreateOffer";
 import MaclerCard from "./components/MaclerCard";
@@ -13,7 +13,7 @@ import SearchInput from "./components/SearchInput";
 
 export default function Home() {
   return (
-    <main className=" py-8">
+    <main>
       <MainSlider />
       <SearchInput />
 

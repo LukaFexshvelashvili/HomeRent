@@ -1,8 +1,8 @@
 import { Swiper } from "swiper";
-import Card from "../../../components/global/Card";
+import Card from "./Card";
 import "swiper/css";
 import "swiper/css/pagination";
-import { LeftArrowIcon } from "../../../assets/icons/Icons";
+import { LeftArrowIcon } from "../../assets/icons/Icons";
 import { Navigation } from "swiper/modules";
 import { memo, useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";

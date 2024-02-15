@@ -43,8 +43,12 @@ export default {
         textInfo: "rgba(0, 0, 0, 0.5)",
         textPlaceholder: "rgba(0, 0, 0, 0.4)",
 
+        borderCol1: "#F2F2F2",
+
         userName: "rgba(0, 0, 0, 0.8)",
         userLastName: "rgba(0, 0, 0, 0.6)",
+
+        userIconFilled: "rgba(0, 0, 0, 0.3)",
 
         textHeadCard: "rgba(0, 0, 0, 0.8)",
         textDescCard: "rgba(0, 0, 0, 0.5)",
@@ -86,6 +90,8 @@ export default {
         cyanClear: "rgba(0, 195, 255, 0.1)",
         cyanHover: "rgba(0, 195, 255, 0.15)",
 
+        reportIcon: "#FF005C",
+
         success: "#00E75C",
         info: "#FFB800",
         warning: "#FF003D",
@@ -103,10 +109,12 @@ export default {
         circle: "50%",
         normal: "10px",
         section: "12px",
+        block: "14px",
       },
       fontFamily: {
         mainSemiBold: "mainSemiBold",
         mainBold: "mainBold",
+        mainMedium: "mainMedium",
         mainRegular: "mainRegular",
       },
       fontSize: {
