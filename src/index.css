@@ -33,6 +33,11 @@ body {
   max-width: 1390px;
   margin: 0 auto;
 }
+.login_container {
+  width: 100%;
+  max-width: 1700px;
+  margin: 0 auto;
+}
 .DefButton {
   @apply bg-main rounded-[5px] w-[190px] h-[38px] text-whiteMain text-[13px] tracking-widest transition-colors hover:bg-mainHover;
 }

@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        mainClear2: "rgba(58, 133, 255, 0.7)",
         main: "#3A86FF",
         mainHover: "#4f92fe",
         mainClear: "rgba(58, 134, 255, 0.1)",
@@ -104,6 +105,7 @@ export default {
         navbarShadow: "0px 2px 40px rgba(0, 0, 0, 0.1)",
         footerShadow: "0px -4px 30px rgba(0, 0, 0, 0.05)",
         slideNavShadow: "0px 4px 15px rgba(58, 133, 255, 0.15)",
+        buttonShadow: "0px 4px 15px rgba(58, 133, 255, 0.25)",
       },
       borderRadius: {
         circle: "50%",
