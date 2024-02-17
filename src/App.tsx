@@ -1,9 +1,10 @@
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
+import Login from "./pages/Authentication/Login";
 import Product from "./pages/Product/Product";
-import Register from "./pages/Register/Register";
+import Register from "./pages/Authentication/Register";
+import ForgotPassword from "./pages/Authentication/ForgotPassword";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
     //   </div>
     //   <Footer />
     // </>
-    <Register />
+    <ForgotPassword />
   );
 }
 

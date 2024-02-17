@@ -8,6 +8,7 @@ export default {
         main: "#3A86FF",
         mainHover: "#4f92fe",
         mainClear: "rgba(58, 134, 255, 0.1)",
+        mainClearActive: "rgba(58, 134, 255, 0.15)",
         LoginInputBg: "rgba(58, 134, 255, 0.05)",
         navBg: "#FFFFFF",
         sectionBg: "#FFFFFF",
@@ -15,6 +16,9 @@ export default {
         whiteMain: "#FFFFFF",
         navIcon: "#4B4B4B",
         lineBg: "#EDEDED",
+
+        LoginInput: "rgba(236, 236, 236, 0.5)",
+        LoginInputActive: "rgba(236, 236, 236, 0.9)",
 
         whiteLoad: "#ECECEC",
         whiteHover: "#f9f9f9",

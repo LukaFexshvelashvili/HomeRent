@@ -4,7 +4,7 @@ import {
   Home3Decor,
   Home4Decor,
   SkeletonDecor,
-} from "../../../assets/images/decorations/svg/HomeDecorations";
+} from "../../../assets/images/decorations/svg/Decorations";
 
 export default function CreateOffer() {
   return (

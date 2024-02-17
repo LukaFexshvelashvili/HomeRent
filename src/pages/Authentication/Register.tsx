@@ -1,5 +1,6 @@
 import { LockIcon, MailIcon, PhoneIcon } from "../../assets/icons/Icons";
-import { HomesbgDecor } from "../../assets/images/decorations/svg/HomeDecorations";
+import { HomesbgDecor } from "../../assets/images/decorations/svg/Decorations";
+import SideSection from "./components/SideSection";
 
 export default function Register() {
   return (
@@ -28,53 +29,61 @@ export default function Register() {
                     <input
                       type="text"
                       placeholder="სახელი"
-                      className="h-full w-full rounded-normal bg-mainClear outline-none px-3 text-textDesc tracking-wider text-Asmall"
+                      className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                     />
                   </div>
                   <div className="h-[40px] w-full rounded-normal flex items-center relative">
                     <input
                       type="text"
                       placeholder="გვარი"
-                      className="h-full w-full rounded-normal bg-mainClear outline-none px-3 text-textDesc tracking-wider text-Asmall"
+                      className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                     />
                   </div>
                 </div>
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <MailIcon className="h-[24px] aspect-square absolute left-3 [&>path]:stroke-mainClear2" />
+                  <MailIcon className="h-[24px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
                   <input
                     type="text"
                     placeholder="მეილი"
-                    className="h-full w-full rounded-normal bg-mainClear outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall"
+                    className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                   />
                 </div>
 
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <PhoneIcon className="h-[24px] aspect-square absolute left-3 [&>path]:stroke-mainClear2" />
+                  <PhoneIcon className="h-[24px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
                   <input
                     type="text"
                     placeholder="ტელეფონის ნომერი"
-                    className="h-full w-full rounded-normal bg-mainClear outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall"
+                    className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                   />
                 </div>
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <LockIcon className="w-[24px] aspect-square absolute left-3 [&>path]:stroke-mainClear2" />
+                  <LockIcon className="w-[24px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
                   <input
                     type="password"
                     placeholder="პაროლი"
-                    className="h-full w-full rounded-normal bg-mainClear outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall"
+                    className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                   />
                 </div>
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <LockIcon className="w-[24px] aspect-square absolute left-3 [&>path]:stroke-mainClear2" />
+                  <LockIcon className="w-[24px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
                   <input
                     type="password"
                     placeholder="გაიმეორეთ პაროლი"
-                    className="h-full w-full rounded-normal bg-mainClear outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall"
+                    className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                   />
                 </div>
+                <div className="flex flex-col w-full">
+                  <div className="w-full h-2 rounded-md bg-whiteLoad">
+                    <div className="w-[10%] h-full rounded-md bg-pinkI"></div>
+                  </div>
+                  <p className="text-textDesc text-Asmall font-mainBold tracking-wider opacity-70 mt-2">
+                    პაროლი სუსტია
+                  </p>
+                </div>
                 <div className="flex items-center w-full justify-between ">
-                  <div className="flex items-center text-textDesc text-Asmall font-mainBold tracking-wider cursor-pointer">
-                    <div className=" h-[16px] aspect-square border-[3px] rounded-md border-main mr-2"></div>
+                  <div className="flex items-center text-textDesc text-Asmall font-mainBold tracking-wider ">
+                    <div className=" h-[16px] aspect-square border-[3px] rounded-md border-main mr-2 cursor-pointer"></div>
                     ვეთანხმები
                     <span className="text-main cursor-pointer ml-2">
                       წესებს და პირობებს
@@ -91,16 +100,11 @@ export default function Register() {
                 <span className="text-main cursor-pointer">ავტორიზაცია</span>
               </p>
             </div>
-            <div className="absolute bottom-0 z-0 pointer-events-none w-full">
-              <HomesbgDecor className="w-full opacity-20" />
+            <div className="absolute bottom-0 z-0 pointer-events-none w-full flex justify-center">
+              <HomesbgDecor className="w-full relative z-[0] opacity-20" />
             </div>
           </section>
-          <section className="flex-1 loginSection flex items-center justify-center relative">
-            <div className="h-[70%] w-9/12 loginSectionBlock rounded-[20px] border-2 border-[#9AC1FF]"></div>
-            <div className="absolute bottom-0 z-0 pointer-events-none w-full">
-              <HomesbgDecor className="w-full opacity-20" />
-            </div>
-          </section>
+          <SideSection />
         </div>
       </main>
     </>

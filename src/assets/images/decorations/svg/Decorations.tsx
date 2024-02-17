@@ -1056,7 +1056,7 @@ export const SkeletonDecor = (props: any) => (
       height="14"
       rx="2"
       fill="#3A86FF"
-      fill-opacity="0.1"
+      fillOpacity="0.1"
     />
     <rect x="539" y="207" width="14" height="14" rx="2" fill="#F2F2F2" />
     <rect x="30" y="78" width="185" height="12" rx="4" fill="#EAEAEA" />
@@ -1094,7 +1094,7 @@ export const SkeletonDecor = (props: any) => (
         filterUnits="userSpaceOnUse"
         color-interpolation-filters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"
@@ -1120,5 +1120,54 @@ export const SkeletonDecor = (props: any) => (
         />
       </filter>
     </defs>
+  </svg>
+);
+
+export const Line1Decor = (props: any) => (
+  <svg
+    {...props}
+    viewBox="0 0 160 623"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M-272.725 604.717C-47.5026 566.888 262.763 231.248 93.6807 -167.49"
+      stroke="white"
+      strokeOpacity="0.1"
+      strokeWidth="35"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+export const Line2Decor = (props: any) => (
+  <svg
+    {...props}
+    viewBox="0 0 673 434"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M18 -41.5C38 186 348.2 521.7 759 384.5"
+      stroke="white"
+      strokeOpacity="0.1"
+      strokeWidth="35"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+export const Line3Decor = (props: any) => (
+  <svg
+    {...props}
+    viewBox="0 0 334 310"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M45.3546 -108C-10.1454 71.5 -18.4453 396.2 392.355 259"
+      stroke="white"
+      strokeOpacity="0.1"
+      strokeWidth="35"
+      strokeLinecap="round"
+    />
   </svg>
 );

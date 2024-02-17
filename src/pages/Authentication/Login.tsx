@@ -1,5 +1,6 @@
 import { LockIcon, MailIcon } from "../../assets/icons/Icons";
-import { HomesbgDecor } from "../../assets/images/decorations/svg/HomeDecorations";
+import { HomesbgDecor } from "../../assets/images/decorations/svg/Decorations";
+import SideSection from "./components/SideSection";
 
 export default function Login() {
   return (
@@ -24,19 +25,19 @@ export default function Login() {
                 className="w-[380px] flex flex-col gap-5 items-center relative z-10"
               >
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <MailIcon className="h-[24px] aspect-square absolute left-3 [&>path]:stroke-mainClear2" />
+                  <MailIcon className="h-[24px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
                   <input
                     type="text"
                     placeholder="მეილი"
-                    className="h-full w-full rounded-normal bg-mainClear outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall"
+                    className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                   />
                 </div>
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <LockIcon className="w-[24px] aspect-square absolute left-3 [&>path]:stroke-mainClear2" />
+                  <LockIcon className="w-[24px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
                   <input
                     type="password"
                     placeholder="პაროლი"
-                    className="h-full w-full rounded-normal bg-mainClear outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall"
+                    className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                   />
                 </div>
                 <div className="flex items-center w-full justify-between ">
@@ -62,7 +63,7 @@ export default function Login() {
               <HomesbgDecor className="w-full opacity-20" />
             </div>
           </section>
-          <section className="flex-1 loginSection flex items-center justify-center"></section>
+          <SideSection />
         </div>
       </main>
     </>
