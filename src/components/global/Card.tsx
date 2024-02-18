@@ -6,10 +6,14 @@ import {
 } from "../../assets/icons/Icons";
 import CardPhoto from "../../assets/images/estates/card.jpg";
 
-export default function Card() {
+export default function Card(props: { autoWidth?: boolean }) {
   const [favorite, setFavorite] = useState(false);
   return (
-    <div className="h-auto  w-full bg-whiteMain border-2 border-[#F3F3F3] rounded-normal p-3 pb-14 relative">
+    <div
+      className={`h-auto   ${
+        props.autoWidth ? "w-full" : "w-[290px]"
+      } bg-whiteMain border-2 border-[#F3F3F3] rounded-normal p-3 pb-14 relative`}
+    >
       <div className="w-full h-[240px] rounded-normal bg-whiteLoad relative overflow-hidden">
         <div className="absolute h-[25px] w-[60px] select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-whiteMain tracking-wider cursor-default top-2 right-2 z-[3]">
           VIP+

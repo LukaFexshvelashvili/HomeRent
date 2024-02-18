@@ -33,34 +33,34 @@ function CardSlider(props: { uniqueId: string | number }) {
       >
         <div className="swiper-wrapper">
           <SwiperSlide className="flex justify-center">
-            <Card />
+            <Card autoWidth={true} />
           </SwiperSlide>
           <SwiperSlide className="flex justify-center">
-            <Card />
+            <Card autoWidth={true} />
           </SwiperSlide>
           <SwiperSlide className="flex justify-center">
-            <Card />
+            <Card autoWidth={true} />
           </SwiperSlide>
           <SwiperSlide className="flex justify-center">
-            <Card />
+            <Card autoWidth={true} />
           </SwiperSlide>{" "}
           <SwiperSlide className="flex justify-center">
-            <Card />
+            <Card autoWidth={true} />
           </SwiperSlide>
           <SwiperSlide className="flex justify-center">
-            <Card />
+            <Card autoWidth={true} />
           </SwiperSlide>
           <SwiperSlide className="flex justify-center">
-            <Card />
+            <Card autoWidth={true} />
           </SwiperSlide>{" "}
           <SwiperSlide className="flex justify-center">
-            <Card />
+            <Card autoWidth={true} />
           </SwiperSlide>
           <SwiperSlide className="flex justify-center">
-            <Card />
+            <Card autoWidth={true} />
           </SwiperSlide>
           <SwiperSlide className="flex justify-center">
-            <Card />
+            <Card autoWidth={true} />
           </SwiperSlide>
         </div>
       </div>
