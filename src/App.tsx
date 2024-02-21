@@ -6,13 +6,14 @@ import Product from "./pages/Product/Product";
 import Register from "./pages/Authentication/Register";
 import ForgotPassword from "./pages/Authentication/ForgotPassword";
 import Search from "./pages/Search/Search";
+import AddProduct from "./pages/AddProduct/AddProduct";
 
 function App() {
   return (
     <>
       <Navbar />
       <div className="content_container">
-        <Search />
+        <AddProduct />
       </div>
       <Footer />
     </>

@@ -90,3 +90,9 @@ main {
   background-color: #3a86ff;
   cursor: pointer;
 }
+input[type="file"] {
+  color: transparent;
+}
+input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}

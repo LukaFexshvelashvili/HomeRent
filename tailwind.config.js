@@ -20,6 +20,9 @@ export default {
         LoginInput: "rgba(236, 236, 236, 0.5)",
         LoginInputActive: "rgba(236, 236, 236, 0.9)",
 
+        whiteLow: "rgba(239, 239, 239, 0.6)",
+        whiteCont: "rgba(198, 198, 198, 1)",
+
         whiteLoad: "#ECECEC",
         whiteHover: "#f9f9f9",
 
@@ -28,6 +31,8 @@ export default {
 
         photoLabel: "rgba(255, 255, 255, 0.9)",
         photoLabelDesc: "rgba(255, 255, 255, 0.8)",
+
+        inputBorder: "#DFDFDF",
 
         sliderFadeStart: "rgba(0, 0, 0, 0.6)",
         sliderFadeEnd: "rgba(0, 0, 0, 0)",

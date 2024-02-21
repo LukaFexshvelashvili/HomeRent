@@ -22,3 +22,6 @@
     rgba(255, 255, 255, 0.1) 100%
   );
 }
+.AddProductInput {
+  @apply h-[40px] px-2 w-[200px] border-[2px] border-inputBorder rounded-lg text-Asmall tracking-wide font-mainMedium outline-none text-textHeadCard;
+}

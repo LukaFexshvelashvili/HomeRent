@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import ReactSlider from "react-slider";
 import { RealEstateTypes } from "./FiltersArray";
 
-export function SelectNumbers(props: { name: string; setData?: Function }) {
+export function SelectNumbers(props: { name?: string; setData?: Function }) {
   const [active, setActive] = useState(0);
   const Length = [1, 2, 3, 4, 5, 6, 7, 7];
   return (
     <div className="flex flex-col items-center">
-      <p className=" text-textHead tracking-wider font-mainBold ">
-        {props.name}
-      </p>
-      <div className="flex gap-3 flex-wrap justify-center mt-4">
+      {props.name && (
+        <p className=" text-textHead tracking-wider font-mainBold  mt-4">
+          {props.name}
+        </p>
+      )}
+      <div className="flex gap-3 flex-wrap justify-center">
         {Length.map((e, i) => (
           <button
             key={i}
@@ -135,7 +137,7 @@ export function PriceSlider(props: { setData?: Function }) {
             }}
             value={Prices[0]}
           />
-          <p className="text-Asmall ml-2 text-textDesc">₾ -დან</p>
+          <p className="text-Asmall ml-2 text-textDesc">$ -დან</p>
         </div>
         <div className="flex items-center">
           <input
@@ -175,7 +177,7 @@ export function PriceSlider(props: { setData?: Function }) {
             }}
             value={Prices[1]}
           />
-          <p className="text-Asmall ml-2 text-textDesc">₾ -მდე</p>
+          <p className="text-Asmall ml-2 text-textDesc">$ -მდე</p>
         </div>
       </div>
     </div>
