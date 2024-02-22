@@ -1,8 +1,11 @@
 import {
   DealType,
+  EstateAddons,
   EstateAddress,
+  EstateClosePlaces,
   EstateImages,
   EstateInformation,
+  EstateOption,
   EstatePrice,
   EstateStatus,
   EstateType,
@@ -20,9 +23,12 @@ export default function AddProduct() {
           <EstateImages />
           <EstateInformation />
           <EstatePrice />
+          <EstateAddons />
+          <EstateClosePlaces />
+          <EstateOption />
         </div>
       </section>
-      <section className="flex-1 bg-whiteMain rounded-section shadow-sectionShadow h-8"></section>
+      <section className="flex-1 sticky top-[80px] bg-whiteMain rounded-section shadow-sectionShadow h-8"></section>
     </main>
   );
 }

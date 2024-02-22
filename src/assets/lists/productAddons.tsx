@@ -16,81 +16,120 @@ import {
   WifiIcon,
 } from "../icons/Icons";
 
-export type TProductAddon = { icon: JSX.Element; name: string };
+export type TProductAddon = {
+  icon: (props: string) => JSX.Element;
+  name: string;
+};
 
 export const productAddonsList = [
   {
-    icon: (
-      <FurnitureIcon className="h-[20px] aspect-square [&>path]:stroke-main" />
+    icon: (props: string) => (
+      <FurnitureIcon
+        className={`${props} aspect-square [&>path]:stroke-main`}
+      />
     ),
     name: "ავეჯი",
   },
   {
-    icon: <WaterIcon className="h-[20px] aspect-square [&>path]:stroke-main" />,
+    icon: (props: string) => (
+      <WaterIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
     name: "სასმელი წყალი",
   },
   {
-    icon: <PoolIcon className="h-[20px] aspect-square [&>path]:fill-main" />,
+    icon: (props: string) => (
+      <PoolIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
     name: "აუზი",
   },
   {
-    icon: (
-      <BalconyIcon className="h-[20px] aspect-square [&>path]:stroke-main" />
+    icon: (props: string) => (
+      <BalconyIcon className={`${props} aspect-square [&>path]:stroke-main`} />
     ),
     name: "აივანი",
   },
   {
-    icon: (
-      <ConditionerIcon className="h-[20px] aspect-square [&>path]:stroke-main" />
+    icon: (props: string) => (
+      <ConditionerIcon
+        className={`${props} aspect-square [&>path]:stroke-main`}
+      />
     ),
     name: "კონდიციონერი",
   },
   {
-    icon: (
-      <ParkingIcon className="h-[20px] aspect-square [&>path]:stroke-main" />
+    icon: (props: string) => (
+      <ParkingIcon className={`${props} aspect-square [&>path]:stroke-main`} />
     ),
     name: "პარკინგი",
   },
   {
-    icon: (
-      <FirewallIcon className="h-[20px] aspect-square [&>path]:fill-main" />
+    icon: (props: string) => (
+      <FirewallIcon className={`${props} aspect-square [&>path]:fill-main`} />
     ),
     name: "გათბობა",
   },
   {
-    icon: <WifiIcon className="h-[20px] aspect-square [&>path]:fill-main" />,
+    icon: (props: string) => (
+      <WifiIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
     name: "ინტერნეტი",
   },
   {
-    icon: <BathIcon className="h-[20px] aspect-square [&>path]:stroke-main" />,
+    icon: (props: string) => (
+      <BathIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
     name: "სველი წერტილი 1",
   },
   {
-    icon: (
-      <ElevatorIcon className="h-[20px] aspect-square [&>path]:fill-main" />
+    icon: (props: string) => (
+      <ElevatorIcon className={`${props} aspect-square [&>path]:fill-main`} />
     ),
     name: "ლიფტი",
   },
   {
-    icon: <BoxesIcon className="h-[20px] aspect-square [&>path]:stroke-main" />,
+    icon: (props: string) => (
+      <BoxesIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
     name: "სარდაფი",
   },
   {
-    icon: <FireIcon className="h-[20px] aspect-square [&>path]:fill-main" />,
+    icon: (props: string) => (
+      <FireIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
     name: "ბუნებრივი აირი",
   },
   {
-    icon: (
-      <GarageIcon className="h-[20px] aspect-square [&>path]:stroke-main" />
+    icon: (props: string) => (
+      <GarageIcon className={`${props} aspect-square [&>path]:stroke-main`} />
     ),
     name: "გარაჟი",
   },
   {
-    icon: <WaterCelsiusIcon className="h-[20px] aspect-square " />,
+    icon: (props: string) => (
+      <WaterCelsiusIcon className={` ${props} aspect-square `} />
+    ),
     name: "ცხელი წყალი",
   },
   {
-    icon: <TvIcon className="h-[20px] aspect-square [&>path]:fill-main" />,
+    icon: (props: string) => (
+      <TvIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
     name: "ტელევიზორი",
   },
 ];
+
+// 0 Furniture
+// 1 Water
+// 2 Pool
+// 3 Balcony
+// 4 Conditioner
+// 5 Parking
+// 6 Firewall
+// 7 Wifi
+// 8 Bath
+// 9 Elevator
+// 10 Boxes
+// 11 Fire
+// 12 Garage
+// 13 WaterCelsius
+// 14 Tv

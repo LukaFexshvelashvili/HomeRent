@@ -46,7 +46,7 @@ export default function Product() {
             <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[150px] my-[25px] pl-5">
               {productAddonsList.map((item: TProductAddon, i: number) => (
                 <div key={i} className="flex items-center  ">
-                  {item.icon}{" "}
+                  {item.icon("h-[20px]")}{" "}
                   <p className="text-Asmall ml-2 text-textDesc"> {item.name}</p>
                 </div>
               ))}
@@ -70,7 +70,7 @@ export default function Product() {
                   style={{ backgroundColor: item.bgColor }}
                   key={i}
                 >
-                  {item.icon}{" "}
+                  {item.icon("h-[24px]")}{" "}
                   <p
                     className="ml-2 text-Asmall font-mainMedium tracking-widest"
                     style={{ color: item.color }}

@@ -1,7 +1,189 @@
 import { useEffect, useState } from "react";
 import { RealEstateTypes } from "../../Search/components/FiltersArray";
-import { DropDownIcon, PlusIcon, TrashIcon } from "../../../assets/icons/Icons";
+import {
+  CheckIcon,
+  DropDownIcon,
+  PlusIcon,
+  TrashIcon,
+} from "../../../assets/icons/Icons";
 import { SelectNumbers } from "../../Search/components/Filters";
+import {
+  TProductAddon,
+  productAddonsList,
+} from "../../../assets/lists/productAddons";
+import {
+  TClosePlace,
+  closePlacesList,
+} from "../../../assets/lists/closePlaces";
+import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
+
+export function EstateOption() {
+  const [status, setStatus] = useState<number>(0);
+
+  return (
+    <div className="flex flex-col">
+      <p className=" text-textHead tracking-wider font-mainBold ">შეთავაზება</p>
+      <div className="flex items-center justify-center gap-5 mt-8">
+        {ActiveOffers.map((e: TOffer, i: number) => (
+          <div
+            key={i}
+            className=" h-[350px] w-[260px] rounded-section flex justify-between p-3 relative items-center flex-col"
+            style={{ backgroundColor: e.secondColor }}
+          >
+            <div
+              className="absolute h-[30px] w-[120px] rounded-normal font-mainBold text-whiteMain flex items-center justify-center text-Asmall tracking-wider top-0 -translate-y-1/4"
+              style={{ backgroundColor: e.mainColor }}
+            >
+              {e.name}
+            </div>
+            <div className="flex flex-col mt-7">
+              {e.benefits.map((item: string, index: number) => (
+                <div key={index} className="flex flex-col">
+                  <p className="text-[13px] tracking-normal font-mainBold text-textDesc text-center">
+                    {item}
+                  </p>
+                  <div
+                    className="h-[2px] w-[30px] rounded-md  mx-auto my-2"
+                    style={{ backgroundColor: e.lineColor }}
+                  ></div>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col gap-3 w-full">
+              <p
+                className="text-Asmall font-mainBold text-center"
+                style={{ color: e.mainColor }}
+              >
+                {e.price !== 0 ? `1 დღე - ${e.price}₾` : "უფასო"}
+              </p>
+              <button
+                className="h-[32px] w-full rounded-md text-Asmall font-mainBold tracking-wider transition-colors"
+                style={{
+                  backgroundColor: status == e.status ? "#FFFFFF" : e.mainColor,
+                  color: status == e.status ? e.mainColor : "#FFFFFF",
+                }}
+                onClick={() => setStatus(e.status)}
+              >
+                {status == e.status ? "არჩეული" : "არჩევა"}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function EstateClosePlaces() {
+  const [selectedAddons, setSelectedAddons] = useState<number[]>([]);
+
+  const addAddon = (index: number) => {
+    if (selectedAddons.includes(index)) {
+      let newAddons = selectedAddons.filter((item) => item !== index);
+      setSelectedAddons([...newAddons]);
+    } else {
+      selectedAddons.push(index);
+      setSelectedAddons([...selectedAddons]);
+    }
+  };
+
+  return (
+    <div className="flex flex-col">
+      <p className=" text-textHead tracking-wider font-mainBold ">
+        ახლოს მდებარეობს
+      </p>
+      <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[200px] my-[25px] pl-5">
+        {closePlacesList.map((e: TClosePlace, i: number) => (
+          <ClosePlaceBlock key={i} i={i} e={e} addAddon={addAddon} />
+        ))}
+      </div>
+    </div>
+  );
+}
+function ClosePlaceBlock(props: {
+  i: number;
+  e: TClosePlace;
+  addAddon: Function;
+}) {
+  const [active, setActive] = useState(false);
+  return (
+    <div
+      key={props.i}
+      onClick={() => {
+        props.addAddon(props.i);
+        setActive((state) => !state);
+      }}
+      className="flex items-center cursor-pointer select-none"
+    >
+      <div
+        className={`h-[16px] aspect-square border-2 rounded-md mr-3 transition-colors flex justify-center items-center ${
+          active ? `bg-[${props.e.color}]` : "bg-transparent"
+        }`}
+        style={{
+          borderColor: props.e.color,
+          backgroundColor: active ? props.e.color : "transparent",
+        }}
+      >
+        {active && <CheckIcon className="h-[8px] aspect-square" />}
+      </div>
+      {props.e.icon("h-[30px]")}
+      <p className="ml-2 text-Asmall text-textDesc">{props.e.name}</p>
+    </div>
+  );
+}
+export function EstateAddons() {
+  const [selectedAddons, setSelectedAddons] = useState<number[]>([]);
+
+  const addAddon = (index: number) => {
+    if (selectedAddons.includes(index)) {
+      let newAddons = selectedAddons.filter((item) => item !== index);
+      setSelectedAddons([...newAddons]);
+    } else {
+      selectedAddons.push(index);
+      setSelectedAddons([...selectedAddons]);
+    }
+  };
+
+  return (
+    <div className="flex flex-col">
+      <p className=" text-textHead tracking-wider font-mainBold ">
+        მონიშნეთ დამატებები
+      </p>
+      <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[200px] my-[25px] pl-5">
+        {productAddonsList.map((e: TProductAddon, i: number) => (
+          <AddonBlock key={i} i={i} e={e} addAddon={addAddon} />
+        ))}
+      </div>
+    </div>
+  );
+}
+function AddonBlock(props: {
+  i: number;
+  e: TProductAddon;
+  addAddon: Function;
+}) {
+  const [active, setActive] = useState(false);
+  return (
+    <div
+      key={props.i}
+      onClick={() => {
+        props.addAddon(props.i);
+        setActive((state) => !state);
+      }}
+      className="flex items-center cursor-pointer select-none"
+    >
+      <div
+        className={`h-[16px] aspect-square border-2 border-main rounded-md mr-3 transition-colors flex justify-center items-center ${
+          active ? "bg-main" : "bg-transparent"
+        }`}
+      >
+        {active && <CheckIcon className="h-[8px] aspect-square" />}
+      </div>
+      {props.e.icon("h-[30px]")}
+      <p className="ml-2 text-Asmall text-textDesc">{props.e.name}</p>
+    </div>
+  );
+}
 
 export function EstateImages() {
   const [images, setImages] = useState<any>([]);
@@ -290,7 +472,7 @@ export function EstatePrice() {
             onClick={() => setOpenDeal((state) => !state)}
             className="bg-main flex items-center w-[150px] justify-center py-[8px] rounded-lg text-whiteMain tracking-widest font-mainMedium text-Asmall"
           >
-            ₾ ლარი
+            {currency == 0 ? "₾ ლარი" : "$ დოლარი"}
             <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
           </button>
           <div
