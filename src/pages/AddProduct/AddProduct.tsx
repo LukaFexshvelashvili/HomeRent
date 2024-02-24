@@ -1,3 +1,5 @@
+import { createContext, useState } from "react";
+import EstateConfirm from "./components/EstateConfirm";
 import {
   DealType,
   EstateAddons,
@@ -6,10 +8,10 @@ import {
   EstateImages,
   EstateInformation,
   EstateOption,
-  EstatePrice,
   EstateStatus,
   EstateType,
 } from "./components/Selectors";
+import { productInfoStart } from "./components/productInfo";
 
 export default function AddProduct() {
   return (
@@ -22,13 +24,14 @@ export default function AddProduct() {
           <EstateAddress />
           <EstateImages />
           <EstateInformation />
-          <EstatePrice />
           <EstateAddons />
           <EstateClosePlaces />
           <EstateOption />
         </div>
       </section>
-      <section className="flex-1 sticky top-[80px] bg-whiteMain rounded-section shadow-sectionShadow h-8"></section>
+      <section className="flex-1 sticky top-[80px] bg-whiteMain rounded-section shadow-sectionShadow">
+        <EstateConfirm />
+      </section>
     </main>
   );
 }

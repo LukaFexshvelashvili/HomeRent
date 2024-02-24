@@ -10,7 +10,7 @@ const initialState: Tuser = {
   lastname: "Fexshvelashvili",
   age: 17,
 };
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
