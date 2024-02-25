@@ -14,7 +14,11 @@ export default function EstateConfirm() {
   const data = useSelector((state: RootState) => state.addProduct);
   const [activeOffer, setActiveOffer] = useState(0);
   let offerData = ActiveOffers.filter((item) => item.id == activeOffer)[0];
-
+  let sendAddress = {
+    city: data.estateCity,
+    address: data.estateAddress,
+    exactAddress: data.estateExactAddress,
+  };
   return (
     <div className="p-4">
       <div className=" flex flex-col items-center justify-center">
@@ -23,6 +27,7 @@ export default function EstateConfirm() {
           image={data.estateActiveImage}
           price={data.estatePrice}
           size={data.estateSize}
+          address={sendAddress}
         />
         <p className=" text-Asmall text-textDesc mt-3">ბარათის ვიზუალი</p>
       </div>
@@ -88,6 +93,11 @@ export function CardExample(props: {
   price?: number | null;
   size?: number | null;
   rooms?: number | null;
+  address: {
+    city: string | null;
+    address: string | null;
+    exactAddress: string | null;
+  };
 }) {
   const getSizePrice = () => {
     if (props.size && props.size > 0 && props.price && props.price > 0) {
@@ -130,7 +140,9 @@ export function CardExample(props: {
       <div className="flex flex-col py-1">
         <h2 className="text-textHeadCard font-mainBold">ვაკე რეზიდენსი</h2>
         <p className="text-textDescCard text-Asmall font-mainRegular">
-          თბილისი, ყიფშიძის ქ. 1
+          {props.address.city &&
+            props.address.city +
+              `${props.address.address ? ", " + props.address.address : ""}`}
         </p>
       </div>
       <div className="flex items-center mt-2 bottom-3 w-full absolute left-0 px-3">

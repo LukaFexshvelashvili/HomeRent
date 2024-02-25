@@ -19,10 +19,13 @@ import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
 import { useDispatch } from "react-redux";
 import {
   updateActiveImage,
+  updateBathrooms,
+  updateBedrooms,
   updateFullPrice,
   updateRooms,
   updateSize,
 } from "../../../store/data/addProductSlice";
+import { SearchCityFilter } from "../../Search/components/SearchFilters";
 
 export function EstateOption() {
   const [status, setStatus] = useState<number>(0);
@@ -392,13 +395,7 @@ export function EstateAddress() {
     <div className="flex flex-col">
       <p className=" text-textHead tracking-wider font-mainBold ">მისამართი</p>
       <div className="flex gap-3 flex-wrap pl-3 mt-4">
-        <input type="text" className="AddProductInput" placeholder="ქალაქი" />
-        <input type="text" className="AddProductInput" placeholder="ქუჩა" />
-        <input
-          type="text"
-          className="AddProductInput"
-          placeholder="ზუსტი მისამართი"
-        />
+        <SearchCityFilter />
         <input
           type="number"
           className="AddProductInput"
@@ -500,13 +497,13 @@ export function EstateInformation() {
             <p className="text-textDesc font-mainMedium w-[200px]">
               საძინებელი
             </p>
-            <SelectNumbers setData={updateRooms} name="" />
+            <SelectNumbers setData={updateBedrooms} name="" />
           </div>
           <div className="flex items-center">
             <p className="text-textDesc font-mainMedium w-[200px]">
               სველი წერტილი
             </p>
-            <SelectNumbers setData={updateRooms} name="" />
+            <SelectNumbers setData={updateBathrooms} name="" />
           </div>
         </div>
       </div>

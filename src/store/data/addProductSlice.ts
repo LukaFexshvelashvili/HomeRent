@@ -56,16 +56,44 @@ const addProductSlice = createSlice({
     updateRooms: (state, action: PayloadAction<number | null>) => {
       state.estateRooms = action.payload;
     },
+    updateBedrooms: (state, action: PayloadAction<number | null>) => {
+      state.estateBedrooms = action.payload;
+    },
+    updateBathrooms: (state, action: PayloadAction<number | null>) => {
+      state.estateBathrooms = action.payload;
+    },
     updateSize: (state, action: PayloadAction<number | null>) => {
       state.estateSize = action.payload;
     },
     updateFullPrice: (state, action: PayloadAction<number | null>) => {
       state.estatePrice = action.payload;
     },
+    updateCity: (state, action: PayloadAction<string | null>) => {
+      state.estateCity = action.payload;
+    },
+    updateAddress: (state, action: PayloadAction<string | null>) => {
+      state.estateAddress = action.payload;
+    },
+    updateExactAddress: (state, action: PayloadAction<string | null>) => {
+      state.estateExactAddress = action.payload;
+    },
+    updateIpcode: (state, action: PayloadAction<string | null>) => {
+      state.estateIpcode = action.payload;
+    },
   },
 });
 
-export const { updateActiveImage, updateRooms, updateSize, updateFullPrice } =
-  addProductSlice.actions;
+export const {
+  updateActiveImage,
+  updateRooms,
+  updateSize,
+  updateFullPrice,
+  updateCity,
+  updateAddress,
+  updateExactAddress,
+  updateIpcode,
+  updateBedrooms,
+  updateBathrooms,
+} = addProductSlice.actions;
 
 export default addProductSlice.reducer;
