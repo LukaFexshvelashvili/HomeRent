@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BookmarkIcon,
   DropDownIcon,
@@ -7,12 +7,21 @@ import {
   SquareFrameIcon,
 } from "../../../assets/icons/Icons";
 import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import numeral from "numeral";
+import { updateVip } from "../../../store/data/addProductSlice";
 export default function EstateConfirm() {
   const data = useSelector((state: RootState) => state.addProduct);
-  const [activeOffer, setActiveOffer] = useState(0);
+  const dispatch = useDispatch();
+  const vipStatus = useSelector(
+    (store: RootState) => store.addProduct.estateVip
+  );
+  const [activeOffer, setActiveOffer] = useState(vipStatus);
+  useEffect(() => {
+    setActiveOffer(vipStatus);
+  }, [vipStatus]);
+
   let offerData = ActiveOffers.filter((item) => item.id == activeOffer)[0];
   let sendAddress = {
     city: data.estateCity,
@@ -27,6 +36,7 @@ export default function EstateConfirm() {
           image={data.estateActiveImage}
           price={data.estatePrice}
           size={data.estateSize}
+          currency={data.estateCurrency}
           address={sendAddress}
         />
         <p className=" text-Asmall text-textDesc mt-3">ბარათის ვიზუალი</p>
@@ -35,7 +45,7 @@ export default function EstateConfirm() {
         {ActiveOffers.map((e: TOffer, i: number) => (
           <div
             key={i}
-            onClick={() => setActiveOffer(e.id)}
+            onClick={() => dispatch(updateVip(e.id))}
             className="text-Asmall h-[30px] w-[80px] flex items-center justify-center cursor-pointer rounded-md transition-colors"
             style={{
               backgroundColor:
@@ -68,18 +78,22 @@ export default function EstateConfirm() {
         </div>
       )}
       <div className="flex justify-between mt-6">
-        <p className="text-Asmall text-textDesc">სტატუსი</p>
+        <p className="text-Asmall text-textDesc font-mainMedium">სტატუსი</p>
 
         <p className="text-Asmall" style={{ color: offerData.mainColor }}>
           {offerData.name}
         </p>
       </div>
       {offerData.status !== 0 && (
-        <div className="flex items-center justify-between font-mainBold rounded-lg mt-1">
-          <p className=" text-textDesc">ფასი</p>
+        <>
+          <div className="h-1 w-[50px] rounded-md bg-mainClear mx-auto my-2"></div>
 
-          <p className=" text-main">{offerData.price}₾</p>
-        </div>
+          <div className="flex items-center justify-between font-mainBold rounded-lg mt-1">
+            <p className=" text-textDesc font-mainMedium">ფასი</p>
+
+            <p className=" text-main">{offerData.price}₾</p>
+          </div>
+        </>
       )}
       <button className="h-[42px] w-full rounded-md bg-main text-whiteMain tracking-wider text-[15px] transition-colors mt-3 hover:bg-mainHover">
         გამოქვეყნება
@@ -93,6 +107,7 @@ export function CardExample(props: {
   price?: number | null;
   size?: number | null;
   rooms?: number | null;
+  currency: number;
   address: {
     city: string | null;
     address: string | null;
@@ -147,10 +162,12 @@ export function CardExample(props: {
       </div>
       <div className="flex items-center mt-2 bottom-3 w-full absolute left-0 px-3">
         <div className="bg-mainClear text-main w-[120px] h-[30px] flex justify-center items-center rounded-lg">
-          {numeral(props.price).format("0,0").replace(/,/g, " ")}$
+          {numeral(props.price).format("0,0").replace(/,/g, " ")}
+          {props.currency == 0 ? "$" : props.currency == 1 && "₾"}
         </div>
         <p className="text-textDescCard text-Asmall mx-3 ">
-          მ² - {getSizePrice()}$
+          მ² - {getSizePrice()}
+          {props.currency == 0 ? "$" : props.currency == 1 && "₾"}
         </p>
         <button className="p-[5px] rounded-md absolute right-3">
           <BookmarkIcon

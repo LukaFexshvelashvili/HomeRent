@@ -9,7 +9,7 @@ export type TproductInfoStart = {
   estateExactAddress: null | string;
   estateIpcode: null | string;
   estateActiveImage: null | string;
-  estateImages: null | string;
+  estateImages: any;
   estateSize: null | number;
   estateProject: null | number;
   estateCondition: null | number;
@@ -21,6 +21,9 @@ export type TproductInfoStart = {
   estatePrice: null | number;
   estateAddons: null | number[];
   estateClosePlaces: null | number[];
+  estateCurrency: number;
+  estateVip: number;
+  estateVipExpire: null | string;
 };
 
 const initialState: TproductInfoStart = {
@@ -44,30 +47,26 @@ const initialState: TproductInfoStart = {
   estatePrice: null,
   estateAddons: null,
   estateClosePlaces: null,
+  estateCurrency: 0,
+  estateVip: 0,
+  estateVipExpire: null,
 };
 
 const addProductSlice = createSlice({
   name: "addProduct",
   initialState,
   reducers: {
-    updateActiveImage: (state, action: PayloadAction<string | null>) => {
-      state.estateActiveImage = action.payload;
+    updateType: (state, action: PayloadAction<number | null>) => {
+      state.estateType = action.payload;
     },
-    updateRooms: (state, action: PayloadAction<number | null>) => {
-      state.estateRooms = action.payload;
+
+    updateDeal: (state, action: PayloadAction<number | null>) => {
+      state.estateDeal = action.payload;
     },
-    updateBedrooms: (state, action: PayloadAction<number | null>) => {
-      state.estateBedrooms = action.payload;
+    updateStatus: (state, action: PayloadAction<number | null>) => {
+      state.estateStatus = action.payload;
     },
-    updateBathrooms: (state, action: PayloadAction<number | null>) => {
-      state.estateBathrooms = action.payload;
-    },
-    updateSize: (state, action: PayloadAction<number | null>) => {
-      state.estateSize = action.payload;
-    },
-    updateFullPrice: (state, action: PayloadAction<number | null>) => {
-      state.estatePrice = action.payload;
-    },
+
     updateCity: (state, action: PayloadAction<string | null>) => {
       state.estateCity = action.payload;
     },
@@ -80,20 +79,83 @@ const addProductSlice = createSlice({
     updateIpcode: (state, action: PayloadAction<string | null>) => {
       state.estateIpcode = action.payload;
     },
+
+    updateActiveImage: (state, action: PayloadAction<string | null>) => {
+      state.estateActiveImage = action.payload;
+    },
+    updateImages: (state, action: PayloadAction<any>) => {
+      state.estateImages = action.payload;
+    },
+    updateSize: (state, action: PayloadAction<number | null>) => {
+      state.estateSize = action.payload;
+    },
+
+    updateProject: (state, action: PayloadAction<number | null>) => {
+      state.estateProject = action.payload;
+    },
+    updateCondition: (state, action: PayloadAction<number | null>) => {
+      state.estateCondition = action.payload;
+    },
+    updateFloor: (state, action: PayloadAction<number | null>) => {
+      state.estateFloor = action.payload;
+    },
+    updateFloors: (state, action: PayloadAction<number | null>) => {
+      state.estateFloors = action.payload;
+    },
+    updateRooms: (state, action: PayloadAction<number | null>) => {
+      state.estateRooms = action.payload;
+    },
+    updateBedrooms: (state, action: PayloadAction<number | null>) => {
+      state.estateBedrooms = action.payload;
+    },
+    updateBathrooms: (state, action: PayloadAction<number | null>) => {
+      state.estateBathrooms = action.payload;
+    },
+    updateFullPrice: (state, action: PayloadAction<number | null>) => {
+      state.estatePrice = action.payload;
+    },
+    updateAddons: (state, action: PayloadAction<number[] | null>) => {
+      state.estateAddons = action.payload;
+    },
+    updateClosePlaces: (state, action: PayloadAction<number[] | null>) => {
+      state.estateClosePlaces = action.payload;
+    },
+    updateVip: (state, action: PayloadAction<number>) => {
+      state.estateVip = action.payload;
+    },
+    updateVipExpire: (state, action: PayloadAction<string | null>) => {
+      state.estateVipExpire = action.payload;
+    },
+    updateCurrency: (state, action: PayloadAction<number>) => {
+      state.estateCurrency = action.payload;
+    },
   },
 });
 
 export const {
-  updateActiveImage,
-  updateRooms,
-  updateSize,
-  updateFullPrice,
+  updateType,
+  updateDeal,
+  updateStatus,
   updateCity,
   updateAddress,
   updateExactAddress,
   updateIpcode,
+  updateActiveImage,
+  updateImages,
+  updateSize,
+  updateProject,
+  updateCondition,
+  updateFloor,
+  updateFloors,
+  updateRooms,
   updateBedrooms,
   updateBathrooms,
+  updateFullPrice,
+  updateAddons,
+  updateClosePlaces,
+  updateCurrency,
+  updateVip,
+  updateVipExpire,
 } = addProductSlice.actions;
 
 export default addProductSlice.reducer;

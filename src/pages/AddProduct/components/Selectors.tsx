@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RealEstateTypes } from "../../Search/components/FiltersArray";
 import {
   CheckIcon,
@@ -16,20 +16,42 @@ import {
   closePlacesList,
 } from "../../../assets/lists/closePlaces";
 import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   updateActiveImage,
+  updateAddons,
   updateBathrooms,
   updateBedrooms,
+  updateClosePlaces,
+  updateCondition,
+  updateCurrency,
+  updateDeal,
+  updateFloor,
+  updateFloors,
   updateFullPrice,
+  updateImages,
+  updateIpcode,
+  updateProject,
   updateRooms,
   updateSize,
+  updateStatus,
+  updateType,
+  updateVip,
 } from "../../../store/data/addProductSlice";
 import { SearchCityFilter } from "../../Search/components/SearchFilters";
+import { RootState } from "../../../store/store";
 
 export function EstateOption() {
-  const [status, setStatus] = useState<number>(0);
+  const vipStatus = useSelector(
+    (store: RootState) => store.addProduct.estateVip
+  );
+  const [status, setStatus] = useState<number>(vipStatus);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setStatus(vipStatus);
+  }, [vipStatus]);
   return (
     <div className="flex flex-col">
       <p className=" text-textHead tracking-wider font-mainBold ">შეთავაზება</p>
@@ -75,7 +97,7 @@ export function EstateOption() {
                   backgroundColor: status == e.status ? "#FFFFFF" : e.mainColor,
                   color: status == e.status ? e.mainColor : "#FFFFFF",
                 }}
-                onClick={() => setStatus(e.status)}
+                onClick={() => dispatch(updateVip(e.status))}
               >
                 {status == e.status ? "არჩეული" : "არჩევა"}
               </button>
@@ -89,14 +111,21 @@ export function EstateOption() {
 
 export function EstateClosePlaces() {
   const [selectedAddons, setSelectedAddons] = useState<number[]>([]);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (selectedAddons.length === 0) {
+      dispatch(updateClosePlaces(null));
+    } else {
+      dispatch(updateClosePlaces(selectedAddons));
+    }
+  }, [selectedAddons]);
   const addAddon = (index: number) => {
     if (selectedAddons.includes(index)) {
       let newAddons = selectedAddons.filter((item) => item !== index);
       setSelectedAddons([...newAddons]);
     } else {
-      selectedAddons.push(index);
-      setSelectedAddons([...selectedAddons]);
+      let newArr = [...selectedAddons, index];
+      setSelectedAddons([...newArr]);
     }
   };
 
@@ -146,14 +175,22 @@ function ClosePlaceBlock(props: {
 }
 export function EstateAddons() {
   const [selectedAddons, setSelectedAddons] = useState<number[]>([]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (selectedAddons.length === 0) {
+      dispatch(updateAddons(null));
+    } else {
+      dispatch(updateAddons(selectedAddons));
+    }
+  }, [selectedAddons]);
 
   const addAddon = (index: number) => {
     if (selectedAddons.includes(index)) {
       let newAddons = selectedAddons.filter((item) => item !== index);
       setSelectedAddons([...newAddons]);
     } else {
-      selectedAddons.push(index);
-      setSelectedAddons([...selectedAddons]);
+      let newArr = [...selectedAddons, index];
+      setSelectedAddons([...newArr]);
     }
   };
 
@@ -209,10 +246,12 @@ export function EstateImages() {
       if (covers.length === 0) {
         images[0].cover = true;
         dispatch(updateActiveImage(images[0].url));
+        dispatch(updateImages(images));
         setImages([...images]);
       }
     } else if (images.length === 0) {
       dispatch(updateActiveImage(null));
+      dispatch(updateImages(null));
     }
   }, [images]);
 
@@ -221,12 +260,13 @@ export function EstateImages() {
     setImages([...images]);
   };
   const makeMainImage = (index: number) => {
-    images.filter(
-      (item: { url: string; cover: boolean }) => (item.cover = false)
-    );
-    images[index].cover = true;
+    let newImages = images.map((item: { url: string; cover: boolean }) => ({
+      url: item.url,
+      cover: false,
+    }));
+    newImages[index].cover = true;
     dispatch(updateActiveImage(images[index].url));
-    setImages([...images]);
+    setImages([...newImages]);
   };
   return (
     <div className="flex flex-col">
@@ -299,6 +339,13 @@ export function EstateImages() {
 
 export function EstateType() {
   const [active, setActive] = useState(-1);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (active !== -1) {
+      dispatch(updateType(active));
+    }
+  }, [active]);
+
   return (
     <div className="flex flex-col">
       <p className=" text-textHead tracking-wider font-mainBold ">
@@ -334,6 +381,12 @@ export function EstateType() {
 
 export function DealType() {
   const [active, setActive] = useState(-1);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (active !== -1) {
+      dispatch(updateDeal(active));
+    }
+  }, [active]);
   const DealTypes = ["იყიდება", "ქირავდება", "ქირავდება დღიურად", "გირავდება"];
   return (
     <div className="flex flex-col">
@@ -364,6 +417,12 @@ export function DealType() {
 }
 export function EstateStatus() {
   const [active, setActive] = useState(-1);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (active !== -1) {
+      dispatch(updateStatus(active));
+    }
+  }, [active]);
   const DealTypes = ["ახალი აშენებული", "ძველი აშენებული", "მშენებარე"];
   return (
     <div className="flex flex-col">
@@ -391,15 +450,26 @@ export function EstateStatus() {
   );
 }
 export function EstateAddress() {
+  const getInput = useRef<any>(null);
+  const dispatch = useDispatch();
+
   return (
     <div className="flex flex-col">
       <p className=" text-textHead tracking-wider font-mainBold ">მისამართი</p>
       <div className="flex gap-3 flex-wrap pl-3 mt-4">
         <SearchCityFilter />
         <input
-          type="number"
+          type="text"
+          ref={getInput}
           className="AddProductInput"
           placeholder="საკადასტრო კოდი"
+          onChange={(e) => {
+            if (e.target.value == "") {
+              dispatch(updateIpcode(null));
+            } else {
+              dispatch(updateIpcode(e.target.value));
+            }
+          }}
         />
       </div>
     </div>
@@ -408,7 +478,7 @@ export function EstateAddress() {
 export function EstateInformation() {
   const [size, setSize] = useState<null | number>(null);
   const [openDeal, setOpenDeal] = useState(false);
-  const [currency, setCurrency] = useState(0);
+  const [currency, setCurrency] = useState(1);
   const [fullPrice, setFullPrice] = useState(0);
   const [sizePrice, setSizePrice] = useState(0);
   const dispatch = useDispatch();
@@ -418,7 +488,9 @@ export function EstateInformation() {
       dispatch(updateFullPrice(fullPrice));
     }
   }, [fullPrice]);
-
+  useEffect(() => {
+    dispatch(updateCurrency(currency));
+  }, [currency]);
   const calculateSizePrice = (price: number) => {
     if (size && size > 0) {
       setSizePrice(Math.floor(price / size));
@@ -458,9 +530,12 @@ export function EstateInformation() {
               პროექტის ტიპი
             </p>
             <input
-              type="text"
+              type="number"
               className="AddProductInput"
               placeholder="არასტანდარტული"
+              onChange={(e) => {
+                dispatch(updateProject(e.target.valueAsNumber));
+              }}
             />
           </div>
 
@@ -469,9 +544,12 @@ export function EstateInformation() {
               მდგომარეობა
             </p>
             <input
-              type="text"
+              type="number"
               className="AddProductInput"
               placeholder="მდგომარეობა"
+              onChange={(e) => {
+                dispatch(updateCondition(e.target.valueAsNumber));
+              }}
             />
           </div>
 
@@ -481,11 +559,17 @@ export function EstateInformation() {
               type="number"
               className="AddProductInput mr-4"
               placeholder="სართულები"
+              onChange={(e) => {
+                dispatch(updateFloor(e.target.valueAsNumber));
+              }}
             />{" "}
             <input
               type="number"
               className="AddProductInput"
               placeholder="სართული სულ"
+              onChange={(e) => {
+                dispatch(updateFloors(e.target.valueAsNumber));
+              }}
             />
           </div>
 
@@ -515,7 +599,7 @@ export function EstateInformation() {
               onClick={() => setOpenDeal((state) => !state)}
               className="bg-main flex items-center w-[150px] justify-center py-[8px] rounded-lg text-whiteMain tracking-widest font-mainMedium text-Asmall"
             >
-              {currency == 0 ? "₾ ლარი" : "$ დოლარი"}
+              {currency == 1 ? "₾ ლარი" : "$ დოლარი"}
               <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
             </button>
             <div
@@ -526,7 +610,7 @@ export function EstateInformation() {
               <button
                 onClick={() => {
                   setOpenDeal(false);
-                  setCurrency(0);
+                  setCurrency(1);
                 }}
                 className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
                   currency == 0 && "bg-whiteHover"
@@ -537,10 +621,10 @@ export function EstateInformation() {
               <button
                 onClick={() => {
                   setOpenDeal(false);
-                  setCurrency(1);
+                  setCurrency(0);
                 }}
                 className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
-                  currency == 1 && "bg-whiteHover"
+                  currency == 0 && "bg-whiteHover"
                 }`}
               >
                 $ დოლარი

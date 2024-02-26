@@ -1,4 +1,3 @@
-import { createContext, useState } from "react";
 import EstateConfirm from "./components/EstateConfirm";
 import {
   DealType,
@@ -11,7 +10,6 @@ import {
   EstateStatus,
   EstateType,
 } from "./components/Selectors";
-import { productInfoStart } from "./components/productInfo";
 
 export default function AddProduct() {
   return (
