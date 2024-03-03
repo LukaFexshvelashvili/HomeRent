@@ -15,7 +15,7 @@ export default {
         bodyBg: "#F9F9F9",
         whiteMain: "#FFFFFF",
         navIcon: "#4B4B4B",
-        lineBg: "#EDEDED",
+        lineBg: "#f4f4f4",
 
         LoginInput: "rgba(236, 236, 236, 0.5)",
         LoginInputActive: "rgba(236, 236, 236, 0.9)",

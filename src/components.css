@@ -25,3 +25,11 @@
 .AddProductInput {
   @apply h-[40px] px-2 w-[200px] border-[2px] border-inputBorder rounded-lg text-[15px]  outline-none text-textHeadCard font-mainSemiBold tracking-wider;
 }
+.ActiveProfileNav::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 4px;
+  border-radius: 75% 0px 0px 75%;
+  right: 0;
+}

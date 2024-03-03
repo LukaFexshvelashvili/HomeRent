@@ -4,11 +4,13 @@ type Tuser = {
   name: string;
   lastname: string;
   age: number;
+  id: string;
 };
 const initialState: Tuser = {
-  name: "Luka",
-  lastname: "Fexshvelashvili",
+  name: "ლუკა",
+  lastname: "ფეხშველაშვილი",
   age: 17,
+  id: "2337692412",
 };
 const userSlice = createSlice({
   name: "user",

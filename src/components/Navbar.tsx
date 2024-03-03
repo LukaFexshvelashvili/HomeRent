@@ -81,7 +81,7 @@ export default function Navbar() {
           </button>
           <div className="flex mx-2 items-center justify-center gap-2">
             <button className="relative h-[34px] aspect-square cursor-default flex items-center justify-center select-none">
-              <BookmarkIcon className="h-[19px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon" />
+              <BookmarkIcon className="h-[20px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon p-[0.2px]" />
             </button>
             <div
               className={`relative h-[34px] aspect-square cursor-default flex items-center justify-center transition-colors ${
@@ -101,7 +101,7 @@ export default function Navbar() {
                 }`}
               />
               <div
-                className={` absolute h-auto pb-[40px] w-[250px] overflow-hidden bg-white rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
+                className={` absolute h-auto pb-[40px] w-[200px] overflow-hidden bg-white rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
                   activePop == "notifications"
                     ? "visible opacity-100"
                     : "invisible opacity-0"
@@ -111,15 +111,15 @@ export default function Navbar() {
                   {[0, 0, 0, 0].map((item, i) => (
                     <button
                       key={i}
-                      className=" px-5 py-3 transition-colors hover:bg-whiteHover"
+                      className=" px-3 py-2 transition-colors hover:bg-whiteHover"
                     >
                       <div className="flex items-center ">
-                        <div className="h-[32px] aspect-square bg-main rounded-md"></div>
-                        <div className="flex flex-col text-start ml-3">
-                          <p className="text-Asmall font-mainBold text-userName">
+                        <div className="h-[30px] aspect-square bg-main rounded-md"></div>
+                        <div className="flex flex-col text-start ml-2">
+                          <p className="text-[12px] font-mainBold text-userName">
                             MESSAGE_TITLE {item}
                           </p>
-                          <p className="text-Asmaller font-mainBold text-userLastName">
+                          <p className="text-[11px] w-[90%] overflow-hidden text-ellipsis font-mainBold text-userLastName">
                             MESSAGE_CR_DESCRIPTION
                           </p>
                         </div>
@@ -127,7 +127,7 @@ export default function Navbar() {
                     </button>
                   ))}
                 </div>
-                <button className="absolute bottom-0 w-full h-[40px] bg-mainClear text-main left-0 tracking-wider font-mainBold text-Asmall">
+                <button className="absolute bottom-0 w-full h-[40px] bg-mainClear text-main left-0 tracking-wider font-mainBold text-[12px]">
                   ყველას ნახვა
                 </button>
               </div>
@@ -141,34 +141,34 @@ export default function Navbar() {
                   state !== "profile" ? "profile" : null
                 )
               }
-              className="h-[28px] aspect-square rounded-circle bg-main select-none cursor-pointer "
+              className="h-[29px] aspect-square rounded-circle bg-main select-none cursor-pointer "
             ></div>
             <div
-              className={`absolute  overflow-hidden h-auto w-[250px] bg-white rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
+              className={`absolute  overflow-hidden h-auto w-[230px] bg-white rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
                 activePop == "profile"
                   ? "visible opacity-100"
                   : "invisible opacity-0"
               }`}
             >
               <div className="px-6 pt-5 pb-2 flex items-center">
-                <div className="h-[34px] aspect-square rounded-circle outline outline-3 outline-main  flex justify-center items-center relative">
-                  <div className="h-[28px] aspect-square rounded-circle bg-main select-none"></div>
+                <div className="h-[32px] aspect-square rounded-circle outline outline-3 outline-main  flex justify-center items-center relative">
+                  <div className="h-[27px] aspect-square rounded-circle bg-main select-none"></div>
                 </div>
                 <div className=" flex flex-col ml-3">
-                  <p className="text-Asmall font-mainBold text-userName">
+                  <p className="text-[13px] font-mainBold text-userName">
                     USER_NAME
                   </p>
-                  <p className="text-Asmaller font-mainBold text-userLastName">
+                  <p className="text-[11px] font-mainBold text-userLastName">
                     USER_LASTNAME
                   </p>
                 </div>
               </div>
-              <div className=" mx-auto my-2 mb-5 bg-lineBg h-[3px] w-[50px] rounded-md"></div>
+              <div className=" mx-auto my-2 mb-4 bg-lineBg h-[2px] w-[50px] rounded-md"></div>
               <div className="flex flex-col">
                 {profileButtons.map((e: TProfileButton, i: number) => (
                   <button
                     key={i}
-                    className="w-full border-t border-lineBg px-5 py-3 text-textHead text-start text-[14px] tracking-wider flex items center transition-colors hover:bg-whiteHover"
+                    className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover"
                   >
                     {e.icon}
                     {e.name}
@@ -191,29 +191,29 @@ const profileButtons = [
   {
     name: "ჩემი პროფილი",
     icon: (
-      <UserLinearIcon className=" h-[24px] aspect-square fill-textHead mr-3" />
+      <UserLinearIcon className=" h-[20px] aspect-square fill-textHead mr-2" />
     ),
   },
   {
     name: "ჩემი განცხადებები",
     icon: (
-      <DocumentsIcon className=" h-[24px] aspect-square stroke-textHead mr-3" />
+      <DocumentsIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
     ),
   },
   {
     name: "შავი თემა",
-    icon: <MoonIcon className=" h-[24px] aspect-square fill-textHead mr-3" />,
+    icon: <MoonIcon className=" h-[20px] aspect-square fill-textHead mr-2" />,
   },
   {
     name: "კონტაქტი",
     icon: (
-      <MessageIcon className=" h-[24px] aspect-square stroke-textHead mr-3" />
+      <MessageIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
     ),
   },
   {
     name: "გასვლა",
     icon: (
-      <LogoutIcon className=" h-[24px] aspect-square stroke-textHead mr-3" />
+      <LogoutIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
     ),
   },
 ];
