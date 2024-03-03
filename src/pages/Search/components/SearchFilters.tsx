@@ -7,9 +7,8 @@ import {
   updateExactAddress,
 } from "../../../store/data/addProductSlice";
 import { subLocs } from "../../../assets/lists/subLocs";
-import { RootState } from "../../../store/store";
 
-export function SearchCityFilter() {
+export function SearchCityFilter(props: { setCity: Function }) {
   const citiesAPI = cities.subLocs.map((item) => item.name.ka);
   const [search, setSearch] = useState("");
   const [searchWindow, setSearchWindow] = useState(false);
@@ -26,6 +25,7 @@ export function SearchCityFilter() {
       setSearch(active);
       setSearchWindow(false);
       dispatch(updateCity(active));
+      props.setCity(active);
     }
   }, [active]);
 

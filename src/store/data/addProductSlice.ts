@@ -129,6 +129,9 @@ const addProductSlice = createSlice({
     updateCurrency: (state, action: PayloadAction<number>) => {
       state.estateCurrency = action.payload;
     },
+    setError: (state, action: PayloadAction<TproductInfoStart>) => {
+      return action.payload;
+    },
   },
 });
 
@@ -156,6 +159,7 @@ export const {
   updateCurrency,
   updateVip,
   updateVipExpire,
+  setError,
 } = addProductSlice.actions;
 
 export default addProductSlice.reducer;

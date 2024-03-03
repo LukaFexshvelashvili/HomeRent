@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   BookmarkIcon,
-  DropDownIcon,
   ImageLoaderIcon,
   RoomIcon,
   SquareFrameIcon,
@@ -10,14 +9,19 @@ import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import numeral from "numeral";
-import { updateVip } from "../../../store/data/addProductSlice";
-export default function EstateConfirm() {
+import { setError, updateVip } from "../../../store/data/addProductSlice";
+import DaysDropdown from "./DaysDropdown";
+import { submitProduct } from "./Selectors";
+
+export default function EstateConfirm(props: { setShowError: Function }) {
   const data = useSelector((state: RootState) => state.addProduct);
   const dispatch = useDispatch();
   const vipStatus = useSelector(
     (store: RootState) => store.addProduct.estateVip
   );
-  const [activeOffer, setActiveOffer] = useState(vipStatus);
+  const [activeOffer, setActiveOffer] = useState<number>(vipStatus);
+  const [selectedDays, setSelectedDays] = useState<number>(1);
+
   useEffect(() => {
     setActiveOffer(vipStatus);
   }, [vipStatus]);
@@ -58,24 +62,11 @@ export default function EstateConfirm() {
         ))}
       </div>
       {offerData.status !== 0 && (
-        <div
-          className="flex items-center justify-between font-mainBold rounded-lg py-2 px-3 mt-5"
-          style={{ backgroundColor: offerData.secondColor }}
-        >
-          <p className="text-Asmall" style={{ color: offerData.mainColor }}>
-            {" "}
-            1 დღე - {offerData.price}₾
-          </p>
-          <div className="">
-            <button
-              className="h-[34px] w-[120px] text-Asmall rounded-md text-whiteMain flex justify-between items-center px-4"
-              style={{ backgroundColor: offerData.mainColor }}
-            >
-              1 დღე
-              <DropDownIcon className="h-2" />
-            </button>
-          </div>
-        </div>
+        <DaysDropdown
+          offerData={offerData}
+          value={selectedDays}
+          setValue={setSelectedDays}
+        />
       )}
       <div className="flex justify-between mt-6">
         <p className="text-Asmall text-textDesc font-mainMedium">სტატუსი</p>
@@ -91,11 +82,14 @@ export default function EstateConfirm() {
           <div className="flex items-center justify-between font-mainBold rounded-lg mt-1">
             <p className=" text-textDesc font-mainMedium">ფასი</p>
 
-            <p className=" text-main">{offerData.price}₾</p>
+            <p className=" text-main">{offerData.price * selectedDays}₾</p>
           </div>
         </>
       )}
-      <button className="h-[42px] w-full rounded-md bg-main text-whiteMain tracking-wider text-[15px] transition-colors mt-3 hover:bg-mainHover">
+      <button
+        onClick={() => submitProduct(data, props.setShowError)}
+        className="h-[42px] w-full rounded-md bg-main text-whiteMain tracking-wider text-[15px] transition-colors mt-3 hover:bg-mainHover"
+      >
         გამოქვეყნება
       </button>
     </div>
