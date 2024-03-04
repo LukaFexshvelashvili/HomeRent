@@ -8,6 +8,7 @@ import {
   UserLinearIcon,
 } from "../../assets/icons/Icons";
 import { useState } from "react";
+import MyProducts from "./components/MyProducts";
 
 export default function Profile() {
   const [activeNav, setActiveNav] = useState(1);
@@ -40,7 +41,7 @@ export default function Profile() {
             <button
               key={e.id}
               onClick={() => setActiveNav(e.id)}
-              className={` outline-none cursor-pointer transition-colors w-full text-start px-9 py-[13px] font-mainMedium flex items-center relative text-[15px] before:transition-transform  ${
+              className={` outline-none cursor-pointer transition-colors w-full text-start px-5 py-[13px] font-mainMedium flex items-center relative text-[14px] before:transition-transform  ${
                 activeNav == e.id
                   ? "ActiveProfileNav before:bg-main bg-mainClear before:scale-y-1"
                   : "bg-transparent before:scale-y-0"
@@ -51,8 +52,8 @@ export default function Profile() {
           ))}
         </div>
       </section>
-      <section className="flex flex-col flex-[4] gap-4 ">
-        <div className=""></div>
+      <section className="flex flex-col flex-[5] gap-4 ">
+        {activeNav == 1 && <MyProducts />}
       </section>
     </main>
   );
@@ -60,42 +61,40 @@ export default function Profile() {
 type TProfileNav = {
   id: number;
   name: string;
-  icon: (props: any) => JSX.Element;
+  icon: () => JSX.Element;
 };
 const ProfileNavs: TProfileNav[] = [
   {
     id: 1,
     name: "ჩემი განცხადებები",
-    icon: (props: any) => (
-      <DocumentsIcon className="h-[28px] aspect-square mr-[10px]" />
-    ),
+    icon: () => <DocumentsIcon className="h-[26px] aspect-square mr-[10px]" />,
   },
   {
     id: 2,
     name: "შენახული განცხადებები",
-    icon: (props: any) => (
-      <BookmarkIcon className="h-[28px] aspect-square mr-[10px] [&>path]:stroke-[1.2px] p-[3px]" />
+    icon: () => (
+      <BookmarkIcon className="h-[26px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[3px]" />
     ),
   },
   {
     id: 3,
     name: "ბოლოს ნანახი",
-    icon: (props: any) => (
-      <HistoryIcon className="h-[29px] aspect-square mr-[10px]  [&>path]:stroke-[1.5px] p-[3px]" />
+    icon: () => (
+      <HistoryIcon className="h-[27px] aspect-square mr-[10px]  [&>path]:stroke-[1.5px] p-[3px]" />
     ),
   },
   {
     id: 4,
     name: "პარამეტრები",
-    icon: (props: any) => (
-      <SettingsIcon className="h-[28px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[3px]" />
+    icon: () => (
+      <SettingsIcon className="h-[26px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[3px]" />
     ),
   },
   {
     id: 5,
     name: "ჩემს შესახებ",
-    icon: (props: any) => (
-      <UserLinearIcon className="h-[28px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[2px]" />
+    icon: () => (
+      <UserLinearIcon className="h-[26px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[2px]" />
     ),
   },
 ];
