@@ -642,7 +642,7 @@ export function EstateInformation(props: { error: boolean }) {
                   onClick={() => setOpenDeal((state) => !state)}
                   className="bg-main flex items-center w-[150px] justify-center py-[8px] rounded-lg text-whiteMain tracking-widest font-mainMedium text-Asmall"
                 >
-                  {currency == 1 ? "₾ ლარი" : "$ დოლარი"}
+                  {currency == 0 ?  "$ დოლარი" : "₾ ლარი"}
                   <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
                 </button>
                 <div
@@ -665,6 +665,7 @@ export function EstateInformation(props: { error: boolean }) {
                     onClick={() => {
                       setOpenDeal(false);
                       setCurrency(0);
+                      
                     }}
                     className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
                       currency == 0 && "bg-whiteHover"
@@ -685,7 +686,7 @@ export function EstateInformation(props: { error: boolean }) {
                   }}
                   value={fullPrice ? fullPrice : ""}
                 />{" "}
-                <p className=" text-textDesc">{currency == 1 ? "$" : "₾"}</p>{" "}
+                <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>{" "}
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -698,7 +699,7 @@ export function EstateInformation(props: { error: boolean }) {
                   }}
                   value={sizePrice ? sizePrice : ""}
                 />{" "}
-                <p className=" text-textDesc">{currency == 1 ? "$" : "₾"}</p>
+                <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>
               </div>
             </div>
           </>

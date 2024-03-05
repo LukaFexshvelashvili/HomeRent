@@ -9,6 +9,10 @@ import {
 } from "../../assets/icons/Icons";
 import { useState } from "react";
 import MyProducts from "./components/MyProducts";
+import SavedProducts from "./components/SavedProducts";
+import LastSeenProducts from "./components/LastSeenProducts";
+import Settings from "./components/Settings";
+import ProfileInfo from "./components/ProfileInfo";
 
 export default function Profile() {
   const [activeNav, setActiveNav] = useState(1);
@@ -54,6 +58,10 @@ export default function Profile() {
       </section>
       <section className="flex flex-col flex-[5] gap-4 ">
         {activeNav == 1 && <MyProducts />}
+        {activeNav == 2 && <SavedProducts />}
+        {activeNav == 3 && <LastSeenProducts />}
+        {activeNav == 4 && <Settings />}
+        {activeNav == 5 && <ProfileInfo />}
       </section>
     </main>
   );

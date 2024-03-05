@@ -55,6 +55,10 @@ export default {
 
         borderCol1: "#F2F2F2",
 
+        profileInfoBlock: "#F2F2F2",
+        profileInfoBlockHeader: "rgba(0, 0, 0, 0.5)",
+        profileInfoBlockText: "rgba(0, 0, 0, 0.6)",
+
         userName: "rgba(0, 0, 0, 0.8)",
         userLastName: "rgba(0, 0, 0, 0.6)",
 

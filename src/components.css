@@ -33,3 +33,29 @@
   border-radius: 75% 0px 0px 75%;
   right: 0;
 }
+
+.productsBg {
+  background: rgb(15, 169, 255);
+  background: linear-gradient(
+    45deg,
+    rgba(15, 169, 255, 1) 0%,
+    rgba(136, 63, 255, 1) 100%
+  );
+}
+.balanceBg {
+  background: rgb(131, 56, 236);
+  background: linear-gradient(
+    45deg,
+    rgba(131, 56, 236, 1) 0%,
+    rgba(255, 0, 110, 1) 100%
+  );
+}
+
+.spentMoneyBg {
+  background: rgb(234, 53, 70);
+  background: linear-gradient(
+    45deg,
+    rgba(234, 53, 70, 1) 0%,
+    rgba(248, 102, 36, 1) 100%
+  );
+}

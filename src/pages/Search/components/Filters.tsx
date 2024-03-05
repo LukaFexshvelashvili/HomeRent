@@ -3,12 +3,14 @@ import ReactSlider from "react-slider";
 import { RealEstateTypes } from "./FiltersArray";
 import { useDispatch } from "react-redux";
 
-export function SelectNumbers(props: { name?: string; setData: Function }) {
+export function SelectNumbers(props: { name?: string; setData?: Function }) {
   const dispatch = useDispatch();
   const [active, setActive] = useState(0);
   const Length = [0, 1, 2, 3, 4, 5, 6, 7, 7];
   useEffect(() => {
-    dispatch(props.setData(active));
+    if (props.setData) {
+      dispatch(props.setData(active));
+    }
   }, [active]);
 
   return (
