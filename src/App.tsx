@@ -8,13 +8,16 @@ import ForgotPassword from "./pages/Authentication/ForgotPassword";
 import Search from "./pages/Search/Search";
 import AddProduct from "./pages/AddProduct/AddProduct";
 import Profile from "./pages/Profile/Profile";
+import MaclerService from "./pages/MaclerService/MaclerService";
+import MaclerChoose from "./pages/MaclerService/MaclerChoose";
+import Maclerconditions from "./pages/MaclerService/Maclerconditions";
 
 function App() {
   return (
     <>
       <Navbar />
       <div className="content_container">
-        <Profile />
+        <Maclerconditions />
       </div>
       <Footer />
     </>

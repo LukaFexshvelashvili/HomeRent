@@ -59,3 +59,7 @@
     rgba(248, 102, 36, 1) 100%
   );
 }
+.maclerSideBorder {
+  box-shadow: 0 8px 0 #3dbe00, 0 16px 0 rgba(60, 190, 0, 0.6),
+    0 24px 0 rgba(60, 190, 0, 0.2);
+}

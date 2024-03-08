@@ -6,7 +6,7 @@ import {
 } from "../../../assets/icons/Icons";
 
 import productImage from "../../../assets/images/estates/2.jpeg";
-export default function ProductBanner() {
+export default function ProductBanner(props: { setPopbuy: Function }) {
   return (
     <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center">
       <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden">
@@ -37,7 +37,10 @@ export default function ProductBanner() {
         </div>
       </div>
       <div className="flex items-center gap-3 ml-auto">
-        <button className="bg-purpleClear text-purpleI h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-purpleHover">
+        <button
+          className="bg-purpleClear text-purpleI h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-purpleHover"
+          onClick={() => props.setPopbuy({ id: 2 })}
+        >
           ნახვების გაზრდა
         </button>
         <button className="bg-orangeClear text-orangeI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-orangeHover flex justify-center items-center">

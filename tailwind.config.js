@@ -75,7 +75,8 @@ export default {
         footerBg: "#FFFFFF",
 
         maclerMain: "#3DBE00",
-        maclerMain: "rgba(60, 190, 0, 0.1)",
+        maclerMainHover: "#3fc700",
+        maclerMainClear: "rgba(60, 190, 0, 0.1)",
 
         orangeI: "#FF9900",
         orangeClear: "rgba(255, 153, 0, 0.1)",
