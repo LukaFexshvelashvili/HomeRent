@@ -6,20 +6,22 @@ import { LeftArrowIcon } from "../../assets/icons/Icons";
 import { Navigation } from "swiper/modules";
 import { memo, useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
-function CardSlider(props: { uniqueId: string | number }) {
+function CardSlider(props: { uniqueId?: string | number }) {
   const rand = Math.floor(Math.random() * 999999);
   const rand2 = Math.floor(Math.random() * 999);
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
   useEffect(() => {
     if (!swiperInstance) {
       const newSwiperInstance = new Swiper(
-        `.A${rand}${props.uniqueId}${rand2}`,
+        `.A${rand}${
+          props.uniqueId ? props.uniqueId : Math.floor(Math.random() * 999)
+        }${rand2}`,
         {
           modules: [Navigation],
-          slidesPerView: 4.5,
-          spaceBetween: 25,
+          slidesPerView: 4.8,
+          spaceBetween: 20,
           navigation: true,
-          speed: 600,
+          speed: 450,
         }
       );
       setSwiperInstance(newSwiperInstance);
@@ -66,13 +68,13 @@ function CardSlider(props: { uniqueId: string | number }) {
       </div>
       <button
         onClick={() => swiperInstance.slidePrev()}
-        className="h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[1] left-0 -translate-x-2/4 shadow-slideNavShadow"
+        className="h-14 aspect-square rounded-circle bg-whiteMain p-[18px] absolute z-[1] left-0 -translate-x-2/4 shadow-slideNavShadow transition-colors hover:bg-whiteHover"
       >
         <LeftArrowIcon className="h-full aspect-square" />{" "}
       </button>{" "}
       <button
         onClick={() => swiperInstance.slideNext()}
-        className="h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[1] right-0 translate-x-2/4 shadow-slideNavShadow"
+        className="h-14 aspect-square rounded-circle bg-whiteMain p-[18px] absolute z-[1] right-0 translate-x-2/4 shadow-slideNavShadow transition-colors hover:bg-whiteHover"
       >
         <LeftArrowIcon className="h-full aspect-square rotate-180" />{" "}
       </button>

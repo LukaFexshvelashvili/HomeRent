@@ -64,12 +64,12 @@ function MainSliderCard(props: TMainSliderCard) {
         className=" z-[1] absolute h-full w-full object-cover top-0 left-0"
       />
       <div className=" bg-gradient-to-t from-sliderFadeStart to-sliderFadeEnd z-[2] absolute h-full w-full object-cover top-0 left-0"></div>
-      <div className="w-full flex justify-between z-[3] absolute bottom-6 px-8 items-end">
+      <div className="w-full flex justify-between z-30 absolute bottom-8 px-6 items-end">
         <div className="flex flex-col gap-1">
-          <h1 className=" text-sliderHead text-Abig">{props.head}</h1>
-          <h3 className=" text-sliderDesc ">{props.desc}</h3>
+          <h1 className=" text-sliderHead text-[18px]">{props.head}</h1>
+          <h3 className=" text-sliderDesc text-[14px]">{props.desc}</h3>
         </div>
-        <button className="DefButton">სრულად ნახვა</button>
+        <button className="DefButton relative z-30">სრულად ნახვა</button>
       </div>
     </div>
   );

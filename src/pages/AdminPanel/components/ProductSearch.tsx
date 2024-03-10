@@ -1,35 +1,27 @@
 import { DateIcon, LoginEyeIcon } from "../../../assets/icons/Icons";
 
 import productImage from "../../../assets/images/estates/2.jpeg";
-
-export default function LastSeenProducts() {
+export default function ProductSearch() {
   return (
-    <>
-      {" "}
-      <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3">
-        <h1>ბოლოს ნანახი განცხადებები</h1>
-
-        <input
-          type="text"
-          placeholder="მოძებნა  ( ID ან სათაური )"
-          className=" text-[14px] h-[40px] w-full bg-LoginInput outline-none rounded-lg px-4 transition-colors focus:bg-LoginInputActive"
-        />
+    <div>
+      <p className=" text-textHead">განცხადებების მართვა</p>
+      <input
+        type="text"
+        placeholder="მოძებნა   (ID, ტელეფონით, სიტყვით)"
+        className=" text-[14px] h-[40px] w-full bg-LoginInput outline-none rounded-lg px-4 transition-colors focus:bg-LoginInputActive my-3"
+      />
+      <div className="flex flex-col gap-3">
+        <ProductBanner />
+        <ProductBanner />
+        <ProductBanner />
       </div>
-      <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex  py-2 flex-col gap-3">
-        <p className="px-4 text-[13px] text-textDesc my-1">სულ 3 განცხადება</p>
-        <div className="flex flex-col">
-          <FavoriteBanner />
-          <FavoriteBanner />
-          <FavoriteBanner />
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
 
-function FavoriteBanner() {
+function ProductBanner() {
   return (
-    <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center">
+    <div className=" w-full border-t-[2px] border-lineBg py-5 flex items-center">
       <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden">
         <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2]"></div>
         <img
@@ -64,6 +56,14 @@ function FavoriteBanner() {
           </p>
           <p className="text-[13px] text-textDesc">ID - 18495519</p>
         </div>
+      </div>
+      <div className="flex items-center gap-3 ml-auto">
+        <button className="bg-pinkClear font-mainBold tracking-wider text-pinkI text-[12px] h-[28px] w-[120px] rounded-md transition-colors hover:bg-pinkHover">
+          დაბლოკვა
+        </button>
+        <button className="bg-redClear font-mainBold tracking-wider text-redI text-[12px] h-[28px] w-[100px] rounded-md transition-colors hover:bg-redHover">
+          წაშლა
+        </button>
       </div>
     </div>
   );

@@ -11,13 +11,14 @@ import Profile from "./pages/Profile/Profile";
 import MaclerService from "./pages/MaclerService/MaclerService";
 import MaclerChoose from "./pages/MaclerService/MaclerChoose";
 import Maclerconditions from "./pages/MaclerService/Maclerconditions";
+import AdminPanel from "./pages/AdminPanel/AdminPanel";
 
 function App() {
   return (
     <>
       <Navbar />
       <div className="content_container">
-        <Maclerconditions />
+        <Home />
       </div>
       <Footer />
     </>

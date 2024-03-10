@@ -18,6 +18,9 @@
   font-family: mainRegular;
   src: url("./assets/fonts/NotoSansGeorgian-Regular.ttf");
 }
+img {
+  -webkit-transform: translateZ(0);
+}
 
 * {
   padding: 0;
@@ -56,7 +59,7 @@ body {
   margin: 0 auto;
 }
 .DefButton {
-  @apply bg-main rounded-[5px] w-[190px] h-[38px] text-whiteMain text-[13px] tracking-widest transition-colors hover:bg-mainHover;
+  @apply bg-main rounded-[5px] w-[170px] h-[35px] font-mainMedium text-whiteMain text-[12px] tracking-widest transition-colors hover:bg-mainHover;
 }
 
 .swiper-pagination-bullet {

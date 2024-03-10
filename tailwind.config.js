@@ -39,6 +39,8 @@ export default {
         sliderHead: "rgba(255, 255, 255, 0.9)",
         sliderDesc: "rgba(255, 255, 255, 0.8)",
 
+        blackFade: "rgba(0, 0, 0, 0.3)",
+
         sectionFadeStart: "rgba(0, 0, 0, 0.75)",
         sectionFadeEnd: "rgba(0, 0, 0, 0.1)",
 
@@ -118,6 +120,7 @@ export default {
         cardShadow: "0px 8px 30px rgba(0, 0, 0, 0.05)",
         navbarShadow: "0px 2px 40px rgba(0, 0, 0, 0.1)",
         footerShadow: "0px -4px 30px rgba(0, 0, 0, 0.05)",
+
         slideNavShadow: "0px 4px 15px rgba(58, 133, 255, 0.15)",
         buttonShadow: "0px 4px 15px rgba(58, 133, 255, 0.25)",
       },

@@ -70,13 +70,13 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-6">
-          <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[160px] h-[36px] bg-orangeClear text-orangeI rounded-normal text-[14px] transition-colors hover:bg-orangeHover">
-            <HelpIcon className="h-[17px] aspect-square" />
+        <div className="flex items-center gap-4">
+          <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-orangeClear text-orangeI rounded-[8px] text-[12px] transition-colors hover:bg-orangeHover">
+            <HelpIcon className="h-[16px] aspect-square" />
             დახმარება
           </button>
-          <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[160px] h-[36px] bg-greenClear text-greenI rounded-normal text-[14px] transition-colors hover:bg-greenHover">
-            <PlusIcon className="h-[15px] aspect-square" />
+          <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-greenClear text-greenI rounded-[8px] text-[12px] transition-colors hover:bg-greenHover">
+            <PlusIcon className="h-[13px] aspect-square" />
             დამატება
           </button>
           <div className="flex mx-2 items-center justify-center gap-2">
@@ -134,14 +134,14 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="h-[34px]  aspect-square rounded-circle outline outline-3 outline-main  flex justify-center items-center relative">
+          <div className="h-[34px]  aspect-square rounded-circle bg-main p-[3px] flex justify-center items-center relative">
             <div
               onClick={() =>
                 setActivePop((state) =>
                   state !== "profile" ? "profile" : null
                 )
               }
-              className="h-[29px] aspect-square rounded-circle bg-main select-none cursor-pointer "
+              className="h-full border-2 border-whiteMain aspect-square rounded-circle bg-main select-none cursor-pointer "
             ></div>
             <div
               className={`absolute  overflow-hidden h-auto w-[230px] bg-white rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
@@ -151,8 +151,8 @@ export default function Navbar() {
               }`}
             >
               <div className="px-6 pt-5 pb-2 flex items-center">
-                <div className="h-[32px] aspect-square rounded-circle outline outline-3 outline-main  flex justify-center items-center relative">
-                  <div className="h-[27px] aspect-square rounded-circle bg-main select-none"></div>
+                <div className="h-[34px]  aspect-square rounded-circle bg-main p-[3px] flex justify-center items-center relative">
+                  <div className="h-full border-2 border-whiteMain aspect-square rounded-circle bg-main select-none cursor-pointer "></div>
                 </div>
                 <div className=" flex flex-col ml-3">
                   <p className="text-[13px] font-mainBold text-userName">

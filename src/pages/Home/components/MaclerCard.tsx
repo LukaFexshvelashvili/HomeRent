@@ -10,8 +10,8 @@ export default function MaclerCard() {
           className="max-h-[520px] max-w-[560px]"
         />
       </div>
-      <div className="flex-1 pl-[80px]">
-        <h2 className="text-[28px] font-mainBold text-main mb-3">
+      <div className="flex-1  pl-[80px]">
+        <h2 className="text-[24px] font-mainBold text-main mb-5">
           მაკლერის სერვისი
         </h2>
         <p className=" text-textDesc text-[16px] tracking-wider max-w-[600px]">
@@ -36,7 +36,7 @@ export default function MaclerCard() {
             სწრაფი მომსახურება
           </div>
         </div>
-        <button className="mt-5 bg-main rounded-[5px] w-[190px] h-[40px] text-whiteMain text-[15px] tracking-widest transition-colors hover:bg-mainHover">
+        <button className="mt-3 bg-main rounded-[5px] w-[190px] h-[40px] text-whiteMain text-[15px] tracking-widest transition-colors hover:bg-mainHover">
           სრულად
         </button>
       </div>

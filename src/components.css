@@ -63,3 +63,28 @@
   box-shadow: 0 8px 0 #3dbe00, 0 16px 0 rgba(60, 190, 0, 0.6),
     0 24px 0 rgba(60, 190, 0, 0.2);
 }
+
+.gradCard1 {
+  background: rgb(127, 0, 255);
+  background: linear-gradient(
+    45deg,
+    rgba(127, 0, 255, 1) 0%,
+    rgba(23, 0, 114, 1) 100%
+  );
+}
+.gradCard2 {
+  background: rgb(0, 102, 255);
+  background: linear-gradient(
+    45deg,
+    rgba(0, 102, 255, 1) 0%,
+    rgba(0, 72, 181, 1) 100%
+  );
+}
+.gradCard3 {
+  background: rgb(189, 0, 220);
+  background: linear-gradient(
+    45deg,
+    rgba(189, 0, 220, 1) 0%,
+    rgba(0, 98, 129, 1) 100%
+  );
+}
