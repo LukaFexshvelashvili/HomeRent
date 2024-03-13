@@ -12,13 +12,23 @@ import MaclerService from "./pages/MaclerService/MaclerService";
 import MaclerChoose from "./pages/MaclerService/MaclerChoose";
 import Maclerconditions from "./pages/MaclerService/Maclerconditions";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <>
       <Navbar />
       <div className="content_container">
-        <Home />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Search" element={<Search />} />
+          <Route path="/Product" element={<Product />} />
+          <Route path="/AddProduct" element={<AddProduct />} />
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/MaclerService" element={<MaclerService />} />
+          <Route path="/MaclerChoose" element={<MaclerChoose />} />
+          <Route path="/Maclerconditions" element={<Maclerconditions />} />
+        </Routes>
       </div>
       <Footer />
     </>

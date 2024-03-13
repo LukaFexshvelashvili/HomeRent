@@ -88,3 +88,18 @@
     rgba(0, 98, 129, 1) 100%
   );
 }
+.beforeInputBlock {
+  position: relative;
+}
+.beforeInputBlock::before {
+  content: "";
+  position: absolute;
+  display: block;
+  height: 1px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: rgb(228, 228, 228);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}

@@ -6,6 +6,7 @@ import { LeftArrowIcon } from "../../assets/icons/Icons";
 import { Navigation } from "swiper/modules";
 import { memo, useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 function CardSlider(props: { uniqueId?: string | number }) {
   const rand = Math.floor(Math.random() * 999999);
   const rand2 = Math.floor(Math.random() * 999);
@@ -22,6 +23,56 @@ function CardSlider(props: { uniqueId?: string | number }) {
           spaceBetween: 20,
           navigation: true,
           speed: 450,
+          breakpoints: {
+            1500: {
+              spaceBetween: 20,
+              slidesPerView: 4.8,
+            },
+            1330: {
+              spaceBetween: 20,
+              slidesPerView: 4.2,
+            },
+            1200: {
+              spaceBetween: 15,
+              slidesPerView: 4,
+            },
+            1100: {
+              spaceBetween: 10,
+              slidesPerView: 3.7,
+            },
+            1000: {
+              spaceBetween: 10,
+              slidesPerView: 3.4,
+            },
+            900: {
+              spaceBetween: 10,
+              slidesPerView: 3,
+            },
+            800: {
+              spaceBetween: 10,
+              slidesPerView: 2.6,
+            },
+            700: {
+              spaceBetween: 10,
+              slidesPerView: 2.4,
+            },
+            600: {
+              spaceBetween: 10,
+              slidesPerView: 2.2,
+            },
+            500: {
+              spaceBetween: 10,
+              slidesPerView: 2,
+            },
+            400: {
+              spaceBetween: 10,
+              slidesPerView: 1.8,
+            },
+            300: {
+              spaceBetween: 10,
+              slidesPerView: 1.6,
+            },
+          },
         }
       );
       setSwiperInstance(newSwiperInstance);
@@ -81,4 +132,4 @@ function CardSlider(props: { uniqueId?: string | number }) {
     </div>
   );
 }
-export default memo(CardSlider);
+export default CardSlider;

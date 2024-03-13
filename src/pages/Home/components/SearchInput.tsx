@@ -9,6 +9,7 @@ import {
 import { RealEstateTypes } from "../../Search/components/FiltersArray";
 import { cities } from "../../../assets/lists/cities";
 import { InputPriceSlider, InputSizeSlider } from "./SearchComponents";
+import { useNavigate } from "react-router-dom";
 
 type TPriceGet = {
   start: number;
@@ -17,16 +18,26 @@ type TPriceGet = {
 };
 
 export default function SearchInput() {
+  const navigate = useNavigate();
   const [inputSelect, setInputSelect] = useState<null | number>(null);
   const [getType, setGetType] = useState<null | string>(null);
   const [getCity, setGetCity] = useState<null | string>(null);
-  const [getSize, setGetSize] = useState<null | number[]>(null);
+  const [getSizes, setGetSizes] = useState<null | number[]>(null);
   const [getPrices, setGetPrices] = useState<null | TPriceGet>(null);
 
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    getType && params.append("type", getType);
+    getCity && params.append("city", getCity);
+    getSizes && params.append("sizes", JSON.stringify(getSizes));
+
+    getPrices && params.append("prices", JSON.stringify(getPrices));
+    navigate(`/search?${params.toString()}`);
+  };
   return (
-    <div className="w-10/12 h-[45px]  my-10 mx-auto">
-      <div className="relative  rounded-normal flex  items-center h-full w-full border-2 border-whiteLoad">
-        <div className="flex items-center w-[20%] text-textDesc h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
+    <div className="w-10/12 mediumSmall:w-full small:w-auto small:h-auto h-[45px]  my-10 mx-auto ">
+      <div className="relative  rounded-normal flex  small:flex-col   items-center h-full w-full border-2 border-whiteLoad">
+        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
           <div
             onClick={() => setInputSelect(1)}
             className="flex h-full items-center gap-3  px-6 "
@@ -45,7 +56,7 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex items-center w-[20%] text-textDesc h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
+        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
           <div
             onClick={() => setInputSelect(2)}
             className="flex h-full items-center gap-3  px-6 "
@@ -64,26 +75,26 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex items-center w-[20%] text-textDesc h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
+        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
           <div
             onClick={() => setInputSelect(3)}
             className="flex h-full items-center gap-3  px-6 "
           >
             <FilterFrameIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
             <p className="w-[150px] text-[14px] font-mainMedium">
-              {getSize ? `${getSize[0]} მ² - ${getSize[1]} მ²` : "ფართი"}
+              {getSizes ? `${getSizes[0]} მ² - ${getSizes[1]} მ²` : "ფართი"}
             </p>
           </div>
-          {getSize && (
+          {getSizes && (
             <button
-              onClick={() => setGetSize(null)}
+              onClick={() => setGetSizes(null)}
               className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
             >
               <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
             </button>
           )}
         </div>
-        <div className="flex items-center w-[20%] text-textDesc h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
+        <div className="flex small:border-none  items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
           <div
             onClick={() => setInputSelect(4)}
             className="flex h-full items-center gap-3  px-6 "
@@ -106,7 +117,10 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <button className="h-full w-[20%] text-[14px] font-mainMedium rounded-r-normal text-whiteMain bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover">
+        <button
+          onClick={handleSearch}
+          className="h-full w-[20%] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-r-normal text-whiteMain bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
+        >
           მოძებნა
         </button>
         {inputSelect && (
@@ -135,7 +149,7 @@ export default function SearchInput() {
               <>
                 <p className="text-textHead text-[14px]">აირჩიეთ ფართის ზომა</p>
                 <InputSizeSlider
-                  setData={setGetSize}
+                  setData={setGetSizes}
                   closeWindow={setInputSelect}
                 />
               </>

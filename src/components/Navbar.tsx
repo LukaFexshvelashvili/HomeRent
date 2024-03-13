@@ -12,7 +12,11 @@ import {
 } from "../assets/icons/Icons";
 import georgianFlag from "../assets/images/languages/georgia.png";
 import englishFlag from "../assets/images/languages/english.png";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 export default function Navbar() {
+  const userData = useSelector((store: RootState) => store.user);
+
   const [activePop, setActivePop] = useState<null | string>(null);
   const [activeLang, setActiveLang] = useState<boolean>(false);
   const [langImg, setLangImg] = useState<string>(georgianFlag);
@@ -22,7 +26,7 @@ export default function Navbar() {
       <div className="content_container flex justify-between">
         <div className="flex items-center gap-3">
           <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
-          <div className="h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
+          <div className=" mobile:hidden h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
           <div className="relative h-[36px] aspect-square flex items-center justify-center">
             <button
               onClick={() => setActiveLang((state) => !state)}
@@ -70,7 +74,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="mobile:hidden flex items-center gap-4">
           <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-orangeClear text-orangeI rounded-[8px] text-[12px] transition-colors hover:bg-orangeHover">
             <HelpIcon className="h-[16px] aspect-square" />
             დახმარება
@@ -178,8 +182,65 @@ export default function Navbar() {
             </div>
           </div>
         </div>
+        <div className="hidden mobile:block">
+          <ResponsiveNavbar userData={userData} />
+        </div>
       </div>
     </nav>
+  );
+}
+
+function ResponsiveNavbar(props: { userData: any }) {
+  const [active, setActive] = useState<boolean>(false);
+  return (
+    <>
+      <button
+        onClick={() => setActive((state: boolean) => !state)}
+        className={` h-[45px] translate relative aspect-square gap-[7px] justify-center p-[10px] flex flex-col z-[31] transition-colors rounded-lg ${
+          active ? " bg-whiteBgLow" : "bg-transparent"
+        } `}
+      >
+        <span
+          className={`transition-transform block h-[2px] rounded-md w-full bg-blackMain ${
+            active && " rotate-45 translate-y-[9px]"
+          }  `}
+        ></span>
+        <span
+          className={`transition-transform  block h-[2px] rounded-md w-8/12 bg-blackMain ${
+            active && " scale-x-0"
+          }  `}
+        ></span>
+        <span
+          className={`transition-transform  block h-[2px] rounded-md w-4/12 bg-blackMain ${
+            active && " -rotate-45 -translate-y-[9px] w-full"
+          }  `}
+        ></span>
+      </button>
+      <div
+        className={`z-30 fixed h-full w-full bg-whiteMain top-0 left-0 transition-transform duration-300 ${
+          active ? "translate-x-0" : "translate-x-full"
+        }  `}
+      >
+        <div className="content_container flex justify-between pt-[80px]  flex-col ">
+          <div className="flex gap-2 items-center justify-center">
+            <div className="">
+              <div className="h-[48px]  aspect-square rounded-circle bg-main p-[3px] flex justify-center items-center relative">
+                <div className="h-full border-[3px] border-whiteMain aspect-square rounded-circle bg-main select-none cursor-pointer "></div>
+              </div>
+            </div>
+            <div className="ml-2">
+              <p className=" font-mainBold text-textHeadCard leading-[26px] text-[17px]">
+                {props.userData.name}
+              </p>
+              <p className=" font-mainBold text-textDescCard leading-[26px] text-[16px]">
+                {props.userData.lastname}
+              </p>
+            </div>
+          </div>
+          <div className="bg-lineBg h-[5px] rounded-md w-[50px] mx-auto my-6"></div>
+        </div>
+      </div>
+    </>
   );
 }
 

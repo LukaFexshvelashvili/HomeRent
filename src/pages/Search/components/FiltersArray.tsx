@@ -6,7 +6,11 @@ import {
   PlotIcon,
 } from "../../../assets/icons/Icons";
 
-export const RealEstateTypes = [
+export type TRealEstateTypes = {
+  icon: (props: any) => JSX.Element;
+  name: string;
+};
+export const RealEstateTypes: TRealEstateTypes[] = [
   { icon: (props: any) => <HomeIcon {...props} />, name: "კერძო სახლი" },
   { icon: (props: any) => <ApartmentIcon {...props} />, name: "კორპუსის ბინა" },
   {

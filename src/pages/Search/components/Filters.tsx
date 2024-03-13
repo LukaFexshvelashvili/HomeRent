@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
 import ReactSlider from "react-slider";
-import { RealEstateTypes } from "./FiltersArray";
+import { RealEstateTypes, TRealEstateTypes } from "./FiltersArray";
 import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { updateParams } from "../../../hooks/routerHooks";
 
-export function SelectNumbers(props: { name?: string; setData?: Function }) {
+export function SelectNumbers(props: {
+  name?: string;
+  setData?: Function;
+  setDataDispatch?: Function;
+}) {
   const dispatch = useDispatch();
   const [active, setActive] = useState(0);
   const Length = [0, 1, 2, 3, 4, 5, 6, 7, 7];
   useEffect(() => {
-    if (props.setData) {
-      dispatch(props.setData(active));
+    if (props.setDataDispatch) {
+      dispatch(props.setDataDispatch(active));
     }
   }, [active]);
 
   return (
     <div className="flex flex-col items-center">
       {props.name && (
-        <p className=" text-textHead tracking-wider font-mainBold  mt-4">
+        <p className=" text-textHead tracking-wider font-mainBold  mb-4">
           {props.name}
         </p>
       )}
@@ -39,6 +45,19 @@ export function SelectNumbers(props: { name?: string; setData?: Function }) {
 
 export function SelectType(props: { getData?: Function }) {
   const [active, setActive] = useState(0);
+
+  const [params, setParams] = useSearchParams();
+
+  useEffect(() => {
+    const searchType = params.get("type");
+    if (searchType) {
+      const activeId = RealEstateTypes.findIndex(
+        (item: TRealEstateTypes) => item.name == searchType
+      );
+      setActive(activeId);
+    }
+  }, []);
+
   return (
     <div className="flex flex-col items-center">
       <p className=" text-textHead tracking-wider font-mainBold ">ტიპი</p>
@@ -46,7 +65,10 @@ export function SelectType(props: { getData?: Function }) {
         {RealEstateTypes.map((e, i) => (
           <button
             key={i}
-            onClick={() => setActive(i)}
+            onClick={() => {
+              setActive(i);
+              updateParams(params, setParams, { type: e.name });
+            }}
             className={`  p-2 px-4 rounded-xl transition-colors ${
               active == i ? "bg-main" : "bg-mainClear"
             }`}
@@ -71,6 +93,20 @@ export function SelectType(props: { getData?: Function }) {
 }
 
 export function PriceSlider(props: { setData?: Function }) {
+  const [params, setParams] = useSearchParams();
+
+  useEffect(() => {
+    const searchPrices = params.get("prices");
+    if (searchPrices) {
+      const getSearchPrices = JSON.parse(searchPrices);
+      setPrices([getSearchPrices.start, getSearchPrices.end]);
+      setPricesPercentages([
+        getSearchPrices.start / (priceDistance[1] / 100),
+        getSearchPrices.end / (priceDistance[1] / 100),
+      ]);
+    }
+  }, []);
+
   const [PricesPercentages, setPricesPercentages] = useState<number[]>([
     0, 100,
   ]);
@@ -82,6 +118,14 @@ export function PriceSlider(props: { setData?: Function }) {
       Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
       Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
     ]);
+    updateParams(params, setParams, {
+      prices: JSON.stringify({
+        start: Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
+        end: Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
+        currency: 0,
+      }),
+    });
+
     if (props.setData) {
       props.setData([Prices[0], Prices[1]]);
     }
@@ -192,6 +236,20 @@ export function PriceSlider(props: { setData?: Function }) {
   );
 }
 export function SizeSlider(props: { setData?: Function }) {
+  const [params, setParams] = useSearchParams();
+
+  useEffect(() => {
+    const searchSizes = params.get("sizes");
+
+    if (searchSizes) {
+      const getSearchSizes = JSON.parse(searchSizes);
+      setPrices([getSearchSizes[0], getSearchSizes[1]]);
+      setPricesPercentages([
+        getSearchSizes[0] / (priceDistance[1] / 100),
+        getSearchSizes[1] / (priceDistance[1] / 100),
+      ]);
+    }
+  }, []);
   const [PricesPercentages, setPricesPercentages] = useState<number[]>([
     0, 100,
   ]);
@@ -203,6 +261,12 @@ export function SizeSlider(props: { setData?: Function }) {
       Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
       Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
     ]);
+    updateParams(params, setParams, {
+      sizes: JSON.stringify([
+        Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
+        Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
+      ]),
+    });
     if (props.setData) {
       props.setData([Prices[0], Prices[1]]);
     }

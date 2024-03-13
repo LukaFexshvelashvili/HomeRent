@@ -616,19 +616,19 @@ export function EstateInformation(props: { error: boolean }) {
 
           <div className="flex items-center">
             <p className="text-textDesc font-mainMedium w-[200px]">ოთახები</p>
-            <SelectNumbers setData={updateRooms} name="" />
+            <SelectNumbers setDataDispatch={updateRooms} name="" />
           </div>
           <div className="flex items-center">
             <p className="text-textDesc font-mainMedium w-[200px]">
               საძინებელი
             </p>
-            <SelectNumbers setData={updateBedrooms} name="" />
+            <SelectNumbers setDataDispatch={updateBedrooms} name="" />
           </div>
           <div className="flex items-center">
             <p className="text-textDesc font-mainMedium w-[200px]">
               სველი წერტილი
             </p>
-            <SelectNumbers setData={updateBathrooms} name="" />
+            <SelectNumbers setDataDispatch={updateBathrooms} name="" />
           </div>
         </div>
       </div>
@@ -642,7 +642,7 @@ export function EstateInformation(props: { error: boolean }) {
                   onClick={() => setOpenDeal((state) => !state)}
                   className="bg-main flex items-center w-[150px] justify-center py-[8px] rounded-lg text-whiteMain tracking-widest font-mainMedium text-Asmall"
                 >
-                  {currency == 0 ?  "$ დოლარი" : "₾ ლარი"}
+                  {currency == 0 ? "$ დოლარი" : "₾ ლარი"}
                   <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
                 </button>
                 <div
@@ -665,7 +665,6 @@ export function EstateInformation(props: { error: boolean }) {
                     onClick={() => {
                       setOpenDeal(false);
                       setCurrency(0);
-                      
                     }}
                     className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
                       currency == 0 && "bg-whiteHover"

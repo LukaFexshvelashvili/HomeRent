@@ -16,6 +16,7 @@ export default {
         whiteMain: "#FFFFFF",
         navIcon: "#4B4B4B",
         lineBg: "#f4f4f4",
+        blackMain: "rgba(0, 0, 0, 0.8)",
 
         LoginInput: "rgba(236, 236, 236, 0.5)",
         LoginInputActive: "rgba(236, 236, 236, 0.9)",
@@ -25,6 +26,8 @@ export default {
 
         whiteLoad: "#ECECEC",
         whiteHover: "#f9f9f9",
+
+        whiteBgLow: "#f7f7f7",
 
         buttonBgFirst: "#3A86FF",
         buttonBgLast: "#6DA5FF",
@@ -143,6 +146,12 @@ export default {
         Anormal: "18px",
         Abig: "22px",
       },
+    },
+    screens: {
+      medium: { max: "1330px" },
+      mediumSmall: { max: "1200px" },
+      small: { max: "1000px" },
+      mobile: { max: "800px" },
     },
   },
   plugins: [],
