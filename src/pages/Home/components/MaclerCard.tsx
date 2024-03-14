@@ -7,7 +7,7 @@ export default function MaclerCard() {
         <img
           src={BlueHouseDecoration}
           alt="blue house decoraion"
-          className="max-h-[520px] max-w-[560px] mediumSmall:max-w-[360px]"
+          className="w-[100%] max-h-[520px] max-w-[560px] mediumSmall:max-w-[360px]"
         />
       </div>
       <div className="flex-1  pl-[80px] small:w-full small:pl-0 small:flex small:flex-col small:items-center">

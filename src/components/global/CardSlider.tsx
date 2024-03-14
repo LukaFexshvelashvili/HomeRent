@@ -54,23 +54,51 @@ function CardSlider(props: { uniqueId?: string | number }) {
             },
             700: {
               spaceBetween: 10,
-              slidesPerView: 2.4,
+              slidesPerView: 2.2,
             },
-            600: {
+            650: {
               spaceBetween: 10,
               slidesPerView: 2.2,
             },
-            500: {
+            560: {
               spaceBetween: 10,
               slidesPerView: 2,
             },
-            400: {
+            510: {
               spaceBetween: 10,
               slidesPerView: 1.8,
             },
-            300: {
+            480: {
+              spaceBetween: 10,
+              slidesPerView: 1.7,
+            },
+            450: {
               spaceBetween: 10,
               slidesPerView: 1.6,
+            },
+            420: {
+              spaceBetween: 10,
+              slidesPerView: 1.5,
+            },
+            400: {
+              spaceBetween: 10,
+              slidesPerView: 1.4,
+            },
+            370: {
+              spaceBetween: 10,
+              slidesPerView: 1.3,
+            },
+            340: {
+              spaceBetween: 10,
+              slidesPerView: 1.2,
+            },
+            310: {
+              spaceBetween: 8,
+              slidesPerView: 1.1,
+            },
+            9: {
+              spaceBetween: 8,
+              slidesPerView: 1,
             },
           },
         }
@@ -119,13 +147,13 @@ function CardSlider(props: { uniqueId?: string | number }) {
       </div>
       <button
         onClick={() => swiperInstance.slidePrev()}
-        className="h-14 aspect-square rounded-circle bg-whiteMain p-[18px] absolute z-[1] left-0 -translate-x-2/4 shadow-slideNavShadow transition-colors hover:bg-whiteHover"
+        className="h-14 mobile:hidden aspect-square rounded-circle bg-whiteMain p-[18px] absolute z-[1] left-0 -translate-x-2/4 shadow-slideNavShadow transition-colors hover:bg-whiteHover"
       >
         <LeftArrowIcon className="h-full aspect-square" />{" "}
       </button>{" "}
       <button
         onClick={() => swiperInstance.slideNext()}
-        className="h-14 aspect-square rounded-circle bg-whiteMain p-[18px] absolute z-[1] right-0 translate-x-2/4 shadow-slideNavShadow transition-colors hover:bg-whiteHover"
+        className="h-14 mobile:hidden aspect-square rounded-circle bg-whiteMain p-[18px] absolute z-[1] right-0 translate-x-2/4 shadow-slideNavShadow transition-colors hover:bg-whiteHover"
       >
         <LeftArrowIcon className="h-full aspect-square rotate-180" />{" "}
       </button>

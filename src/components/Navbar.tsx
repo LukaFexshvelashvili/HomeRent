@@ -7,6 +7,7 @@ import {
   MessageIcon,
   MoonIcon,
   NotificationIcon,
+  NotificationResponsiveIcon,
   PlusIcon,
   UserLinearIcon,
 } from "../assets/icons/Icons";
@@ -14,6 +15,8 @@ import georgianFlag from "../assets/images/languages/georgia.png";
 import englishFlag from "../assets/images/languages/english.png";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { Link } from "react-router-dom";
+import { RealEstateTypes } from "../pages/Search/components/FiltersArray";
 export default function Navbar() {
   const userData = useSelector((store: RootState) => store.user);
 
@@ -25,8 +28,10 @@ export default function Navbar() {
     <nav className="h-[60px] w-full sticky bg-navBg shadow-navbarShadow flex items-center top-0 z-10">
       <div className="content_container flex justify-between">
         <div className="flex items-center gap-3">
-          <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
-          <div className=" mobile:hidden h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
+          <Link to="/./" className="flex items-center gap-3">
+            <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
+            <div className=" mobile:hidden h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
+          </Link>
           <div className="relative h-[36px] aspect-square flex items-center justify-center">
             <button
               onClick={() => setActiveLang((state) => !state)}
@@ -217,7 +222,7 @@ function ResponsiveNavbar(props: { userData: any }) {
         ></span>
       </button>
       <div
-        className={`z-30 fixed h-full w-full bg-whiteMain top-0 left-0 transition-transform duration-300 ${
+        className={`z-30 fixed h-full w-full bg-whiteMain top-0 left-0 transition-transform duration-300 ResponsiveNavbar pb-5 overflow-auto  ${
           active ? "translate-x-0" : "translate-x-full"
         }  `}
       >
@@ -238,6 +243,51 @@ function ResponsiveNavbar(props: { userData: any }) {
             </div>
           </div>
           <div className="bg-lineBg h-[5px] rounded-md w-[50px] mx-auto my-6"></div>
+          <div className="flex flex-col gap-1">
+            {profileResponsiveButtons.map((e: TProfileButton, i: number) => (
+              <Link key={i} onClick={() => setActive(false)} to={e.link}>
+                <button
+                  key={i}
+                  className={` outline-none cursor-pointer transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
+                >
+                  {e.icon} {e.name}
+                </button>
+              </Link>
+            ))}
+          </div>
+          <div className=" flex items-center justify-center mt-8 gap-4">
+            <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-orangeClear text-orangeI rounded-[8px] text-[14px] transition-colors hover:bg-orangeHover">
+              <HelpIcon className="h-[18px] aspect-square" />
+              დახმარება
+            </button>
+            <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-greenClear text-greenI rounded-[8px] text-[14px] transition-colors hover:bg-greenHover">
+              <PlusIcon className="h-[16px] aspect-square" />
+              დამატება
+            </button>
+          </div>
+          <div className="bg-lineBg h-[5px] rounded-md w-[50px] mx-auto mb-5 mt-7"></div>
+
+          <p className="text-center  text-textDesc tracking-wider text-[16px]">
+            კატეგორიები
+          </p>
+          <div className="flex gap-3 flex-wrap justify-center mt-5">
+            {RealEstateTypes.map(
+              (
+                e: { icon: (props: any) => JSX.Element; name: string },
+                i: number
+              ) => (
+                <button
+                  key={i}
+                  className={`  p-2 px-4 rounded-xl transition-colors bg-mainClear`}
+                >
+                  <e.icon className={` h-[24px] aspect-square  `} />
+                  <p className={`text-Asmall ml-7 tracking-wide text-main`}>
+                    {e.name}
+                  </p>
+                </button>
+              )
+            )}
+          </div>
         </div>
       </div>
     </>
@@ -247,31 +297,80 @@ function ResponsiveNavbar(props: { userData: any }) {
 type TProfileButton = {
   name: string;
   icon: JSX.Element;
+  link: string;
 };
-const profileButtons = [
+const profileResponsiveButtons: TProfileButton[] = [
   {
+    link: "/Profile",
+    name: "ჩემი პროფილი",
+    icon: (
+      <UserLinearIcon className=" h-[30px] aspect-square fill-textHead mr-3" />
+    ),
+  },
+  {
+    link: "/Profile/MyProducts",
+    name: "ჩემი განცხადებები",
+    icon: (
+      <DocumentsIcon className=" h-[30px] aspect-square stroke-textHead mr-3" />
+    ),
+  },
+  {
+    link: "/",
+    name: "შავი თემა",
+    icon: <MoonIcon className=" h-[30px] aspect-square fill-textHead mr-3" />,
+  },
+  {
+    link: "/Contact",
+    name: "კონტაქტი",
+    icon: (
+      <MessageIcon className=" h-[30px] aspect-square stroke-textHead mr-3" />
+    ),
+  },
+  {
+    link: "/Notifications",
+    name: "შეტყობინებები",
+    icon: (
+      <NotificationResponsiveIcon className=" h-[30px] flex items-center justify-center stroke-textHead mr-3" />
+    ),
+  },
+  {
+    link: "/Logout",
+    name: "გასვლა",
+    icon: (
+      <LogoutIcon className=" h-[30px] aspect-square stroke-textHead mr-3" />
+    ),
+  },
+];
+
+const profileButtons: TProfileButton[] = [
+  {
+    link: "",
     name: "ჩემი პროფილი",
     icon: (
       <UserLinearIcon className=" h-[20px] aspect-square fill-textHead mr-2" />
     ),
   },
   {
+    link: "",
     name: "ჩემი განცხადებები",
     icon: (
       <DocumentsIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
     ),
   },
   {
+    link: "",
     name: "შავი თემა",
     icon: <MoonIcon className=" h-[20px] aspect-square fill-textHead mr-2" />,
   },
   {
+    link: "",
     name: "კონტაქტი",
     icon: (
       <MessageIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
     ),
   },
   {
+    link: "",
     name: "გასვლა",
     icon: (
       <LogoutIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />

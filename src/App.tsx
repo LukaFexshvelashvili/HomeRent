@@ -24,7 +24,7 @@ function App() {
           <Route path="/Search" element={<Search />} />
           <Route path="/Product" element={<Product />} />
           <Route path="/AddProduct" element={<AddProduct />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/Profile/*" element={<Profile />} />
           <Route path="/MaclerService" element={<MaclerService />} />
           <Route path="/MaclerChoose" element={<MaclerChoose />} />
           <Route path="/Maclerconditions" element={<Maclerconditions />} />
