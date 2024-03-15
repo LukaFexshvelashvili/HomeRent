@@ -1,5 +1,5 @@
 import productImage from "../../assets/images/estates/2.jpeg";
-import { LoginEyeIcon, PopupCloseIcon } from "../../assets/icons/Icons";
+import { LoginEyeIcon } from "../../assets/icons/Icons";
 import { useState } from "react";
 
 export default function MaclerChoose() {

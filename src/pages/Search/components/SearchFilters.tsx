@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { cities } from "../../../assets/lists/cities";
 import {
   updateAddress,

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cities } from "../../../assets/lists/cities";
 import { updateCity } from "../../../store/data/addProductSlice";
@@ -37,15 +37,30 @@ export function SearchAddressFilter() {
     return null;
   }
   const activeCityCode: number = useMemo(() => {
-    cities.subLocs.filter((item) => item.name.ka == getActiveCity)[0].osm_id;
+    return cities.subLocs.filter((item) => item.name.ka == getActiveCity)[0]
+      .osm_id;
+  }, []);
+  const citiesAPI = subLocs.subLocs.map((item) => {
+    if (parseInt(item.parent_osm_id) == activeCityCode) return item.name.ka;
+  });
 
-    const citiesAPI = subLocs.subLocs.map((item) => {
-      if (parseInt(item.parent_osm_id) == activeCityCode) return item.name.ka;
-    });
-
-    const fetchSearch = () => {
-      if (search == "") {
-        return citiesAPI.map((e: any, i: number) => (
+  const fetchSearch = () => {
+    if (search == "") {
+      return citiesAPI.map((e: any, i: number) => (
+        <button
+          key={i}
+          onClick={() => setActive(e)}
+          className={`w-full h-auto py-2 text-start px-5 text-Asmall transition-colors hover:bg-mainClear ${
+            active == e ? "text-main" : "text-textHead"
+          }`}
+        >
+          {e}
+        </button>
+      ));
+    } else {
+      return citiesAPI
+        .filter((item: any) => item.includes(search))
+        .map((e: any, i: number) => (
           <button
             key={i}
             onClick={() => setActive(e)}
@@ -56,42 +71,27 @@ export function SearchAddressFilter() {
             {e}
           </button>
         ));
-      } else {
-        return citiesAPI
-          .filter((item: any) => item.includes(search))
-          .map((e: any, i: number) => (
-            <button
-              key={i}
-              onClick={() => setActive(e)}
-              className={`w-full h-auto py-2 text-start px-5 text-Asmall transition-colors hover:bg-mainClear ${
-                active == e ? "text-main" : "text-textHead"
-              }`}
-            >
-              {e}
-            </button>
-          ));
-      }
-    };
-    return (
-      <div className="relative">
-        <input
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
-          onFocus={() => setSearchWindow(true)}
-          type="text"
-          className="AddProductInput"
-          placeholder="ქუჩა"
-          ref={getInput}
-        />
+    }
+  };
+  return (
+    <div className="relative">
+      <input
+        onChange={(e) => setSearch(e.target.value)}
+        value={search}
+        onFocus={() => setSearchWindow(true)}
+        type="text"
+        className="AddProductInput"
+        placeholder="ქუჩა"
+        ref={getInput}
+      />
 
-        {searchWindow && (
-          <div className="absolute h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden">
-            <div className="flex flex-col h-full overflow-y-scroll">
-              {fetchSearch()}
-            </div>
+      {searchWindow && (
+        <div className="absolute h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden">
+          <div className="flex flex-col h-full overflow-y-scroll">
+            {fetchSearch()}
           </div>
-        )}
-      </div>
-    );
-  });
+        </div>
+      )}
+    </div>
+  );
 }

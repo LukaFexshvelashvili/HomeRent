@@ -4,12 +4,12 @@ import imageExample3 from "../../../assets/images/estates/4.jpg";
 
 export default function ChooseSection() {
   return (
-    <section className="my-[70px]">
-      <div className="flex gap-4 w-full [&>div]:rounded-section [&>div>div]:rounded-section">
-        <div className="flex flex-[2] flex-wrap gap-4 [&>div]:h-[270px]">
-          <div className="flex w-full bg-whiteLoad overflow-hidden cursor-pointer group relative">
+    <section className="my-[70px] mobile:my-[50px]">
+      <div className="flex gap-4 mobile:gap-2 w-full [&>div]:rounded-section [&>div>div]:rounded-section  mobile:flex-col mobile:items-stretch">
+        <div className="flex flex-[2] flex-wrap gap-4 mobile:gap-2 [&>div]:h-[270px] mobile:flex-col mobile:items-stretch">
+          <div className="flex w-full bg-whiteLoad mobile:flex-1 mobile:aspect-video overflow-hidden cursor-pointer group relative">
             <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] z-[3] ">
+            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] mobile:text-[14px] z-[3] ">
               კერძო სახლები
             </div>
             <img
@@ -18,9 +18,9 @@ export default function ChooseSection() {
               alt="Real estate image"
             />
           </div>
-          <div className="flex flex-1 bg-whiteLoad overflow-hidden cursor-pointer group relative">
+          <div className="flex flex-1 mobile:w-full  mobile:aspect-video bg-whiteLoad overflow-hidden cursor-pointer group relative">
             <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] z-[3] ">
+            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] mobile:text-[14px] z-[3] ">
               იყიდება ბინები
             </div>
             <img
@@ -29,9 +29,9 @@ export default function ChooseSection() {
               alt="Real estate image"
             />
           </div>
-          <div className="flex flex-1 bg-whiteLoad overflow-hidden cursor-pointer group relative">
+          <div className="flex flex-1 mobile:w-full  mobile:aspect-video bg-whiteLoad overflow-hidden cursor-pointer group relative">
             <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] z-[3] ">
+            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] mobile:text-[14px] z-[3] ">
               ქირავდება ბინები
             </div>
             <img
@@ -41,9 +41,9 @@ export default function ChooseSection() {
             />
           </div>
         </div>
-        <div className="flex flex-1 bg-whiteLoad overflow-hidden cursor-pointer group relative">
+        <div className="flex flex-1 bg-whiteLoad overflow-hidden cursor-pointer group relative mobile:aspect-video">
           <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-          <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] z-[3] ">
+          <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] mobile:text-[14px] z-[3] ">
             სასტუმროები
           </div>
           <img
@@ -53,9 +53,9 @@ export default function ChooseSection() {
           />
         </div>
       </div>
-      <div className="h-[270px] mt-4 bg-whiteLoad overflow-hidden cursor-pointer group rounded-section relative">
+      <div className=" mobile:aspect-video w-full mt-4 mobile:mt-2 bg-whiteLoad overflow-hidden cursor-pointer group rounded-section relative">
         <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-        <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] z-[3] ">
+        <div className="absolute bottom-3 left-4 text-WhiteFade tracking-widest font-mainRegular text-[15px] mobile:text-[14px] z-[3] ">
           მიწის ნაკვეთები
         </div>
         <img

@@ -7,36 +7,36 @@ export default function MaclerCard() {
         <img
           src={BlueHouseDecoration}
           alt="blue house decoraion"
-          className="w-[100%] max-h-[520px] max-w-[560px] mediumSmall:max-w-[360px]"
+          className="w-[100%] mobileSmall:w-[90%] max-h-[520px] max-w-[560px] mediumSmall:max-w-[360px]"
         />
       </div>
       <div className="flex-1  pl-[80px] small:w-full small:pl-0 small:flex small:flex-col small:items-center">
-        <h2 className="small:text-center text-[24px] font-mainBold text-main mb-5">
+        <h2 className="small:text-center text-[24px] mobileSmall:text-[22px] font-mainBold text-main mb-5">
           მაკლერის სერვისი
         </h2>
-        <p className="small:text-center text-textDesc text-[16px] tracking-wider max-w-[600px]">
+        <p className="small:text-center text-textDesc text-[16px] mobileSmall:text-[15px] tracking-wider max-w-[600px]">
           სერვისში გთავაზობთ დახმარებას თქვენი უძრავი ქონების გაყიდვა/გაქირავება
           -ში
         </p>
-        <div className="flex flex-col gap-3 my-5">
-          <div className="flex items-center text-textDesc gap-3 small:justify-center">
-            <div className="h-[14px] aspect-square rounded-circle border-2 border-main"></div>{" "}
+        <div className="flex flex-col gap-3 my-5 mobileSmall:items-start">
+          <div className="flex items-center  text-textDesc gap-3 small:justify-center mobileSmall:text-[15px]">
+            <div className="h-[14px] aspect-square rounded-circle border-2  border-main"></div>{" "}
             სოციალურ მედიაში განთავსება
           </div>
-          <div className="flex items-center text-textDesc gap-3 small:justify-center">
-            <div className="h-[14px] aspect-square rounded-circle border-2 border-main"></div>{" "}
+          <div className="flex items-center text-textDesc gap-3 small:justify-center mobileSmall:text-[15px]">
+            <div className="h-[14px] aspect-square rounded-circle border-2  border-main"></div>{" "}
             პრიორიტეტული გამოჩენა (საიტზე)
           </div>
-          <div className="flex items-center text-textDesc gap-3 small:justify-center">
-            <div className="h-[14px] aspect-square rounded-circle border-2 border-main"></div>{" "}
+          <div className="flex items-center text-textDesc gap-3 small:justify-center mobileSmall:text-[15px]">
+            <div className="h-[14px] aspect-square rounded-circle border-2  border-main"></div>{" "}
             კლიენტებთან მოლაპარაკება
           </div>
-          <div className="flex items-center text-textDesc gap-3 small:justify-center">
-            <div className="h-[14px] aspect-square rounded-circle border-2 border-main"></div>{" "}
+          <div className="flex items-center text-textDesc gap-3 small:justify-center mobileSmall:text-[15px]">
+            <div className="h-[14px] aspect-square rounded-circle border-2  border-main"></div>{" "}
             სწრაფი მომსახურება
           </div>
         </div>
-        <button className="small:mx-auto block mt-3 bg-main rounded-[5px] w-[190px] h-[40px] text-whiteMain text-[15px] tracking-widest transition-colors hover:bg-mainHover">
+        <button className="small:mx-auto block mt-3 bg-main rounded-[5px] w-[190px] h-[40px] mobileSmall:h-[36px] mobileSmall:w-[160px] mobileSmall:text-[14px] text-whiteMain text-[15px] tracking-widest transition-colors hover:bg-mainHover">
           სრულად
         </button>
       </div>

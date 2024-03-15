@@ -160,4 +160,4 @@ function CardSlider(props: { uniqueId?: string | number }) {
     </div>
   );
 }
-export default CardSlider;
+export default memo(CardSlider);

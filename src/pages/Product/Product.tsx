@@ -10,11 +10,11 @@ import ProductSideBar from "./components/ProductSideBar";
 export default function Product() {
   return (
     <main className="min-h-screen">
-      <section className="flex gap-[36px]">
+      <section className="medium:flex-col flex gap-[36px]">
         <ImageSlider />
         <ProductSideBar />
       </section>
-      <section className="flex gap-[36px] mt-6 ">
+      <section className="flex gap-[36px] mt-6  small:flex-col">
         <div className="flex-[2] flex flex-col gap-3">
           <div className=" rounded-block bg-whiteMain p-4">
             <p className=" text-[15px] font-mainBold text-textHeadCard">
@@ -43,7 +43,7 @@ export default function Product() {
             <p className=" text-[15px] font-mainBold text-textHeadCard">
               დამატებითი ინფორმაცია
             </p>
-            <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[150px] my-[25px] pl-5">
+            <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[150px] my-[25px] pl-5 medium:max-h-none medium:flex-row ">
               {productAddonsList.map((item: TProductAddon, i: number) => (
                 <div key={i} className="flex items-center  ">
                   {item.icon("h-[20px]")}{" "}
@@ -53,8 +53,8 @@ export default function Product() {
             </div>
           </div>
         </div>
-        <div className="flex-1 flex flex-col gap-3">
-          <div className="w-full aspect-[2/1] rounded-block bg-whiteLoad relative">
+        <div className="flex-1 flex flex-col gap-3  small:flex-col-reverse">
+          <div className="w-full  aspect-[2/1] small:h-[200px] rounded-block bg-whiteLoad relative">
             <div className="bg-mainClear text-main px-5 py-1 rounded-md text-Asmall absolute top-3 right-3 cursor-pointer">
               განათავსე რეკლამა
             </div>
@@ -63,10 +63,10 @@ export default function Product() {
             <p className=" text-[15px] font-mainBold text-textHeadCard">
               ახლოს მდებარეობს
             </p>
-            <div className="flex gap-3 flex-wrap mt-5">
+            <div className="flex gap-3 flex-wrap mt-5 mobile:justify-center">
               {closePlacesList.map((item: TClosePlace, i: number) => (
                 <div
-                  className="h-[35px] px-4 flex items-center rounded-md"
+                  className="h-[35px] px-4 flex items-center rounded-md "
                   style={{ backgroundColor: item.bgColor }}
                   key={i}
                 >

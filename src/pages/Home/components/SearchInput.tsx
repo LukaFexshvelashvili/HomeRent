@@ -5,6 +5,7 @@ import {
   FilterPlaceIcon,
   MoneyIcon,
   PopupCloseIcon,
+  SearchIcon,
 } from "../../../assets/icons/Icons";
 import { RealEstateTypes } from "../../Search/components/FiltersArray";
 import { cities } from "../../../assets/lists/cities";
@@ -36,8 +37,8 @@ export default function SearchInput() {
   };
   return (
     <div className="w-10/12 mediumSmall:w-full small:w-auto small:h-auto h-[45px]  my-10 mx-auto ">
-      <div className="relative  rounded-normal flex  small:flex-col   items-center h-full w-full border-2 border-whiteLoad">
-        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
+      <div className="relative  rounded-normal flex  small:flex-col   items-center h-full w-full border-2 border-whiteLoad overflow-hidden">
+        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(1)}
             className="flex h-full items-center gap-3  px-6 "
@@ -56,7 +57,7 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
+        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(2)}
             className="flex h-full items-center gap-3  px-6 "
@@ -75,7 +76,7 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
+        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(3)}
             className="flex h-full items-center gap-3  px-6 "
@@ -94,7 +95,7 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex small:border-none  items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteLoad relative">
+        <div className="flex small:border-none  items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(4)}
             className="flex h-full items-center gap-3  px-6 "
@@ -119,7 +120,7 @@ export default function SearchInput() {
         </div>
         <button
           onClick={handleSearch}
-          className="h-full w-[20%] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-r-normal text-whiteMain bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
+          className="small:hidden h-full w-[20%] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-r-[6px] text-whiteMain bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
         >
           მოძებნა
         </button>
@@ -169,6 +170,12 @@ export default function SearchInput() {
           </div>
         )}
       </div>
+      <button
+        onClick={handleSearch}
+        className="hidden h-full  text-[14px] w-full py-3 mt-2 rounded-normal font-mainMedium rounded-r-[6px] text-whiteMain bg-main small:flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
+      >
+        <SearchIcon className="h-[16px] aspect-square mr-2" /> მოძებნა
+      </button>
       {inputSelect && (
         <div
           onClick={() => setInputSelect(null)}

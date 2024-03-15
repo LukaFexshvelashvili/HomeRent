@@ -43,7 +43,7 @@ export function SelectNumbers(props: {
   );
 }
 
-export function SelectType(props: { getData?: Function }) {
+export function SelectType() {
   const [active, setActive] = useState(0);
 
   const [params, setParams] = useSearchParams();

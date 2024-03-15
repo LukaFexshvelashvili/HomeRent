@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { LockIcon, MailIcon } from "../../assets/icons/Icons";
+// import { useState } from "react";
+import { LockIcon } from "../../assets/icons/Icons";
 import { HomesbgDecor } from "../../assets/images/decorations/svg/Decorations";
 import SideSection from "./components/SideSection";
 
 export default function ForgotPassword() {
-  const [codeSended, setCodeSended] = useState(false);
+  // const [codeSended, setCodeSended] = useState(false);
   return (
     <>
       <main className="m-0 p-0">

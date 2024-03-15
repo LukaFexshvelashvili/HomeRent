@@ -54,3 +54,10 @@
     padding-right: 15px;
   }
 }
+
+@media (max-width: 600px) {
+  .swiper-pagination {
+    @apply text-end px-3 h-[24px];
+    --swiper-pagination-top: 5px;
+  }
+}

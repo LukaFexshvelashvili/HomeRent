@@ -28,7 +28,7 @@ export default function Navbar() {
     <nav className="h-[60px] w-full sticky bg-navBg shadow-navbarShadow flex items-center top-0 z-10">
       <div className="content_container flex justify-between">
         <div className="flex items-center gap-3">
-          <Link to="/./" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
             <div className=" mobile:hidden h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
           </Link>
@@ -201,13 +201,13 @@ function ResponsiveNavbar(props: { userData: any }) {
     <>
       <button
         onClick={() => setActive((state: boolean) => !state)}
-        className={` h-[45px] translate relative aspect-square gap-[7px] justify-center p-[10px] flex flex-col z-[31] transition-colors rounded-lg ${
+        className={` h-[45px] translate relative aspect-square gap-[6px] justify-center p-[10px] flex flex-col z-[31] transition-colors rounded-lg ${
           active ? " bg-whiteBgLow" : "bg-transparent"
         } `}
       >
         <span
           className={`transition-transform block h-[2px] rounded-md w-full bg-blackMain ${
-            active && " rotate-45 translate-y-[9px]"
+            active && " rotate-45 translate-y-[8px]"
           }  `}
         ></span>
         <span
@@ -217,7 +217,7 @@ function ResponsiveNavbar(props: { userData: any }) {
         ></span>
         <span
           className={`transition-transform  block h-[2px] rounded-md w-4/12 bg-blackMain ${
-            active && " -rotate-45 -translate-y-[9px] w-full"
+            active && " -rotate-45 -translate-y-[8px] w-full"
           }  `}
         ></span>
       </button>

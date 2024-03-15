@@ -27,6 +27,8 @@ export default {
         whiteLoad: "#ECECEC",
         whiteHover: "#f9f9f9",
 
+        whiteHoverDark: "#f5f5f5",
+
         whiteBgLow: "#f7f7f7",
 
         buttonBgFirst: "#3A86FF",
@@ -152,6 +154,7 @@ export default {
       mediumSmall: { max: "1200px" },
       small: { max: "1000px" },
       mobile: { max: "800px" },
+      mobileSmall: { max: "440px" },
     },
   },
   plugins: [],

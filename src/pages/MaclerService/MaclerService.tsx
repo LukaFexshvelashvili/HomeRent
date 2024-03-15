@@ -90,7 +90,7 @@ export default function MaclerService() {
         </p>
         <div className="flex justify-center gap-10 items-center mt-7 mb-3">
           {services.map((e: Tservice, i: number) => (
-            <div className="flex items-center gap-3">
+            <div key={i} className="flex items-center gap-3">
               {e.icon}{" "}
               <p className="text-[15px]" style={{ color: e.color }}>
                 {e.title}

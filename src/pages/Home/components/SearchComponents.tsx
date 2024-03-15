@@ -16,9 +16,6 @@ export function InputSizeSlider(props: {
       Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
       Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
     ]);
-    if (props.setData) {
-      props.setData([Prices[0], Prices[1]]);
-    }
   }, [PricesPercentages]);
   return (
     <div className="flex flex-col items-center relative w-10/12 mx-auto">

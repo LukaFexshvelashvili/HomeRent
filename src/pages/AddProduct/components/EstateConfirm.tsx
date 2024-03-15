@@ -9,7 +9,7 @@ import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import numeral from "numeral";
-import { setError, updateVip } from "../../../store/data/addProductSlice";
+import { updateVip } from "../../../store/data/addProductSlice";
 import DaysDropdown from "./DaysDropdown";
 import { submitProduct } from "./Selectors";
 
