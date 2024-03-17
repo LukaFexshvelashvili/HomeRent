@@ -1,16 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type Tuser = {
+export type Tuser = {
   name: string;
   lastname: string;
   age: number;
   id: string;
+  isLogged: boolean;
 };
 const initialState: Tuser = {
   name: "ლუკა",
   lastname: "ფეხშველაშვილი",
   age: 17,
   id: "2337692412",
+  isLogged: false,
 };
 const userSlice = createSlice({
   name: "user",

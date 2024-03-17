@@ -7,7 +7,7 @@ import {
 
 export default function SideSection() {
   return (
-    <section className="flex-1 loginSection flex items-center justify-center relative overflow-hidden">
+    <section className="flex-1 loginSection medium:hidden flex items-center justify-center relative overflow-hidden">
       <div className="absolute top-0 w-full">
         <Line1Decor className="h-[400px] aspect-square absolute" />
         <Line2Decor className="h-[450px] aspect-square absolute right-0 top-[-50px] " />

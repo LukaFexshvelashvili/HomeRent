@@ -147,15 +147,15 @@ export default function ProductSideBar() {
         </div>
       </div>
       <div className="flex items-center gap-5  mobile:flex-wrap mobile:justify-center mobile:gap-3">
-        <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-Asmall text-textHeadCard tracking-wider cursor-pointer">
+        <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer">
           <BookmarkIcon className="h-[16px] aspect-square [&>path]:stroke-orangeI mr-3" />{" "}
           შენახვა
         </div>
-        <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-Asmall text-textHeadCard tracking-wider cursor-pointer">
+        <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer">
           <ShareIcon className="h-[16px] aspect-square [&>path]:stroke-main mr-3" />{" "}
           გაზიარება
         </div>
-        <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-Asmall text-textHeadCard tracking-wider cursor-pointer">
+        <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer">
           <ReportIcon className="h-[16px] aspect-square [&>path]:fill-reportIcon mr-3" />{" "}
           გასაჩივრება
         </div>

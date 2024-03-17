@@ -1,10 +1,10 @@
-// import { useState } from "react";
-import { LockIcon } from "../../assets/icons/Icons";
+import { useState } from "react";
+import { LockIcon, MailIcon } from "../../assets/icons/Icons";
 import { HomesbgDecor } from "../../assets/images/decorations/svg/Decorations";
 import SideSection from "./components/SideSection";
 
 export default function ForgotPassword() {
-  // const [codeSended, setCodeSended] = useState(false);
+  const [codeSended, setCodeSended] = useState(false);
   return (
     <>
       <main className="m-0 p-0">
@@ -18,24 +18,24 @@ export default function ForgotPassword() {
         </div>
         <div className="flex h-screen">
           <section className="flex-1 relative flex justify-center items-center">
-            <RecoverPassword />
-            {/* <div className="flex flex-col items-center pb-[200px]">
-              <h1 className=" text-[32px] text-textHead font-mainBold mb-2">
+            {/* <RecoverPassword /> */}
+            <div className="flex flex-col items-center pb-[200px] medium:pb-[100px] w-full">
+              <h1 className=" text-[32px] mobile:text-[24px] text-textHead font-mainBold mb-2">
                 პაროლის აღდგენა
               </h1>
-              <p className="mb-6 text-textDesc text-Asmall font-mainBold tracking-wider">
+              <p className="mb-6 text-textDesc text-Asmall font-mainBold tracking-wider mobile:text-[14px]">
                 შეიყვანეთ თქვენი ელფოსტა
               </p>
               <form
                 onSubmit={(e) => e.preventDefault()}
-                className="w-[380px] flex flex-col gap-5 items-center relative z-10"
+                className="w-[380px] flex flex-col gap-5 items-center relative z-10 mobile:gap-4 mobile:max-w-[360px] mobile:w-full mobile:px-[5px]"
               >
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <MailIcon className="h-[24px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
+                  <MailIcon className="h-[24px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
                   <input
                     type="text"
                     placeholder="მეილი"
-                    className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
+                    className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 mobile:text-[12px] mobile:pl-10 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                   />
                 </div>
                 {codeSended && (
@@ -49,12 +49,12 @@ export default function ForgotPassword() {
                 )}
                 <button
                   onClick={() => setCodeSended(true)}
-                  className="linearButton font-mainBold text-whiteMain h-[40px] w-[200px] rounded-normal tracking-wider transition-shadow hover:shadow-buttonShadow"
+                  className="linearButton mt-2 font-mainBold text-whiteMain h-[40px] w-[200px] mobile:h-[36px] mobile:w-[180px] mobile:text-[14px] rounded-normal tracking-wider transition-shadow hover:shadow-buttonShadow"
                 >
                   {codeSended ? "დადასტურება" : "კოდის მიღება"}
                 </button>
               </form>
-            </div> */}
+            </div>
             <div className="absolute bottom-0 z-0 pointer-events-none w-full">
               <HomesbgDecor className="w-full opacity-20" />
             </div>
@@ -68,43 +68,43 @@ export default function ForgotPassword() {
 
 function RecoverPassword() {
   return (
-    <div className="flex flex-col items-center pb-[200px]">
-      <h1 className=" text-[32px] text-main font-mainBold mb-2">
+    <div className="flex flex-col items-center pb-[200px] medium:pb-[100px] w-full">
+      <h1 className=" text-[32px] text-main font-mainBold mb-2 mobile:text-[24px] ">
         პაროლის განახლება
       </h1>
-      <p className="mb-6 text-textDesc text-Asmall font-mainBold tracking-wider">
+      <p className="mb-6 text-textDesc text-Asmall font-mainBold tracking-wider  mobile:text-[14px]">
         შეიყვანეთ ახალი პაროლი
       </p>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-[380px] flex flex-col gap-5 items-center relative z-10"
+        className="w-[380px] flex flex-col gap-5 items-center relative z-10  mobile:gap-4 mobile:max-w-[360px] mobile:w-full mobile:px-[5px]"
       >
         <div className="h-[40px] w-full rounded-normal flex items-center relative">
-          <LockIcon className="w-[24px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
+          <LockIcon className="w-[24px] mobile:h-[20px]  aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
           <input
             type="password"
             placeholder="პაროლი"
-            className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
+            className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 mobile:text-[12px] mobile:pl-10 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
           />
         </div>
         <div className="h-[40px] w-full rounded-normal flex items-center relative">
-          <LockIcon className="w-[24px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
+          <LockIcon className="w-[24px] mobile:h-[20px]  aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
           <input
             type="password"
             placeholder="გაიმეორეთ პაროლი"
-            className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
+            className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 mobile:text-[12px] mobile:pl-10 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
           />
         </div>
         <div className="flex flex-col w-full">
           <div className="w-full h-2 rounded-md bg-whiteLoad">
             <div className="w-[10%] h-full rounded-md bg-pinkI"></div>
           </div>
-          <p className="text-textDesc text-Asmall font-mainBold tracking-wider opacity-70 mt-2">
+          <p className="text-textDesc text-Asmall font-mainBold tracking-wider opacity-70 mt-2 mobile:text-[12px]">
             პაროლი სუსტია
           </p>
         </div>
 
-        <button className=" mt-4 linearButton font-mainSemiBold text-whiteMain h-[40px] w-[200px] rounded-normal tracking-wider transition-shadow hover:shadow-buttonShadow">
+        <button className="linearButton mt-2 font-mainBold text-whiteMain h-[40px] w-[200px] mobile:h-[36px] mobile:w-[180px] mobile:text-[14px] rounded-normal tracking-wider transition-shadow hover:shadow-buttonShadow">
           დადასტურება
         </button>
       </form>

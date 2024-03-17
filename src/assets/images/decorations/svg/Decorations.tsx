@@ -805,7 +805,7 @@ export const HomesbgDecor = (props: any) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clip-path="url(#clip0_119_2738)">
+    <g clipPath="url(#clip0_119_2738)">
       <path d="M159.686 82.9644H0V359.996H159.686V82.9644Z" fill="#5E9CFF" />
       <path d="M948.496 146.812H788.807V360H948.496V146.812Z" fill="#5E9CFF" />
       <path d="M576.303 173.956H416.617V360H576.303V173.956Z" fill="#5E9CFF" />

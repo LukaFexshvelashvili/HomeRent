@@ -43,7 +43,7 @@ export default function ImageSlider() {
           </div>
         ))}
       </div>
-      <div className="relative overflow-hidden h-full w-full rounded-block z-[1] min-h-[500px] small:min-h-[400px] mobile:min-h-[300px] mobileSmall:min-h-[200px]">
+      <div className="relative overflow-hidden h-full w-full rounded-block z-[1] medium:min-h-[500px] small:min-h-[400px] mobile:min-h-[300px] mobileSmall:min-h-[200px]">
         <img
           src={imageList[slider]}
           className="absolute top-0 left-0 h-full w-full object-cover"

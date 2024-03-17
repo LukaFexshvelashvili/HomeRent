@@ -52,8 +52,8 @@ body {
 }
 
 .login_container {
-  width: 100%;
-  max-width: 1700px;
+  width: calc(100% - 40px);
+
   margin: 0 auto;
 }
 .DefButton {

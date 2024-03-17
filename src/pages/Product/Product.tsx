@@ -10,7 +10,7 @@ import ProductSideBar from "./components/ProductSideBar";
 export default function Product() {
   return (
     <main className="min-h-screen">
-      <section className="medium:flex-col flex gap-[36px]">
+      <section className="medium:flex-col flex gap-[36px] medium:gap-5 mobile:gap-3">
         <ImageSlider />
         <ProductSideBar />
       </section>
