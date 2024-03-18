@@ -13,12 +13,18 @@ import {
 } from "../assets/icons/Icons";
 import georgianFlag from "../assets/images/languages/georgia.png";
 import englishFlag from "../assets/images/languages/english.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Link } from "react-router-dom";
 import { RealEstateTypes } from "../pages/Search/components/FiltersArray";
+import { toggleDarkMode } from "../store/data/webUISlice";
 export default function Navbar() {
   const userData = useSelector((store: RootState) => store.user);
+  const darkmode: boolean = useSelector(
+    (store: RootState) => store.webUI.darkMode
+  );
+
+  const dispatch = useDispatch();
 
   const [activePop, setActivePop] = useState<null | string>(null);
   const [activeLang, setActiveLang] = useState<boolean>(false);
@@ -153,7 +159,7 @@ export default function Navbar() {
               className="h-full border-2 border-whiteMain aspect-square rounded-circle bg-main select-none cursor-pointer "
             ></div>
             <div
-              className={`absolute  overflow-hidden h-auto w-[230px] bg-white rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
+              className={`absolute  overflow-hidden h-auto w-[230px] bg-navBg rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
                 activePop == "profile"
                   ? "visible opacity-100"
                   : "invisible opacity-0"
@@ -174,15 +180,29 @@ export default function Navbar() {
               </div>
               <div className=" mx-auto my-2 mb-4 bg-lineBg h-[2px] w-[50px] rounded-md"></div>
               <div className="flex flex-col">
-                {profileButtons.map((e: TProfileButton, i: number) => (
-                  <button
-                    key={i}
-                    className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover"
-                  >
-                    {e.icon}
-                    {e.name}
-                  </button>
-                ))}
+                {profileButtons.map((e: TProfileButton, i: number) =>
+                  e.link !== "ChangeDarkTheme" ? (
+                    <Link
+                      key={i}
+                      to={e.link}
+                      onClick={() => setActivePop(null)}
+                    >
+                      <button className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover">
+                        {e.icon}
+                        {e.name}
+                      </button>
+                    </Link>
+                  ) : (
+                    <button
+                      key={i}
+                      onClick={() => dispatch(toggleDarkMode())}
+                      className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover"
+                    >
+                      {e.icon}
+                      {darkmode ? "ღია თემა" : "მუქი თემა"}
+                    </button>
+                  )
+                )}
               </div>
             </div>
           </div>
@@ -196,6 +216,11 @@ export default function Navbar() {
 }
 
 function ResponsiveNavbar(props: { userData: any }) {
+  const darkmode: boolean = useSelector(
+    (store: RootState) => store.webUI.darkMode
+  );
+
+  const dispatch = useDispatch();
   const [active, setActive] = useState<boolean>(false);
   return (
     <>
@@ -244,16 +269,26 @@ function ResponsiveNavbar(props: { userData: any }) {
           </div>
           <div className="bg-lineBg h-[5px] rounded-md w-[50px] mx-auto my-6"></div>
           <div className="flex flex-col gap-1">
-            {profileResponsiveButtons.map((e: TProfileButton, i: number) => (
-              <Link key={i} onClick={() => setActive(false)} to={e.link}>
+            {profileResponsiveButtons.map((e: TProfileButton, i: number) =>
+              e.link !== "ChangeDarkTheme" ? (
+                <Link key={i} onClick={() => setActive(false)} to={e.link}>
+                  <button
+                    key={i}
+                    className={` outline-none cursor-pointer text-textHead transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
+                  >
+                    {e.icon} {e.name}
+                  </button>
+                </Link>
+              ) : (
                 <button
                   key={i}
-                  className={` outline-none cursor-pointer transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
+                  onClick={() => dispatch(toggleDarkMode())}
+                  className={` outline-none cursor-pointer text-textHead transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
                 >
-                  {e.icon} {e.name}
+                  {e.icon} {darkmode ? "ღია თემა" : "მუქი თემა"}
                 </button>
-              </Link>
-            ))}
+              )
+            )}
           </div>
           <div className=" flex items-center justify-center mt-8 gap-4">
             <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-orangeClear text-orangeI rounded-[8px] text-[14px] transition-colors hover:bg-orangeHover">
@@ -315,8 +350,8 @@ const profileResponsiveButtons: TProfileButton[] = [
     ),
   },
   {
-    link: "/",
-    name: "შავი თემა",
+    link: "ChangeDarkTheme",
+    name: "მუქი თემა",
     icon: <MoonIcon className=" h-[30px] aspect-square fill-textHead mr-3" />,
   },
   {
@@ -344,33 +379,34 @@ const profileResponsiveButtons: TProfileButton[] = [
 
 const profileButtons: TProfileButton[] = [
   {
-    link: "",
+    link: "/Profile",
     name: "ჩემი პროფილი",
     icon: (
       <UserLinearIcon className=" h-[20px] aspect-square fill-textHead mr-2" />
     ),
   },
   {
-    link: "",
+    link: "/Profile/MyProducts",
     name: "ჩემი განცხადებები",
     icon: (
       <DocumentsIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
     ),
   },
   {
-    link: "",
-    name: "შავი თემა",
+    link: "ChangeDarkTheme",
+    name: "მუქი თემა",
     icon: <MoonIcon className=" h-[20px] aspect-square fill-textHead mr-2" />,
   },
   {
-    link: "",
+    link: "/Contact",
     name: "კონტაქტი",
     icon: (
       <MessageIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
     ),
   },
   {
-    link: "",
+    link: "/Logout",
+
     name: "გასვლა",
     icon: (
       <LogoutIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />

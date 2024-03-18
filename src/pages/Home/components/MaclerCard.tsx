@@ -14,29 +14,29 @@ export default function MaclerCard() {
         <h2 className="small:text-center text-[24px] mobileSmall:text-[22px] font-mainBold text-main mb-5">
           მაკლერის სერვისი
         </h2>
-        <p className="small:text-center text-textDesc text-[16px] mobileSmall:text-[15px] tracking-wider max-w-[600px]">
+        <p className="small:text-center text-textDesc text-[15px] mobileSmall:text-[15px] tracking-wider max-w-[600px]">
           სერვისში გთავაზობთ დახმარებას თქვენი უძრავი ქონების გაყიდვა/გაქირავება
           -ში
         </p>
-        <div className="flex flex-col gap-3 my-5 mobileSmall:items-start">
-          <div className="flex items-center  text-textDesc gap-3 small:justify-center mobileSmall:text-[15px]">
+        <div className="flex flex-col gap-3 my-8 mobileSmall:items-start">
+          <div className="flex items-center  text-textDesc text-[15px] gap-3 small:justify-center mobileSmall:text-[15px]">
             <div className="h-[14px] aspect-square rounded-circle border-2  border-main"></div>{" "}
             სოციალურ მედიაში განთავსება
           </div>
-          <div className="flex items-center text-textDesc gap-3 small:justify-center mobileSmall:text-[15px]">
+          <div className="flex items-center text-textDesc text-[15px] gap-3 small:justify-center mobileSmall:text-[15px]">
             <div className="h-[14px] aspect-square rounded-circle border-2  border-main"></div>{" "}
             პრიორიტეტული გამოჩენა (საიტზე)
           </div>
-          <div className="flex items-center text-textDesc gap-3 small:justify-center mobileSmall:text-[15px]">
+          <div className="flex items-center text-textDesc text-[15px] gap-3 small:justify-center mobileSmall:text-[15px]">
             <div className="h-[14px] aspect-square rounded-circle border-2  border-main"></div>{" "}
             კლიენტებთან მოლაპარაკება
           </div>
-          <div className="flex items-center text-textDesc gap-3 small:justify-center mobileSmall:text-[15px]">
+          <div className="flex items-center text-textDesc text-[15px] gap-3 small:justify-center mobileSmall:text-[15px]">
             <div className="h-[14px] aspect-square rounded-circle border-2  border-main"></div>{" "}
             სწრაფი მომსახურება
           </div>
         </div>
-        <button className="small:mx-auto block mt-3 bg-main rounded-[5px] w-[190px] h-[40px] mobileSmall:h-[36px] mobileSmall:w-[160px] mobileSmall:text-[14px] text-whiteMain text-[15px] tracking-widest transition-colors hover:bg-mainHover">
+        <button className="small:mx-auto block mt-3 bg-main rounded-[5px] w-[190px] h-[40px] mobileSmall:h-[36px] mobileSmall:w-[160px] mobileSmall:text-[14px] text-buttonText text-[14px] tracking-widest transition-colors hover:bg-mainHover">
           სრულად
         </button>
       </div>

@@ -48,14 +48,14 @@ export default function ProductSideBar() {
               <div className="flex-1 h-full flex items-center justify-center">
                 ₾
               </div>
-              <div className="flex-1 h-full flex items-center justify-center text-whiteMain bg-main rounded-lg relative">
+              <div className="flex-1 h-full flex items-center justify-center text-buttonText bg-main rounded-lg relative">
                 $
               </div>
             </div>
           </div>
           <div className="outline outline-2 -outline-offset-2 outline-borderCol1 mobile:flex-col mobile:h-auto  rounded-xl  w-full h-[48px] mt-4 flex items-center">
-            <button className="flex-1 flex justify-center items-center h-full rounded-xl min-h-[48px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main text-whiteMain relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors hover:bg-mainHover">
-              <PhoneFIlledIcon className="mobile:h-[21px] mobileSmall:h-[18px] h-[19px] aspect-square [&>path]:fill-whiteMain mr-3 translate-y-[-1px]" />{" "}
+            <button className="flex-1  text-buttonText flex justify-center items-center h-full rounded-xl min-h-[48px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors hover:bg-mainHover">
+              <PhoneFIlledIcon className="mobile:h-[21px] mobileSmall:h-[18px] h-[19px] aspect-square [&>path]:fill-text-buttonText mr-3 translate-y-[-1px]" />{" "}
               511 22 ** ** ნომრის ჩვენება
             </button>
             <div className="flex-1 ">

@@ -21,25 +21,25 @@ function App() {
   // const user: Tuser = useSelector((store: RootState) => store.user);
   return (
     <>
-      {/* <Navbar /> */}
-      {/* <div className="content_container"> */}
-      <Routes>
-        <Route path="/">
-          <Route index element={<Home />} />
-          <Route path="Login" element={<Login />} />
-          <Route path="Register" element={<Register />} />
-          <Route path="ForgotPassword" element={<ForgotPassword />} />
-          <Route path="Search" element={<Search />} />
-          <Route path="Product" element={<Product />} />
-          <Route path="AddProduct" element={<AddProduct />} />
-          <Route path="Profile/*" element={<Profile />} />
-          <Route path="MaclerService" element={<MaclerService />} />
-          <Route path="MaclerChoose" element={<MaclerChoose />} />
-          <Route path="Maclerconditions" element={<Maclerconditions />} />
-        </Route>
-      </Routes>
-      {/* </div> */}
-      {/* <Footer /> */}
+      <Navbar />
+      <div className="content_container">
+        <Routes>
+          <Route path="/">
+            <Route index element={<Home />} />
+            <Route path="Login" element={<Login />} />
+            <Route path="Register" element={<Register />} />
+            <Route path="ForgotPassword" element={<ForgotPassword />} />
+            <Route path="Search" element={<Search />} />
+            <Route path="Product" element={<Product />} />
+            <Route path="AddProduct" element={<AddProduct />} />
+            <Route path="Profile/*" element={<Profile />} />
+            <Route path="MaclerService" element={<MaclerService />} />
+            <Route path="MaclerChoose" element={<MaclerChoose />} />
+            <Route path="Maclerconditions" element={<Maclerconditions />} />
+          </Route>
+        </Routes>
+      </div>
+      <Footer />
     </>
   );
 }

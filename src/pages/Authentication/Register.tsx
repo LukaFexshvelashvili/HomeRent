@@ -1,14 +1,17 @@
 import { Link } from "react-router-dom";
 import { LockIcon, MailIcon, PhoneIcon } from "../../assets/icons/Icons";
 import {
-  Home2Decor,
-  Home4Decor,
   Home5Decor,
   HomesbgDecor,
 } from "../../assets/images/decorations/svg/Decorations";
 import SideSection from "./components/SideSection";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 export default function Register() {
+  const darkMode: boolean = useSelector(
+    (store: RootState) => store.webUI.darkMode
+  );
   return (
     <>
       <main className="m-0 p-0">
@@ -22,7 +25,11 @@ export default function Register() {
         </div>
         <div className="flex h-screen overflow-hidden min-h-[700px]">
           <section className="flex-1 relative flex justify-center items-center">
-            <div className="flex flex-col items-center pb-[150px] medium:pb-[80px]">
+            <div
+              className={`flex flex-col items-center ${
+                darkMode ? "" : "pb-[150px]"
+              }  medium:pb-[80px]`}
+            >
               <h1 className=" text-[32px] text-textHead font-mainBold mb-10 mobile:text-[22px] mobile:mb-6">
                 ანგარიშის შექმნა
               </h1>
@@ -110,7 +117,9 @@ export default function Register() {
             </div>
 
             <div className="absolute bottom-0 z-0 pointer-events-none w-full">
-              <HomesbgDecor className="absolute bottom-0 w-full opacity-20" />
+              {!darkMode && (
+                <HomesbgDecor className="absolute bottom-0 w-full opacity-20" />
+              )}
               <Home5Decor className="absolute max-h-[160px] bottom-0 max-w-[50%] left-[50%] translate-x-[-50%] hidden mobile:block " />
             </div>
           </section>

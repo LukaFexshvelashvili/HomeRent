@@ -88,7 +88,7 @@ export default function EstateConfirm(props: { setShowError: Function }) {
       )}
       <button
         onClick={() => submitProduct(data, props.setShowError)}
-        className="h-[42px] w-full rounded-md bg-main text-whiteMain tracking-wider text-[15px] transition-colors mt-3 hover:bg-mainHover"
+        className="h-[42px] w-full rounded-md bg-main text-buttonText tracking-wider text-[15px] transition-colors mt-3 hover:bg-mainHover"
       >
         გამოქვეყნება
       </button>
@@ -120,10 +120,10 @@ export function CardExample(props: {
     <div
       className={`h-auto   ${
         props.autoWidth ? "w-full" : "w-[290px]"
-      } bg-whiteMain border-2 border-[#F3F3F3] rounded-normal p-3 pb-14 relative`}
+      } bg-whiteMain border-2 border-cardBorder rounded-normal p-3 pb-14 relative`}
     >
       <div className="w-full h-[240px] rounded-normal bg-whiteLoad relative overflow-hidden flex justify-center items-center">
-        <div className="absolute h-[25px] w-[60px] select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-whiteMain tracking-wider cursor-default top-2 right-2 z-[3]">
+        <div className="absolute h-[25px] w-[60px]  select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
           VIP+
         </div>
         {props.image ? (
@@ -133,7 +133,7 @@ export function CardExample(props: {
             alt="estate-photo"
           />
         ) : (
-          <ImageLoaderIcon className="h-[100px]" />
+          <ImageLoaderIcon className="h-[100px] [&>path]:fill-[var(--skeleton6)]" />
         )}
         <div className="absolute bottom-2 left-2 flex items center gap-2">
           <div className="bg-cardInfoBg backdrop-blur-[2px] rounded-[3px] flex justify-center items-center px-2 py-[6px] text-WhiteFade font-mainSemiBold text-sm">
@@ -165,9 +165,7 @@ export function CardExample(props: {
         </p>
         <button className="p-[5px] rounded-md absolute right-3">
           <BookmarkIcon
-            className={`h-[20px]  transition-all  
-                : "fill-transparent [&>path]:stroke-navIcon"
-            `}
+            className={`h-[20px]  transition-all [&>path]:stroke-navIcon`}
           />
         </button>
       </div>

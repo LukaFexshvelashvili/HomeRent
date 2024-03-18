@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactSlider from "react-slider";
 import { RealEstateTypes, TRealEstateTypes } from "./FiltersArray";
 import { useDispatch } from "react-redux";
@@ -32,7 +32,7 @@ export function SelectNumbers(props: {
             key={i}
             onClick={() => setActive(i)}
             className={` h-[36px] text-[15px] aspect-square rounded-circle flex justify-center items-center transition-colors ${
-              active == i ? "bg-main text-whiteMain" : "bg-mainClear text-main"
+              active == i ? "bg-main text-buttonText" : "bg-mainClear text-main"
             }`}
           >
             {Length.length - 1 !== i ? e : `${e}+`}
@@ -94,6 +94,7 @@ export function SelectType() {
 
 export function PriceSlider(props: { setData?: Function }) {
   const [params, setParams] = useSearchParams();
+  const startCounting = useRef<boolean>(false);
 
   useEffect(() => {
     const searchPrices = params.get("prices");
@@ -114,20 +115,22 @@ export function PriceSlider(props: { setData?: Function }) {
   const priceDistance = [20000, 80000];
   const priceGap = 5000;
   useEffect(() => {
-    setPrices([
-      Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
-      Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
-    ]);
-    updateParams(params, setParams, {
-      prices: JSON.stringify({
-        start: Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
-        end: Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
-        currency: 0,
-      }),
-    });
+    if (startCounting.current) {
+      setPrices([
+        Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
+        Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
+      ]);
+      updateParams(params, setParams, {
+        prices: JSON.stringify({
+          start: Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
+          end: Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
+          currency: 0,
+        }),
+      });
 
-    if (props.setData) {
-      props.setData([Prices[0], Prices[1]]);
+      if (props.setData) {
+        props.setData([Prices[0], Prices[1]]);
+      }
     }
   }, [PricesPercentages]);
   return (
@@ -135,7 +138,7 @@ export function PriceSlider(props: { setData?: Function }) {
       <p className=" text-textHead tracking-wider font-mainBold ">ფასი</p>
       <div className="h-[30px] w-[70px] flex items-center absolute top-0 right-0 outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg text-textDescCard cursor-pointer">
         <div className="flex-1 h-full flex items-center justify-center">₾</div>
-        <div className="flex-1 h-full flex items-center justify-center text-whiteMain bg-main rounded-lg relative">
+        <div className="flex-1 h-full flex items-center justify-center text-buttonText bg-main rounded-lg relative">
           $
         </div>
       </div>
@@ -146,7 +149,10 @@ export function PriceSlider(props: { setData?: Function }) {
         defaultValue={[PricesPercentages[0], PricesPercentages[1]]}
         value={[PricesPercentages[0], PricesPercentages[1]]}
         ariaLabel={["Lower thumb", "Upper thumb"]}
-        onChange={(state) => setPricesPercentages(state)}
+        onChange={(state) => {
+          setPricesPercentages(state);
+          startCounting.current = true;
+        }}
         ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
         pearling
         minDistance={10}
@@ -155,7 +161,7 @@ export function PriceSlider(props: { setData?: Function }) {
         <div className="flex items-center">
           <input
             type="number"
-            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
+            className="h-[30px] w-[100px] rounded-md bg-LoginInput text-textHeadCard px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               if (
                 e.target.valueAsNumber <= priceDistance[1] &&
@@ -194,7 +200,7 @@ export function PriceSlider(props: { setData?: Function }) {
         <div className="flex items-center">
           <input
             type="number"
-            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
+            className="h-[30px] w-[100px] rounded-md bg-LoginInput text-textHeadCard px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               setPrices([
                 Prices[0],
@@ -237,6 +243,7 @@ export function PriceSlider(props: { setData?: Function }) {
 }
 export function SizeSlider(props: { setData?: Function }) {
   const [params, setParams] = useSearchParams();
+  const startCounting = useRef<boolean>(false);
 
   useEffect(() => {
     const searchSizes = params.get("sizes");
@@ -257,18 +264,21 @@ export function SizeSlider(props: { setData?: Function }) {
   const priceDistance = [50, 500];
   const priceGap = 5;
   useEffect(() => {
-    setPrices([
-      Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
-      Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
-    ]);
-    updateParams(params, setParams, {
-      sizes: JSON.stringify([
+    if (startCounting.current) {
+      setPrices([
         Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
         Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
-      ]),
-    });
-    if (props.setData) {
-      props.setData([Prices[0], Prices[1]]);
+      ]);
+
+      updateParams(params, setParams, {
+        sizes: JSON.stringify([
+          Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
+          Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
+        ]),
+      });
+      if (props.setData) {
+        props.setData([Prices[0], Prices[1]]);
+      }
     }
   }, [PricesPercentages]);
   return (
@@ -284,7 +294,10 @@ export function SizeSlider(props: { setData?: Function }) {
         defaultValue={[PricesPercentages[0], PricesPercentages[1]]}
         value={[PricesPercentages[0], PricesPercentages[1]]}
         ariaLabel={["Lower thumb", "Upper thumb"]}
-        onChange={(state) => setPricesPercentages(state)}
+        onChange={(state) => {
+          setPricesPercentages(state);
+          startCounting.current = true;
+        }}
         ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
         pearling
         minDistance={10}
@@ -293,7 +306,7 @@ export function SizeSlider(props: { setData?: Function }) {
         <div className="flex items-center">
           <input
             type="number"
-            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
+            className="h-[30px] w-[100px] rounded-md bg-LoginInput text-textHeadCard px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               if (
                 e.target.valueAsNumber <= priceDistance[1] &&
@@ -332,7 +345,7 @@ export function SizeSlider(props: { setData?: Function }) {
         <div className="flex items-center">
           <input
             type="number"
-            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
+            className="h-[30px] w-[100px] rounded-md bg-LoginInput  text-textHeadCard px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               setPrices([
                 Prices[0],

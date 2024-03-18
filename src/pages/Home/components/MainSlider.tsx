@@ -75,7 +75,7 @@ function MainSliderCard(props: TMainSliderCard) {
             {props.desc}
           </h3>
         </div>
-        <button className="DefButton relative z-30 mobile:text-[11px] mobileSmall:hidden">
+        <button className="DefButton relative z-30 mobile:text-[11px] mobileSmall:hidden text-buttonText">
           სრულად ნახვა
         </button>
       </div>

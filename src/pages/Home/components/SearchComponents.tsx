@@ -35,7 +35,7 @@ export function InputSizeSlider(props: {
         <div className="flex items-center">
           <input
             type="number"
-            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
+            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors text-textHeadCard focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               if (
                 e.target.valueAsNumber <= priceDistance[1] &&
@@ -74,7 +74,7 @@ export function InputSizeSlider(props: {
         <div className="flex items-center">
           <input
             type="number"
-            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
+            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none text-textHeadCard transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               setPrices([
                 Prices[0],
@@ -144,7 +144,7 @@ export function InputPriceSlider(props: {
     <div className="flex flex-col items-center relative w-10/12 mx-auto">
       <div className="h-[30px] w-[70px] flex items-center absolute top-0 right-0 outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg text-textDescCard cursor-pointer">
         <div className="flex-1 h-full flex items-center justify-center">₾</div>
-        <div className="flex-1 h-full flex items-center justify-center text-whiteMain bg-main rounded-lg relative">
+        <div className="flex-1 h-full flex items-center justify-center text-buttonText bg-main rounded-lg relative">
           $
         </div>
       </div>
@@ -164,7 +164,7 @@ export function InputPriceSlider(props: {
         <div className="flex items-center">
           <input
             type="number"
-            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
+            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors text-textHeadCard focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               if (
                 e.target.valueAsNumber <= priceDistance[1] &&
@@ -203,7 +203,7 @@ export function InputPriceSlider(props: {
         <div className="flex items-center">
           <input
             type="number"
-            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
+            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors text-textHeadCard focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               setPrices([
                 Prices[0],

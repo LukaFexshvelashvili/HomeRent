@@ -50,7 +50,7 @@ export default function Profile() {
               className="w-full"
             >
               <button
-                className={` outline-none cursor-pointer transition-colors w-full text-start px-5 py-[13px] font-mainMedium flex items-center relative text-[14px] before:transition-transform  ${
+                className={` outline-none cursor-pointer transition-colors w-full text-start px-5 py-[13px] text-textHead font-mainMedium flex items-center relative text-[14px] before:transition-transform  ${
                   activeNav == e.id
                     ? "ActiveProfileNav before:bg-main bg-mainClear before:scale-y-1"
                     : "bg-transparent before:scale-y-0"
@@ -95,7 +95,7 @@ const ProfileNavs: TProfileNav[] = [
     name: "შენახული განცხადებები",
     link: "SavedProducts",
     icon: () => (
-      <BookmarkIcon className="h-[26px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[3px]" />
+      <BookmarkIcon className="h-[26px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[3px] [&>path]:stroke-textHead" />
     ),
   },
   {
@@ -103,7 +103,7 @@ const ProfileNavs: TProfileNav[] = [
     name: "ბოლოს ნანახი",
     link: "LastSeenProducts",
     icon: () => (
-      <HistoryIcon className="h-[27px] aspect-square mr-[10px]  [&>path]:stroke-[1.5px] p-[3px]" />
+      <HistoryIcon className="h-[27px] aspect-square mr-[10px]  [&>path]:stroke-[1.5px] p-[3px] [&>path]:fill-textHead" />
     ),
   },
   {
@@ -111,7 +111,7 @@ const ProfileNavs: TProfileNav[] = [
     name: "პარამეტრები",
     link: "Settings",
     icon: () => (
-      <SettingsIcon className="h-[26px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[3px]" />
+      <SettingsIcon className="h-[26px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[3px] [&>path]:stroke-textHead" />
     ),
   },
   {
@@ -119,7 +119,7 @@ const ProfileNavs: TProfileNav[] = [
     name: "ჩემს შესახებ",
     link: "ProfileInfo",
     icon: () => (
-      <UserLinearIcon className="h-[26px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[2px]" />
+      <UserLinearIcon className="h-[26px] aspect-square mr-[10px] [&>path]:stroke-[1.5px] p-[2px] [&>path]:fill-textHead" />
     ),
   },
 ];

@@ -10,16 +10,16 @@ export default function MyProducts() {
     <>
       {" "}
       {popbuy.id && <Buypopup setPopbuy={setPopbuy} />}
-      <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3">
+      <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3">
         <h1>ჩემი განცხადებები</h1>
         <div className="flex gap-3 items-center">
           {choices.map((e: string, i: number) => (
             <button
               key={i}
               onClick={() => setChoice(i)}
-              className={`px-4 py-2 transition-colors rounded-lg text-[14px] ${
+              className={`px-4 py-2 transition-colors rounded-lg text-[14px]  ${
                 choice == i
-                  ? "text-whiteMain bg-main"
+                  ? "text-buttonText bg-main"
                   : "text-main bg-mainClear"
               }`}
             >

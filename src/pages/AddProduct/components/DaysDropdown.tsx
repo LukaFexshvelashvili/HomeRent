@@ -18,14 +18,14 @@ export default function DaysDropdown({
       className="flex items-center justify-between font-mainBold rounded-lg py-2 px-3 mt-5"
       style={{ backgroundColor: offerData.secondColor }}
     >
-      <p className="text-Asmall" style={{ color: offerData.mainColor }}>
+      <p className="text-Asmall " style={{ color: offerData.mainColor }}>
         {" "}
         1 დღე - {offerData.price}₾
       </p>
       <div className="relative">
         <button
           onClick={() => setOpen((state) => !state)}
-          className="h-[34px] w-[120px] text-Asmall rounded-md text-whiteMain flex justify-between items-center px-4"
+          className="h-[34px] w-[120px] text-Asmall rounded-md flex justify-between items-center px-4 text-buttonText"
           style={{ backgroundColor: offerData.mainColor }}
         >
           {value} დღე

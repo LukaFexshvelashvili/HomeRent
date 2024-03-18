@@ -4,19 +4,19 @@
 
 @font-face {
   font-family: mainSemiBold;
-  src: url("./assets/fonts/NotoSansGeorgian-SemiBold.ttf");
+  src: url("../assets/fonts/NotoSansGeorgian-SemiBold.ttf");
 }
 @font-face {
   font-family: mainBold;
-  src: url("./assets/fonts/NotoSansGeorgian-Bold.ttf");
+  src: url("../assets/fonts/NotoSansGeorgian-Bold.ttf");
 }
 @font-face {
   font-family: mainMedium;
-  src: url("./assets/fonts/NotoSansGeorgian-Medium.ttf");
+  src: url("../assets/fonts/NotoSansGeorgian-Medium.ttf");
 }
 @font-face {
   font-family: mainRegular;
-  src: url("./assets/fonts/NotoSansGeorgian-Regular.ttf");
+  src: url("../assets/fonts/NotoSansGeorgian-Regular.ttf");
 }
 img {
   -webkit-transform: translateZ(0);
@@ -57,7 +57,7 @@ body {
   margin: 0 auto;
 }
 .DefButton {
-  @apply bg-main rounded-[5px] w-[170px] h-[35px] font-mainMedium text-whiteMain text-[12px] tracking-widest transition-colors hover:bg-mainHover;
+  @apply bg-main rounded-[5px] w-[170px] h-[35px] font-mainMedium text-buttonText text-[12px] tracking-widest transition-colors hover:bg-mainHover;
 }
 
 .swiper-pagination-bullet {
@@ -69,11 +69,7 @@ body {
 }
 .maclerLinear {
   background: rgb(255, 255, 255);
-  background: linear-gradient(
-    29deg,
-    rgba(255, 255, 255, 1) 56%,
-    rgba(239, 245, 255, 1) 56%
-  );
+  background: linear-gradient(29deg, var(--maclerStart), var(--maclerEnd));
 }
 main {
   @apply py-8;

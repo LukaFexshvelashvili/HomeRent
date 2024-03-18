@@ -44,7 +44,7 @@ export default function SearchInput() {
             className="flex h-full items-center gap-3  px-6 "
           >
             <FilterHomeIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-            <p className="w-[150px] text-[14px] font-mainMedium">
+            <p className="w-[150px] text-[14px] font-mainMedium text-textDesc">
               {getType ? getType : "ბინა"}
             </p>
           </div>
@@ -63,7 +63,7 @@ export default function SearchInput() {
             className="flex h-full items-center gap-3  px-6 "
           >
             <FilterPlaceIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-            <p className="w-[150px] text-[14px] font-mainMedium">
+            <p className="w-[150px] text-[14px] font-mainMedium text-textDesc">
               {getCity ? getCity : "მდებარეობა"}
             </p>
           </div>
@@ -82,7 +82,7 @@ export default function SearchInput() {
             className="flex h-full items-center gap-3  px-6 "
           >
             <FilterFrameIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-            <p className="w-[150px] text-[14px] font-mainMedium">
+            <p className="w-[150px] text-[14px] font-mainMedium text-textDesc">
               {getSizes ? `${getSizes[0]} მ² - ${getSizes[1]} მ²` : "ფართი"}
             </p>
           </div>
@@ -101,7 +101,7 @@ export default function SearchInput() {
             className="flex h-full items-center gap-3  px-6 "
           >
             <MoneyIcon className=" h-[18px] [&>path]:fill-navIcon" />{" "}
-            <p className="w-[150px] text-[14px] font-mainMedium">
+            <p className="w-[150px] text-[14px] font-mainMedium text-textDesc">
               {getPrices
                 ? `${getPrices.start}${getPrices.currency == 0 ? "$" : "₾"} - ${
                     getPrices.end
@@ -120,7 +120,7 @@ export default function SearchInput() {
         </div>
         <button
           onClick={handleSearch}
-          className="small:hidden h-full w-[20%] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-r-[6px] text-whiteMain bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
+          className="small:hidden h-full w-[20%] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-r-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
         >
           მოძებნა
         </button>
@@ -172,7 +172,7 @@ export default function SearchInput() {
       </div>
       <button
         onClick={handleSearch}
-        className="hidden h-full  text-[14px] w-full py-3 mt-2 rounded-normal font-mainMedium rounded-r-[6px] text-whiteMain bg-main small:flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
+        className="hidden h-full  text-[14px] w-full py-3 mt-2 rounded-normal font-mainMedium  rounded-r-[6px] text-buttonText bg-main small:flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
       >
         <SearchIcon className="h-[16px] aspect-square mr-2" /> მოძებნა
       </button>

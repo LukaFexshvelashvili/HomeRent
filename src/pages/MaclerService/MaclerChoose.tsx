@@ -88,7 +88,7 @@ export default function MaclerChoose() {
               <div className="flex items-center gap-[30px]">
                 <div className="flex flex-col flex-1 gap-8">
                   <div className="px-5 flex flex-col  gap-3">
-                    <div className="w-full h-10 bg-maclerMain flex justify-center items-center text-whiteMain tracking-widest rounded-lg">
+                    <div className="w-full h-10 bg-maclerMain flex justify-center items-center text-buttonText tracking-widest rounded-lg">
                       86 000$
                     </div>
                     <div className="flex justify-between my-3 mb-5">
@@ -131,7 +131,7 @@ export default function MaclerChoose() {
               </div>
               <button
                 onClick={() => setMessage({ status: 0 })}
-                className="bg-maclerMain text-[14px] h-[35px] w-[200px] text-whiteMain font-mainMedium rounded-md mx-auto block mt-8 mb-2 transition-colors hover:bg-maclerMainHover"
+                className="bg-maclerMain text-[14px] h-[36px] w-[220px] text-buttonText tracking-wider font-mainMedium rounded-md mx-auto block mt-8 mb-2 transition-colors hover:bg-maclerMainHover"
               >
                 სერვისის მოთხოვნა
               </button>
@@ -179,7 +179,7 @@ function ProductBannerMacler(props: {
       <div className="flex items-center gap-3 ml-auto">
         {props.setOff == null ? (
           <button
-            className="bg-maclerMain text-whiteMain h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-maclerMainHover"
+            className="bg-maclerMain text-buttonText h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-maclerMainHover"
             onClick={() => props.setProduct(3)}
           >
             არჩევა

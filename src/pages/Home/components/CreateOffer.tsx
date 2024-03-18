@@ -23,7 +23,7 @@ export default function CreateOffer() {
           ჩვენი სერვისი საშუალებას გაძლევთ გამოაქვეყნოთ თქვენი უძრავი ქონება
           რათა დაგეხმაროთ მის გაყიდვა/გაქირავება -ში
         </p>
-        <button className="small:mx-auto   mt-9 mobileSmall:mt-4  mobileSmall:h-[36px] mobileSmall:w-[160px] mobileSmall:text-[14px] bg-main rounded-[5px] w-[190px] h-[40px] text-whiteMain text-[15px] tracking-widest transition-colors hover:bg-mainHover">
+        <button className="small:mx-auto   mt-9 mobileSmall:mt-4  mobileSmall:h-[36px] mobileSmall:w-[160px] mobileSmall:text-[14px] bg-main rounded-[5px] w-[190px] h-[40px] text-buttonText text-[15px] tracking-widest transition-colors hover:bg-mainHover">
           დაწყება
         </button>
       </div>

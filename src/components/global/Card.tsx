@@ -12,10 +12,10 @@ export default function Card(props: { autoWidth?: boolean }) {
     <div
       className={`h-auto   ${
         props.autoWidth ? "w-full" : "w-[290px]"
-      } bg-whiteMain border-2 border-[#F3F3F3] rounded-normal p-3 pb-14 relative`}
+      } bg-whiteMain border-2 border-cardBorder rounded-normal p-3 pb-14 relative`}
     >
       <div className="w-full h-[200px] rounded-normal bg-whiteLoad relative overflow-hidden">
-        <div className="absolute h-[25px] w-[60px] select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-whiteMain tracking-wider cursor-default top-2 right-2 z-[3]">
+        <div className="absolute h-[25px] w-[60px] select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
           VIP+
         </div>
         <img

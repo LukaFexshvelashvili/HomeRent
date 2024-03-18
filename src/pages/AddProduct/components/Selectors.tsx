@@ -85,7 +85,7 @@ export function EstateOption() {
             style={{ backgroundColor: e.secondColor }}
           >
             <div
-              className="absolute h-[30px] w-[120px] rounded-normal font-mainBold text-whiteMain flex items-center justify-center text-Asmall tracking-wider top-0 -translate-y-1/4"
+              className="absolute h-[30px] w-[120px] rounded-normal font-mainBold text-buttonText flex items-center justify-center text-Asmall tracking-wider top-0 -translate-y-1/4"
               style={{ backgroundColor: e.mainColor }}
             >
               {e.name}
@@ -114,7 +114,7 @@ export function EstateOption() {
                 {e.price !== 0 ? `1 დღე - ${e.price}₾` : "უფასო"}
               </p>
               <button
-                className="h-[32px] w-full rounded-md text-Asmall font-mainBold tracking-wider transition-colors"
+                className="h-[36px] w-full rounded-md text-Asmall font-mainBold tracking-wider transition-colors"
                 style={{
                   backgroundColor: status == e.status ? "#FFFFFF" : e.mainColor,
                   color: status == e.status ? e.mainColor : "#FFFFFF",

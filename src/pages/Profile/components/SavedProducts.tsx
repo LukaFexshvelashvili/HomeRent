@@ -10,7 +10,7 @@ export default function SavedProducts() {
   return (
     <>
       {" "}
-      <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3">
+      <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3">
         <h1>შენახული განცხადებები</h1>
 
         <input

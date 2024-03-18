@@ -18,10 +18,10 @@ export default function ProfileInfo() {
             key={i}
             className=" bg-profileInfoBlock rounded-md flex flex-col justify-center px-3 h-[45px] min-w-[120px]"
           >
-            <p className=" text-[11px] text-profileInfoBlockHeader font-mainSemiBold ">
+            <p className=" text-[11px] text-profileInfoBlockHeader font-mainSemiBold  ">
               {e.title}
             </p>
-            <p className=" text-[12px] text-profileInfoBlockHeader font-mainBold ml-1">
+            <p className=" text-[12px] text-profileInfoBlockHeader font-mainBold ml-1 ">
               {e.value}
             </p>
           </div>
