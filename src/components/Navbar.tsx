@@ -9,6 +9,7 @@ import {
   NotificationIcon,
   NotificationResponsiveIcon,
   PlusIcon,
+  SunIcon,
   UserLinearIcon,
 } from "../assets/icons/Icons";
 import georgianFlag from "../assets/images/languages/georgia.png";
@@ -198,7 +199,11 @@ export default function Navbar() {
                       onClick={() => dispatch(toggleDarkMode())}
                       className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover"
                     >
-                      {e.icon}
+                      {darkmode ? (
+                        <SunIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
+                      ) : (
+                        e.icon
+                      )}
                       {darkmode ? "ღია თემა" : "მუქი თემა"}
                     </button>
                   )
@@ -251,24 +256,24 @@ function ResponsiveNavbar(props: { userData: any }) {
           active ? "translate-x-0" : "translate-x-full"
         }  `}
       >
-        <div className="content_container flex justify-between pt-[80px]  flex-col ">
+        <div className=" z-30 relative content_container flex justify-between pt-[80px]  flex-col ">
           <div className="flex gap-2 items-center justify-center">
             <div className="">
-              <div className="h-[48px]  aspect-square rounded-circle bg-main p-[3px] flex justify-center items-center relative">
+              <div className="h-[44px]  aspect-square rounded-circle bg-main p-[3px] flex justify-center items-center relative">
                 <div className="h-full border-[3px] border-whiteMain aspect-square rounded-circle bg-main select-none cursor-pointer "></div>
               </div>
             </div>
-            <div className="ml-2">
-              <p className=" font-mainBold text-textHeadCard leading-[26px] text-[17px]">
+            <div className="ml-1">
+              <p className=" font-mainBold text-textHeadCard leading-[25px] text-[16px]">
                 {props.userData.name}
               </p>
-              <p className=" font-mainBold text-textDescCard leading-[26px] text-[16px]">
+              <p className=" font-mainBold text-textDescCard leading-[25px] text-[15px]">
                 {props.userData.lastname}
               </p>
             </div>
           </div>
           <div className="bg-lineBg h-[5px] rounded-md w-[50px] mx-auto my-6"></div>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-[2px]">
             {profileResponsiveButtons.map((e: TProfileButton, i: number) =>
               e.link !== "ChangeDarkTheme" ? (
                 <Link key={i} onClick={() => setActive(false)} to={e.link}>
@@ -285,7 +290,12 @@ function ResponsiveNavbar(props: { userData: any }) {
                   onClick={() => dispatch(toggleDarkMode())}
                   className={` outline-none cursor-pointer text-textHead transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
                 >
-                  {e.icon} {darkmode ? "ღია თემა" : "მუქი თემა"}
+                  {darkmode ? (
+                    <SunIcon className=" h-[26px] aspect-square fill-textHead mr-2" />
+                  ) : (
+                    e.icon
+                  )}
+                  {darkmode ? "ღია თემა" : "მუქი თემა"}
                 </button>
               )
             )}
@@ -339,40 +349,40 @@ const profileResponsiveButtons: TProfileButton[] = [
     link: "/Profile",
     name: "ჩემი პროფილი",
     icon: (
-      <UserLinearIcon className=" h-[30px] aspect-square fill-textHead mr-3" />
+      <UserLinearIcon className=" h-[26px] aspect-square fill-textHead mr-2" />
     ),
   },
   {
     link: "/Profile/MyProducts",
     name: "ჩემი განცხადებები",
     icon: (
-      <DocumentsIcon className=" h-[30px] aspect-square stroke-textHead mr-3" />
+      <DocumentsIcon className=" h-[26px] aspect-square stroke-textHead mr-2" />
     ),
   },
   {
     link: "ChangeDarkTheme",
     name: "მუქი თემა",
-    icon: <MoonIcon className=" h-[30px] aspect-square fill-textHead mr-3" />,
+    icon: <MoonIcon className=" h-[26px] aspect-square fill-textHead mr-2" />,
   },
   {
     link: "/Contact",
     name: "კონტაქტი",
     icon: (
-      <MessageIcon className=" h-[30px] aspect-square stroke-textHead mr-3" />
+      <MessageIcon className=" h-[26px] aspect-square stroke-textHead mr-2" />
     ),
   },
   {
     link: "/Notifications",
     name: "შეტყობინებები",
     icon: (
-      <NotificationResponsiveIcon className=" h-[30px] flex items-center justify-center stroke-textHead mr-3" />
+      <NotificationResponsiveIcon className=" h-[26px] flex items-center justify-center stroke-textHead mr-2" />
     ),
   },
   {
     link: "/Logout",
     name: "გასვლა",
     icon: (
-      <LogoutIcon className=" h-[30px] aspect-square stroke-textHead mr-3" />
+      <LogoutIcon className=" h-[26px] aspect-square stroke-textHead mr-2" />
     ),
   },
 ];

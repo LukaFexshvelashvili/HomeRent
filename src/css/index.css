@@ -31,7 +31,7 @@ img {
 }
 ::-webkit-scrollbar {
   width: 8px;
-  background-color: rgb(244, 244, 244);
+  background-color: rgba(244, 244, 244, 0.1);
 }
 ::-webkit-scrollbar-thumb {
   background-color: #3a86ff;

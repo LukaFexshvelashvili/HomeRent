@@ -13,12 +13,20 @@ import MaclerChoose from "./pages/MaclerService/MaclerChoose";
 import Maclerconditions from "./pages/MaclerService/Maclerconditions";
 // import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import { Route, Routes } from "react-router-dom";
+import { useEffect, useLayoutEffect } from "react";
+import { checkUIStorage } from "./hooks/UIFunctions";
+import { useDispatch } from "react-redux";
 // import { useSelector } from "react-redux";
 // import { RootState } from "./store/store";
 // import { Tuser } from "./store/data/userSlice";
 
 function App() {
   // const user: Tuser = useSelector((store: RootState) => store.user);
+  const dispatch = useDispatch();
+  useLayoutEffect(() => {
+    checkUIStorage(dispatch);
+  }, []);
+
   return (
     <>
       <Navbar />

@@ -91,6 +91,9 @@
 .ResponsiveNavbar::-webkit-scrollbar {
   display: none;
 }
+.responsiveFilters::-webkit-scrollbar {
+  display: none;
+}
 @media (max-width: 1000px) {
   .beforeInputBlock {
     position: relative;

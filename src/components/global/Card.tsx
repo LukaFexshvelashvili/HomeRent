@@ -11,7 +11,7 @@ export default function Card(props: { autoWidth?: boolean }) {
   return (
     <div
       className={`h-auto   ${
-        props.autoWidth ? "w-full" : "w-[290px]"
+        props.autoWidth ? "w-full" : "w-[280px]"
       } bg-whiteMain border-2 border-cardBorder rounded-normal p-3 pb-14 relative`}
     >
       <div className="w-full h-[200px] rounded-normal bg-whiteLoad relative overflow-hidden">

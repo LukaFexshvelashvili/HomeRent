@@ -1,5 +1,18 @@
+import { setDarkMode } from "../store/data/webUISlice";
+
+export function checkUIStorage(dispatch: any) {
+  if (localStorage.getItem("darkmode")) {
+    let darkmodeStorage: any = localStorage.getItem("darkmode");
+    let darkmode: boolean = JSON.parse(darkmodeStorage);
+    if (typeof darkmode == "boolean") {
+      dispatch(setDarkMode(darkmode));
+    }
+  }
+}
+
 export function changeDarkThemeColors(makeDark: boolean) {
   var r: any = document.querySelector(":root");
+  localStorage.setItem("darkmode", JSON.stringify(makeDark));
 
   if (makeDark) {
     let colArray = Object.keys(darkColors);

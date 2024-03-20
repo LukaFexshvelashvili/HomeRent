@@ -151,8 +151,10 @@ export default {
       },
     },
     screens: {
+      large: { max: "1500px" },
       medium: { max: "1330px" },
       mediumSmall: { max: "1200px" },
+      mediumSmallXl: { max: "1100px" },
       small: { max: "1000px" },
       mobile: { max: "800px" },
       mobileSmall: { max: "440px" },
