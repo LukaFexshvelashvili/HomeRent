@@ -19,9 +19,9 @@ export default function AddProduct() {
   const [showError, setShowError] = useState(false);
 
   return (
-    <main className="flex gap-3 min-h-screen items-start">
-      <section className="flex-[3] bg-whiteMain rounded-section shadow-sectionShadow ">
-        <div className="py-4 px-5 flex flex-col gap-8">
+    <main className="flex flex-row-reverse gap-3 min-h-screen items-start smallXl:flex-col">
+      <section className="flex-[3] medium:w-8/12 bg-whiteMain rounded-section shadow-sectionShadow smallXl:w-full">
+        <div className="py-4 px-5 flex flex-col gap-8  mobile:px-3">
           <EstateType />
           {productData.estateType !== null && <DealType />}
           {productData.estateDeal !== null && <EstateStatus />}
@@ -49,7 +49,7 @@ export default function AddProduct() {
           {productData.estateStatus !== null && <EstateOption />}
         </div>
       </section>
-      <section className="flex-1 sticky top-[80px] bg-whiteMain rounded-section shadow-sectionShadow">
+      <section className="flex-1 medium:w-4/12 sticky top-[80px] bg-whiteMain rounded-section shadow-sectionShadow smallXl:w-full">
         <EstateConfirm setShowError={setShowError} />
       </section>
     </main>

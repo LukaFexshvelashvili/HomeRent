@@ -120,9 +120,9 @@ export function CardExample(props: {
     <div
       className={`h-auto   ${
         props.autoWidth ? "w-full" : "w-[290px]"
-      } bg-whiteMain border-2 border-cardBorder rounded-normal p-3 pb-14 relative`}
+      } bg-whiteMain border-2 border-cardBorder rounded-normal p-3 pb-14 relative medium:w-[260px]`}
     >
-      <div className="w-full h-[240px] rounded-normal bg-whiteLoad relative overflow-hidden flex justify-center items-center">
+      <div className="w-full h-[240px] medium:h-[200px] rounded-normal bg-whiteLoad relative overflow-hidden flex justify-center items-center">
         <div className="absolute h-[25px] w-[60px]  select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
           VIP+
         </div>

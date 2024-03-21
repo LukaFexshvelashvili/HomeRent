@@ -59,26 +59,21 @@ function ResponsiveFiltersSection() {
           ფილტრები
         </button>
         <div
-          className={`responsiveFilters  mobile  pb-[30px] rounded-[20px] h-3/4  top-1/4 shadow-sectionShadow fixed z-[5] bg-whiteMain left-0  w-full overflow-y-scroll transition-transform duration-300 ${
+          onClick={() => setOpenFilters(false)}
+          className={`fixed h-full w-full top-0 left-0 bg-blackFade z-10 transition-[opacity,visibility] duration-500  ${
+            openFilters ? "opacity-100 visible" : "opacity-0 invisible"
+          } `}
+        ></div>
+        <div
+          className={`responsiveFilters  mobile  pb-[30px] rounded-[20px] h-3/4  top-1/4 shadow-sectionShadow fixed z-[11] bg-whiteMain left-0  w-full overflow-y-scroll transition-transform duration-300 ${
             openFilters ? "translate-y-0" : "translate-y-full"
           } `}
         >
-          <div className="flex sticky top-0 items-center justify-center py-3 h-[50px] translate-y-[-2px] bg-whiteMain z-20">
+          <div
+            onClick={() => setOpenFilters(false)}
+            className="flex sticky top-0 items-center justify-center py-3 h-[50px] translate-y-[-2px] bg-whiteMain z-20"
+          >
             <div className=" h-[6px] w-[100px] rounded-md  bg-lineBg mx-auto "></div>
-            <button
-              onClick={() => setOpenFilters(false)}
-              className={` h-[45px] absolute aspect-square gap-[6px] top-5  right-5 justify-center p-[10px] flex flex-col z-[5] transition-colors rounded-lg  bg-whiteBgLow `}
-            >
-              <span
-                className={`transition-transform block h-[2px] rounded-md w-full bg-blackMain ${" rotate-45 translate-y-[8px]"}  `}
-              ></span>
-              <span
-                className={`transition-transform  block h-[2px] rounded-md w-8/12 bg-blackMain ${" scale-x-0"}  `}
-              ></span>
-              <span
-                className={`transition-transform  block h-[2px] rounded-md w-4/12 bg-blackMain ${" -rotate-45 -translate-y-[8px] w-full"}  `}
-              ></span>
-            </button>
           </div>
 
           <div className="content_container">

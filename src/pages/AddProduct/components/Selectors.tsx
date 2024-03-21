@@ -76,8 +76,10 @@ export function EstateOption() {
   }, [vipStatus]);
   return (
     <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold ">შეთავაზება</p>
-      <div className="flex items-center justify-center gap-5 mt-8">
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+        შეთავაზება
+      </p>
+      <div className="flex items-center justify-center gap-5 mt-8 flex-wrap">
         {ActiveOffers.map((e: TOffer, i: number) => (
           <div
             key={i}
@@ -153,10 +155,10 @@ export function EstateClosePlaces() {
 
   return (
     <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold ">
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
         ახლოს მდებარეობს
       </p>
-      <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[200px] my-[25px] pl-5">
+      <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[200px] my-[25px] pl-5 mobileTab:pl-0 mobileSmall:pl-5 mobileSmall:max-h-fit">
         {closePlacesList.map((e: TClosePlace, i: number) => (
           <ClosePlaceBlock key={i} i={i} e={e} addAddon={addAddon} />
         ))}
@@ -188,10 +190,12 @@ function ClosePlaceBlock(props: {
           backgroundColor: active ? props.e.color : "transparent",
         }}
       >
-        {active && <CheckIcon className="h-[8px] aspect-square" />}
+        {active && <CheckIcon className="h-[8px] aspect-square " />}
       </div>
-      {props.e.icon("h-[30px]")}
-      <p className="ml-2 text-Asmall text-textDesc">{props.e.name}</p>
+      {props.e.icon("h-[30px] mobileTab:h-[24px]")}
+      <p className="ml-2 text-Asmall text-textDesc mobileTab:text-[12px]">
+        {props.e.name}
+      </p>
     </div>
   );
 }
@@ -218,10 +222,10 @@ export function EstateAddons() {
 
   return (
     <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold ">
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
         მონიშნეთ დამატებები
       </p>
-      <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[200px] my-[25px] pl-5">
+      <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[200px] my-[25px] pl-5 mediumSmallXl:max-h-[350px] mobileTab:pl-0 mobileSmall:pl-5 mobileSmall:max-h-fit">
         {productAddonsList.map((e: TProductAddon, i: number) => (
           <AddonBlock key={i} i={i} e={e} addAddon={addAddon} />
         ))}
@@ -249,10 +253,12 @@ function AddonBlock(props: {
           active ? "bg-main" : "bg-transparent"
         }`}
       >
-        {active && <CheckIcon className="h-[8px] aspect-square" />}
+        {active && <CheckIcon className="h-[8px]  aspect-square" />}
       </div>
-      {props.e.icon("h-[30px]")}
-      <p className="ml-2 text-Asmall text-textDesc">{props.e.name}</p>
+      {props.e.icon("h-[30px] mobileTab:h-[24px]")}
+      <p className="ml-2 text-Asmall text-textDesc mobileTab:text-[12px]">
+        {props.e.name}
+      </p>
     </div>
   );
 }
@@ -292,7 +298,7 @@ export function EstateImages(props: { error: boolean }) {
   };
   return (
     <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold ">
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
         ფოტოები{" "}
         <span className="text-Asmall text-textDescCard">
           (მაქსიმუმ 12 ფოტო, სურათის მოცულობა: 10MB)
@@ -304,7 +310,7 @@ export function EstateImages(props: { error: boolean }) {
           სავალდებულოა მინიმუმ ერთი ფოტო
         </div>
       )}
-      <div className="flex gap-3 flex-wrap pl-3 mt-4">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
         <div className=" h-[120px] aspect-video bg-whiteLow rounded-xl cursor-pointer transition-colors hover:bg-whiteHover flex justify-center items-center relative">
           <PlusIcon className=" h-[32px] aspect-square [&>path]:fill-whiteCont" />
           <input
@@ -337,19 +343,19 @@ export function EstateImages(props: { error: boolean }) {
               <div className="flex items-center gap-3 absolute top-2 right-2">
                 <button
                   onClick={() => makeMainImage(i)}
-                  className="invisible transition-opacity group-hover:visible opacity-0 group-hover:opacity-100   h-[30px] w-[150px] rounded-md bg-main text-whiteMain z-[2] text-Asmaller tracking-wider"
+                  className="invisible transition-opacity group-hover:visible opacity-0 group-hover:opacity-100   h-[30px] w-[150px] rounded-md bg-main text-buttonText z-[2] text-Asmaller tracking-wider"
                 >
-                  ფონზე დაყენება
+                  ფონად დაყენება
                 </button>
                 <button
                   onClick={() => removeImage(i)}
                   className="invisible transition-opacity group-hover:visible opacity-0 group-hover:opacity-100   h-[30px] aspect-square rounded-md bg-redI text-whiteMain z-[2] text-Asmaller tracking-wider flex justify-center items-center"
                 >
-                  <TrashIcon className="h-[20px] aspect-square [&>path]:stroke-whiteMain" />
+                  <TrashIcon className="h-[20px] aspect-square [&>path]:stroke-buttonText" />
                 </button>
               </div>
               {e.cover == true && (
-                <div className="absolute bottom-1 left-1 w-[70px] h-[26px] flex items-center justify-center rounded-lg tracking-widest bg-main text-whiteMain text-Asmaller z-[2]">
+                <div className="absolute bottom-1 left-1 w-[70px] h-[26px] flex items-center justify-center rounded-lg tracking-widest bg-main text-buttonText text-Asmaller z-[2]">
                   ფონი
                 </div>
               )}
@@ -376,10 +382,10 @@ export function EstateType() {
 
   return (
     <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold ">
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
         უძრავი ქონების ტიპი
       </p>
-      <div className="flex gap-3 flex-wrap pl-3 mt-4">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
         {RealEstateTypes.map((e, i) => (
           <button
             key={i}
@@ -390,12 +396,12 @@ export function EstateType() {
           >
             <e.icon
               className={` h-[24px] aspect-square ${
-                active == i && "[&>path]:fill-whiteMain"
+                active == i && "[&>path]:fill-buttonText"
               } `}
             />
             <p
               className={`text-Asmall ml-7 tracking-wide ${
-                active == i ? "text-whiteMain" : "text-main"
+                active == i ? "text-buttonText" : "text-main"
               }`}
             >
               {e.name}
@@ -418,10 +424,10 @@ export function DealType() {
   const DealTypes = ["იყიდება", "ქირავდება", "ქირავდება დღიურად", "გირავდება"];
   return (
     <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold ">
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
         გარიგების ტიპი
       </p>
-      <div className="flex gap-3 flex-wrap pl-3 mt-4">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
         {DealTypes.map((e, i) => (
           <button
             key={i}
@@ -432,7 +438,7 @@ export function DealType() {
           >
             <p
               className={`text-Asmall tracking-wide ${
-                active == i ? "text-whiteMain" : "text-main"
+                active == i ? "text-buttonText" : "text-main"
               }`}
             >
               {e}
@@ -454,8 +460,10 @@ export function EstateStatus() {
   const DealTypes = ["ახალი აშენებული", "ძველი აშენებული", "მშენებარე"];
   return (
     <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold ">სტატუსი</p>
-      <div className="flex gap-3 flex-wrap pl-3 mt-4">
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+        სტატუსი
+      </p>
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
         {DealTypes.map((e, i) => (
           <button
             key={i}
@@ -466,7 +474,7 @@ export function EstateStatus() {
           >
             <p
               className={`text-Asmall tracking-wide ${
-                active == i ? "text-whiteMain" : "text-main"
+                active == i ? "text-buttonText" : "text-main"
               }`}
             >
               {e}
@@ -484,14 +492,16 @@ export function EstateAddress(props: { error: boolean }) {
 
   return (
     <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold ">მისამართი</p>
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+        მისამართი
+      </p>
       {city == "" && props.error && (
         <div className=" rounded-xl text-pinkI bg-pinkClear py-3 px-4 text-sm tracking-wider mt-2 text-center">
           {" "}
           სავალდებულოა შეავსოთ ქალაქის ველი
         </div>
       )}
-      <div className="flex gap-3 flex-wrap pl-3 mt-4">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
         <SearchCityFilter setCity={setCity} />
         <input
           type="text"
@@ -540,7 +550,7 @@ export function EstateInformation(props: { error: boolean }) {
   return (
     <>
       <div className="flex flex-col">
-        <p className=" text-textHead tracking-wider font-mainBold ">
+        <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
           ინფორმაცია
         </p>
         {(size == null || fullPrice == 0) && props.error && (
@@ -550,13 +560,13 @@ export function EstateInformation(props: { error: boolean }) {
           </div>
         )}
         <div className="flex gap-4 flex-col pl-3 mt-4">
-          <div className="flex items-center">
-            <p className="text-textDesc font-mainMedium w-[200px]">
+          <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
+            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
               ფართი (მ²)
             </p>
             <input
               type="number"
-              className="AddProductInput"
+              className="AddProductInput mobileSmall:mx-auto"
               placeholder="ფართი"
               onChange={(e) => {
                 setSize(e.target.valueAsNumber);
@@ -566,13 +576,13 @@ export function EstateInformation(props: { error: boolean }) {
             />
           </div>
 
-          <div className="flex items-center">
-            <p className="text-textDesc font-mainMedium w-[200px]">
+          <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
+            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
               პროექტის ტიპი
             </p>
             <input
               type="number"
-              className="AddProductInput"
+              className="AddProductInput  mobileSmall:mx-auto"
               placeholder="არასტანდარტული"
               onChange={(e) => {
                 dispatch(updateProject(e.target.valueAsNumber));
@@ -580,13 +590,13 @@ export function EstateInformation(props: { error: boolean }) {
             />
           </div>
 
-          <div className="flex items-center">
-            <p className="text-textDesc font-mainMedium w-[200px]">
+          <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch ">
+            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
               მდგომარეობა
             </p>
             <input
               type="number"
-              className="AddProductInput"
+              className="AddProductInput mobileSmall:mx-auto"
               placeholder="მდგომარეობა"
               onChange={(e) => {
                 dispatch(updateCondition(e.target.valueAsNumber));
@@ -594,38 +604,44 @@ export function EstateInformation(props: { error: boolean }) {
             />
           </div>
 
-          <div className="flex items-center">
-            <p className="text-textDesc font-mainMedium w-[200px]">სართული</p>
-            <input
-              type="number"
-              className="AddProductInput mr-4"
-              placeholder="სართულები"
-              onChange={(e) => {
-                dispatch(updateFloor(e.target.valueAsNumber));
-              }}
-            />{" "}
-            <input
-              type="number"
-              className="AddProductInput"
-              placeholder="სართული სულ"
-              onChange={(e) => {
-                dispatch(updateFloors(e.target.valueAsNumber));
-              }}
-            />
+          <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
+            <p className="text-textDesc font-mainMedium min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
+              სართული
+            </p>
+            <div className="flex gap-4 flex-wrap mobileTab:justify-end mobileSmall:justify-center">
+              <input
+                type="number"
+                className="AddProductInput"
+                placeholder="სართულები"
+                onChange={(e) => {
+                  dispatch(updateFloor(e.target.valueAsNumber));
+                }}
+              />{" "}
+              <input
+                type="number"
+                className="AddProductInput"
+                placeholder="სართული სულ"
+                onChange={(e) => {
+                  dispatch(updateFloors(e.target.valueAsNumber));
+                }}
+              />
+            </div>
           </div>
 
-          <div className="flex items-center">
-            <p className="text-textDesc font-mainMedium w-[200px]">ოთახები</p>
+          <div className="flex items-center mobileTab:flex-col">
+            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
+              ოთახები
+            </p>
             <SelectNumbers setDataDispatch={updateRooms} name="" />
           </div>
-          <div className="flex items-center">
-            <p className="text-textDesc font-mainMedium w-[200px]">
+          <div className="flex items-center mobileTab:flex-col">
+            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
               საძინებელი
             </p>
             <SelectNumbers setDataDispatch={updateBedrooms} name="" />
           </div>
-          <div className="flex items-center">
-            <p className="text-textDesc font-mainMedium w-[200px]">
+          <div className="flex items-center mobileTab:flex-col">
+            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
               სველი წერტილი
             </p>
             <SelectNumbers setDataDispatch={updateBathrooms} name="" />
@@ -635,7 +651,9 @@ export function EstateInformation(props: { error: boolean }) {
       <div className="flex flex-col">
         {size !== null && size > 0 && (
           <>
-            <p className=" text-textHead tracking-wider font-mainBold ">ფასი</p>
+            <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+              ფასი
+            </p>
             <div className="flex gap-4 items-center  pl-3 mt-4">
               <div className="relative">
                 <button
