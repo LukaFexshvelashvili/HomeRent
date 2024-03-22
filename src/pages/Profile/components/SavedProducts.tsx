@@ -10,8 +10,8 @@ export default function SavedProducts() {
   return (
     <>
       {" "}
-      <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3">
-        <h1>შენახული განცხადებები</h1>
+      <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3  mobile:px-3">
+        <h1 className="mobileSmall:text-[14px]">შენახული განცხადებები</h1>
 
         <input
           type="text"
@@ -33,15 +33,15 @@ export default function SavedProducts() {
 
 function FavoriteBanner() {
   return (
-    <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center">
-      <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden">
+    <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center   small:flex-col">
+      <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden   small:w-[100%] small:aspect-video small:h-auto">
         <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2]"></div>
         <img
           src={productImage}
           className="absolute h-full w-full object-cover  top-0 left-0"
         />
       </div>
-      <div className="flex flex-col ml-3 h-full relative">
+      <div className="flex flex-col ml-3 h-full relative  small:w-full small:mt-3 small:h-auto">
         <h3 className="text-[15px] mb-[2px] text-textHeadBlack">
           იყიდება 5 ოთახიანი ბინა
         </h3>
@@ -57,7 +57,7 @@ function FavoriteBanner() {
         <p className="text-[13px] text-textDesc">
           ფართი: <span className="text-[13px] text-textHeadBlack">100 მ²</span>
         </p>
-        <div className="flex items-center gap-5 mt-auto">
+        <div className="flex items-center gap-5 mt-auto small:mt-2 flex-wrap">
           <p className="flex items-center text-[13px] text-textDesc gap-1">
             <LoginEyeIcon className="h-4 aspect-square [&>path]:fill-textDesc" />{" "}
             2 234
@@ -69,7 +69,7 @@ function FavoriteBanner() {
           <p className="text-[13px] text-textDesc">ID - 18495519</p>
         </div>
       </div>
-      <div className="flex items-center gap-3 ml-auto">
+      <div className="flex items-center gap-3 ml-auto small:justify-start small:w-full small:mt-5">
         <button className="bg-orangeClear  h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-orangeHover flex justify-center items-center">
           <BookmarkIcon className="h-full aspect-square [&>path]:fill-orangeI [&>path]:stroke-orangeI" />
         </button>

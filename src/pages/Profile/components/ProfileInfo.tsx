@@ -12,7 +12,7 @@ export default function ProfileInfo() {
   return (
     <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex gap-6 flex-col  px-7 py-5 ">
       <h2 className="text-textHeadCard">ინფორმაცია</h2>
-      <div className="flex items-center gap-3 ">
+      <div className="flex items-center gap-3 flex-wrap small:justify-center ">
         {userInfo.map((e: TuserInfo, i: number) => (
           <div
             key={i}
@@ -27,7 +27,7 @@ export default function ProfileInfo() {
           </div>
         ))}
       </div>
-      <div className="flex items-center gap-4 ">
+      <div className="flex items-center gap-4  flex-wrap justify-center">
         <div className="h-[50px] w-[270px] productsBg rounded-lg flex flex-col justify-center px-3 ">
           <p className=" text-[13px] text-[rgba(255,255,255,0.9)] leading-[15px] font-mainBold tracking-wider">
             განცხადებების რაოდენობა

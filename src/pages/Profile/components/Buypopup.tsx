@@ -70,7 +70,7 @@ export default function Buypopup(props: { setPopbuy: Function }) {
                         {e.price !== 0 ? `1 დღე - ${e.price}₾` : "უფასო"}
                       </p>
                       <button
-                        className="h-[32px] w-full rounded-md text-Asmall font-mainBold tracking-wider transition-colors"
+                        className="h-[32px] w-full rounded-md text-Asmall font-mainBold tracking-wider transition-colors "
                         style={{
                           backgroundColor:
                             status == e.status ? "#FFFFFF" : e.mainColor,
@@ -114,7 +114,7 @@ export default function Buypopup(props: { setPopbuy: Function }) {
               </div>
             </>
           )}
-          <button className="block h-[34px] w-[180px] rounded-md bg-main text-whiteMain text-[14px] tracking-wider transition-colors hover:bg-mainHover ml-auto mt-5">
+          <button className="block h-[34px] w-[180px] rounded-md bg-main text-buttonText text-[14px] tracking-wider transition-colors hover:bg-mainHover ml-auto mt-5">
             გადახდა
           </button>
         </div>

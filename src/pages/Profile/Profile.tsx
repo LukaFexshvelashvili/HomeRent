@@ -19,10 +19,10 @@ export default function Profile() {
   const [activeNav, setActiveNav] = useState(1);
   const userData = useSelector((store: RootState) => store.user);
   return (
-    <main className="min-h-screen flex gap-4">
+    <main className="min-h-screen flex gap-4 mobile:flex-col">
       <section className="flex flex-col flex-[2] gap-4 ">
         <div className="h-[90px] rounded-section shadow-sectionShadow bg-whiteMain relative flex items-center px-7 py-5 ">
-          <p className="text-sm text-textDescCard absolute top-2 right-4">
+          <p className="text-sm text-textDescCard absolute top-2 right-4 small:text-[10px]">
             ID - {userData.id}
           </p>
           <div className="flex gap-2 items-center">

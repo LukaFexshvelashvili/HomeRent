@@ -10,9 +10,9 @@ export default function MyProducts() {
     <>
       {" "}
       {popbuy.id && <Buypopup setPopbuy={setPopbuy} />}
-      <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3">
-        <h1>ჩემი განცხადებები</h1>
-        <div className="flex gap-3 items-center">
+      <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3  mobile:px-3">
+        <h1 className="mobileSmall:text-[14px]">ჩემი განცხადებები</h1>
+        <div className="flex gap-3 items-center flex-wrap mobile:justify-center">
           {choices.map((e: string, i: number) => (
             <button
               key={i}
