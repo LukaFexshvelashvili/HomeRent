@@ -15,7 +15,7 @@ export default function MaclerChoose() {
           >
             {" "}
           </div>
-          <div className=" w-[650px] rounded-section bg-whiteMain p-5 relative z-10">
+          <div className=" w-[650px] rounded-section bg-whiteMain p-5 relative z-10  max-w-[90%]">
             {message.status == 1 ? (
               <div className="w-[550px] mx-auto">
                 <h2 className="text-maclerMain font-mainBold text-center text-[18px]  mb-4">
@@ -30,13 +30,13 @@ export default function MaclerChoose() {
 
                 <button
                   onClick={() => setMessage({ status: -1 })}
-                  className="bg-maclerMain text-[14px] h-[35px] w-[200px] text-whiteMain tracking-wider rounded-md mx-auto block mt-6  transition-colors hover:bg-maclerMainHover"
+                  className="bg-maclerMain text-[14px] h-[35px] w-[200px] text-buttonText tracking-wider rounded-md mx-auto block mt-6  transition-colors hover:bg-maclerMainHover"
                 >
                   გასაგებია
                 </button>
               </div>
             ) : (
-              <div className="w-[550px] mx-auto">
+              <div className="w-[550px] mx-auto  max-w-[100%] ">
                 <h2 className="text-redI font-mainBold text-center text-[18px]  mb-4">
                   წარმოიშვა შეცდომა შეცდომა
                 </h2>
@@ -48,7 +48,7 @@ export default function MaclerChoose() {
                 </p>
                 <button
                   onClick={() => setMessage({ status: -1 })}
-                  className="bg-redI text-[14px] h-[35px] w-[200px] text-whiteMain tracking-wider rounded-md mx-auto block mt-6  transition-colors hover:bg-redCloseI"
+                  className="bg-redI text-[14px] h-[35px] w-[200px] text-buttonText tracking-wider rounded-md mx-auto block mt-6  transition-colors hover:bg-redCloseI"
                 >
                   გასაგებია
                 </button>
@@ -85,8 +85,8 @@ export default function MaclerChoose() {
               <p className="text-textHead  mt-[30px] mb-[20px]">
                 უძრავი ქონების ფასი
               </p>
-              <div className="flex items-center gap-[30px]">
-                <div className="flex flex-col flex-1 gap-8">
+              <div className="flex items-center gap-[30px] mobile:flex-col-reverse">
+                <div className="flex flex-col flex-1 gap-8  mobile:w-full">
                   <div className="px-5 flex flex-col  gap-3">
                     <div className="w-full h-10 bg-maclerMain flex justify-center items-center text-buttonText tracking-widest rounded-lg">
                       86 000$
@@ -148,15 +148,15 @@ function ProductBannerMacler(props: {
   setOff?: boolean;
 }) {
   return (
-    <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center">
-      <div className="w-[170px] h-[100px] rounded-lg bg-whiteLoad relative overflow-hidden">
+    <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center  mobile:flex-col">
+      <div className="w-[170px] h-[100px] rounded-lg bg-whiteLoad relative overflow-hidden mobile:w-[100%] mobile:aspect-video mobile:h-auto">
         <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2]"></div>
         <img
           src={productImage}
           className="absolute h-full w-full object-cover  top-0 left-0"
         />
       </div>
-      <div className="flex flex-col ml-3 h-full relative">
+      <div className="flex flex-col ml-3 h-full relative  mobile:w-full mobile:mt-3 mobile:h-auto">
         <h3 className="text-[15px] mb-[2px] text-textHeadBlack">
           იყიდება 5 ოთახიანი ბინა
         </h3>
@@ -176,17 +176,17 @@ function ProductBannerMacler(props: {
           <p className="text-[13px] text-textDesc">ID - 18495519</p>
         </div>
       </div>
-      <div className="flex items-center gap-3 ml-auto">
+      <div className="flex items-center gap-3 ml-auto mobile:mx-auto">
         {props.setOff == null ? (
           <button
-            className="bg-maclerMain text-buttonText h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-maclerMainHover"
+            className="bg-maclerMain mobile:mt-5  text-buttonText h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-maclerMainHover"
             onClick={() => props.setProduct(3)}
           >
             არჩევა
           </button>
         ) : (
           <button
-            className="bg-whiteMain text-maclerMain h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-whiteHover"
+            className="bg-whiteMain text-maclerMain mobile:mt-5  h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-whiteHover"
             onClick={() => props.setProduct(null)}
           >
             არჩეული
