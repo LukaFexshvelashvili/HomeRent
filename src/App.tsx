@@ -16,6 +16,7 @@ import { Route, Routes } from "react-router-dom";
 import { useEffect, useLayoutEffect } from "react";
 import { checkUIStorage } from "./hooks/UIFunctions";
 import { useDispatch } from "react-redux";
+import AdminPanel from "./pages/AdminPanel/AdminPanel";
 // import { useSelector } from "react-redux";
 // import { RootState } from "./store/store";
 // import { Tuser } from "./store/data/userSlice";
@@ -44,6 +45,7 @@ function App() {
             <Route path="MaclerService" element={<MaclerService />} />
             <Route path="MaclerChoose" element={<MaclerChoose />} />
             <Route path="Maclerconditions" element={<Maclerconditions />} />
+            <Route path="AdminPanel" element={<AdminPanel />} />
           </Route>
         </Routes>
       </div>

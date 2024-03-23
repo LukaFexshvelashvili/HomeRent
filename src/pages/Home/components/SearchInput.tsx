@@ -38,13 +38,13 @@ export default function SearchInput() {
   return (
     <div className="w-10/12 mediumSmall:w-full small:w-auto small:h-auto h-[45px]  my-10 mx-auto ">
       <div className="relative  rounded-normal flex  small:flex-col   items-center h-full w-full border-2 border-whiteLoad overflow-hidden">
-        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(1)}
-            className="flex h-full items-center gap-3  px-6 "
+            className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
           >
             <FilterHomeIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-            <p className="w-[150px] text-[14px] font-mainMedium text-textDesc">
+            <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
               {getType ? getType : "ბინა"}
             </p>
           </div>
@@ -57,13 +57,13 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(2)}
-            className="flex h-full items-center gap-3  px-6 "
+            className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
           >
             <FilterPlaceIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-            <p className="w-[150px] text-[14px] font-mainMedium text-textDesc">
+            <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
               {getCity ? getCity : "მდებარეობა"}
             </p>
           </div>
@@ -76,13 +76,13 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(3)}
-            className="flex h-full items-center gap-3  px-6 "
+            className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
           >
             <FilterFrameIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-            <p className="w-[150px] text-[14px] font-mainMedium text-textDesc">
+            <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
               {getSizes ? `${getSizes[0]} მ² - ${getSizes[1]} მ²` : "ფართი"}
             </p>
           </div>
@@ -95,13 +95,13 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex small:border-none  items-center w-[20%] text-textDesc small:py-4 small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+        <div className="flex small:border-none  items-center w-[20%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(4)}
-            className="flex h-full items-center gap-3  px-6 "
+            className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
           >
             <MoneyIcon className=" h-[18px] [&>path]:fill-navIcon" />{" "}
-            <p className="w-[150px] text-[14px] font-mainMedium text-textDesc">
+            <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
               {getPrices
                 ? `${getPrices.start}${getPrices.currency == 0 ? "$" : "₾"} - ${
                     getPrices.end
@@ -125,16 +125,16 @@ export default function SearchInput() {
           მოძებნა
         </button>
         {inputSelect && (
-          <div className="fixed left-2/4 -translate-x-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4 w-[80%] mx-auto z-20">
+          <div className="fixed left-2/4 -translate-x-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4 w-[80%] mx-auto z-20 small:top-2/4 small:-translate-y-2/4">
             <button
               onClick={() => setInputSelect(null)}
               className="h-[26px] aspect-square  absolute top-3 right-3 flex justify-center items-center p-1"
             >
-              <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+              <PopupCloseIcon className=" [&>path]:fill-whiteCont" />
             </button>
             {inputSelect == 1 && (
               <>
-                <p className="text-textHead text-[14px]">
+                <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
                   აირჩიეთ უძრავი ქონების ტიპი
                 </p>
                 <SelectType setData={setGetType} closeWindow={setInputSelect} />
@@ -142,28 +142,34 @@ export default function SearchInput() {
             )}
             {inputSelect == 2 && (
               <>
-                <p className="text-textHead text-[14px]">აირჩიეთ ქალაქი</p>
+                <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                  აირჩიეთ ქალაქი
+                </p>
                 <SelectCity setData={setGetCity} closeWindow={setInputSelect} />
               </>
             )}
             {inputSelect == 3 && (
               <>
-                <p className="text-textHead text-[14px]">აირჩიეთ ფართის ზომა</p>
+                <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                  აირჩიეთ ფართის ზომა
+                </p>
                 <InputSizeSlider
                   setData={setGetSizes}
                   closeWindow={setInputSelect}
+                  toFull
                 />
               </>
             )}
 
             {inputSelect == 4 && (
               <>
-                <p className="text-textHead text-[14px]">
+                <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
                   აირჩიეთ ფასის ინტერვალი
                 </p>
                 <InputPriceSlider
                   setData={setGetPrices}
                   closeWindow={setInputSelect}
+                  toFull
                 />
               </>
             )}
@@ -206,7 +212,7 @@ function SelectCity(props: { setData: Function; closeWindow: Function }) {
         onChange={(e) => setSearch(e.target.value)}
         value={search}
       />
-      <div className="flex flex-col flex-wrap gap-x-10 h-[400px] overflow-x-scroll mt-6 gap-y-2">
+      <div className="flex flex-col   mobileTab:overflow-x-hidden mobileTab:overflow-y-scroll mobileTab:flex-nowrap  flex-wrap gap-x-10 h-[420px] overflow-x-scroll mt-6 gap-y-2">
         {citiesAPI &&
           citiesAPI.map((e: string, i: number) => (
             <div
@@ -214,7 +220,7 @@ function SelectCity(props: { setData: Function; closeWindow: Function }) {
                 props.setData(e);
                 props.closeWindow(null);
               }}
-              className=" h-[26px] cursor-pointer transition-colors px-2 min-w-[150px] rounded-md hover:bg-whiteHover"
+              className=" h-[26px] mobileTab:h-auto min-h-[30px] cursor-pointer transition-colors px-2 min-w-[150px] rounded-md hover:bg-whiteHover text-textHeadBlack"
               key={i}
             >
               {e}

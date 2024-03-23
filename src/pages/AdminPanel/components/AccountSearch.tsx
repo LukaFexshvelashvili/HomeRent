@@ -18,14 +18,14 @@ export default function AccountSearch() {
 }
 function AccountBanner() {
   return (
-    <div className="w-full h-10 rounded-lg flex items-center px-5 bg-mainClear">
-      <div className="h-[28px]  aspect-square rounded-circle bg-main p-[3px] flex justify-center items-center relative">
-        <div className="h-full border-2 border-whiteMain aspect-square rounded-circle bg-main select-none cursor-pointer "></div>
+    <div className="w-full h-10 rounded-lg flex items-center px-5 bg-mainClear  small:flex-wrap  small:h-auto  small:py-3 small:justify-center  small:gap-y-2">
+      <div className="h-[28px]  small:h-[24px]   aspect-square rounded-circle bg-main p-[3px] small:p-[2px] flex justify-center items-center relative">
+        <div className="h-full border-2 border-whiteMain  aspect-square rounded-circle bg-main select-none cursor-pointer "></div>
       </div>
       <p className="text-[14px] ml-4 text-textDesc">ლუკა ფეხშველაშვილი</p>
       <p className="text-[14px] ml-4 text-textDesc">Luka1172@mail.ru</p>
       <p className="text-[14px] ml-4 text-textDesc">599000000</p>
-      <div className="flex gap-2 items-center ml-auto">
+      <div className="flex gap-2 items-center ml-auto  small:mt-1  small:w-full small:justify-center">
         <button className="bg-pinkClear font-mainBold tracking-wider text-pinkI text-[12px] h-[28px] w-[120px] rounded-md transition-colors hover:bg-pinkHover">
           დაბლოკვა
         </button>

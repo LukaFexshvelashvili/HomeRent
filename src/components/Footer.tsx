@@ -131,14 +131,16 @@ function ResponsiveFooterLi(props: { title: string; content: JSX.Element }) {
         onClick={() => setactive((state: boolean) => !state)}
         className="flex h-[32px] justify-between items-center w-full"
       >
-        <h3 className="mb-2 text-textHeadBlack">{props.title}</h3>
+        <h3 className="mb-2 text-textHeadBlack mobile:text-[14px] opacity-90">
+          {props.title}
+        </h3>
         <DropDownIcon
           className={` h-3 aspect-square [&>path]:fill-textDesc transition-transform ${
             active ? "rotate-180" : "rotate-0"
           }`}
         />
       </button>
-      <div className="flex flex-col [&>p]:text-[16px] [&>p]:text-textDesc gap-1">
+      <div className="flex flex-col [&>p]:text-[16px] [&>p]:text-textDesc gap-1 mobile:[&>p]:text-[14px]">
         {props.content}
       </div>
     </div>

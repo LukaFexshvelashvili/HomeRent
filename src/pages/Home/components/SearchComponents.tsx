@@ -4,6 +4,7 @@ import ReactSlider from "react-slider";
 export function InputSizeSlider(props: {
   setData: Function;
   closeWindow: Function;
+  toFull?: boolean;
 }) {
   const [PricesPercentages, setPricesPercentages] = useState<number[]>([
     0, 100,
@@ -18,7 +19,11 @@ export function InputSizeSlider(props: {
     ]);
   }, [PricesPercentages]);
   return (
-    <div className="flex flex-col items-center relative w-10/12 mx-auto">
+    <div
+      className={`flex flex-col items-center relative w-10/12 mx-auto ${
+        props.toFull ? "w-full" : ""
+      }`}
+    >
       <ReactSlider
         className="horizontal-slider w-full mt-4 flex items-center h-3"
         thumbClassName="example-thumb thumbSlider"
@@ -31,11 +36,11 @@ export function InputSizeSlider(props: {
         pearling
         minDistance={10}
       />
-      <div className="flex items-center gap-6 mt-4">
+      <div className="flex items-center gap-6 mt-4 mobile:flex-wrap">
         <div className="flex items-center">
           <input
             type="number"
-            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors text-textHeadCard focus:bg-LoginInputActive text-[15px]"
+            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors text-buttonText focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               if (
                 e.target.valueAsNumber <= priceDistance[1] &&
@@ -117,7 +122,7 @@ export function InputSizeSlider(props: {
           props.setData([Prices[0], Prices[1]]);
           props.closeWindow(null);
         }}
-        className="my-1 mt-6 rounded-md bg-main px-8 py-2 text-whiteMain tracking-wider transition-colors hover:bg-mainHover"
+        className="my-1 mt-6 rounded-md bg-main px-8 py-2 text-buttonText tracking-wider transition-colors hover:bg-mainHover"
       >
         დადასტურება
       </button>
@@ -127,6 +132,7 @@ export function InputSizeSlider(props: {
 export function InputPriceSlider(props: {
   setData: Function;
   closeWindow: Function;
+  toFull?: boolean;
 }) {
   const [PricesPercentages, setPricesPercentages] = useState<number[]>([
     0, 100,
@@ -141,8 +147,16 @@ export function InputPriceSlider(props: {
     ]);
   }, [PricesPercentages]);
   return (
-    <div className="flex flex-col items-center relative w-10/12 mx-auto">
-      <div className="h-[30px] w-[70px] flex items-center absolute top-0 right-0 outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg text-textDescCard cursor-pointer">
+    <div
+      className={`flex flex-col items-center relative w-10/12 mx-auto ${
+        props.toFull ? "w-full" : ""
+      }`}
+    >
+      <div
+        className={`h-[30px] w-[70px] flex items-center absolute ${
+          props.toFull ? "mt-2" : ""
+        }  top-0 right-0 outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg text-textDescCard cursor-pointer`}
+      >
         <div className="flex-1 h-full flex items-center justify-center">₾</div>
         <div className="flex-1 h-full flex items-center justify-center text-buttonText bg-main rounded-lg relative">
           $
@@ -160,7 +174,7 @@ export function InputPriceSlider(props: {
         pearling
         minDistance={10}
       />
-      <div className="flex items-center gap-6 mt-4">
+      <div className="flex items-center gap-6 mt-4 mobileTab:flex-wrap ">
         <div className="flex items-center">
           <input
             type="number"
@@ -250,7 +264,7 @@ export function InputPriceSlider(props: {
           });
           props.closeWindow(null);
         }}
-        className="my-1 mt-6 rounded-md bg-main px-8 py-2 text-whiteMain tracking-wider transition-colors hover:bg-mainHover"
+        className="my-1 mt-6 rounded-md bg-main px-8 py-2 text-buttonText tracking-wider transition-colors hover:bg-mainHover"
       >
         დადასტურება
       </button>
