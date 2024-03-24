@@ -1,13 +1,30 @@
+import { useSelector } from "react-redux";
+import { Tuser } from "../../../store/data/userSlice";
+import { RootState } from "../../../store/store";
+import { useNavigate } from "react-router-dom";
+
 type TuserInfo = {
   title: string;
   value: string;
 };
 export default function ProfileInfo() {
+  const user: Tuser = useSelector((store: RootState) => store.user);
+  const navigate = useNavigate();
+
+  if (user.isLogged == false) {
+    navigate("/Login");
+  }
+  if (user.isLogged == null) {
+    return null;
+  }
   const userInfo: TuserInfo[] = [
-    { title: "სახელი", value: "ლუკა" },
-    { title: "გვარი", value: "ფეხშველაშვილი" },
-    { title: "მეილი", value: "luk****@mail.ru" },
-    { title: "ტელეფონის ნომერი", value: "598 15 9* **" },
+    { title: "სახელი", value: user.name },
+    { title: "გვარი", value: user.surname },
+    { title: "მეილი", value: user.mail?.slice(0, 6) + "***" },
+    {
+      title: "ტელეფონის ნომერი",
+      value: user.mobile ? user.mobile.slice(0, 6) + "***" : "დამატება",
+    },
   ];
   return (
     <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex gap-6 flex-col  px-7 py-5 ">
@@ -55,7 +72,7 @@ export default function ProfileInfo() {
       </div>
       <p className=" text-[14px] text-textDesc">
         ანგარიშის შექმნის თარიღი:{" "}
-        <span className="text-textHead">2-10-2023</span>
+        <span className="text-textHead">{user.create_date?.split(" ")[0]}</span>
       </p>
     </div>
   );

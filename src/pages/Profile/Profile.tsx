@@ -7,16 +7,34 @@ import {
   SettingsIcon,
   UserLinearIcon,
 } from "../../assets/icons/Icons";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import MyProducts from "./components/MyProducts";
 import SavedProducts from "./components/SavedProducts";
 import LastSeenProducts from "./components/LastSeenProducts";
 import Settings from "./components/Settings";
 import ProfileInfo from "./components/ProfileInfo";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 
 export default function Profile() {
+  const navigate = useNavigate();
   const [activeNav, setActiveNav] = useState(1);
+  useLayoutEffect(() => {
+    if (location.pathname.includes("MyProducts")) {
+      setActiveNav(1);
+    }
+    if (location.pathname.includes("SavedProducts")) {
+      setActiveNav(2);
+    }
+    if (location.pathname.includes("LastSeenProducts")) {
+      setActiveNav(3);
+    }
+    if (location.pathname.includes("Settings")) {
+      setActiveNav(4);
+    }
+    if (location.pathname.includes("ProfileInfo")) {
+      setActiveNav(5);
+    }
+  }, [navigate]);
   const userData = useSelector((store: RootState) => store.user);
   return (
     <main className="min-h-screen flex gap-4 mobile:flex-col">
@@ -36,7 +54,7 @@ export default function Profile() {
                 {userData.name}
               </p>
               <p className=" font-mainBold text-textDescCard leading-[22px] text-[14px]">
-                {userData.lastname}
+                {userData.surname}
               </p>
             </div>
           </div>

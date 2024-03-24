@@ -1,15 +1,21 @@
 import { useState } from "react";
-import { LockIcon, MailIcon } from "../../assets/icons/Icons";
+import { MailIcon } from "../../assets/icons/Icons";
 import { HomesbgDecor } from "../../assets/images/decorations/svg/Decorations";
 import SideSection from "./components/SideSection";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { Tuser } from "../../store/data/userSlice";
+import { Link } from "react-router-dom";
 
 export default function ForgotPassword() {
+  const user: Tuser = useSelector((store: RootState) => store.user);
   const [codeSended, setCodeSended] = useState(false);
   const darkMode: boolean = useSelector(
     (store: RootState) => store.webUI.darkMode
   );
+  if (user.isLogged === null || user.isLogged == true) {
+    return null;
+  }
   return (
     <>
       <main className="m-0 p-0">
@@ -63,6 +69,9 @@ export default function ForgotPassword() {
                   {codeSended ? "დადასტურება" : "კოდის მიღება"}
                 </button>
               </form>
+              <p className="text-main text-Asmall mt-5 font-mainBold tracking-wider mobile:text-[12px] mobile:invisible cursor-pointer">
+                <Link to={"/Login"}>უკან დაბრუნება</Link>
+              </p>
             </div>
             <div className="absolute bottom-0 z-0 pointer-events-none w-full">
               {!darkMode && <HomesbgDecor className="w-full opacity-20" />}

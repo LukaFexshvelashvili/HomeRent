@@ -91,10 +91,14 @@ export default function Navbar() {
             <HelpIcon className="h-[16px] aspect-square" />
             დახმარება
           </button>
-          <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-greenClear text-greenI rounded-[8px] text-[12px] transition-colors hover:bg-greenHover">
-            <PlusIcon className="h-[13px] aspect-square" />
-            დამატება
-          </button>
+          {userData.isLogged && (
+            <Link to={"/AddProduct"}>
+              <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-greenClear text-greenI rounded-[8px] text-[12px] transition-colors hover:bg-greenHover">
+                <PlusIcon className="h-[13px] aspect-square" />
+                დამატება
+              </button>
+            </Link>
+          )}
           <div className="flex mx-2 items-center justify-center gap-2">
             <button className="relative h-[34px] aspect-square cursor-default flex items-center justify-center select-none">
               <BookmarkIcon className="h-[20px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon p-[0.2px]" />
@@ -117,7 +121,7 @@ export default function Navbar() {
                 }`}
               />
               <div
-                className={` absolute h-auto pb-[40px] w-[200px] overflow-hidden bg-white rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
+                className={` absolute h-auto pb-[40px] w-[200px] overflow-hidden bg-whiteMain rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
                   activePop == "notifications"
                     ? "visible opacity-100"
                     : "invisible opacity-0"
@@ -172,42 +176,70 @@ export default function Navbar() {
                 </div>
                 <div className=" flex flex-col ml-3">
                   <p className="text-[13px] font-mainBold text-userName">
-                    USER_NAME
+                    {userData.name}
                   </p>
                   <p className="text-[11px] font-mainBold text-userLastName">
-                    USER_LASTNAME
+                    {userData.surname}
                   </p>
                 </div>
               </div>
               <div className=" mx-auto my-2 mb-4 bg-lineBg h-[2px] w-[50px] rounded-md"></div>
               <div className="flex flex-col">
-                {profileButtons.map((e: TProfileButton, i: number) =>
-                  e.link !== "ChangeDarkTheme" ? (
-                    <Link
-                      key={i}
-                      to={e.link}
-                      onClick={() => setActivePop(null)}
-                    >
-                      <button className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover">
-                        {e.icon}
-                        {e.name}
-                      </button>
-                    </Link>
-                  ) : (
-                    <button
-                      key={i}
-                      onClick={() => dispatch(toggleDarkMode())}
-                      className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover"
-                    >
-                      {darkmode ? (
-                        <SunIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
+                {userData.isLogged
+                  ? profileButtons.map((e: TProfileButton, i: number) =>
+                      e.link !== "ChangeDarkTheme" ? (
+                        <Link
+                          key={i}
+                          to={e.link}
+                          onClick={() => setActivePop(null)}
+                        >
+                          <button className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover">
+                            {e.icon}
+                            {e.name}
+                          </button>
+                        </Link>
                       ) : (
-                        e.icon
-                      )}
-                      {darkmode ? "ღია თემა" : "მუქი თემა"}
-                    </button>
-                  )
-                )}
+                        <button
+                          key={i}
+                          onClick={() => dispatch(toggleDarkMode())}
+                          className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover"
+                        >
+                          {darkmode ? (
+                            <SunIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
+                          ) : (
+                            e.icon
+                          )}
+                          {darkmode ? "ღია თემა" : "მუქი თემა"}
+                        </button>
+                      )
+                    )
+                  : unloggedButtons.map((e: TProfileButton, i: number) =>
+                      e.link !== "ChangeDarkTheme" ? (
+                        <Link
+                          key={i}
+                          to={e.link}
+                          onClick={() => setActivePop(null)}
+                        >
+                          <button className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover">
+                            {e.icon}
+                            {e.name}
+                          </button>
+                        </Link>
+                      ) : (
+                        <button
+                          key={i}
+                          onClick={() => dispatch(toggleDarkMode())}
+                          className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover"
+                        >
+                          {darkmode ? (
+                            <SunIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
+                          ) : (
+                            e.icon
+                          )}
+                          {darkmode ? "ღია თემა" : "მუქი თემა"}
+                        </button>
+                      )
+                    )}
               </div>
             </div>
           </div>
@@ -268,7 +300,7 @@ function ResponsiveNavbar(props: { userData: any }) {
                 {props.userData.name}
               </p>
               <p className=" font-mainBold text-textDescCard leading-[25px] text-[15px]">
-                {props.userData.lastname}
+                {props.userData.surname}
               </p>
             </div>
           </div>
@@ -386,6 +418,20 @@ const profileResponsiveButtons: TProfileButton[] = [
     ),
   },
 ];
+const unloggedButtons: TProfileButton[] = [
+  {
+    link: "/Login",
+    name: "ანგარიშში შესვლა",
+    icon: (
+      <LogoutIcon className="h-[20px] aspect-square stroke-textHead mr-2" />
+    ),
+  },
+  {
+    link: "ChangeDarkTheme",
+    name: "მუქი თემა",
+    icon: <MoonIcon className="h-[20px] aspect-square fill-textHead mr-2" />,
+  },
+];
 
 const profileButtons: TProfileButton[] = [
   {
@@ -416,7 +462,6 @@ const profileButtons: TProfileButton[] = [
   },
   {
     link: "/Logout",
-
     name: "გასვლა",
     icon: (
       <LogoutIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
