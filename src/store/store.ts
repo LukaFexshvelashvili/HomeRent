@@ -9,6 +9,13 @@ export const store = configureStore({
     addProduct: addProductSlice,
     webUI: webUISlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["addProduct/updateImages"],
+        ignoredPaths: ["addProduct.estateImages"],
+      },
+    }),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

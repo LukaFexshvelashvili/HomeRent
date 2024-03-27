@@ -5,8 +5,6 @@ import {
 } from "../store/data/userSlice";
 
 export function makeUserSession(dispatch: Function, userData: any) {
-  console.log(userData);
-
   if (userData) {
     const sessionUser: Tuser = {
       id: `${userData.id}`,

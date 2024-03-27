@@ -41,26 +41,61 @@ import {
 } from "../../../store/data/addProductSlice";
 import { SearchCityFilter } from "../../Search/components/SearchFilters";
 import { RootState } from "../../../store/store";
+import axiosCall from "../../../hooks/axiosCall";
 
 export const submitProduct = (
   productData: TproductInfoStart | any,
   setShowError: Function
 ) => {
-  let error: boolean = false;
+  // let error: boolean = false;
 
-  if (
-    productData.estateCity == null ||
-    productData.estateImages == null ||
-    productData.estatePrice == null
-  ) {
-    error = true;
-  }
+  // if (
+  //   productData.estateCity == null ||
+  //   productData.estateImages == null ||
+  //   productData.estatePrice == null
+  // ) {
+  //   error = true;
+  // }
 
-  if (error) {
-    setShowError(true);
-  } else {
-    console.log("Ship IT !!!");
-  }
+  // if (error) {
+  //   setShowError(true);
+  // } else {
+  let formData = new FormData();
+  formData.append("estateType", productData.estateType);
+  formData.append("estateDeal", productData.estateDeal);
+  formData.append("estateStatus", productData.estateStatus);
+  formData.append("estateCity", productData.estateCity);
+  formData.append("estateAddress", productData.estateAddress);
+  formData.append("estateExactAddress", productData.estateExactAddress);
+  formData.append("estateIpcode", productData.estateIpcode);
+  formData.append("estateActiveImage", productData.estateActiveImage);
+
+  formData.append("estateSize", productData.estateSize);
+  formData.append("estateProject", productData.estateProject);
+  formData.append("estateCondition", productData.estateCondition);
+  formData.append("estateFloor", productData.estateFloor);
+  formData.append("estateFloors", productData.estateFloors);
+  formData.append("estateRooms", productData.estateRooms);
+  formData.append("estateBedrooms", productData.estateBedrooms);
+  formData.append("estateBathrooms", productData.estateBathrooms);
+  formData.append("estatePrice", productData.estatePrice);
+  formData.append("estateAddons", productData.estateAddons);
+  formData.append("estateClosePlaces", productData.estateClosePlaces);
+  formData.append("estateCurrency", productData.estateCurrency);
+  formData.append("estateVip", productData.estateVip);
+  formData.append("estateVipExpire", productData.estateVipExpire);
+  productData.estateImages.forEach((image: any) => {
+    formData.append("images[]", image.image);
+  });
+
+  axiosCall
+    .post("/upload_product", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => console.log(res));
+  // }
 };
 
 export function EstateOption() {
@@ -320,10 +355,13 @@ export function EstateImages(props: { error: boolean }) {
             onChange={(event) => {
               if (event.target.files) {
                 const selectedImages = Array.from(event.target.files).map(
-                  (file) => ({
-                    url: URL.createObjectURL(file),
-                    cover: false,
-                  })
+                  (file) => {
+                    return {
+                      image: file,
+                      url: URL.createObjectURL(file),
+                      cover: false,
+                    };
+                  }
                 );
                 let allImages = [...images, ...selectedImages];
                 if (allImages.length > 12) allImages = allImages.slice(-12);
@@ -335,37 +373,39 @@ export function EstateImages(props: { error: boolean }) {
           />
         </div>
         {images.length !== 0 &&
-          images.map((e: { url: string; cover: boolean }, i: number) => (
-            <div
-              key={i}
-              className="group  h-[120px] overflow-hidden aspect-video bg-whiteLow rounded-xl transition-colors hover:bg-whiteHover flex justify-center items-center relative"
-            >
-              <div className="flex items-center gap-3 absolute top-2 right-2">
-                <button
-                  onClick={() => makeMainImage(i)}
-                  className="invisible transition-opacity group-hover:visible opacity-0 group-hover:opacity-100   h-[30px] w-[150px] rounded-md bg-main text-buttonText z-[2] text-Asmaller tracking-wider"
-                >
-                  ფონად დაყენება
-                </button>
-                <button
-                  onClick={() => removeImage(i)}
-                  className="invisible transition-opacity group-hover:visible opacity-0 group-hover:opacity-100   h-[30px] aspect-square rounded-md bg-redI text-whiteMain z-[2] text-Asmaller tracking-wider flex justify-center items-center"
-                >
-                  <TrashIcon className="h-[20px] aspect-square [&>path]:stroke-buttonText" />
-                </button>
-              </div>
-              {e.cover == true && (
-                <div className="absolute bottom-1 left-1 w-[70px] h-[26px] flex items-center justify-center rounded-lg tracking-widest bg-main text-buttonText text-Asmaller z-[2]">
-                  ფონი
+          images.map(
+            (e: { image: any; url: string; cover: boolean }, i: number) => (
+              <div
+                key={i}
+                className="group  h-[120px] overflow-hidden aspect-video bg-whiteLow rounded-xl transition-colors hover:bg-whiteHover flex justify-center items-center relative"
+              >
+                <div className="flex items-center gap-3 absolute top-2 right-2">
+                  <button
+                    onClick={() => makeMainImage(i)}
+                    className="invisible transition-opacity group-hover:visible opacity-0 group-hover:opacity-100   h-[30px] w-[150px] rounded-md bg-main text-buttonText z-[2] text-Asmaller tracking-wider"
+                  >
+                    ფონად დაყენება
+                  </button>
+                  <button
+                    onClick={() => removeImage(i)}
+                    className="invisible transition-opacity group-hover:visible opacity-0 group-hover:opacity-100   h-[30px] aspect-square rounded-md bg-redI text-whiteMain z-[2] text-Asmaller tracking-wider flex justify-center items-center"
+                  >
+                    <TrashIcon className="h-[20px] aspect-square [&>path]:stroke-buttonText" />
+                  </button>
                 </div>
-              )}
-              <img
-                src={e.url}
-                alt="EstateImage"
-                className="absolute top-0 left-0 w-full h-full object-cover"
-              />
-            </div>
-          ))}
+                {e.cover == true && (
+                  <div className="absolute bottom-1 left-1 w-[70px] h-[26px] flex items-center justify-center rounded-lg tracking-widest bg-main text-buttonText text-Asmaller z-[2]">
+                    ფონი
+                  </div>
+                )}
+                <img
+                  src={e.url}
+                  alt="EstateImage"
+                  className="absolute top-0 left-0 w-full h-full object-cover"
+                />
+              </div>
+            )
+          )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BookmarkIcon,
   DocumentsIcon,
@@ -19,6 +19,7 @@ import { RootState } from "../store/store";
 import { Link } from "react-router-dom";
 import { RealEstateTypes } from "../pages/Search/components/FiltersArray";
 import { toggleDarkMode } from "../store/data/webUISlice";
+import axiosCall from "../hooks/axiosCall";
 export default function Navbar() {
   const userData = useSelector((store: RootState) => store.user);
   const darkmode: boolean = useSelector(
@@ -30,6 +31,17 @@ export default function Navbar() {
   const [activePop, setActivePop] = useState<null | string>(null);
   const [activeLang, setActiveLang] = useState<boolean>(false);
   const [langImg, setLangImg] = useState<string>(georgianFlag);
+  const [notificationsData, setNotificationsData] = useState<any[]>([]);
+
+  useEffect(() => {
+    axiosCall
+      .get("/get_notifications", { withCredentials: true })
+      .then((res) => {
+        if (res.data) {
+          setNotificationsData([...res.data]);
+        }
+      });
+  }, []);
 
   return (
     <nav className="h-[60px] w-full sticky bg-navBg shadow-navbarShadow flex items-center top-0 z-10">
@@ -108,6 +120,10 @@ export default function Navbar() {
                 activePop == "notifications" ? "bg-mainClear" : "bg-transparent"
               }   rounded-md `}
             >
+              {notificationsData.length !== 0 &&
+                notificationsData.some((obj) => obj.seen == 0) && (
+                  <div className="absolute h-[8px] aspect-square top-[6px] right-[6px] z-20 rounded-circle bg-main"></div>
+                )}
               <NotificationIcon
                 onClick={() =>
                   setActivePop((state) =>
@@ -121,31 +137,40 @@ export default function Navbar() {
                 }`}
               />
               <div
-                className={` absolute h-auto pb-[40px] w-[200px] overflow-hidden bg-whiteMain rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
+                className={` absolute h-auto pb-[40px] min-h-[250px] max-h-[250px] w-[200px] overflow-hidden bg-whiteMain rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
                   activePop == "notifications"
                     ? "visible opacity-100"
                     : "invisible opacity-0"
                 }`}
               >
                 <div className="flex flex-col ">
-                  {[0, 0, 0, 0].map((item, i) => (
-                    <button
-                      key={i}
-                      className=" px-3 py-2 transition-colors hover:bg-whiteHover"
-                    >
-                      <div className="flex items-center ">
-                        <div className="h-[30px] aspect-square bg-main rounded-md"></div>
-                        <div className="flex flex-col text-start ml-2">
-                          <p className="text-[12px] font-mainBold text-userName">
-                            MESSAGE_TITLE {item}
-                          </p>
-                          <p className="text-[11px] w-[90%] overflow-hidden text-ellipsis font-mainBold text-userLastName">
-                            MESSAGE_CR_DESCRIPTION
-                          </p>
+                  {notificationsData.length == 0 ? (
+                    <p className=" text-textHead text-[14px] font-mainRegular p-3 text-center">
+                      შეტყობინებები არ არის
+                    </p>
+                  ) : (
+                    notificationsData.map((item, i) => (
+                      <button
+                        key={i}
+                        className=" px-3 py-2 transition-colors hover:bg-whiteHover"
+                      >
+                        <div className="flex items-center relative">
+                          <div className="h-[30px] aspect-square bg-main rounded-md"></div>
+                          {item["seen"] == 0 && (
+                            <div className="h-[10px] aspect-square rounded-circle bg-main absolute right-0"></div>
+                          )}
+                          <div className="flex flex-col text-start ml-2">
+                            <p className="text-[12px] tracking-wider font-mainSemiBold text-userName">
+                              {item["title"].slice(0, 18)}
+                            </p>
+                            <p className="text-[11px] w-[90%] overflow-hidden text-ellipsis font-mainMedium tracking-wider text-userLastName">
+                              {item["content"].slice(0, 22)}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </button>
-                  ))}
+                      </button>
+                    ))
+                  )}
                 </div>
                 <button className="absolute bottom-0 w-full h-[40px] bg-mainClear text-main left-0 tracking-wider font-mainBold text-[12px]">
                   ყველას ნახვა
