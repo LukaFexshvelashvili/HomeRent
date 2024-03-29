@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type TproductInfoStart = {
-  estateType: null | number;
-  estateDeal: null | number;
-  estateStatus: null | number;
+  estateType: null | string;
+  estateDeal: null | string;
+  estateStatus: null | string;
   estateCity: null | string;
   estateAddress: null | string;
   estateExactAddress: null | string;
@@ -11,8 +11,8 @@ export type TproductInfoStart = {
   estateActiveImage: null | string;
   estateImages: any;
   estateSize: null | number;
-  estateProject: null | number;
-  estateCondition: null | number;
+  estateProject: null | string;
+  estateCondition: null | string;
   estateFloor: null | number;
   estateFloors: null | number;
   estateRooms: null | number;
@@ -56,14 +56,14 @@ const addProductSlice = createSlice({
   name: "addProduct",
   initialState,
   reducers: {
-    updateType: (state, action: PayloadAction<number | null>) => {
+    updateType: (state, action: PayloadAction<string | null>) => {
       state.estateType = action.payload;
     },
 
-    updateDeal: (state, action: PayloadAction<number | null>) => {
+    updateDeal: (state, action: PayloadAction<string | null>) => {
       state.estateDeal = action.payload;
     },
-    updateStatus: (state, action: PayloadAction<number | null>) => {
+    updateStatus: (state, action: PayloadAction<string | null>) => {
       state.estateStatus = action.payload;
     },
 
@@ -90,10 +90,10 @@ const addProductSlice = createSlice({
       state.estateSize = action.payload;
     },
 
-    updateProject: (state, action: PayloadAction<number | null>) => {
+    updateProject: (state, action: PayloadAction<string | null>) => {
       state.estateProject = action.payload;
     },
-    updateCondition: (state, action: PayloadAction<number | null>) => {
+    updateCondition: (state, action: PayloadAction<string | null>) => {
       state.estateCondition = action.payload;
     },
     updateFloor: (state, action: PayloadAction<number | null>) => {

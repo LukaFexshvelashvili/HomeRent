@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { RealEstateTypes } from "../../Search/components/FiltersArray";
 import {
   CheckIcon,
@@ -42,60 +42,67 @@ import {
 import { SearchCityFilter } from "../../Search/components/SearchFilters";
 import { RootState } from "../../../store/store";
 import axiosCall from "../../../hooks/axiosCall";
+import DropDownSelector from "../../../components/global/DropDownSelector";
+import BubbleSelector from "../../../components/global/BubbleSelector";
 
 export const submitProduct = (
   productData: TproductInfoStart | any,
-  setShowError: Function
+  setShowError: Function,
+  setUploadStatus: Function
 ) => {
-  // let error: boolean = false;
+  let error: boolean = false;
 
-  // if (
-  //   productData.estateCity == null ||
-  //   productData.estateImages == null ||
-  //   productData.estatePrice == null
-  // ) {
-  //   error = true;
-  // }
+  if (
+    productData.estateCity == null ||
+    productData.estateImages == null ||
+    productData.estatePrice == null
+  ) {
+    error = true;
+  }
 
-  // if (error) {
-  //   setShowError(true);
-  // } else {
-  let formData = new FormData();
-  formData.append("estateType", productData.estateType);
-  formData.append("estateDeal", productData.estateDeal);
-  formData.append("estateStatus", productData.estateStatus);
-  formData.append("estateCity", productData.estateCity);
-  formData.append("estateAddress", productData.estateAddress);
-  formData.append("estateExactAddress", productData.estateExactAddress);
-  formData.append("estateIpcode", productData.estateIpcode);
-  formData.append("estateActiveImage", productData.estateActiveImage);
+  if (error) {
+    setShowError(true);
+  } else {
+    let formData = new FormData();
+    formData.append("estateType", productData.estateType);
+    formData.append("estateDeal", productData.estateDeal);
+    formData.append("estateStatus", productData.estateStatus);
+    formData.append("estateCity", productData.estateCity);
+    formData.append("estateAddress", productData.estateAddress);
+    formData.append("estateExactAddress", productData.estateExactAddress);
+    formData.append("estateIpcode", productData.estateIpcode);
+    formData.append("estateSize", productData.estateSize);
+    formData.append("estateProject", productData.estateProject);
+    formData.append("estateCondition", productData.estateCondition);
+    formData.append("estateFloor", productData.estateFloor);
+    formData.append("estateFloors", productData.estateFloors);
+    formData.append("estateRooms", productData.estateRooms);
+    formData.append("estateBedrooms", productData.estateBedrooms);
+    formData.append("estateBathrooms", productData.estateBathrooms);
+    formData.append("estatePrice", productData.estatePrice);
+    formData.append("estateAddons", productData.estateAddons);
+    formData.append("estateClosePlaces", productData.estateClosePlaces);
+    formData.append("estateCurrency", productData.estateCurrency);
+    formData.append("estateVip", productData.estateVip);
+    formData.append("estateVipExpire", productData.estateVipExpire);
+    productData.estateImages.forEach((image: any) => {
+      if (image.cover == true) {
+        formData.append("estateActiveImage", image.image);
+      }
+      formData.append("images[]", image.image);
+    });
 
-  formData.append("estateSize", productData.estateSize);
-  formData.append("estateProject", productData.estateProject);
-  formData.append("estateCondition", productData.estateCondition);
-  formData.append("estateFloor", productData.estateFloor);
-  formData.append("estateFloors", productData.estateFloors);
-  formData.append("estateRooms", productData.estateRooms);
-  formData.append("estateBedrooms", productData.estateBedrooms);
-  formData.append("estateBathrooms", productData.estateBathrooms);
-  formData.append("estatePrice", productData.estatePrice);
-  formData.append("estateAddons", productData.estateAddons);
-  formData.append("estateClosePlaces", productData.estateClosePlaces);
-  formData.append("estateCurrency", productData.estateCurrency);
-  formData.append("estateVip", productData.estateVip);
-  formData.append("estateVipExpire", productData.estateVipExpire);
-  productData.estateImages.forEach((image: any) => {
-    formData.append("images[]", image.image);
-  });
-
-  axiosCall
-    .post("/upload_product", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((res) => console.log(res));
-  // }
+    axiosCall
+      .post("/upload_product", formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        setUploadStatus(res.data.status);
+      });
+  }
 };
 
 export function EstateOption() {
@@ -412,10 +419,10 @@ export function EstateImages(props: { error: boolean }) {
 }
 
 export function EstateType() {
-  const [active, setActive] = useState(-1);
+  const [active, setActive] = useState<null | string>(null);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (active !== -1) {
+    if (active !== null) {
       dispatch(updateType(active));
     }
   }, [active]);
@@ -429,19 +436,19 @@ export function EstateType() {
         {RealEstateTypes.map((e, i) => (
           <button
             key={i}
-            onClick={() => setActive(i)}
+            onClick={() => setActive(e.name)}
             className={`  p-2 px-4 rounded-xl transition-colors ${
-              active == i ? "bg-main" : "bg-mainClear"
+              active == e.name ? "bg-main" : "bg-mainClear"
             }`}
           >
             <e.icon
               className={` h-[24px] aspect-square ${
-                active == i && "[&>path]:fill-buttonText"
+                active == e.name && "[&>path]:fill-buttonText"
               } `}
             />
             <p
               className={`text-Asmall ml-7 tracking-wide ${
-                active == i ? "text-buttonText" : "text-main"
+                active == e.name ? "text-buttonText" : "text-main"
               }`}
             >
               {e.name}
@@ -454,10 +461,10 @@ export function EstateType() {
 }
 
 export function DealType() {
-  const [active, setActive] = useState(-1);
+  const [active, setActive] = useState<null | string>(null);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (active !== -1) {
+    if (active !== null) {
       dispatch(updateDeal(active));
     }
   }, [active]);
@@ -471,14 +478,14 @@ export function DealType() {
         {DealTypes.map((e, i) => (
           <button
             key={i}
-            onClick={() => setActive(i)}
+            onClick={() => setActive(e)}
             className={`  p-2 px-4 rounded-xl transition-colors ${
-              active == i ? "bg-main" : "bg-mainClear"
+              active == e ? "bg-main" : "bg-mainClear"
             }`}
           >
             <p
               className={`text-Asmall tracking-wide ${
-                active == i ? "text-buttonText" : "text-main"
+                active == e ? "text-buttonText" : "text-main"
               }`}
             >
               {e}
@@ -490,10 +497,10 @@ export function DealType() {
   );
 }
 export function EstateStatus() {
-  const [active, setActive] = useState(-1);
+  const [active, setActive] = useState<null | string>(null);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (active !== -1) {
+    if (active !== null) {
       dispatch(updateStatus(active));
     }
   }, [active]);
@@ -507,14 +514,14 @@ export function EstateStatus() {
         {DealTypes.map((e, i) => (
           <button
             key={i}
-            onClick={() => setActive(i)}
+            onClick={() => setActive(e)}
             className={`  p-2 px-4 rounded-xl transition-colors ${
-              active == i ? "bg-main" : "bg-mainClear"
+              active == e ? "bg-main" : "bg-mainClear"
             }`}
           >
             <p
               className={`text-Asmall tracking-wide ${
-                active == i ? "text-buttonText" : "text-main"
+                active == e ? "text-buttonText" : "text-main"
               }`}
             >
               {e}
@@ -568,6 +575,29 @@ export function EstateInformation(props: { error: boolean }) {
   const [sizePrice, setSizePrice] = useState(0);
   const dispatch = useDispatch();
 
+  const projectTypes = useMemo(
+    () => [
+      "ლენინგრადის",
+      "ლვოვის",
+      "კიევი",
+      "თბილისური ეზო",
+      "მოსკოვის",
+      "ქალაქური",
+      "ჩეხური",
+      "ხრუშოვის",
+      "თუხარელის",
+      "ვეძისი",
+      "იუგოსლავიის",
+      "მეტრომშენის",
+      "არასტანდარტული",
+      "ყავლაშვილის",
+    ],
+    []
+  );
+  const projectStatuses = useMemo(
+    () => ["ახალი მშენებარე", "ძველი აშენებული", "მშენებარე"],
+    []
+  );
   useEffect(() => {
     if (fullPrice > 0) {
       dispatch(updateFullPrice(fullPrice));
@@ -589,7 +619,7 @@ export function EstateInformation(props: { error: boolean }) {
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
         <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
           ინფორმაცია
         </p>
@@ -599,34 +629,32 @@ export function EstateInformation(props: { error: boolean }) {
             სავალდებულოა შეავსოთ ფართი, ფასი
           </div>
         )}
-        <div className="flex gap-4 flex-col pl-3 mt-4">
+        <div className="flex gap-7 flex-col pl-3 mt-4">
           <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
             <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
               ფართი (მ²)
-            </p>
-            <input
-              type="number"
-              className="AddProductInput mobileSmall:mx-auto"
-              placeholder="ფართი"
-              onChange={(e) => {
-                setSize(e.target.valueAsNumber);
-                dispatch(updateSize(e.target.valueAsNumber));
-              }}
-              value={size ? size : ""}
-            />
+            </p>{" "}
+            <div className="w-full flex justify-end">
+              <input
+                type="number"
+                className="AddProductInput mobileSmall:mx-auto "
+                placeholder="ფართი"
+                onChange={(e) => {
+                  setSize(e.target.valueAsNumber);
+                  dispatch(updateSize(e.target.valueAsNumber));
+                }}
+                value={size ? size : ""}
+              />{" "}
+            </div>
           </div>
 
-          <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
-            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
+          <div className="flex items-start mobileSmall:flex-col h-auto   mobileSmall:items-stretch">
+            <p className="text-textDesc font-mainMedium w-[200px] min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
               პროექტის ტიპი
             </p>
-            <input
-              type="number"
-              className="AddProductInput  mobileSmall:mx-auto"
-              placeholder="არასტანდარტული"
-              onChange={(e) => {
-                dispatch(updateProject(e.target.valueAsNumber));
-              }}
+            <BubbleSelector
+              itemList={projectTypes}
+              setData={(item: any) => dispatch(updateProject(item))}
             />
           </div>
 
@@ -634,13 +662,10 @@ export function EstateInformation(props: { error: boolean }) {
             <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
               მდგომარეობა
             </p>
-            <input
-              type="number"
-              className="AddProductInput mobileSmall:mx-auto"
-              placeholder="მდგომარეობა"
-              onChange={(e) => {
-                dispatch(updateCondition(e.target.valueAsNumber));
-              }}
+
+            <BubbleSelector
+              itemList={projectStatuses}
+              setData={(item: any) => dispatch(updateCondition(item))}
             />
           </div>
 
@@ -648,7 +673,7 @@ export function EstateInformation(props: { error: boolean }) {
             <p className="text-textDesc font-mainMedium min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
               სართული
             </p>
-            <div className="flex gap-4 flex-wrap mobileTab:justify-end mobileSmall:justify-center">
+            <div className="flex gap-4 flex-wrap mobileTab:justify-end mobileSmall:justify-center w-full justify-end">
               <input
                 type="number"
                 className="AddProductInput"
@@ -672,19 +697,25 @@ export function EstateInformation(props: { error: boolean }) {
             <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
               ოთახები
             </p>
-            <SelectNumbers setDataDispatch={updateRooms} name="" />
+            <div className="w-full flex justify-end">
+              <SelectNumbers setDataDispatch={updateRooms} name="" />
+            </div>
           </div>
           <div className="flex items-center mobileTab:flex-col">
             <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
               საძინებელი
-            </p>
-            <SelectNumbers setDataDispatch={updateBedrooms} name="" />
+            </p>{" "}
+            <div className="w-full flex justify-end">
+              <SelectNumbers setDataDispatch={updateBedrooms} name="" />{" "}
+            </div>
           </div>
           <div className="flex items-center mobileTab:flex-col">
             <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
               სველი წერტილი
-            </p>
-            <SelectNumbers setDataDispatch={updateBathrooms} name="" />
+            </p>{" "}
+            <div className="w-full flex justify-end">
+              <SelectNumbers setDataDispatch={updateBathrooms} name="" />{" "}
+            </div>
           </div>
         </div>
       </div>

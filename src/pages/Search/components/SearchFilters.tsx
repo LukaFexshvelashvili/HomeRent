@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { cities } from "../../../assets/lists/cities";
 import {
@@ -7,6 +7,7 @@ import {
   updateExactAddress,
 } from "../../../store/data/addProductSlice";
 import { subLocs } from "../../../assets/lists/subLocs";
+import axiosCall from "../../../hooks/axiosCall";
 
 export function SearchCityFilter(props: { setCity: Function }) {
   const citiesAPI = cities.subLocs.map((item) => item.name.ka);
@@ -30,7 +31,7 @@ export function SearchCityFilter(props: { setCity: Function }) {
   }, [active]);
 
   const fetchSearch = () => {
-    if (search == "") {
+    if (search == "" && citiesAPI && citiesAPI.length !== 0) {
       return citiesAPI.map((e: string, i: number) => (
         <button
           key={i}
@@ -87,7 +88,7 @@ export function SearchCityFilter(props: { setCity: Function }) {
 
 export function SearchAddressFilter(props: { getActiveCity: string | null }) {
   const getInput = useRef<any>(null);
-  const [activeCityCode, setActiveCityCode] = useState<null | number>(null);
+  const [citiesAPI, setCitiesAPI] = useState<any>([]);
   const [search, setSearch] = useState("");
   const [searchWindow, setSearchWindow] = useState(false);
   const [active, setActive] = useState("");
@@ -108,11 +109,12 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
     if (getInput.current !== null) {
       getInput.current.focus();
     }
-    let getDataF = cities.subLocs.filter(
-      (item) => item.name.ka == props.getActiveCity
-    );
-    if (getDataF.length !== 0) {
-      setActiveCityCode(getDataF[0].osm_id);
+    const formData = new FormData();
+    if (props.getActiveCity) {
+      formData.append("city", props.getActiveCity);
+      axiosCall
+        .post("locations/get_location", formData)
+        .then((res) => setCitiesAPI(res.data.subLocs));
     }
   }, []);
 
@@ -120,46 +122,44 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
     return null;
   }
 
-  const citiesAPI = subLocs.subLocs.map((item) => {
-    if (activeCityCode !== null) {
-      if (parseInt(item.parent_osm_id) == activeCityCode) return item.name.ka;
-    }
-  });
-
   const fetchSearch = () => {
-    if (search == "") {
+    if (search == "" && citiesAPI && citiesAPI.length !== 0) {
       return citiesAPI.map((e: any, i: number) => (
         <button
           key={i}
-          onClick={() => setActive(e)}
+          onClick={() => setActive(e.name.ka)}
           className={`w-full h-auto py-2 text-start px-5 text-Asmall transition-colors hover:bg-mainClear ${
-            active == e ? "text-main" : "text-textHead"
+            active == e.name.ka ? "text-main" : "text-textHead"
           }`}
         >
-          {e}
+          {e.name.ka}
         </button>
       ));
-    } else {
+    } else if (citiesAPI && citiesAPI.length !== 0) {
       return citiesAPI
-        .filter((item: any) => item.includes(search))
+        .filter((item: any) => item.name.ka.includes(search))
         .map((e: any, i: number) => (
           <button
             key={i}
-            onClick={() => setActive(e)}
+            onClick={() => setActive(e.name.ka)}
             className={`w-full h-auto py-2 text-start px-5 text-Asmall transition-colors hover:bg-mainClear ${
-              active == e ? "text-main" : "text-textHead"
+              active == e.name.ka ? "text-main" : "text-textHead"
             }`}
           >
-            {e}
+            {e.name.ka}
           </button>
         ));
     }
   };
+
   return (
     <>
       <div className="relative">
         <input
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            dispatch(updateAddress(e.target.value));
+          }}
           value={search}
           onFocus={() => setSearchWindow(true)}
           type="text"
@@ -169,22 +169,27 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
         />
 
         {searchWindow && (
-          <div className="absolute h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden">
+          <div className="absolute h-auto max-h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-auto">
             <div className="flex flex-col h-full overflow-y-scroll">
               {fetchSearch()}
             </div>
           </div>
         )}
       </div>
-      {active !== "" && <SearchExactAddressFilter activeAddress={active} />}
+      {active !== "" && (
+        <SearchExactAddressFilter activeAddress={active} childs={citiesAPI} />
+      )}
     </>
   );
 }
 
 export function SearchExactAddressFilter(props: {
   activeAddress: string | null;
+  childs: any[];
 }) {
   const getInput = useRef<any>(null);
+
+  const [citiesAPI, setCitiesAPI] = useState<any[]>([]);
   const [search, setSearch] = useState("");
   const [searchWindow, setSearchWindow] = useState(false);
   const [active, setActive] = useState("");
@@ -205,34 +210,31 @@ export function SearchExactAddressFilter(props: {
     if (getInput.current !== null) {
       getInput.current.focus();
     }
+    const activeAdresses = props.childs.filter(
+      (item: any) => item.name.ka == props.activeAddress
+    );
+
+    setCitiesAPI(activeAdresses[0].childs);
   }, []);
 
   if (props.activeAddress == null) {
     return null;
   }
-  const getActiveAddressId = subLocs.subLocs.filter(
-    (item) => item.name.ka == props.activeAddress
-  )[0].osm_id;
-  const citiesAPI = subLocs.subLocs.filter((item) => {
-    if (getActiveAddressId !== null) {
-      if (item.osm_id == getActiveAddressId) return true;
-    }
-  })[0].childs;
 
   const fetchSearch = () => {
-    if (search == "") {
+    if (search == "" && citiesAPI && citiesAPI.length !== 0) {
       return citiesAPI.map((e: any, i: number) => (
         <button
           key={i}
           onClick={() => setActive(e.name.ka)}
           className={`w-full h-auto py-2 text-start px-5 text-Asmall transition-colors hover:bg-mainClear ${
-            active == e ? "text-main" : "text-textHead"
+            active == e.name.ka ? "text-main" : "text-textHead"
           }`}
         >
           {e.name.ka}
         </button>
       ));
-    } else {
+    } else if (citiesAPI && citiesAPI.length !== 0) {
       return citiesAPI
         .filter((item: any) => item.name.ka.includes(search))
         .map((e: any, i: number) => (
@@ -240,7 +242,7 @@ export function SearchExactAddressFilter(props: {
             key={i}
             onClick={() => setActive(e.name.ka)}
             className={`w-full h-auto py-2 text-start px-5 text-Asmall transition-colors hover:bg-mainClear ${
-              active == e ? "text-main" : "text-textHead"
+              active == e.name.ka ? "text-main" : "text-textHead"
             }`}
           >
             {e.name.ka}
@@ -252,17 +254,20 @@ export function SearchExactAddressFilter(props: {
     <>
       <div className="relative">
         <input
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            dispatch(updateExactAddress(e.target.value));
+          }}
           value={search}
           onFocus={() => setSearchWindow(true)}
           type="text"
           className="AddProductInput"
-          placeholder="ზუსტი მისამართი"
+          placeholder="ქუჩა"
           ref={getInput}
         />
 
         {searchWindow && (
-          <div className="absolute h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden">
+          <div className="absolute h-auto max-h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-auto">
             <div className="flex flex-col h-full overflow-y-scroll">
               {fetchSearch()}
             </div>

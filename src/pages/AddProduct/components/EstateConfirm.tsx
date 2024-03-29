@@ -13,7 +13,11 @@ import { updateVip } from "../../../store/data/addProductSlice";
 import DaysDropdown from "./DaysDropdown";
 import { submitProduct } from "./Selectors";
 
-export default function EstateConfirm(props: { setShowError: Function }) {
+export default function EstateConfirm(props: {
+  setShowError: Function;
+  setAlertBlock: Function;
+  setUploadStatus: Function;
+}) {
   const data = useSelector((state: RootState) => state.addProduct);
   const dispatch = useDispatch();
   const vipStatus = useSelector(
@@ -33,66 +37,71 @@ export default function EstateConfirm(props: { setShowError: Function }) {
     exactAddress: data.estateExactAddress,
   };
   return (
-    <div className="p-4">
-      <div className=" flex flex-col items-center justify-center">
-        <CardExample
-          rooms={data.estateRooms}
-          image={data.estateActiveImage}
-          price={data.estatePrice}
-          size={data.estateSize}
-          currency={data.estateCurrency}
-          address={sendAddress}
-        />
-        <p className=" text-Asmall text-textDesc mt-3">ბარათის ვიზუალი</p>
-      </div>
-      <div className="flex gap-2 items-center mt-5">
-        {ActiveOffers.map((e: TOffer, i: number) => (
-          <div
-            key={i}
-            onClick={() => dispatch(updateVip(e.id))}
-            className="text-Asmall h-[30px] w-[80px] flex items-center justify-center cursor-pointer rounded-md transition-colors"
-            style={{
-              backgroundColor:
-                activeOffer == e.id ? e.mainColor : e.secondColor,
-              color: activeOffer == e.id ? "#FFFFFF" : e.mainColor,
-            }}
-          >
-            {e.name}
-          </div>
-        ))}
-      </div>
-      {offerData.status !== 0 && (
-        <DaysDropdown
-          offerData={offerData}
-          value={selectedDays}
-          setValue={setSelectedDays}
-        />
-      )}
-      <div className="flex justify-between mt-6">
-        <p className="text-Asmall text-textDesc font-mainMedium">სტატუსი</p>
+    <>
+      <div className="p-4">
+        <div className=" flex flex-col items-center justify-center">
+          <CardExample
+            rooms={data.estateRooms}
+            image={data.estateActiveImage}
+            price={data.estatePrice}
+            size={data.estateSize}
+            currency={data.estateCurrency}
+            address={sendAddress}
+          />
+          <p className=" text-Asmall text-textDesc mt-3">ბარათის ვიზუალი</p>
+        </div>
+        <div className="flex gap-2 items-center mt-5">
+          {ActiveOffers.map((e: TOffer, i: number) => (
+            <div
+              key={i}
+              onClick={() => dispatch(updateVip(e.id))}
+              className="text-Asmall h-[30px] w-[80px] flex items-center justify-center cursor-pointer rounded-md transition-colors"
+              style={{
+                backgroundColor:
+                  activeOffer == e.id ? e.mainColor : e.secondColor,
+                color: activeOffer == e.id ? "#FFFFFF" : e.mainColor,
+              }}
+            >
+              {e.name}
+            </div>
+          ))}
+        </div>
+        {offerData.status !== 0 && (
+          <DaysDropdown
+            offerData={offerData}
+            value={selectedDays}
+            setValue={setSelectedDays}
+          />
+        )}
+        <div className="flex justify-between mt-6">
+          <p className="text-Asmall text-textDesc font-mainMedium">სტატუსი</p>
 
-        <p className="text-Asmall" style={{ color: offerData.mainColor }}>
-          {offerData.name}
-        </p>
+          <p className="text-Asmall" style={{ color: offerData.mainColor }}>
+            {offerData.name}
+          </p>
+        </div>
+        {offerData.status !== 0 && (
+          <>
+            <div className="h-1 w-[50px] rounded-md bg-mainClear mx-auto my-2"></div>
+
+            <div className="flex items-center justify-between font-mainBold rounded-lg mt-1">
+              <p className=" text-textDesc font-mainMedium">ფასი</p>
+
+              <p className=" text-main">{offerData.price * selectedDays}₾</p>
+            </div>
+          </>
+        )}
+        <button
+          onClick={() => {
+            props.setAlertBlock(true);
+            submitProduct(data, props.setShowError, props.setUploadStatus);
+          }}
+          className="h-[42px] w-full rounded-md bg-main text-buttonText tracking-wider text-[15px] transition-colors mt-3 hover:bg-mainHover"
+        >
+          გამოქვეყნება
+        </button>
       </div>
-      {offerData.status !== 0 && (
-        <>
-          <div className="h-1 w-[50px] rounded-md bg-mainClear mx-auto my-2"></div>
-
-          <div className="flex items-center justify-between font-mainBold rounded-lg mt-1">
-            <p className=" text-textDesc font-mainMedium">ფასი</p>
-
-            <p className=" text-main">{offerData.price * selectedDays}₾</p>
-          </div>
-        </>
-      )}
-      <button
-        onClick={() => submitProduct(data, props.setShowError)}
-        className="h-[42px] w-full rounded-md bg-main text-buttonText tracking-wider text-[15px] transition-colors mt-3 hover:bg-mainHover"
-      >
-        გამოქვეყნება
-      </button>
-    </div>
+    </>
   );
 }
 export function CardExample(props: {
