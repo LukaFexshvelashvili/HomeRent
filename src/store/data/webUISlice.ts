@@ -1,10 +1,19 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { changeDarkThemeColors } from "../../hooks/UIFunctions";
+import {
+  changeDarkThemeColors,
+  changeMainColor,
+} from "../../hooks/UIFunctions";
 
 export type TWebUI = {
   darkMode: boolean;
+  mainColor: string;
+  colors: string[];
 };
-const initialState: TWebUI = { darkMode: false };
+const initialState: TWebUI = {
+  darkMode: false,
+  mainColor: "#3a86ff",
+  colors: ["#3A86FF", "#C727FF", "#A6E81B"],
+};
 
 const webUISlice = createSlice({
   name: "webUI",
@@ -19,8 +28,12 @@ const webUISlice = createSlice({
       changeDarkThemeColors(action.payload);
       state.darkMode = action.payload;
     },
+    setMainColor: (state, action: PayloadAction<string>) => {
+      changeMainColor(action.payload);
+      state.mainColor = action.payload;
+    },
   },
 });
-export const { toggleDarkMode, setDarkMode } = webUISlice.actions;
+export const { toggleDarkMode, setDarkMode, setMainColor } = webUISlice.actions;
 
 export default webUISlice.reducer;

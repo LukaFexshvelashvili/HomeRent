@@ -15,10 +15,10 @@ export const ActiveOffers = [
     status: 0,
     name: "უფასო",
     benefits: ["განთავსება საერთო სიაში"],
-    mainColor: "#3A86FF",
+    mainColor: "var(--main)",
 
-    secondColor: "rgba(58, 134, 255, 0.1)",
-    lineColor: "rgba(58, 134, 255, 0.3)",
+    secondColor: "var(--mainClear)",
+    lineColor: "var(--mainClearActive)",
     price: 0,
   },
   {

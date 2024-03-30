@@ -36,35 +36,39 @@ import {
   updateRooms,
   updateSize,
   updateStatus,
+  updateTitle,
   updateType,
   updateVip,
 } from "../../../store/data/addProductSlice";
 import { SearchCityFilter } from "../../Search/components/SearchFilters";
 import { RootState } from "../../../store/store";
 import axiosCall from "../../../hooks/axiosCall";
-import DropDownSelector from "../../../components/global/DropDownSelector";
 import BubbleSelector from "../../../components/global/BubbleSelector";
 
 export const submitProduct = (
   productData: TproductInfoStart | any,
   setShowError: Function,
-  setUploadStatus: Function
+  setUploadStatus: Function,
+  setAlertBlock: Function
 ) => {
   let error: boolean = false;
 
   if (
     productData.estateCity == null ||
     productData.estateImages == null ||
-    productData.estatePrice == null
+    productData.estatePrice == null ||
+    productData.estateTitle == null
   ) {
     error = true;
   }
 
   if (error) {
     setShowError(true);
+    window.scrollTo(-1000, 0);
   } else {
     let formData = new FormData();
     formData.append("estateType", productData.estateType);
+    formData.append("estateTitle", productData.estateTitle);
     formData.append("estateDeal", productData.estateDeal);
     formData.append("estateStatus", productData.estateStatus);
     formData.append("estateCity", productData.estateCity);
@@ -91,7 +95,7 @@ export const submitProduct = (
       }
       formData.append("images[]", image.image);
     });
-
+    setAlertBlock(true);
     axiosCall
       .post("/upload_product", formData, {
         withCredentials: true,
@@ -100,6 +104,8 @@ export const submitProduct = (
         },
       })
       .then((res) => {
+        console.log(res.data);
+
         setUploadStatus(res.data.status);
       });
   }
@@ -560,6 +566,44 @@ export function EstateAddress(props: { error: boolean }) {
               dispatch(updateIpcode(null));
             } else {
               dispatch(updateIpcode(e.target.value));
+            }
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+export function EstateTitle(props: { error: boolean }) {
+  const [title, setTitle] = useState("");
+  const dispatch = useDispatch();
+
+  return (
+    <div className="flex flex-col">
+      <div className="flex items-center gap-2">
+        <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+          განცხადების სათაური
+        </p>{" "}
+        <span className="text-Asmall text-textDescCard ">
+          (მაქსიმალური სიგრძე: 30)
+        </span>
+      </div>
+      {title == "" && props.error && (
+        <div className=" rounded-xl text-pinkI bg-pinkClear py-3 px-4 text-sm tracking-wider mt-2 text-center">
+          {" "}
+          სავალდებულოა შეავსოთ სათაურის ველი
+        </div>
+      )}
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
+        <input
+          type="text"
+          className="AddProductInputTitle"
+          placeholder="მაგ: იყიდება ბინა ზღვასთან"
+          onChange={(e) => {
+            setTitle(e.target.value);
+            if (e.target.value == "") {
+              dispatch(updateTitle(null));
+            } else {
+              dispatch(updateTitle(e.target.value));
             }
           }}
         />

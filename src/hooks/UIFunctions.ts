@@ -1,6 +1,6 @@
-import { setDarkMode } from "../store/data/webUISlice";
+import { setDarkMode, setMainColor } from "../store/data/webUISlice";
 
-export function checkUIStorage(dispatch: any) {
+export function checkUIStorage(dispatch: any, UISettings: any) {
   if (localStorage.getItem("darkmode")) {
     let darkmodeStorage: any = localStorage.getItem("darkmode");
     let darkmode: boolean = JSON.parse(darkmodeStorage);
@@ -8,8 +8,51 @@ export function checkUIStorage(dispatch: any) {
       dispatch(setDarkMode(darkmode));
     }
   }
+  if (localStorage.getItem("mainColor")) {
+    let mainColor: any = localStorage.getItem("mainColor");
+    if (UISettings.colors.includes(mainColor)) {
+      if (typeof mainColor == "string") {
+        dispatch(setMainColor(mainColor));
+      }
+    } else {
+      localStorage.removeItem("mainColor");
+      dispatch(setMainColor("#3a86ff"));
+    }
+  }
 }
+export function changeMainColor(newColor: string) {
+  var b: any = document.querySelector("body");
+  localStorage.setItem("mainColor", newColor);
 
+  if (newColor) {
+    switch (newColor) {
+      case "#3A86FF":
+        b.style.setProperty(`--main`, `${newColor}`);
+        b.style.setProperty(`--mainClear`, `rgba(58, 134, 255, 0.1)`);
+        b.style.setProperty(`--mainClear2`, `rgba(58, 133, 255, 0.7)`);
+        b.style.setProperty(`--mainClearActive`, `rgba(58, 134, 255, 0.15)`);
+        b.style.setProperty(`--mainHover`, `#4f92fe`);
+
+        break;
+      case "#C727FF":
+        b.style.setProperty(`--main`, `${newColor}`);
+        b.style.setProperty(`--mainClear`, `rgba(198, 47, 253, 0.1)`);
+        b.style.setProperty(`--mainClear2`, `rgba(198, 47, 253, 0.1)`);
+        b.style.setProperty(`--mainClearActive`, `rgba(198, 47, 253, 0.15)`);
+        b.style.setProperty(`--mainHover`, `#cd44ff`);
+
+        break;
+      case "#A6E81B":
+        b.style.setProperty(`--main`, `${newColor}`);
+        b.style.setProperty(`--mainClear`, `rgba(177, 237, 48, 0.1)`);
+        b.style.setProperty(`--mainClear2`, `rgba(177, 237, 48, 0.7)`);
+        b.style.setProperty(`--mainClearActive`, `rgba(177, 237, 48, 0.15)`);
+        b.style.setProperty(`--mainHover`, `#b5ee3b`);
+
+        break;
+    }
+  }
+}
 export function changeDarkThemeColors(makeDark: boolean) {
   var r: any = document.querySelector(":root");
   localStorage.setItem("darkmode", JSON.stringify(makeDark));

@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type TproductInfoStart = {
+  estateTitle: null | string;
   estateType: null | string;
   estateDeal: null | string;
   estateStatus: null | string;
@@ -27,6 +28,7 @@ export type TproductInfoStart = {
 };
 
 const initialState: TproductInfoStart = {
+  estateTitle: null,
   estateType: null,
   estateDeal: null,
   estateStatus: null,
@@ -58,6 +60,9 @@ const addProductSlice = createSlice({
   reducers: {
     updateType: (state, action: PayloadAction<string | null>) => {
       state.estateType = action.payload;
+    },
+    updateTitle: (state, action: PayloadAction<string | null>) => {
+      state.estateTitle = action.payload;
     },
 
     updateDeal: (state, action: PayloadAction<string | null>) => {
@@ -134,6 +139,7 @@ const addProductSlice = createSlice({
 
 export const {
   updateType,
+  updateTitle,
   updateDeal,
   updateStatus,
   updateCity,

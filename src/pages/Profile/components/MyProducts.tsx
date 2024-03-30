@@ -1,10 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductBanner from "./ProductBanner";
 import Buypopup from "./Buypopup";
+import axiosCall from "../../../hooks/axiosCall";
+import { Link } from "react-router-dom";
+import ContentLoader from "../../../components/global/ContentLoader";
+
+export type TProductData = {
+  id: number;
+  user_id: number;
+  estate_title: string;
+  estate_type: number;
+  estate_deal: number;
+  estate_status: number;
+  estate_city: string;
+  estate_address: string;
+  estate_exact_address: string;
+  estate_ipcode: string;
+  estate_size: number;
+  estate_project: number;
+  estate_condition: number;
+  estate_floor: number;
+  estate_floors: number;
+  estate_rooms: number;
+  estate_bedrooms: number;
+  estate_bathrooms: number;
+  estate_price: number;
+  estate_sale: number;
+  estate_addons: string;
+  estate_close_places: string;
+  estate_currency: number;
+  estate_vip: number;
+  estate_vip_expire: string;
+  estate_active_image: string;
+  estate_images: string;
+  views: number;
+  created_time: string;
+  update_time: string;
+  expire_time: string;
+  product_status: number;
+};
 
 export default function MyProducts() {
   const [popbuy, setPopbuy] = useState<{ id: null | number }>({ id: null });
   const [choice, setChoice] = useState<number>(0);
+  const [myProducts, setMyProducts] = useState<any[] | null>(null);
+  useEffect(() => {
+    axiosCall
+      .get("fetch/my_products", { withCredentials: true })
+      .then((res) => setMyProducts(res.data));
+  }, []);
+
   const choices: string[] = ["აქტიური", "დაბლოკილი", "ვადაგასული"];
   return (
     <>
@@ -33,12 +78,37 @@ export default function MyProducts() {
           className=" text-[14px] h-[40px] w-full bg-LoginInput outline-none rounded-lg px-4 transition-colors focus:bg-LoginInputActive"
         />
       </div>
-      <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex  py-2 flex-col gap-3">
-        <p className="px-4 text-[13px] text-textDesc my-1">სულ 3 განცხადება</p>
+      <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex  py-2 flex-col gap-3 min-h-[200px]">
+        {myProducts === null && <ContentLoader />}
+        {myProducts && myProducts.length !== 0 && (
+          <p className="px-4 text-[13px] text-textDesc my-1">
+            სულ 3 განცხადება
+          </p>
+        )}
         <div className="flex flex-col">
-          <ProductBanner setPopbuy={setPopbuy} />
-          <ProductBanner setPopbuy={setPopbuy} />
-          <ProductBanner setPopbuy={setPopbuy} />
+          {myProducts && myProducts.length !== 0
+            ? myProducts.map((e: TProductData) => (
+                <ProductBanner
+                  key={e.id}
+                  setPopbuy={setPopbuy}
+                  productData={e}
+                />
+              ))
+            : myProducts &&
+              myProducts.length === 0 && (
+                <div>
+                  <p className="px-4 text-[15px] text-textDesc my-2 text-center">
+                    განცხადებები ვერ მოიძებნა
+                  </p>
+                  <div className="flex justify-center my-3 mt-5">
+                    <Link to={"/addProduct"} className=" rounded-lg">
+                      <button className=" block text-buttonText bg-main rounded-lg text-[14px] px-4 py-2 tracking-wide">
+                        განცხადების დამატება
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              )}
         </div>
       </div>
     </>

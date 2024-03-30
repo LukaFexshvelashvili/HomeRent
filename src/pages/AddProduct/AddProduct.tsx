@@ -9,6 +9,7 @@ import {
   EstateInformation,
   EstateOption,
   EstateStatus,
+  EstateTitle,
   EstateType,
 } from "./components/Selectors";
 import { RootState } from "../../store/store";
@@ -30,7 +31,7 @@ export default function AddProduct() {
           <div className=" w-[650px] h-auto min-h-[150px] rounded-section bg-whiteMain p-5 relative z-10">
             {uploadStatus === null && <ContentLoader />}
 
-            {uploadStatus == 100 ? (
+            {uploadStatus === 100 ? (
               <>
                 <h2 className="text-greenI text-center text-[20px] font-mainBold">
                   განცხადება წარმატებით დამატდა
@@ -53,21 +54,23 @@ export default function AddProduct() {
                 </div>
               </>
             ) : (
-              <>
-                <h2 className="text-pinkI text-center text-[20px] font-mainBold">
-                  განცხადების დამატებისას წარმოიშვა პრობლემა
-                </h2>
-                <p className="text-textDesc text-center text-[16px] font-mainBold my-3">
-                  გთხოვთ სცადოთ მოგვიანებით
-                </p>
-                <div className="flex items-center gap-5 justify-center mt-5">
-                  <Link to={"/"}>
-                    <button className="px-4 py-2 rounded-md text-buttonText bg-main tracking-wider text-[14px] transition-colors hover:bg-mainHover">
-                      მთავარ გვერდზე დაბრუნება
-                    </button>{" "}
-                  </Link>
-                </div>
-              </>
+              uploadStatus === 0 && (
+                <>
+                  <h2 className="text-pinkI text-center text-[20px] font-mainBold">
+                    განცხადების დამატებისას წარმოიშვა პრობლემა
+                  </h2>
+                  <p className="text-textDesc text-center text-[16px] font-mainBold my-3">
+                    გთხოვთ სცადოთ მოგვიანებით
+                  </p>
+                  <div className="flex items-center gap-5 justify-center mt-5">
+                    <Link to={"/"}>
+                      <button className="px-4 py-2 rounded-md text-buttonText bg-main tracking-wider text-[14px] transition-colors hover:bg-mainHover">
+                        მთავარ გვერდზე დაბრუნება
+                      </button>{" "}
+                    </Link>
+                  </div>
+                </>
+              )
             )}
           </div>
         </div>
@@ -77,6 +80,12 @@ export default function AddProduct() {
           <EstateType />
           {productData.estateType !== null && <DealType />}
           {productData.estateDeal !== null && <EstateStatus />}
+
+          {productData.estateStatus !== null && (
+            <EstateTitle
+              error={showError && productData.estateCity == null ? true : false}
+            />
+          )}
           {productData.estateStatus !== null && (
             <EstateAddress
               error={showError && productData.estateCity == null ? true : false}

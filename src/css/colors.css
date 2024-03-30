@@ -1,8 +1,8 @@
 :root {
-  --mainClear2: rgba(58, 133, 255, 0.7);
   --main: #3a86ff;
   --mainHover: #4f92fe;
   --mainClear: rgba(58, 134, 255, 0.1);
+  --mainClear2: rgba(58, 133, 255, 0.7);
   --mainClearActive: rgba(58, 134, 255, 0.15);
   --LoginInputBg: rgba(58, 134, 255, 0.05);
   --navBg: #ffffff;
@@ -12,8 +12,8 @@
   --navIcon: #4b4b4b;
   --lineBg: #f4f4f4;
   --blackMain: rgba(0, 0, 0, 0.8);
-  --LoginInput: rgba(236, 236, 236, 0.5);
-  --LoginInputActive: rgba(236, 236, 236, 0.9);
+  --LoginInput: rgba(239, 239, 239, 0.5);
+  --LoginInputActive: rgba(232, 232, 232, 0.5);
   --whiteLow: rgba(239, 239, 239, 0.6);
   --whiteCont: rgba(198, 198, 198, 1);
   --whiteLoad: #eaeaea;
@@ -25,7 +25,7 @@
   --photoLabel: rgba(255, 255, 255, 0.9);
   --photoLabelDesc: rgba(255, 255, 255, 0.8);
   --buttonText: rgb(255, 255, 255);
-  --inputBorder: #dfdfdf;
+  --inputBorder: #e7e7e7;
   --sliderFadeStart: rgba(0, 0, 0, 0.6);
   --sliderFadeEnd: rgba(0, 0, 0, 0);
   --sliderHead: rgba(255, 255, 255, 0.9);

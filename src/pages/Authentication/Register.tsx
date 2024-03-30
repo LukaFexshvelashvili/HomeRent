@@ -110,7 +110,9 @@ export default function Register() {
             formData.append("password", formInputs.password);
 
             axiosCall
-              .post("/user_register", formData, { withCredentials: true })
+              .post("authentication/user_register", formData, {
+                withCredentials: true,
+              })
               .then((res) => {
                 if (res.data.status === 3) {
                   let userData = {

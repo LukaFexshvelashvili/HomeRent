@@ -28,12 +28,13 @@ import Logout from "./pages/Logout";
 // import { Tuser } from "./store/data/userSlice";
 
 function App() {
+  const UISettings = useSelector((store: RootState) => store.webUI);
   const user: Tuser = useSelector((store: RootState) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     axiosCall
-      .get("/user_get", { withCredentials: true })
+      .get("authentication/user_get", { withCredentials: true })
       .then((res) => makeUserSession(dispatch, res.data));
   }, []);
 
@@ -42,7 +43,7 @@ function App() {
   }, [navigate, user.isLogged, location.pathname]);
 
   useLayoutEffect(() => {
-    checkUIStorage(dispatch);
+    checkUIStorage(dispatch, UISettings);
   }, []);
 
   return (

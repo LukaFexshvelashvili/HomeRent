@@ -44,7 +44,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="h-[60px] w-full sticky bg-navBg shadow-navbarShadow flex items-center top-0 z-10">
+    <nav className="h-[60px] w-full sticky bg-navBg shadow-navbarShadow flex items-center top-0 z-20">
       <div className="content_container flex justify-between">
         <div className="flex items-center gap-3">
           <Link to="/" className="flex items-center gap-3">

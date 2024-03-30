@@ -1,39 +1,58 @@
 import {
+  DateIcon,
   EditIcon,
   LoginEyeCloseIcon,
   LoginEyeIcon,
   TrashIcon,
 } from "../../../assets/icons/Icons";
+import { TProductData } from "./MyProducts";
 
-import productImage from "../../../assets/images/estates/2.jpeg";
-export default function ProductBanner(props: { setPopbuy: Function }) {
+export default function ProductBanner(props: {
+  setPopbuy: Function;
+  productData: TProductData;
+}) {
   return (
     <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center small:flex-col ">
       <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden small:w-[100%] small:aspect-video small:h-auto">
         <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2] "></div>
         <img
-          src={productImage}
+          src={
+            "http://localhost/homeRentServer/" +
+            props.productData.estate_active_image
+          }
           className="absolute h-full w-full object-cover  top-0 left-0"
         />
       </div>
       <div className="flex flex-col ml-3 h-full relative small:w-full small:mt-3 small:h-auto">
         <h3 className="text-[15px] mb-[2px] text-textHeadBlack">
-          იყიდება 5 ოთახიანი ბინა
+          {props.productData.estate_title}
         </h3>
         <p className="text-[13px] text-textDesc">
           განახლდა:{" "}
-          <span className="text-[13px] text-textHeadBlack">1-27-2024</span>
+          <span className="text-[13px] text-textHeadBlack">
+            {props.productData.update_time.slice(0, 10)}
+          </span>
         </p>
         <p className="text-[13px] text-textDesc">
           ვადა:{" "}
-          <span className="text-[13px] text-textHeadBlack">3-27-2024</span>
+          <span className="text-[13px] text-textHeadBlack">
+            {" "}
+            {props.productData.expire_time.slice(0, 10)}
+          </span>
         </p>
         <div className="flex items-center gap-5 mt-auto small:mt-2">
+          {" "}
+          <p className="flex items-center text-[13px] text-textDesc gap-1">
+            <DateIcon className="h-4 aspect-square [&>path]:fill-textDesc" />
+            {props.productData.created_time.slice(0, 10)}
+          </p>
           <p className="flex items-center text-[13px] text-textDesc gap-1">
             <LoginEyeIcon className="h-4 aspect-square [&>path]:fill-textDesc" />{" "}
-            2 234
+            {props.productData.views}
           </p>
-          <p className="text-[13px] text-textDesc">ID - 18495519</p>
+          <p className="text-[13px] text-textDesc">
+            ID - {props.productData.id}
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-3 ml-auto mediumSmallXl:flex-wrap mediumSmallXl:justify-end small:justify-start small:w-full small:mt-5">

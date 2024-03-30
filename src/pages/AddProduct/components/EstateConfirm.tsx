@@ -93,8 +93,12 @@ export default function EstateConfirm(props: {
         )}
         <button
           onClick={() => {
-            props.setAlertBlock(true);
-            submitProduct(data, props.setShowError, props.setUploadStatus);
+            submitProduct(
+              data,
+              props.setShowError,
+              props.setUploadStatus,
+              props.setAlertBlock
+            );
           }}
           className="h-[42px] w-full rounded-md bg-main text-buttonText tracking-wider text-[15px] transition-colors mt-3 hover:bg-mainHover"
         >
@@ -120,7 +124,7 @@ export function CardExample(props: {
   const getSizePrice = () => {
     if (props.size && props.size > 0 && props.price && props.price > 0) {
       let calc = props.size > 0 && props.price > 0 && props.price / props.size;
-      return calc;
+      return calc && Math.floor(calc);
     } else {
       return 0;
     }

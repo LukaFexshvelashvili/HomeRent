@@ -10,7 +10,7 @@ export default function Buypopup(props: { setPopbuy: Function }) {
   let offerData = ActiveOffers.filter((item) => item.status == status)[0];
 
   return (
-    <div className="fixed w-full h-full top-0 left-0 z-10 flex justify-center items-center">
+    <div className="fixed w-full h-full top-0 left-0 z-30 flex justify-center items-center">
       <div
         onClick={() => props.setPopbuy({ id: null })}
         className="absolute top-0 left-0 w-full h-full  bg-[rgba(0,0,0,0.4)]  z-[5]"
@@ -22,7 +22,7 @@ export default function Buypopup(props: { setPopbuy: Function }) {
           onClick={() => props.setPopbuy({ id: null })}
           className="h-[30px] aspect-square  absolute top-3 right-3 flex justify-center items-center p-1"
         >
-          <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+          <PopupCloseIcon className="h-[16px] [&>path]:fill-[rgba(0,0,0,0.2)]" />
         </button>
         <div className="w-[550px] mx-auto">
           <h2 className="text-main font-mainBold text-center text-[18px] ">

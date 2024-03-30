@@ -40,11 +40,9 @@ export default function Login() {
       formData.append("password", password);
 
       axiosCall
-        .post("/user_login", formData, { withCredentials: true })
+        .post("authentication/user_login", formData, { withCredentials: true })
         .then((res) => {
           if (res.data.status === 3) {
-            console.log(res);
-
             makeUserSession(dispatch, res.data.user_data);
             navigate("/");
           }
@@ -96,6 +94,7 @@ export default function Login() {
                   <input
                     type="text"
                     placeholder="მეილი"
+                    name="email"
                     ref={mailRef}
                     className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 mobile:pl-10 text-textDesc tracking-wider text-Asmall mobile:text-[12px] transition-colors focus:bg-LoginInputActive"
                   />
@@ -105,6 +104,7 @@ export default function Login() {
                   <input
                     type="password"
                     placeholder="პაროლი"
+                    name="password"
                     ref={passwordRef}
                     className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 mobile:pl-10 text-textDesc tracking-wider text-Asmall mobile:text-[12px] transition-colors focus:bg-LoginInputActive"
                   />
