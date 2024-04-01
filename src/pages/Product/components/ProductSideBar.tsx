@@ -11,7 +11,7 @@ import {
   StairsIcon,
   UserIcon,
 } from "../../../assets/icons/Icons";
-export default function ProductSideBar() {
+export default function ProductSideBar(props: { productData: any }) {
   return (
     <div className="flex-1 flex flex-col gap-3">
       <div className="bg-whiteMain rounded-block  shadow-sectionShadow">
@@ -19,29 +19,43 @@ export default function ProductSideBar() {
           <div className=" mobileSmall:max-h-[18px] mobileSmall:overflow-hidden flex items-center text-[13px] font-mainBold text-textDescCard gap-7 mobile:justify-center mobile:gap-4 mobile:flex-wrap mobile:text-[11px] mobileSmall:text-[10px]">
             <span className="flex items-center">
               <LoginEyeIcon className=" h-[18px] aspect-square [&>path]:fill-textDesc mr-3 mobile:mr-2" />{" "}
-              2 234
+              {props.productData.views}
             </span>
             <span className="flex items-center">
               <DateIcon className=" h-[18px] aspect-square [&>path]:fill-textDesc mr-3 mobile:mr-2 translate-y-[-1px]" />{" "}
-              23 იან 24, 14:54
+              {props.productData.created_time.slice(0, 10)}
             </span>
-            <span>ID - 18495519</span>
+            <span>ID - {props.productData.id}</span>
           </div>
           <div className="flex items-center mt-2 justify-between mobile:flex-col-reverse mobile:mt-3 mobile:gap-3 mobile:items-stretch">
             <h2 className="text-[20px] text-textHeadCard tracking-wide font-mainBold mobile:text-[18px] mobileSmall:text-[16px]">
-              2 ოთახიანი ბინა საბურთალოზე
+              {props.productData.estate_title}
             </h2>
             <div className=" flex justify-center items-center bg-mainClear text-main h-[32px] w-[120px] font-mainBold tracking-wider rounded-lg text-Asmall mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
-              იყიდება
+              {getDealType(props.productData.estate_deal)}
             </div>
           </div>
           <div className="flex items-center mt-5 justify-between px-3 mobile:px-0">
             <div className="flex items-center gap-4 mobileSmall:gap-2">
               <p className="text-[20px] font-mainBold text-textHeadCard mobile:text-[18px] mobileSmall:text-[16px]">
-                42 700$
+                {Math.floor(props.productData.estate_price)}{" "}
+                {props.productData.estate_currency == 0
+                  ? "$"
+                  : props.productData.estate_currency == 1
+                  ? "₾"
+                  : ""}
               </p>
               <p className="text-[16px] font-mainBold text-textDescCard mobile:text-[14px] mobileSmall:text-[12px]">
-                1 მ² - 14 $
+                1 მ² -{" "}
+                {Math.floor(
+                  props.productData.estate_price / props.productData.estate_size
+                )}{" "}
+                $
+                {props.productData.estate_currency == 0
+                  ? "$"
+                  : props.productData.estate_currency == 1
+                  ? "₾"
+                  : ""}
               </p>
             </div>
             <div className="h-[35px] w-[80px] flex items-center  outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg text-textDescCard cursor-pointer">
@@ -82,7 +96,7 @@ export default function ProductSideBar() {
               ფართი
             </p>
             <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
-              55 მ²
+              {props.productData.estate_size} მ²
             </p>
           </div>
         </div>
@@ -93,7 +107,7 @@ export default function ProductSideBar() {
               ოთახები
             </p>
             <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
-              3
+              {props.productData.estate_rooms}
             </p>
           </div>
         </div>
@@ -104,21 +118,30 @@ export default function ProductSideBar() {
               საძინებელი
             </p>
             <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
-              2
+              {props.productData.estate_bedrooms}
             </p>
           </div>
         </div>
-        <div className="flex-1 px-5 flex items-center  mobile:min-w-[50%] ">
-          <StairsIcon className=" h-[25px] aspect-square [&>path]:stroke-textHeadCard" />
-          <div className="flex flex-col ml-3">
-            <p className=" text-textDesc text-Asmaller font-mainBold tracking-wider">
-              სართული
-            </p>
-            <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
-              4 <span className="text-textDescCard">/ 9</span>
-            </p>
+        {props.productData.estate_floor ? (
+          <div className="flex-1 px-5 flex items-center  mobile:min-w-[50%] ">
+            <StairsIcon className=" h-[25px] aspect-square [&>path]:stroke-textHeadCard" />
+            <div className="flex flex-col ml-3">
+              <p className=" text-textDesc text-Asmaller font-mainBold tracking-wider">
+                სართული
+              </p>
+              <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
+                {props.productData.estate_floor}{" "}
+                {props.productData.estate_floors && (
+                  <span className="text-textDescCard">
+                    / {props.productData.estate_floors}
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
-        </div>
+        ) : (
+          ""
+        )}
       </div>
       <div className="bg-whiteMain rounded-block h-[70px] flex items-center justify-between  shadow-sectionShadow mobile:h-auto mobile:p-3 mobile:flex-wrap mobile:justify-center mobile:gap-y-3">
         <div className="flex flex-col mobile:text-center px-4 gap-[2px]">
@@ -126,15 +149,15 @@ export default function ProductSideBar() {
             მდებარეობა
           </p>
           <p className="text-textHeadCard text-[13px] font-mainBold tracking-wider">
-            თბილისი, მარჯანიშვილი
+            {props.productData.estate_city}
           </p>
         </div>
         <div className=" flex flex-col mobile:text-center px-4 gap-[2px]">
           <p className=" text-textDesc text-Asmaller font-mainSemiBold tracking-wider">
-            მდგომარეობა
+            პროექტი
           </p>
           <p className="text-textHeadCard text-[13px] font-mainBold tracking-wider">
-            გარემონტებული
+            {getProject(props.productData.estate_project)}
           </p>
         </div>
         <div className=" flex flex-col mobile:text-center px-4 gap-[2px]">
@@ -142,7 +165,7 @@ export default function ProductSideBar() {
             სტატუსი
           </p>
           <p className="text-textHeadCard text-[13px] font-mainBold tracking-wider">
-            ახალი აშენებული
+            {getStatus(props.productData.estate_status)}
           </p>
         </div>
       </div>
@@ -162,4 +185,73 @@ export default function ProductSideBar() {
       </div>
     </div>
   );
+}
+
+function getDealType(dealID: number) {
+  switch (dealID) {
+    case 0:
+      return "იყიდება";
+      break;
+    case 1:
+      return "ქირავდება";
+      break;
+    case 2:
+      return "ქირავდება დღიურად";
+      break;
+    case 3:
+      return "გირავდება";
+      break;
+  }
+}
+function getType(typeID: number) {
+  switch (typeID) {
+    case 0:
+      return "კერძო სახლი";
+      break;
+    case 1:
+      return "კორპუსის ბინა";
+      break;
+    case 2:
+      return "კომერციული ფართი";
+      break;
+    case 3:
+      return "მიწის ნაკვეთი";
+      break;
+    case 4:
+      return "სასტუმრო";
+      break;
+  }
+}
+function getStatus(statusID: number) {
+  switch (statusID) {
+    case 0:
+      return "ახალი აშენებული";
+      break;
+    case 1:
+      return "ძველი აშენებული";
+      break;
+    case 2:
+      return "მშენებარე";
+      break;
+  }
+}
+function getProject(projectID: number) {
+  const projectTypes: string[] = [
+    "ლენინგრადის",
+    "ლვოვის",
+    "კიევი",
+    "თბილისური ეზო",
+    "მოსკოვის",
+    "ქალაქური",
+    "ჩეხური",
+    "ხრუშოვის",
+    "თუხარელის",
+    "ვეძისი",
+    "იუგოსლავიის",
+    "მეტრომშენის",
+    "არასტანდარტული",
+    "ყავლაშვილის",
+  ];
+
+  return projectTypes[projectID];
 }

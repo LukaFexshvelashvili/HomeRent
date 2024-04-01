@@ -28,6 +28,9 @@
 .AddProductInputTitle {
   @apply h-[40px] px-2 w-[300px] border-[2px] border-inputBorder rounded-lg text-[15px]  outline-none text-textHeadCard font-mainSemiBold tracking-wider bg-LoginInput transition-colors placeholder:text-textPlaceholder focus:bg-LoginInputActive;
 }
+.textareaInput {
+  @apply h-[90px] max-w-[700px] w-[600px];
+}
 .ActiveProfileNav::before {
   content: "";
   position: absolute;

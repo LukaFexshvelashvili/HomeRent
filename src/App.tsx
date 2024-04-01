@@ -58,6 +58,7 @@ function App() {
             <Route path="Logout" element={<Logout />} />
             <Route path="Search" element={<Search />} />
             <Route path="Product" element={<Product />} />
+            <Route path="Product/:id" element={<Product />} />
             <Route path="AddProduct" element={<AddProduct />} />
             <Route path="Profile/*" element={<Profile />} />
             <Route path="MaclerService" element={<MaclerService />} />

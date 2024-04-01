@@ -5,9 +5,9 @@ import image3 from "../../../assets/images/products/productExample/3.webp";
 import image4 from "../../../assets/images/products/productExample/4.jpg";
 import { LeftArrowIcon } from "../../../assets/icons/Icons";
 
-export default function ImageSlider() {
+export default function ImageSlider(props: { productData: any }) {
   const [slider, setSlider] = useState<number>(0);
-  const imageList = [image1, image2, image3, image4];
+  const imageList = JSON.parse(props.productData.estate_images);
 
   const sliderNext = () => {
     if (slider == imageList.length - 1) {
@@ -36,7 +36,7 @@ export default function ImageSlider() {
             }`}
           >
             <img
-              src={item}
+              src={"http://localhost/HomeRentServer/" + item}
               className=" h-full w-full object-cover rounded-[5px]"
               alt="Product Image"
             />
@@ -45,23 +45,27 @@ export default function ImageSlider() {
       </div>
       <div className="relative overflow-hidden h-full w-full rounded-block z-[1] medium:min-h-[500px] small:min-h-[400px] mobile:min-h-[300px] mobileSmall:min-h-[200px]">
         <img
-          src={imageList[slider]}
+          src={"http://localhost/HomeRentServer/" + imageList[slider]}
           className="absolute top-0 left-0 h-full w-full object-cover"
           alt="Product Image"
         />
       </div>
-      <button
-        onClick={() => sliderPrev()}
-        className="mobile:hidden h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[5] left-0 -translate-x-1/4 shadow-slideNavShadow"
-      >
-        <LeftArrowIcon className="h-full aspect-square" />{" "}
-      </button>{" "}
-      <button
-        onClick={() => sliderNext()}
-        className="mobile:hidden h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[5] right-0 translate-x-1/4 shadow-slideNavShadow"
-      >
-        <LeftArrowIcon className="h-full aspect-square rotate-180" />{" "}
-      </button>
+      {imageList.length !== 1 && (
+        <>
+          <button
+            onClick={() => sliderPrev()}
+            className="mobile:hidden h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[5] left-0 -translate-x-1/4 shadow-slideNavShadow"
+          >
+            <LeftArrowIcon className="h-full aspect-square" />{" "}
+          </button>{" "}
+          <button
+            onClick={() => sliderNext()}
+            className="mobile:hidden h-16 aspect-square rounded-circle bg-whiteMain p-5 absolute z-[5] right-0 translate-x-1/4 shadow-slideNavShadow"
+          >
+            <LeftArrowIcon className="h-full aspect-square rotate-180" />{" "}
+          </button>
+        </>
+      )}
     </div>
   );
 }

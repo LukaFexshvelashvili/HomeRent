@@ -5,6 +5,7 @@ import {
   EstateAddons,
   EstateAddress,
   EstateClosePlaces,
+  EstateDescription,
   EstateImages,
   EstateInformation,
   EstateOption,
@@ -83,9 +84,12 @@ export default function AddProduct() {
 
           {productData.estateStatus !== null && (
             <EstateTitle
-              error={showError && productData.estateCity == null ? true : false}
+              error={
+                showError && productData.estateTitle == null ? true : false
+              }
             />
           )}
+          {productData.estateStatus !== null && <EstateDescription />}
           {productData.estateStatus !== null && (
             <EstateAddress
               error={showError && productData.estateCity == null ? true : false}

@@ -27,6 +27,7 @@ import {
   updateCondition,
   updateCurrency,
   updateDeal,
+  updateDescription,
   updateFloor,
   updateFloors,
   updateFullPrice,
@@ -69,6 +70,7 @@ export const submitProduct = (
     let formData = new FormData();
     formData.append("estateType", productData.estateType);
     formData.append("estateTitle", productData.estateTitle);
+    formData.append("estateDescription", productData.estateDescription);
     formData.append("estateDeal", productData.estateDeal);
     formData.append("estateStatus", productData.estateStatus);
     formData.append("estateCity", productData.estateCity);
@@ -104,8 +106,6 @@ export const submitProduct = (
         },
       })
       .then((res) => {
-        console.log(res.data);
-
         setUploadStatus(res.data.status);
       });
   }
@@ -559,7 +559,7 @@ export function EstateAddress(props: { error: boolean }) {
         <input
           type="text"
           ref={getInput}
-          className="AddProductInput"
+          className="AddProductInput "
           placeholder="საკადასტრო კოდი"
           onChange={(e) => {
             if (e.target.value == "") {
@@ -598,6 +598,7 @@ export function EstateTitle(props: { error: boolean }) {
           type="text"
           className="AddProductInputTitle"
           placeholder="მაგ: იყიდება ბინა ზღვასთან"
+          value={title}
           onChange={(e) => {
             setTitle(e.target.value);
             if (e.target.value == "") {
@@ -607,6 +608,39 @@ export function EstateTitle(props: { error: boolean }) {
             }
           }}
         />
+      </div>
+    </div>
+  );
+}
+export function EstateDescription() {
+  const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
+
+  return (
+    <div className="flex flex-col">
+      <div className="flex items-center gap-2">
+        <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+          განცხადების აღწერა
+        </p>{" "}
+        <span className="text-Asmall text-textDescCard ">
+          (მაქსიმალური სიგრძე: 600)
+        </span>
+      </div>
+
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
+        <textarea
+          className="AddProductInputTitle textareaInput"
+          placeholder="ბინის აღწერა"
+          value={description}
+          onChange={(e) => {
+            setDescription(e.target.value);
+            if (e.target.value == "") {
+              dispatch(updateDescription(null));
+            } else {
+              dispatch(updateDescription(e.target.value));
+            }
+          }}
+        ></textarea>
       </div>
     </div>
   );
