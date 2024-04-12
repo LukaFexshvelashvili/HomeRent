@@ -6,6 +6,7 @@ export type Tuser = {
   surname: string;
   mail: string | null;
   mobile: string | null;
+  favorites: number[];
   create_date: string | null;
   verified: boolean;
   isLogged: boolean | null;
@@ -16,6 +17,7 @@ const initialState: Tuser = {
   surname: "",
   mail: null,
   mobile: null,
+  favorites: [],
   create_date: null,
   verified: false,
   isLogged: null,
@@ -25,6 +27,7 @@ const sessionState: Tuser = {
   name: "სტუმარი",
   surname: "",
   mail: null,
+  favorites: [],
   mobile: null,
   create_date: null,
   verified: false,
@@ -40,13 +43,20 @@ const userSlice = createSlice({
     setUserLoginStatus: (state, action: PayloadAction<boolean>) => {
       state.isLogged = action.payload;
     },
+    updateFavorites: (state, action: PayloadAction<number[]>) => {
+      state.favorites = action.payload;
+    },
     clearSession: () => {
       return sessionState;
     },
   },
 });
 
-export const { setUserSessionData, setUserLoginStatus, clearSession } =
-  userSlice.actions;
+export const {
+  setUserSessionData,
+  setUserLoginStatus,
+  clearSession,
+  updateFavorites,
+} = userSlice.actions;
 
 export default userSlice.reducer;

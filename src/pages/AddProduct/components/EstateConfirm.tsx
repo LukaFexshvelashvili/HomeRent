@@ -169,7 +169,8 @@ export function CardExample(props: {
       </div>
       <div className="flex items-center mt-2 bottom-3 w-full absolute left-0 px-3">
         <div className="bg-mainClear text-main w-[120px] h-[30px] flex justify-center items-center rounded-lg">
-          {numeral(props.price).format("0,0").replace(/,/g, " ")}
+          {props.price &&
+            numeral(Math.floor(props.price)).format("0,0").replace(/,/g, " ")}
           {props.currency == 0 ? "$" : props.currency == 1 && "₾"}
         </div>
         <p className="text-textDescCard text-Asmall mx-3 ">

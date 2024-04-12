@@ -1,5 +1,5 @@
 import { Swiper } from "swiper";
-import Card from "./Card";
+import Card, { CardSkeleton } from "./Card";
 import "swiper/css";
 import "swiper/css/pagination";
 import { LeftArrowIcon } from "../../assets/icons/Icons";
@@ -7,10 +7,16 @@ import { Navigation } from "swiper/modules";
 import { memo, useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-function CardSlider(props: { uniqueId?: string | number }) {
+import { TProductData } from "../../pages/Profile/components/MyProducts";
+
+function CardSlider(props: {
+  uniqueId?: string | number;
+  products: null | TProductData[];
+}) {
   const rand = Math.floor(Math.random() * 999999);
   const rand2 = Math.floor(Math.random() * 999);
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
+
   useEffect(() => {
     if (!swiperInstance) {
       const newSwiperInstance = new Swiper(
@@ -113,36 +119,23 @@ function CardSlider(props: { uniqueId?: string | number }) {
         className={`swiper swiper-container A${rand}${props.uniqueId}${rand2}`}
       >
         <div className="swiper-wrapper">
-          <SwiperSlide className="flex justify-center">
-            <Card autoWidth={true} />
-          </SwiperSlide>
-          <SwiperSlide className="flex justify-center">
-            <Card autoWidth={true} />
-          </SwiperSlide>
-          <SwiperSlide className="flex justify-center">
-            <Card autoWidth={true} />
-          </SwiperSlide>
-          <SwiperSlide className="flex justify-center">
-            <Card autoWidth={true} />
-          </SwiperSlide>{" "}
-          <SwiperSlide className="flex justify-center">
-            <Card autoWidth={true} />
-          </SwiperSlide>
-          <SwiperSlide className="flex justify-center">
-            <Card autoWidth={true} />
-          </SwiperSlide>
-          <SwiperSlide className="flex justify-center">
-            <Card autoWidth={true} />
-          </SwiperSlide>{" "}
-          <SwiperSlide className="flex justify-center">
-            <Card autoWidth={true} />
-          </SwiperSlide>
-          <SwiperSlide className="flex justify-center">
-            <Card autoWidth={true} />
-          </SwiperSlide>
-          <SwiperSlide className="flex justify-center">
-            <Card autoWidth={true} />
-          </SwiperSlide>
+          {props.products !== null ? (
+            props.products.map((e: TProductData) => (
+              <SwiperSlide key={e.id} className="flex justify-center">
+                <Card autoWidth={true} product={e} />
+              </SwiperSlide>
+            ))
+          ) : (
+            <>
+              <div className="flex gap-[20px]">
+                <CardSkeleton autoWidth={false} />
+                <CardSkeleton autoWidth={false} />
+                <CardSkeleton autoWidth={false} />
+                <CardSkeleton autoWidth={false} />
+                <CardSkeleton autoWidth={false} />
+              </div>
+            </>
+          )}
         </div>
       </div>
       <button

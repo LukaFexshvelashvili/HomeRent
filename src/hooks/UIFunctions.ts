@@ -1,6 +1,9 @@
 import { setDarkMode, setMainColor } from "../store/data/webUISlice";
 
 export function checkUIStorage(dispatch: any, UISettings: any) {
+  if (!localStorage.getItem("favorites")) {
+    localStorage.setItem("favorites", "[]");
+  }
   if (localStorage.getItem("darkmode")) {
     let darkmodeStorage: any = localStorage.getItem("darkmode");
     let darkmode: boolean = JSON.parse(darkmodeStorage);

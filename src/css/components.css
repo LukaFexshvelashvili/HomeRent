@@ -109,6 +109,20 @@
   border-bottom: 8px solid var(--main);
   animation: loading 1s infinite linear;
 }
+.skeletonLoad {
+  animation: 1s skeleton infinite ease-in-out;
+}
+@keyframes skeleton {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 @keyframes loading {
   from {
