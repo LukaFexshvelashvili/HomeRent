@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 import {
   BedIcon,
   BookmarkIcon,
@@ -11,7 +12,27 @@ import {
   StairsIcon,
   UserIcon,
 } from "../../../assets/icons/Icons";
-export default function ProductSideBar(props: { productData: any }) {
+import { RootState } from "../../../store/store";
+import { TProductData } from "../../Profile/components/MyProducts";
+import { useEffect, useState } from "react";
+import { addFavorite, removeFavorite } from "../../../hooks/serverFunctions";
+export default function ProductSideBar(props: { productData: TProductData }) {
+  const userFavorites = useSelector((store: RootState) => store.user.favorites);
+  const dispatch = useDispatch();
+  const [favorited, setFavorited] = useState(
+    userFavorites.includes(props.productData.id)
+  );
+  const changeFavorite = () => {
+    if (favorited) {
+      removeFavorite(dispatch, props.productData.id);
+      setFavorited(false);
+    } else {
+      addFavorite(dispatch, props.productData.id);
+
+      setFavorited(true);
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col gap-3">
       <div className="bg-whiteMain rounded-block  shadow-sectionShadow">
@@ -170,9 +191,18 @@ export default function ProductSideBar(props: { productData: any }) {
         </div>
       </div>
       <div className="flex items-center gap-5  mobile:flex-wrap mobile:justify-center mobile:gap-3">
-        <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer">
-          <BookmarkIcon className="h-[16px] aspect-square [&>path]:stroke-orangeI mr-3" />{" "}
-          შენახვა
+        <div
+          onClick={changeFavorite}
+          className={` shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto select-none transition-colors ${
+            favorited ? "bg-orangeClear" : "bg-whiteMain"
+          } rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer `}
+        >
+          <BookmarkIcon
+            className={`h-[16px] aspect-square [&>path]:stroke-orangeI mr-3 [&>path]:transition-colors ${
+              favorited ? "[&>path]:fill-orangeI" : "[&>path]:fill-transparent"
+            } `}
+          />{" "}
+          {favorited ? "შენახულია" : "შენახვა"}
         </div>
         <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer">
           <ShareIcon className="h-[16px] aspect-square [&>path]:stroke-main mr-3" />{" "}

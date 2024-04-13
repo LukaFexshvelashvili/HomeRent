@@ -1,8 +1,4 @@
-import { useState } from "react";
-import image1 from "../../../assets/images/products/productExample/1.webp";
-import image2 from "../../../assets/images/products/productExample/2.webp";
-import image3 from "../../../assets/images/products/productExample/3.webp";
-import image4 from "../../../assets/images/products/productExample/4.jpg";
+import { useEffect, useState } from "react";
 import { LeftArrowIcon } from "../../../assets/icons/Icons";
 
 export default function ImageSlider(props: { productData: any }) {
@@ -23,6 +19,10 @@ export default function ImageSlider(props: { productData: any }) {
       setSlider((state) => state - 1);
     }
   };
+  useEffect(() => {
+    setSlider(0);
+  }, [props.productData]);
+
   return (
     <div className="flex-[1.3] bg-whiteMain rounded-block relative flex items-center justify-center  shadow-sectionShadow">
       <div className="slider-shade absolute h-full w-full left-0 top-0 z-[2] rounded-b-block"></div>

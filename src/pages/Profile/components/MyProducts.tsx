@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductBanner from "./ProductBanner";
 import Buypopup from "./Buypopup";
 import axiosCall from "../../../hooks/axiosCall";
@@ -9,6 +9,7 @@ export type TProductData = {
   id: number;
   user_id: number;
   estate_title: string;
+  estate_description: string;
   estate_type: number;
   estate_deal: number;
   estate_status: number;
@@ -44,11 +45,29 @@ export default function MyProducts() {
   const [popbuy, setPopbuy] = useState<{ id: null | number }>({ id: null });
   const [choice, setChoice] = useState<number>(0);
   const [myProducts, setMyProducts] = useState<any[] | null>(null);
+  const saveProducts = useRef<any>(null);
   useEffect(() => {
     axiosCall
       .get("fetch/my_products", { withCredentials: true })
-      .then((res) => setMyProducts(res.data));
+      .then((res) => {
+        res.data &&
+          setMyProducts(
+            res.data.filter(
+              (item: TProductData) => item.product_status == choice
+            )
+          );
+        saveProducts.current = res.data;
+      });
   }, []);
+  useEffect(() => {
+    if (saveProducts.current !== null) {
+      setMyProducts(
+        saveProducts.current.filter(
+          (item: TProductData) => item.product_status == choice
+        )
+      );
+    }
+  }, [choice]);
 
   const choices: string[] = ["აქტიური", "დაბლოკილი", "ვადაგასული"];
   return (
@@ -82,7 +101,7 @@ export default function MyProducts() {
         {myProducts === null && <ContentLoader />}
         {myProducts && myProducts.length !== 0 && (
           <p className="px-4 text-[13px] text-textDesc my-1">
-            სულ 3 განცხადება
+            სულ {myProducts.length} განცხადება
           </p>
         )}
         <div className="flex flex-col">

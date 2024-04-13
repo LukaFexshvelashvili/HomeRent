@@ -13,6 +13,7 @@ import {
   removeFavorite,
 } from "../../hooks/serverFunctions";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Card(props: {
   autoWidth?: boolean;
@@ -35,51 +36,61 @@ export default function Card(props: {
   return (
     <>
       <div
-        className={`h-auto ${loaded ? "" : "hidden"}  ${
+        className={`h-auto ${
+          loaded ? "" : "invisible max-w-0 overflow-hidden"
+        }  ${
           props.autoWidth ? "w-full" : "w-[280px]"
         } bg-whiteMain border-2 border-cardBorder rounded-normal p-3 pb-14 relative`}
       >
-        <div className="w-full h-[200px] rounded-normal bg-whiteLoad relative overflow-hidden">
-          {props.product.estate_vip == 2 ? (
-            <div className="absolute h-[25px] w-[60px] select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
-              VIP+
+        <Link to={"/product/" + props.product.id} className=" rounded-2xl">
+          <div className="w-full h-[200px] rounded-normal bg-whiteLoad relative overflow-hidden">
+            {props.product.estate_vip == 2 ? (
+              <div className="absolute h-[25px] w-[60px] select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
+                VIP+
+              </div>
+            ) : props.product.estate_vip == 1 ? (
+              <div className="absolute h-[25px] w-[60px] select-none bg-orangeI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
+                VIP
+              </div>
+            ) : (
+              props.product.estate_vip == 0 && <></>
+            )}
+            <img
+              src={
+                "http://localhost/HomeRentServer/" +
+                props.product.estate_active_image
+              }
+              className="absolute h-full w-full object-cover top-0 left-0 select-none"
+              alt="estate-photo"
+              onLoad={() => {
+                setLoaded(true);
+              }}
+              loading="lazy"
+            />
+            <div className="absolute bottom-2 left-2 flex items center gap-2">
+              <div className="bg-cardInfoBg backdrop-blur-[2px] rounded-[3px] flex justify-center items-center px-2 py-[6px] text-WhiteFade font-mainSemiBold text-sm">
+                <RoomIcon className="h-[18px] mr-3 [&>path]:fill-WhiteFade" />{" "}
+                {props.product.estate_rooms}
+              </div>
+              <div className="bg-cardInfoBg backdrop-blur-[2px] rounded-[3px] flex justify-center items-center px-2 py-[6px] text-WhiteFade font-mainSemiBold text-sm">
+                <SquareFrameIcon className="h-[18px] mr-3 [&>path]:stroke-WhiteFade" />{" "}
+                {props.product.estate_size}მ²
+              </div>
             </div>
-          ) : props.product.estate_vip == 1 ? (
-            <div className="absolute h-[25px] w-[60px] select-none bg-orangeI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
-              VIP
-            </div>
-          ) : (
-            props.product.estate_vip == 0 && <></>
-          )}
-          <img
-            src={
-              "http://localhost/HomeRentServer/" +
-              props.product.estate_active_image
-            }
-            className="absolute h-full w-full object-cover top-0 left-0 select-none"
-            alt="estate-photo"
-            onLoad={() => setLoaded(true)}
-            loading="lazy"
-          />
-          <div className="absolute bottom-2 left-2 flex items center gap-2">
-            <div className="bg-cardInfoBg backdrop-blur-[2px] rounded-[3px] flex justify-center items-center px-2 py-[6px] text-WhiteFade font-mainSemiBold text-sm">
-              <RoomIcon className="h-[18px] mr-3 [&>path]:fill-WhiteFade" />{" "}
-              {props.product.estate_rooms}
-            </div>
-            <div className="bg-cardInfoBg backdrop-blur-[2px] rounded-[3px] flex justify-center items-center px-2 py-[6px] text-WhiteFade font-mainSemiBold text-sm">
-              <SquareFrameIcon className="h-[18px] mr-3 [&>path]:stroke-WhiteFade" />{" "}
-              {props.product.estate_size}მ²
-            </div>
-          </div>
-        </div>
+          </div>{" "}
+        </Link>
         <div className="flex flex-col py-1 pt-2">
-          <h2 className="text-textHeadCard font-mainSemiBold text-[15px] text-nowrap text-ellipsis w-full overflow-hidden">
-            {props.product.estate_title}
-          </h2>
-          <p className="text-textDescCard text-[13px] font-mainRegular mt-[2px]  text-nowrap text-ellipsis w-full overflow-hidden">
-            {props.product.estate_city},{" "}
-            {props.product.estate_address && props.product.estate_address}
-          </p>
+          <Link to={"/product/" + props.product.id}>
+            <h2 className="text-textHeadCard font-mainSemiBold text-[15px] text-nowrap text-ellipsis w-full overflow-hidden">
+              {props.product.estate_title}
+            </h2>
+          </Link>
+          <Link to={"/product/" + props.product.id}>
+            <p className="text-textDescCard text-[13px] font-mainRegular mt-[2px]  text-nowrap text-ellipsis w-full overflow-hidden">
+              {props.product.estate_city},{" "}
+              {props.product.estate_address && props.product.estate_address}
+            </p>{" "}
+          </Link>
         </div>
         <div className="flex items-center mt-2 bottom-3 w-full absolute left-0 px-3">
           <div className="bg-mainClear text-main w-[120px] h-[30px] flex justify-center items-center rounded-md">

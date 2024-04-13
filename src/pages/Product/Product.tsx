@@ -10,16 +10,21 @@ import ProductSideBar from "./components/ProductSideBar";
 import { useEffect, useState } from "react";
 import axiosCall from "../../hooks/axiosCall";
 import ContentLoader from "../../components/global/ContentLoader";
+import { TProductData } from "../Profile/components/MyProducts";
 
 export default function Product() {
   const { id } = useParams();
-  const [productData, setProductData] = useState<any>(null);
+  const [productData, setProductData] = useState<null | TProductData>(null);
+  const [sameProducts, setSameProducts] = useState<null | TProductData[]>(null);
   useEffect(() => {
     axiosCall.post("fetch/product", `product_id=${id}`).then((res) => {
-      console.log(res.data.product_data[0]);
-
       if (res.data.status === 100) {
         setProductData(res.data.product_data[0]);
+        let formData = new FormData();
+        formData.append("city", res.data.product_data[0].estate_city);
+        axiosCall
+          .post("fetch/same_products", formData)
+          .then((res) => setSameProducts(res.data));
       }
     });
   }, [id]);
@@ -41,8 +46,8 @@ export default function Product() {
                   აღწერა
                 </p>
                 <p className=" text-[14px] font-mainSemiBold text-textDescCard leading-[23px] mt-2 tracking-normal">
-                  {productData.description
-                    ? productData.description
+                  {productData.estate_description
+                    ? productData.estate_description
                     : "აღწერა არ არის დამატებული"}
                 </p>
                 {productData.estate_ipcode !== "null" && (
@@ -104,10 +109,15 @@ export default function Product() {
             </div>
           </section>
           <div className="mt-5">
-            <p className="p-2 text-[16px] font-mainBold text-textHeadCard mb-1">
-              მსგავსი განცხადებები
-            </p>
-            <CardSlider uniqueId={1001} />
+            {sameProducts && (
+              <>
+                <p className="p-2 text-[16px] font-mainBold text-textHeadCard mb-1">
+                  მსგავსი განცხადებები
+                </p>
+
+                <CardSlider uniqueId={1001} products={sameProducts} />
+              </>
+            )}
           </div>
         </>
       )}

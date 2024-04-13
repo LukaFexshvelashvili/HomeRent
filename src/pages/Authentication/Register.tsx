@@ -107,6 +107,10 @@ export default function Register() {
             } else {
               formData.append("mobile", "");
             }
+            if (localStorage.getItem("favorites")) {
+              const userFavorites: any = localStorage.getItem("favorites");
+              formData.append("favorites", userFavorites);
+            }
             formData.append("password", formInputs.password);
 
             axiosCall

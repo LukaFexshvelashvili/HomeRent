@@ -10,7 +10,7 @@ import { RootState } from "../../store/store";
 import { useRef, useState } from "react";
 import axiosCall from "../../hooks/axiosCall";
 import { Tuser } from "../../store/data/userSlice";
-import { makeUserSession } from "../../hooks/serverFunctions";
+import { makeUserSession, mergeFavorites } from "../../hooks/serverFunctions";
 
 export default function Login() {
   const user: Tuser = useSelector((store: RootState) => store.user);
@@ -44,6 +44,14 @@ export default function Login() {
         .then((res) => {
           if (res.data.status === 3) {
             makeUserSession(dispatch, res.data.user_data);
+            if (localStorage.getItem("favorites")) {
+              const currentFavorites: any = localStorage.getItem("favorites");
+              mergeFavorites(
+                dispatch,
+                JSON.parse(res.data.user_data.favorites),
+                JSON.parse(currentFavorites)
+              );
+            }
             navigate("/");
           }
           if (res.data.status === 0) {

@@ -39,6 +39,8 @@ function App() {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     loggedUser(navigate, user.isLogged);
   }, [navigate, user.isLogged, location.pathname]);
 

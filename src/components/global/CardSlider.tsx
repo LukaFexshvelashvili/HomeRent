@@ -116,12 +116,15 @@ function CardSlider(props: {
   return (
     <div className="relative flex items-center">
       <div
-        className={`swiper swiper-container A${rand}${props.uniqueId}${rand2}`}
+        className={`swiper swiper-container w-full A${rand}${props.uniqueId}${rand2}`}
       >
-        <div className="swiper-wrapper">
-          {props.products !== null ? (
+        <div className="swiper-wrapper ">
+          {props.products != null ? (
             props.products.map((e: TProductData) => (
-              <SwiperSlide key={e.id} className="flex justify-center">
+              <SwiperSlide
+                key={e.id}
+                className="flex justify-center w-auto mr-4"
+              >
                 <Card autoWidth={true} product={e} />
               </SwiperSlide>
             ))

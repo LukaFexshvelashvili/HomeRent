@@ -1,3 +1,4 @@
+import { memo, useEffect, useState } from "react";
 import {
   BookmarkIcon,
   DateIcon,
@@ -5,8 +6,18 @@ import {
 } from "../../../assets/icons/Icons";
 
 import productImage from "../../../assets/images/estates/2.jpeg";
+import { TProductData } from "./MyProducts";
+import { getFavorites, removeFavorite } from "../../../hooks/serverFunctions";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
-export default function SavedProducts() {
+function SavedProducts() {
+  const userFavorites = useSelector((store: RootState) => store.user.favorites);
+  const [products, setProducts] = useState<[] | TProductData[]>([]);
+  useEffect(() => {
+    getFavorites().then((data: TProductData[]) => setProducts(data));
+  }, [userFavorites]);
+
   return (
     <>
       {" "}
@@ -22,58 +33,77 @@ export default function SavedProducts() {
       <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex  py-2 flex-col gap-3">
         <p className="px-4 text-[13px] text-textDesc my-1">სულ 3 განცხადება</p>
         <div className="flex flex-col">
-          <FavoriteBanner />
-          <FavoriteBanner />
-          <FavoriteBanner />
+          {products.length >= 1 ? (
+            products.map((e: TProductData) => (
+              <FavoriteBanner key={e.id} product={e} />
+            ))
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </>
   );
 }
 
-function FavoriteBanner() {
+function FavoriteBanner(props: { product: TProductData }) {
+  const dispatch = useDispatch();
   return (
     <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center   small:flex-col">
       <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden   small:w-[100%] small:aspect-video small:h-auto">
         <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2]"></div>
         <img
-          src={productImage}
+          src={
+            "http://localhost/HomeRentServer/" +
+            props.product.estate_active_image
+          }
           className="absolute h-full w-full object-cover  top-0 left-0"
         />
       </div>
       <div className="flex flex-col ml-3 h-full relative  small:w-full small:mt-3 small:h-auto">
         <h3 className="text-[15px] mb-[2px] text-textHeadBlack">
-          იყიდება 5 ოთახიანი ბინა
+          {props.product.estate_title}
         </h3>
         <p className="text-[13px] text-textDesc">
           ადგილი:{" "}
           <span className="text-[13px] text-textHeadBlack">
-            თბილისი, ვაშლიჯვარი
+            {props.product.estate_city}
           </span>
         </p>
         <p className="text-[13px] text-textDesc">
-          ოთახები: <span className="text-[13px] text-textHeadBlack">5</span>
+          ოთახები:{" "}
+          <span className="text-[13px] text-textHeadBlack">
+            {props.product.estate_rooms}
+          </span>
         </p>
         <p className="text-[13px] text-textDesc">
-          ფართი: <span className="text-[13px] text-textHeadBlack">100 მ²</span>
+          ფართი:{" "}
+          <span className="text-[13px] text-textHeadBlack">
+            {props.product.estate_size} მ²
+          </span>
         </p>
         <div className="flex items-center gap-5 mt-auto small:mt-2 flex-wrap">
           <p className="flex items-center text-[13px] text-textDesc gap-1">
             <LoginEyeIcon className="h-4 aspect-square [&>path]:fill-textDesc" />{" "}
-            2 234
+            {props.product.views}
           </p>
           <p className="flex items-center text-[13px] text-textDesc gap-1">
             <DateIcon className="h-4 aspect-square [&>path]:fill-textDesc" /> 2
-            23 იან 24, 14:54
+            {props.product.created_time.split(" ")[0]}
           </p>
-          <p className="text-[13px] text-textDesc">ID - 18495519</p>
+          <p className="text-[13px] text-textDesc">ID - {props.product.id}</p>
         </div>
       </div>
       <div className="flex items-center gap-3 ml-auto small:justify-start small:w-full small:mt-5">
-        <button className="bg-orangeClear  h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-orangeHover flex justify-center items-center">
+        <button
+          onClick={() => removeFavorite(dispatch, props.product.id)}
+          className="bg-orangeClear  h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-orangeHover flex justify-center items-center"
+        >
           <BookmarkIcon className="h-full aspect-square [&>path]:fill-orangeI [&>path]:stroke-orangeI" />
         </button>
       </div>
     </div>
   );
 }
+
+export default memo(SavedProducts);

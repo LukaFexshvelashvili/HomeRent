@@ -37,6 +37,33 @@ export function loggedUser(navigate: Function, isLogged: boolean | null) {
   }
 }
 
+export function mergeFavorites(
+  dispatch: Function,
+  ar1: number[],
+  ar2: number[]
+) {
+  if (localStorage.getItem("favorites")) {
+    let merge = [...ar1, ...ar2];
+    let newFavorites = [...new Set(merge)];
+    localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    dispatch(updateFavorites(newFavorites));
+    const formData = new FormData();
+    formData.append("favorites", JSON.stringify(getFavorites));
+    axiosCall.post("user/favorites", formData, { withCredentials: true });
+  }
+}
+export function getFavorites(): any {
+  if (localStorage.getItem("favorites")) {
+    const favoritesStorage: any = localStorage.getItem("favorites");
+    const formData = new FormData();
+    formData.append("favorites", favoritesStorage);
+    return axiosCall
+      .post("fetch/favorites", formData, { withCredentials: true })
+      .then((res) => {
+        return res.data;
+      });
+  }
+}
 export function addFavorite(dispatch: Function, id: number) {
   if (localStorage.getItem("favorites")) {
     const getFavoritesStorage: any = localStorage.getItem("favorites");
@@ -47,9 +74,7 @@ export function addFavorite(dispatch: Function, id: number) {
     const formData = new FormData();
 
     formData.append("favorites", JSON.stringify(getFavorites));
-    axiosCall
-      .post("user/favorites", formData, { withCredentials: true })
-      .then((res) => console.log(res));
+    axiosCall.post("user/favorites", formData, { withCredentials: true });
   }
 }
 export function removeFavorite(dispatch: Function, id: number) {
@@ -64,9 +89,9 @@ export function removeFavorite(dispatch: Function, id: number) {
       dispatch(updateFavorites(getFavorites));
       const formData = new FormData();
       formData.append("favorites", JSON.stringify(getFavorites));
-      axiosCall
-        .post("user/remove_favorites", formData, { withCredentials: true })
-        .then((res) => console.log(res));
+      axiosCall.post("user/remove_favorites", formData, {
+        withCredentials: true,
+      });
     }
   }
 }
