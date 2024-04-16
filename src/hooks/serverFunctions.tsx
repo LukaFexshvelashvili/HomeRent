@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Tuser,
   setUserLoginStatus,
@@ -109,3 +110,18 @@ export function checkFavorite(id: number): boolean {
     return false;
   }
 }
+
+export const useDebounce = (value: any, delay: number) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    // Cleanup function to clear the timeout
+    return () => clearTimeout(timeout);
+  }, [value, delay]);
+
+  return debouncedValue;
+};

@@ -9,7 +9,10 @@ export function SelectNumbers(props: {
   name?: string;
   setData?: Function;
   setDataDispatch?: Function;
+  changeParams?: boolean;
+  engName?: string;
 }) {
+  const [params, setParams] = useSearchParams();
   const dispatch = useDispatch();
   const [active, setActive] = useState(0);
   const Length = [0, 1, 2, 3, 4, 5, 6, 7, 7];
@@ -18,7 +21,24 @@ export function SelectNumbers(props: {
       dispatch(props.setDataDispatch(active));
     }
   }, [active]);
-
+  const changeProps = (newActive: number) => {
+    if (props.engName && props.changeParams && active !== newActive) {
+      let newProp: any = {};
+      newProp[props.engName] = newActive;
+      updateParams(params, setParams, newProp);
+      setActive(newActive);
+    } else if (props.engName && props.changeParams && active == newActive) {
+      let AllParams: any = {};
+      params.forEach((value: any, key: any) => {
+        AllParams[key] = value;
+      });
+      delete AllParams[props.engName];
+      setParams(AllParams);
+      setActive(-1);
+    } else {
+      setActive(newActive);
+    }
+  };
   return (
     <div className="flex flex-col items-center">
       {props.name && (
@@ -30,7 +50,7 @@ export function SelectNumbers(props: {
         {Length.map((e, i) => (
           <button
             key={i}
-            onClick={() => setActive(i)}
+            onClick={() => changeProps(i)}
             className={` h-[36px] text-[15px] aspect-square rounded-circle flex justify-center items-center transition-colors ${
               active == i ? "bg-main text-buttonText" : "bg-mainClear text-main"
             }`}
@@ -75,12 +95,12 @@ export function SelectType() {
           >
             <e.icon
               className={` h-[24px] aspect-square ${
-                active == i && "[&>path]:fill-whiteMain"
+                active == i && "[&>path]:fill-buttonText"
               } `}
             />
             <p
               className={`text-Asmall ml-7 tracking-wide ${
-                active == i ? "text-whiteMain" : "text-main"
+                active == i ? "text-buttonText" : "text-main"
               }`}
             >
               {e.name}

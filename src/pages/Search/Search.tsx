@@ -1,40 +1,71 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DropDownIcon } from "../../assets/icons/Icons";
-import Card from "../../components/global/Card";
 import {
   PriceSlider,
   SelectNumbers,
   SelectType,
   SizeSlider,
 } from "./components/Filters";
+import axiosCall from "../../hooks/axiosCall";
+import { TProductData } from "../Profile/components/MyProducts";
+import Card from "../../components/global/Card";
+import { useDebounce } from "../../hooks/serverFunctions";
 
 export default function Search() {
+  const [searched, setSearched] = useState<any>(null);
+  const [pages, setPages] = useState<number>(0);
+  const debouncedSearch = useDebounce(location.search, 300);
+
+  useEffect(() => {
+    axiosCall
+      .get(`fetch/search${debouncedSearch}`)
+      .then((res) => {
+        console.log(res);
+        setSearched(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [debouncedSearch]);
+
+  useEffect(() => {
+    if (searched !== null) {
+      setPages(Math.floor(searched / 25));
+    }
+  }, [searched]);
+  const fetchPageButtons = () => {
+    const buttons = []; // Create an array to hold the buttons
+
+    for (let i = 0; i < pages; i++) {
+      buttons.push(
+        <button
+          key={i}
+          className="h-[32px] aspect-square text-[15px] text-buttonText bg-main rounded-md flex items-center justify-center"
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return buttons; // Return the array of buttons after the loop
+  };
   return (
     <main className="flex  gap-5 mediumSmallXl:flex-col">
       <FiltersSection />
       <ResponsiveFiltersSection />
       <section className="flex-[3]  rounded-normal">
         <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
-          ნაპოვნია 12 შედეგი
+          {searched !== null ? `ნაპოვნია ${searched.length} შედეგი` : ""}
         </p>
-        <div className="flex flex-wrap justify-between gap-y-7 large:justify-center large:gap-5">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+        <div className="flex flex-wrap  gap-5 gap-y-7 large:justify-center large:gap-5">
+          {searched !== null
+            ? searched.map((product: TProductData) => (
+                <Card key={product.id} product={product} />
+              ))
+            : null}
         </div>
         <div className="flex items-center  justify-center gap-4 mt-5">
-          <button className="h-[32px] aspect-square  text-[15px]  text-buttonText bg-main rounded-md flex items-center justify-center">
-            1
-          </button>
-          <button className="h-[32px] aspect-square  text-[15px]  text-main bg-whiteLoad rounded-md flex items-center justify-center transition-colors hover:bg-mainClear">
-            2
-          </button>
-          <button className="h-[32px] aspect-square  text-[15px]  text-main bg-whiteLoad rounded-md flex items-center justify-center transition-colors hover:bg-mainClear">
-            3
-          </button>
+          {fetchPageButtons()}
         </div>
       </section>
     </main>
@@ -108,9 +139,21 @@ function ResponsiveFiltersSection() {
               <PriceSlider />
               <SizeSlider />
               <SelectType />
-              <SelectNumbers name="ოთახები" />
-              <SelectNumbers name="საძინებლები" />
-              <SelectNumbers name="სველი წერტილი" />
+              <SelectNumbers
+                changeParams={true}
+                engName="rooms"
+                name="ოთახები"
+              />
+              <SelectNumbers
+                changeParams={true}
+                engName="bedrooms"
+                name="საძინებლები"
+              />
+              <SelectNumbers
+                changeParams={true}
+                engName="wet_points"
+                name="სველი წერტილი"
+              />
             </div>
           </div>
         </div>
@@ -178,9 +221,17 @@ function FiltersSection() {
             <PriceSlider />
             <SizeSlider />
             <SelectType />
-            <SelectNumbers name="ოთახები" />
-            <SelectNumbers name="საძინებლები" />
-            <SelectNumbers name="სველი წერტილი" />
+            <SelectNumbers changeParams={true} engName="rooms" name="ოთახები" />
+            <SelectNumbers
+              changeParams={true}
+              engName="bedrooms"
+              name="საძინებლები"
+            />
+            <SelectNumbers
+              changeParams={true}
+              engName="wet_points"
+              name="სველი წერტილი"
+            />
           </div>
         </div>
       </div>
@@ -219,9 +270,17 @@ function FiltersSection() {
           <PriceSlider />
           <SizeSlider />
           <SelectType />
-          <SelectNumbers name="ოთახები" />
-          <SelectNumbers name="საძინებლები" />
-          <SelectNumbers name="სველი წერტილი" />
+          <SelectNumbers changeParams={true} engName="rooms" name="ოთახები" />
+          <SelectNumbers
+            changeParams={true}
+            engName="bedrooms"
+            name="საძინებლები"
+          />
+          <SelectNumbers
+            changeParams={true}
+            engName="wet_points"
+            name="სველი წერტილი"
+          />
         </div>
       </div>
     </section>
