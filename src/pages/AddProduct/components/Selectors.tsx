@@ -10,6 +10,9 @@ import { SelectNumbers } from "../../Search/components/Filters";
 import {
   TProductAddon,
   productAddonsList,
+  projectDealTypes,
+  projectStatuses,
+  projectTypes,
 } from "../../../assets/lists/productAddons";
 import {
   TClosePlace,
@@ -474,14 +477,13 @@ export function DealType() {
       dispatch(updateDeal(active));
     }
   }, [active]);
-  const DealTypes = ["იყიდება", "ქირავდება", "ქირავდება დღიურად", "გირავდება"];
   return (
     <div className="flex flex-col">
       <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
         გარიგების ტიპი
       </p>
       <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
-        {DealTypes.map((e, i) => (
+        {projectDealTypes.map((e: string, i: number) => (
           <button
             key={i}
             onClick={() => setActive(e)}
@@ -645,6 +647,7 @@ export function EstateDescription() {
     </div>
   );
 }
+
 export function EstateInformation(props: { error: boolean }) {
   const [size, setSize] = useState<null | number>(null);
   const [openDeal, setOpenDeal] = useState(false);
@@ -653,29 +656,6 @@ export function EstateInformation(props: { error: boolean }) {
   const [sizePrice, setSizePrice] = useState(0);
   const dispatch = useDispatch();
 
-  const projectTypes = useMemo(
-    () => [
-      "ლენინგრადის",
-      "ლვოვის",
-      "კიევი",
-      "თბილისური ეზო",
-      "მოსკოვის",
-      "ქალაქური",
-      "ჩეხური",
-      "ხრუშოვის",
-      "თუხარელის",
-      "ვეძისი",
-      "იუგოსლავიის",
-      "მეტრომშენის",
-      "არასტანდარტული",
-      "ყავლაშვილის",
-    ],
-    []
-  );
-  const projectStatuses = useMemo(
-    () => ["ახალი მშენებარე", "ძველი აშენებული", "მშენებარე"],
-    []
-  );
   useEffect(() => {
     if (fullPrice > 0) {
       dispatch(updateFullPrice(fullPrice));

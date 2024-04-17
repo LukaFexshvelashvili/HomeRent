@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { DropDownIcon } from "../../assets/icons/Icons";
 import {
   PriceSlider,
@@ -10,17 +10,33 @@ import axiosCall from "../../hooks/axiosCall";
 import { TProductData } from "../Profile/components/MyProducts";
 import Card from "../../components/global/Card";
 import { useDebounce } from "../../hooks/serverFunctions";
+import ContentLoader from "../../components/global/ContentLoader";
+import DropDownSelector from "../../components/global/DropDownSelector";
+import { cities } from "../../assets/lists/cities";
+import {
+  projectDealTypes,
+  projectStatuses,
+  projectTypes,
+} from "../../assets/lists/productAddons";
+import { deleteParams, updateParams } from "../../hooks/routerHooks";
+import { useSearchParams } from "react-router-dom";
 
 export default function Search() {
   const [searched, setSearched] = useState<any>(null);
+  const [loader, setLoader] = useState<boolean>(false);
   const [pages, setPages] = useState<number>(0);
   const debouncedSearch = useDebounce(location.search, 300);
-
+  const citiesAPI = useMemo(
+    () => cities.subLocs.map((item) => item.name.ka),
+    []
+  );
   useEffect(() => {
+    setLoader(true);
     axiosCall
       .get(`fetch/search${debouncedSearch}`)
       .then((res) => {
-        console.log(res);
+        setLoader(false);
+
         setSearched(res.data);
       })
       .catch((error) => {
@@ -51,18 +67,22 @@ export default function Search() {
   };
   return (
     <main className="flex  gap-5 mediumSmallXl:flex-col">
-      <FiltersSection />
-      <ResponsiveFiltersSection />
+      <FiltersSection citiesAPI={citiesAPI} />
+      <ResponsiveFiltersSection citiesAPI={citiesAPI} />
       <section className="flex-[3]  rounded-normal">
         <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
           {searched !== null ? `ნაპოვნია ${searched.length} შედეგი` : ""}
         </p>
-        <div className="flex flex-wrap  gap-5 gap-y-7 large:justify-center large:gap-5">
-          {searched !== null
-            ? searched.map((product: TProductData) => (
+        <div className="flex flex-wrap relative min-h-[150px] gap-5 gap-y-7 large:justify-center large:gap-5">
+          {!loader ? (
+            searched !== null ? (
+              searched.map((product: TProductData) => (
                 <Card key={product.id} product={product} />
               ))
-            : null}
+            ) : null
+          ) : (
+            <ContentLoader />
+          )}
         </div>
         <div className="flex items-center  justify-center gap-4 mt-5">
           {fetchPageButtons()}
@@ -72,9 +92,8 @@ export default function Search() {
   );
 }
 
-function ResponsiveFiltersSection() {
+function ResponsiveFiltersSection(props: { citiesAPI: any }) {
   const [openFilters, setOpenFilters] = useState<boolean>(false);
-
   return (
     <section className="hidden mobile:block shadow-none ">
       <div className={`overflow-hidden`}>
@@ -109,32 +128,47 @@ function ResponsiveFiltersSection() {
 
           <div className="content_container">
             <div className="flex flex-col gap-9 pt-5">
+              <p className=" text-textHead tracking-wider text-center font-mainBold ">
+                გარიგების ტიპი
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <ProjectDealSelector />
+              </div>
               <div className="flex flex-col items-center">
                 <p className=" text-textHead tracking-wider font-mainBold ">
                   ადგილმდებარეობა
                 </p>
-                <button className="bg-main flex items-center px-6 py-[6px]  rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall">
-                  თბილისი{" "}
-                  <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-                </button>
+
+                <DropDownSelector
+                  name="არჩევა"
+                  itemsList={props.citiesAPI}
+                  engName={"city"}
+                  changeParams={true}
+                />
               </div>
               <div className="flex flex-col items-center">
                 <p className=" text-textHead tracking-wider font-mainBold ">
                   მდგომარეობა
                 </p>
-                <button className="bg-main flex items-center px-6 py-[6px] rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall">
-                  ახალი გარემონტებული{" "}
-                  <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-                </button>
+
+                <DropDownSelector
+                  name="არჩევა"
+                  itemsList={projectStatuses}
+                  engName={"condition"}
+                  changeParams={true}
+                />
               </div>
               <div className="flex flex-col items-center">
                 <p className=" text-textHead tracking-wider font-mainBold ">
                   პროექტის ტიპი
                 </p>
-                <button className="bg-main flex items-center px-6 py-[6px] rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall">
-                  არასტანდარტული{" "}
-                  <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-                </button>
+
+                <DropDownSelector
+                  name="არჩევა"
+                  itemsList={projectTypes}
+                  engName={"project_type"}
+                  changeParams={true}
+                />
               </div>
               <PriceSlider />
               <SizeSlider />
@@ -162,111 +196,74 @@ function ResponsiveFiltersSection() {
   );
 }
 
-function FiltersSection() {
+function FiltersSection(props: { citiesAPI: any }) {
   const [openFilters, setOpenFilters] = useState<boolean>(false);
-  const filtersBlock = useRef<null | HTMLDivElement>(null);
 
   return (
     <section className=" mobile:hidden flex-[1.5] large:flex-[2] bg-whiteMain mediumSmallXl:rounded-[10px] rounded-[18px] shadow-sectionShadow mediumSmallXl:shadow-none">
       <div
-        className={`hidden mediumSmallXl:flex flex-col transition-all duration-300 overflow-hidden `}
-        style={{
-          maxHeight: openFilters
-            ? filtersBlock
-              ? filtersBlock.current?.offsetHeight
-              : 1500
-            : 55,
-        }}
+        className={` px-4 py-3 pb-12 mediumSmallXl:p-0 mediumSmallXl:pb-8 overflow-hidden ${
+          openFilters ? "mediumSmallXl:max-h-min" : "mediumSmallXl:max-h-[55px]"
+        }`}
       >
         <button
           onClick={() => setOpenFilters((state) => !state)}
-          className="h-[55px] min-h-[55px] w-full bg-main rounded-[10px] text-buttonText tracking-wider font-mainMedium relative flex items-center justify-center"
+          className="h-[55px] min-h-[55px] hidden mediumSmallXl:flex w-full bg-main rounded-[10px] text-buttonText tracking-wider font-mainMedium relative items-center justify-center"
         >
-          <div className="flex flex-col h-[30px] aspect-square justify-center items-center gap-1 absolute left-5">
+          <div className="flex  flex-col h-[30px] aspect-square justify-center items-center gap-1 absolute left-5">
             <span className="h-[2px] rounded-md w-10/12 bg-buttonText block"></span>
             <span className="h-[2px] rounded-md w-8/12 bg-buttonText block"></span>
             <span className="h-[2px] rounded-md w-4/12 bg-buttonText block"></span>
           </div>
           ფილტრები
         </button>
-        <div className=" px-4 py-3 pb-12" ref={filtersBlock}>
-          <div className="flex flex-col gap-9 pt-5">
-            <div className="flex flex-col items-center">
-              <p className=" text-textHead tracking-wider font-mainBold ">
-                ადგილმდებარეობა
-              </p>
-              <button className="bg-main flex items-center px-6 py-[6px]  rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall">
-                თბილისი{" "}
-                <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-              </button>
-            </div>
-            <div className="flex flex-col items-center">
-              <p className=" text-textHead tracking-wider font-mainBold ">
-                მდგომარეობა
-              </p>
-              <button className="bg-main flex items-center px-6 py-[6px] rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall">
-                ახალი გარემონტებული{" "}
-                <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-              </button>
-            </div>
-            <div className="flex flex-col items-center">
-              <p className=" text-textHead tracking-wider font-mainBold ">
-                პროექტის ტიპი
-              </p>
-              <button className="bg-main flex items-center px-6 py-[6px] rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall">
-                არასტანდარტული{" "}
-                <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-              </button>
-            </div>
-            <PriceSlider />
-            <SizeSlider />
-            <SelectType />
-            <SelectNumbers changeParams={true} engName="rooms" name="ოთახები" />
-            <SelectNumbers
-              changeParams={true}
-              engName="bedrooms"
-              name="საძინებლები"
-            />
-            <SelectNumbers
-              changeParams={true}
-              engName="wet_points"
-              name="სველი წერტილი"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="mediumSmallXl:hidden px-4 py-3 pb-12">
-        <p className="text-Asmall text-textDesc tracking-wider font-mainBold">
+        <p className="text-Asmall mediumSmallXl:hidden text-textDesc tracking-wider font-mainBold">
           ფილტრები
         </p>
-        <div className="flex flex-col gap-9 pt-5">
+        <div className="flex flex-col gap-6 pt-5">
+          <p className=" text-textHead tracking-wider text-center font-mainBold ">
+            გარიგების ტიპი
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center">
+            <ProjectDealSelector />
+          </div>
           <div className="flex flex-col items-center">
             <p className=" text-textHead tracking-wider font-mainBold ">
               ადგილმდებარეობა
             </p>
-            <button className="bg-main flex items-center px-6 py-[6px]  rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall">
-              თბილისი{" "}
-              <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-            </button>
+
+            <DropDownSelector
+              name="არჩევა"
+              itemsList={props.citiesAPI}
+              engName={"city"}
+              changeParams={true}
+            />
           </div>
           <div className="flex flex-col items-center">
             <p className=" text-textHead tracking-wider font-mainBold ">
               მდგომარეობა
             </p>
-            <button className="bg-main flex items-center px-6 py-[6px] rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall">
-              ახალი გარემონტებული{" "}
-              <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-            </button>
+
+            <DropDownSelector
+              name="არჩევა"
+              itemsList={projectStatuses}
+              engName={"condition"}
+              changeParams={true}
+            />
           </div>
           <div className="flex flex-col items-center">
             <p className=" text-textHead tracking-wider font-mainBold ">
               პროექტის ტიპი
             </p>
-            <button className="bg-main flex items-center px-6 py-[6px] rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall">
-              არასტანდარტული{" "}
-              <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-            </button>
+
+            <DropDownSelector
+              name="არჩევა"
+              itemsList={projectTypes}
+              engName={"project_type"}
+              changeParams={true}
+            />
           </div>
+
           <PriceSlider />
           <SizeSlider />
           <SelectType />
@@ -284,5 +281,48 @@ function FiltersSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+function ProjectDealSelector() {
+  const [params, setParams] = useSearchParams();
+  const [active, setActive] = useState<null | number>(null);
+  useEffect(() => {}, [active]);
+
+  useEffect(() => {
+    const searchType = params.get("deal");
+
+    if (searchType) {
+      setActive(parseInt(searchType));
+    }
+  }, []);
+  return (
+    <>
+      {projectDealTypes.map((e: string, i: number) => (
+        <button
+          key={i}
+          onClick={() => {
+            if (active == i) {
+              setActive(null);
+              deleteParams(params, setParams, "deal");
+            } else {
+              setActive(i);
+              updateParams(params, setParams, { deal: i });
+            }
+          }}
+          className={`  p-2 px-4 rounded-xl transition-colors ${
+            active == i ? "bg-main" : "bg-mainClear"
+          }`}
+        >
+          <p
+            className={`text-Asmall tracking-wide ${
+              active == i ? "text-buttonText" : "text-main"
+            }`}
+          >
+            {e}
+          </p>
+        </button>
+      ))}
+    </>
   );
 }

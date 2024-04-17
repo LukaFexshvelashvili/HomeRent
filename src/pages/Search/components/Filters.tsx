@@ -3,7 +3,7 @@ import ReactSlider from "react-slider";
 import { RealEstateTypes, TRealEstateTypes } from "./FiltersArray";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { updateParams } from "../../../hooks/routerHooks";
+import { deleteParams, updateParams } from "../../../hooks/routerHooks";
 
 export function SelectNumbers(props: {
   name?: string;
@@ -14,7 +14,7 @@ export function SelectNumbers(props: {
 }) {
   const [params, setParams] = useSearchParams();
   const dispatch = useDispatch();
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(-1);
   const Length = [0, 1, 2, 3, 4, 5, 6, 7, 7];
   useEffect(() => {
     if (props.setDataDispatch) {
@@ -28,17 +28,21 @@ export function SelectNumbers(props: {
       updateParams(params, setParams, newProp);
       setActive(newActive);
     } else if (props.engName && props.changeParams && active == newActive) {
-      let AllParams: any = {};
-      params.forEach((value: any, key: any) => {
-        AllParams[key] = value;
-      });
-      delete AllParams[props.engName];
-      setParams(AllParams);
+      deleteParams(params, setParams, props.engName);
       setActive(-1);
     } else {
       setActive(newActive);
     }
   };
+
+  useEffect(() => {
+    if (props.engName) {
+      const searchType = params.get(props.engName);
+      if (searchType) {
+        setActive(parseInt(searchType));
+      }
+    }
+  }, []);
   return (
     <div className="flex flex-col items-center">
       {props.name && (
@@ -64,17 +68,14 @@ export function SelectNumbers(props: {
 }
 
 export function SelectType() {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState<null | number>(null);
 
   const [params, setParams] = useSearchParams();
 
   useEffect(() => {
     const searchType = params.get("type");
     if (searchType) {
-      const activeId = RealEstateTypes.findIndex(
-        (item: TRealEstateTypes) => item.name == searchType
-      );
-      setActive(activeId);
+      setActive(parseInt(searchType));
     }
   }, []);
 
@@ -86,8 +87,13 @@ export function SelectType() {
           <button
             key={i}
             onClick={() => {
-              setActive(i);
-              updateParams(params, setParams, { type: e.name });
+              if (active == i) {
+                setActive(null);
+                deleteParams(params, setParams, "type");
+              } else {
+                setActive(i);
+                updateParams(params, setParams, { type: i });
+              }
             }}
             className={`  p-2 px-4 rounded-xl transition-colors ${
               active == i ? "bg-main" : "bg-mainClear"

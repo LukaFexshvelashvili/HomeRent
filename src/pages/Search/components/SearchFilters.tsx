@@ -6,11 +6,14 @@ import {
   updateCity,
   updateExactAddress,
 } from "../../../store/data/addProductSlice";
-import { subLocs } from "../../../assets/lists/subLocs";
+
 import axiosCall from "../../../hooks/axiosCall";
 
 export function SearchCityFilter(props: { setCity: Function }) {
-  const citiesAPI = cities.subLocs.map((item) => item.name.ka);
+  const citiesAPI = useMemo(
+    () => cities.subLocs.map((item) => item.name.ka),
+    []
+  );
   const [search, setSearch] = useState("");
   const [searchWindow, setSearchWindow] = useState(false);
   const [active, setActive] = useState("");
