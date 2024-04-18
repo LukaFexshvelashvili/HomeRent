@@ -32,10 +32,16 @@ function App() {
   const user: Tuser = useSelector((store: RootState) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     axiosCall
       .get("authentication/user_get", { withCredentials: true })
-      .then((res) => makeUserSession(dispatch, res.data));
+      .then((res) =>
+        makeUserSession(dispatch, {
+          ...res.data,
+          favorites: JSON.parse(res.data.favorites),
+        })
+      );
   }, []);
 
   useEffect(() => {

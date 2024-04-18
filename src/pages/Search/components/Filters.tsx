@@ -73,7 +73,7 @@ export function SelectType() {
   const [params, setParams] = useSearchParams();
 
   useEffect(() => {
-    const searchType = params.get("type");
+    const searchType = params.get("estate_type");
     if (searchType) {
       setActive(parseInt(searchType));
     }
@@ -89,10 +89,10 @@ export function SelectType() {
             onClick={() => {
               if (active == i) {
                 setActive(null);
-                deleteParams(params, setParams, "type");
+                deleteParams(params, setParams, "estate_type");
               } else {
                 setActive(i);
-                updateParams(params, setParams, { type: i });
+                updateParams(params, setParams, { estate_type: i });
               }
             }}
             className={`  p-2 px-4 rounded-xl transition-colors ${

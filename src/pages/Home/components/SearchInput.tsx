@@ -7,7 +7,10 @@ import {
   PopupCloseIcon,
   SearchIcon,
 } from "../../../assets/icons/Icons";
-import { RealEstateTypes } from "../../Search/components/FiltersArray";
+import {
+  RealEstateTypes,
+  TRealEstateTypes,
+} from "../../Search/components/FiltersArray";
 import { cities } from "../../../assets/lists/cities";
 import { InputPriceSlider, InputSizeSlider } from "./SearchComponents";
 import { useNavigate } from "react-router-dom";
@@ -23,22 +26,59 @@ export default function SearchInput() {
   const [inputSelect, setInputSelect] = useState<null | number>(null);
   const [getType, setGetType] = useState<null | string>(null);
   const [getCity, setGetCity] = useState<null | string>(null);
+  const [searchTitle, setSearchTitle] = useState<string>("");
   const [getSizes, setGetSizes] = useState<null | number[]>(null);
   const [getPrices, setGetPrices] = useState<null | TPriceGet>(null);
 
   const handleSearch = () => {
     const params = new URLSearchParams();
-    getType && params.append("type", getType);
+    if (getType) {
+      const TypeIndex: number = RealEstateTypes.findIndex(
+        (item: TRealEstateTypes) => item.name == getType
+      );
+      if (TypeIndex !== -1) {
+        params.append("estate_type", JSON.stringify(TypeIndex));
+      }
+    }
     getCity && params.append("city", getCity);
+    searchTitle !== "" && params.append("title", searchTitle);
     getSizes && params.append("sizes", JSON.stringify(getSizes));
 
     getPrices && params.append("prices", JSON.stringify(getPrices));
     navigate(`/search?${params.toString()}`);
   };
   return (
-    <div className="w-10/12 mediumSmall:w-full small:w-auto small:h-auto h-[45px]  my-10 mx-auto ">
-      <div className="relative  rounded-normal flex  small:flex-col   items-center h-full w-full border-2 border-whiteLoad overflow-hidden">
-        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+    <div className="w-10/12 mediumSmall:w-full flex gap-3 small:w-auto small:h-auto   my-10 mx-auto small:flex-col small:gap-1 flex-wrap">
+      <div className="w-full flex items-center border-2 border-whiteLoad rounded-normal overflow-hidden relative h-[45px]">
+        <form
+          className="w-full h-full"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSearch();
+          }}
+        >
+          <input
+            type="text"
+            placeholder="სიტყვით ძებნა..."
+            className="w-full h-full px-4 bg-bodyBg outline-none text-blackMain tracking-wider text-[14px] transition-colors focus:bg-whiteLoad"
+            onChange={(e) => setSearchTitle(e.target.value)}
+            value={searchTitle}
+          />
+        </form>
+        <div
+          onClick={() => setSearchTitle("")}
+          className={`absolute h-[28px] aspect-square rounded-md bg-whiteHoverDark  flex items-center justify-center right-2  transition-all ${
+            searchTitle == ""
+              ? " pointer-events-none cursor-default invisible opacity-0"
+              : "cursor-pointer visible opacity-100"
+          } hover:bg-whiteCont`}
+        >
+          <PopupCloseIcon className="h-[10px] aspect-square [&>path]:fill-blackMain" />
+        </div>
+      </div>
+
+      <div className="relative  rounded-normal flex  small:flex-col  h-[45px] items-center  w-[calc(100%-72px)] border-2 border-whiteLoad overflow-hidden">
+        <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(1)}
             className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
@@ -57,7 +97,7 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+        <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(2)}
             className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
@@ -76,7 +116,7 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex small:border-none beforeInputBlock items-center w-[20%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+        <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(3)}
             className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
@@ -95,7 +135,7 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <div className="flex small:border-none  items-center w-[20%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+        <div className="flex small:border-none  items-center w-[25%] text-textDesc  small:w-full h-full  cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
           <div
             onClick={() => setInputSelect(4)}
             className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
@@ -118,12 +158,7 @@ export default function SearchInput() {
             </button>
           )}
         </div>
-        <button
-          onClick={handleSearch}
-          className="small:hidden h-full w-[20%] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-r-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
-        >
-          მოძებნა
-        </button>
+
         {inputSelect && (
           <div className="fixed left-2/4 -translate-x-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4 w-[80%] mx-auto z-20 small:top-2/4 small:-translate-y-2/4">
             <button
@@ -176,6 +211,12 @@ export default function SearchInput() {
           </div>
         )}
       </div>
+      <button
+        onClick={handleSearch}
+        className="small:hidden h-[45px] w-[60px] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
+      >
+        <SearchIcon className="h-[16px] aspect-square " />
+      </button>
       <button
         onClick={handleSearch}
         className="hidden h-full  text-[14px] w-full py-3 mt-2 rounded-normal font-mainMedium  rounded-r-[6px] text-buttonText bg-main small:flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"

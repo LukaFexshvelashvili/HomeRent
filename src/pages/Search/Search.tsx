@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { DropDownIcon } from "../../assets/icons/Icons";
+import {
+  DropDownIcon,
+  PopupCloseIcon,
+  SearchIcon,
+} from "../../assets/icons/Icons";
 import {
   PriceSlider,
   SelectNumbers,
@@ -25,30 +29,41 @@ export default function Search() {
   const [searched, setSearched] = useState<any>(null);
   const [loader, setLoader] = useState<boolean>(false);
   const [pages, setPages] = useState<number>(0);
+  const [searchTitle, setSearchTitle] = useState<string>("");
+  const [params, setParams] = useSearchParams();
   const debouncedSearch = useDebounce(location.search, 300);
-  const citiesAPI = useMemo(
+  const citiesAPI: any = useMemo(
     () => cities.subLocs.map((item) => item.name.ka),
     []
   );
   useEffect(() => {
     setLoader(true);
-    axiosCall
-      .get(`fetch/search${debouncedSearch}`)
-      .then((res) => {
-        setLoader(false);
+    axiosCall.get(`fetch/search${debouncedSearch}`).then((res) => {
+      setLoader(false);
 
-        setSearched(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+      setSearched(res.data);
+    });
   }, [debouncedSearch]);
+  useEffect(() => {
+    if (params.get("title") && params.get("title") !== null) {
+      let gotTitle: any = params.get("title");
+      setSearchTitle(gotTitle);
+    }
+  }, []);
 
   useEffect(() => {
     if (searched !== null) {
       setPages(Math.floor(searched / 25));
     }
   }, [searched]);
+
+  const titleSubmit = () => {
+    if (searchTitle !== "") {
+      updateParams(params, setParams, { title: searchTitle });
+    } else {
+      deleteParams(params, setParams, "title");
+    }
+  };
   const fetchPageButtons = () => {
     const buttons = []; // Create an array to hold the buttons
 
@@ -66,28 +81,70 @@ export default function Search() {
     return buttons; // Return the array of buttons after the loop
   };
   return (
-    <main className="flex  gap-5 mediumSmallXl:flex-col">
-      <FiltersSection citiesAPI={citiesAPI} />
-      <ResponsiveFiltersSection citiesAPI={citiesAPI} />
-      <section className="flex-[3]  rounded-normal">
-        <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
-          {searched !== null ? `ნაპოვნია ${searched.length} შედეგი` : ""}
-        </p>
-        <div className="flex flex-wrap relative min-h-[150px] gap-5 gap-y-7 large:justify-center large:gap-5">
-          {!loader ? (
-            searched !== null ? (
-              searched.map((product: TProductData) => (
-                <Card key={product.id} product={product} />
-              ))
-            ) : null
-          ) : (
-            <ContentLoader />
-          )}
+    <main className="flex gap-4 flex-col">
+      <div className="flex gap-3">
+        <div className="w-full flex items-center border-2 border-whiteLoad rounded-normal overflow-hidden relative h-[45px]">
+          <form
+            className="w-full h-full"
+            onSubmit={(e) => {
+              e.preventDefault();
+              titleSubmit();
+            }}
+          >
+            <input
+              type="text"
+              placeholder="სიტყვით ძებნა..."
+              className="w-full h-full px-4 bg-bodyBg outline-none text-blackMain tracking-wider text-[14px] transition-colors focus:bg-whiteLoad"
+              onChange={(e) => setSearchTitle(e.target.value)}
+              value={searchTitle}
+            />
+          </form>
+          <div
+            onClick={() => {
+              deleteParams(params, setParams, "title");
+
+              setSearchTitle("");
+            }}
+            className={`absolute h-[28px] aspect-square rounded-md bg-whiteHoverDark  flex items-center justify-center right-2  transition-all ${
+              searchTitle == ""
+                ? " pointer-events-none cursor-default invisible opacity-0"
+                : "cursor-pointer visible opacity-100"
+            } hover:bg-whiteCont`}
+          >
+            <PopupCloseIcon className="h-[10px] aspect-square [&>path]:fill-blackMain" />
+          </div>
         </div>
-        <div className="flex items-center  justify-center gap-4 mt-5">
-          {fetchPageButtons()}
-        </div>
-      </section>
+        <button
+          onClick={() => titleSubmit}
+          className=" h-[45px] w-[60px] text-[14px]   font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
+        >
+          <SearchIcon className="h-[16px] aspect-square " />
+        </button>
+      </div>
+
+      <div className="flex  gap-5 mediumSmallXl:flex-col">
+        <FiltersSection citiesAPI={citiesAPI} />
+        <ResponsiveFiltersSection citiesAPI={citiesAPI} />
+        <section className="flex-[3]  rounded-normal">
+          <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
+            {searched !== null ? `ნაპოვნია ${searched.length} შედეგი` : ""}
+          </p>
+          <div className="flex flex-wrap relative min-h-[150px] gap-5 gap-y-7 large:justify-center large:gap-5">
+            {!loader ? (
+              searched !== null ? (
+                searched.map((product: TProductData) => (
+                  <Card key={product.id} product={product} />
+                ))
+              ) : null
+            ) : (
+              <ContentLoader />
+            )}
+          </div>
+          <div className="flex items-center  justify-center gap-4 mt-5">
+            {fetchPageButtons()}
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

@@ -112,9 +112,17 @@ export default function Navbar() {
             </Link>
           )}
           <div className="flex mx-2 items-center justify-center gap-2">
-            <button className="relative h-[34px] aspect-square cursor-default flex items-center justify-center select-none">
-              <BookmarkIcon className="h-[20px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon p-[0.2px]" />
-            </button>
+            <Link to={"/profile/SavedProducts"}>
+              <button className="relative h-[34px] aspect-square cursor-pointer flex items-center justify-center select-none">
+                {userData.favorites.length > 0 ? (
+                  <div className="absolute h-[16px] aspect-square top-[2px] right-[2px] z-20 text-[9px] flex justify-center items-center text-buttonText font-mainRegular rounded-circle bg-main">
+                    {userData.favorites.length}
+                  </div>
+                ) : null}
+
+                <BookmarkIcon className="h-[20px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon p-[0.2px]" />
+              </button>
+            </Link>
             <div
               className={`relative h-[34px] aspect-square cursor-default flex items-center justify-center transition-colors ${
                 activePop == "notifications" ? "bg-mainClear" : "bg-transparent"

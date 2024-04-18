@@ -5,7 +5,6 @@ import {
   LoginEyeIcon,
 } from "../../../assets/icons/Icons";
 
-import productImage from "../../../assets/images/estates/2.jpeg";
 import { TProductData } from "./MyProducts";
 import { getFavorites, removeFavorite } from "../../../hooks/serverFunctions";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,12 +30,18 @@ function SavedProducts() {
         />
       </div>
       <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex  py-2 flex-col gap-3">
-        <p className="px-4 text-[13px] text-textDesc my-1">სულ 3 განცხადება</p>
+        <p className="px-4 text-[13px] text-textDesc my-1">
+          სულ {products.length} განცხადება
+        </p>
         <div className="flex flex-col">
-          {products.length >= 1 ? (
-            products.map((e: TProductData) => (
-              <FavoriteBanner key={e.id} product={e} />
-            ))
+          {products ? (
+            products.length > 0 ? (
+              products.map((e: TProductData) => (
+                <FavoriteBanner key={e.id} product={e} />
+              ))
+            ) : (
+              <></>
+            )
           ) : (
             <></>
           )}
