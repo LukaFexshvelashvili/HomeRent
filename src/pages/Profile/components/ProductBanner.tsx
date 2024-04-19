@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import {
   DateIcon,
   EditIcon,
@@ -5,12 +6,18 @@ import {
   LoginEyeIcon,
   TrashIcon,
 } from "../../../assets/icons/Icons";
+import { deleteProduct } from "../../../hooks/serverProductFunctions";
+import { Tuser } from "../../../store/data/userSlice";
 import { TProductData } from "./MyProducts";
 
 export default function ProductBanner(props: {
   setPopbuy: Function;
   productData: TProductData;
+  setPopAlert: Function;
+  userData: Tuser;
+  fetchProducts: Function;
 }) {
+  const dispatch = useDispatch();
   return (
     <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center small:flex-col ">
       <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden small:w-[100%] small:aspect-video small:h-auto">
@@ -68,7 +75,32 @@ export default function ProductBanner(props: {
         <button className="bg-mainClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueHover flex justify-center items-center">
           <LoginEyeCloseIcon className="h-full aspect-square [&>path]:stroke-blueI" />
         </button>
-        <button className="bg-redClear text-redI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-redHover flex justify-center items-center">
+        <button
+          onClick={() =>
+            props.setPopAlert({
+              open: true,
+              headText: "განცხადების წაშლა",
+              descText:
+                "ნამდვილად გსურთ განცხადების წაშლა? ( ქმედება უკან ვეღარ დაბრუნდება )",
+              nextFunction: () => {
+                deleteProduct(
+                  dispatch,
+                  props.userData,
+                  props.productData.id
+                ).then(() => {
+                  props.setPopAlert({
+                    open: false,
+                    headText: "",
+                    descText: "",
+                    nextFunction: () => {},
+                  });
+                  props.fetchProducts();
+                });
+              },
+            })
+          }
+          className="bg-redClear text-redI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-redHover flex justify-center items-center"
+        >
           <TrashIcon className="h-full aspect-square" />
         </button>
       </div>

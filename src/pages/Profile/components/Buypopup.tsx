@@ -22,7 +22,7 @@ export default function Buypopup(props: { setPopbuy: Function }) {
           onClick={() => props.setPopbuy({ id: null })}
           className="h-[30px] aspect-square  absolute top-3 right-3 flex justify-center items-center p-1"
         >
-          <PopupCloseIcon className="h-[16px] [&>path]:fill-[rgba(0,0,0,0.2)]" />
+          <PopupCloseIcon className="h-[16px] [&>path]:fill-mainBlack" />
         </button>
         <div className="w-[550px] mx-auto">
           <h2 className="text-main font-mainBold text-center text-[18px] ">
@@ -41,7 +41,7 @@ export default function Buypopup(props: { setPopbuy: Function }) {
                     style={{ backgroundColor: e.secondColor }}
                   >
                     <div
-                      className="absolute h-[30px] w-[120px] rounded-normal font-mainBold text-whiteMain flex items-center justify-center text-Asmall tracking-wider top-0 -translate-y-1/4"
+                      className="absolute h-[30px] w-[120px] rounded-normal font-mainBold text-buttonText flex items-center justify-center text-Asmall tracking-wider top-0 -translate-y-1/4"
                       style={{ backgroundColor: e.mainColor }}
                     >
                       {e.name}

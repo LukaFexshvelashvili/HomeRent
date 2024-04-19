@@ -1,9 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ProductBanner from "./ProductBanner";
 import Buypopup from "./Buypopup";
 import axiosCall from "../../../hooks/axiosCall";
 import { Link } from "react-router-dom";
 import ContentLoader from "../../../components/global/ContentLoader";
+import PopAlertBlock from "../../../components/PopAlertBlock";
+import { Tuser } from "../../../store/data/userSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 export type TProductData = {
   id: number;
@@ -41,12 +45,26 @@ export type TProductData = {
   product_status: number;
 };
 
+type TAlertPop = {
+  open: boolean;
+  headText: string;
+  descText: string;
+  nextFunction: Function;
+};
+
 export default function MyProducts() {
   const [popbuy, setPopbuy] = useState<{ id: null | number }>({ id: null });
   const [choice, setChoice] = useState<number>(0);
   const [myProducts, setMyProducts] = useState<any[] | null>(null);
+  const [popAlert, setPopAlert] = useState<TAlertPop>({
+    open: false,
+    headText: "",
+    descText: "",
+    nextFunction: () => {},
+  });
+  const userData: Tuser = useSelector((store: RootState) => store.user);
   const saveProducts = useRef<any>(null);
-  useEffect(() => {
+  const fetchProducts = useCallback(() => {
     axiosCall
       .get("fetch/my_products", { withCredentials: true })
       .then((res) => {
@@ -60,6 +78,9 @@ export default function MyProducts() {
       });
   }, []);
   useEffect(() => {
+    fetchProducts();
+  }, []);
+  useEffect(() => {
     if (saveProducts.current !== null) {
       setMyProducts(
         saveProducts.current.filter(
@@ -67,12 +88,26 @@ export default function MyProducts() {
         )
       );
     }
-  }, [choice]);
+  }, [choice, saveProducts.current]);
 
   const choices: string[] = ["აქტიური", "დაბლოკილი", "ვადაგასული"];
   return (
     <>
-      {" "}
+      {popAlert.open ? (
+        <PopAlertBlock
+          close={() =>
+            setPopAlert({
+              open: false,
+              headText: "",
+              descText: "",
+              nextFunction: () => {},
+            })
+          }
+          headText={popAlert.headText}
+          descText={popAlert.descText}
+          nextFunction={popAlert.nextFunction}
+        />
+      ) : null}{" "}
       {popbuy.id && <Buypopup setPopbuy={setPopbuy} />}
       <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3  mobile:px-3">
         <h1 className="mobileSmall:text-[14px]">ჩემი განცხადებები</h1>
@@ -111,6 +146,9 @@ export default function MyProducts() {
                   key={e.id}
                   setPopbuy={setPopbuy}
                   productData={e}
+                  setPopAlert={setPopAlert}
+                  userData={userData}
+                  fetchProducts={fetchProducts}
                 />
               ))
             : myProducts &&

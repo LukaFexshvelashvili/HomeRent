@@ -13,7 +13,7 @@ import MaclerChoose from "./pages/MaclerService/MaclerChoose";
 import Maclerconditions from "./pages/MaclerService/Maclerconditions";
 // import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { checkUIStorage } from "./hooks/UIFunctions";
 import { useDispatch, useSelector } from "react-redux";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
@@ -23,6 +23,12 @@ import { RootState } from "./store/store";
 import { Tuser } from "./store/data/userSlice";
 import CheckRoutes from "./CheckRoutes";
 import Logout from "./pages/Logout";
+import MyProducts from "./pages/Profile/components/MyProducts";
+import SavedProducts from "./pages/Profile/components/SavedProducts";
+import LastSeenProducts from "./pages/Profile/components/LastSeenProducts";
+import Settings from "./pages/Profile/components/Settings";
+import ProfileInfo from "./pages/Profile/components/ProfileInfo";
+
 // import { useSelector } from "react-redux";
 // import { RootState } from "./store/store";
 // import { Tuser } from "./store/data/userSlice";
@@ -68,7 +74,14 @@ function App() {
             <Route path="Product" element={<Product />} />
             <Route path="Product/:id" element={<Product />} />
             <Route path="AddProduct" element={<AddProduct />} />
-            <Route path="Profile/*" element={<Profile />} />
+            <Route path="Profile/*" element={<Profile />}>
+              <Route index element={<MyProducts />} />
+              <Route path="MyProducts" element={<MyProducts />} />
+              <Route path="SavedProducts" element={<SavedProducts />} />
+              <Route path="LastSeenProducts" element={<LastSeenProducts />} />
+              <Route path="Settings" element={<Settings />} />
+              <Route path="ProfileInfo" element={<ProfileInfo />} />
+            </Route>
             <Route path="MaclerService" element={<MaclerService />} />
             <Route path="MaclerChoose" element={<MaclerChoose />} />
             <Route path="Maclerconditions" element={<Maclerconditions />} />

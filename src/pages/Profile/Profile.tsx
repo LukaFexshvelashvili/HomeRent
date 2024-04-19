@@ -13,7 +13,7 @@ import SavedProducts from "./components/SavedProducts";
 import LastSeenProducts from "./components/LastSeenProducts";
 import Settings from "./components/Settings";
 import ProfileInfo from "./components/ProfileInfo";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -81,16 +81,7 @@ export default function Profile() {
         </div>
       </section>
       <section className="flex flex-col flex-[5] gap-4 ">
-        <Routes>
-          <Route>
-            <Route index element={<MyProducts />} />
-            <Route path="MyProducts" element={<MyProducts />} />
-            <Route path="SavedProducts" element={<SavedProducts />} />
-            <Route path="LastSeenProducts" element={<LastSeenProducts />} />
-            <Route path="Settings" element={<Settings />} />
-            <Route path="ProfileInfo" element={<ProfileInfo />} />
-          </Route>
-        </Routes>
+        <Outlet />
       </section>
     </main>
   );
