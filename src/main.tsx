@@ -1,9 +1,9 @@
+import "./css/colors.css";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./css/index.css";
 import "./css/components.css";
 import "./css/responsive.css";
-import "./css/colors.css";
 import { StrictMode } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";

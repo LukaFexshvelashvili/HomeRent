@@ -1,14 +1,17 @@
 import { useDispatch } from "react-redux";
 import {
   DateIcon,
-  EditIcon,
   LoginEyeCloseIcon,
   LoginEyeIcon,
   TrashIcon,
 } from "../../../assets/icons/Icons";
-import { deleteProduct } from "../../../hooks/serverProductFunctions";
+import {
+  deleteProduct,
+  hideProduct,
+} from "../../../hooks/serverProductFunctions";
 import { Tuser } from "../../../store/data/userSlice";
 import { TProductData } from "./MyProducts";
+import { Link } from "react-router-dom";
 
 export default function ProductBanner(props: {
   setPopbuy: Function;
@@ -20,16 +23,18 @@ export default function ProductBanner(props: {
   const dispatch = useDispatch();
   return (
     <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center small:flex-col ">
-      <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden small:w-[100%] small:aspect-video small:h-auto">
-        <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2] "></div>
-        <img
-          src={
-            "http://localhost/homeRentServer/" +
-            props.productData.estate_active_image
-          }
-          className="absolute h-full w-full object-cover  top-0 left-0"
-        />
-      </div>
+      <Link to={"/Product/" + props.productData.id}>
+        <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden small:w-[100%] small:aspect-video small:h-auto">
+          <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2] "></div>
+          <img
+            src={
+              "http://localhost/homeRentServer/" +
+              props.productData.estate_active_image
+            }
+            className="absolute h-full w-full object-cover  top-0 left-0"
+          />
+        </div>
+      </Link>
       <div className="flex flex-col ml-3 h-full relative small:w-full small:mt-3 small:h-auto">
         <h3 className="text-[15px] mb-[2px] text-textHeadBlack">
           {props.productData.estate_title}
@@ -69,12 +74,61 @@ export default function ProductBanner(props: {
         >
           ნახვების გაზრდა
         </button>
-        <button className="bg-orangeClear text-orangeI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-orangeHover flex justify-center items-center">
-          <EditIcon className="h-full aspect-square" />
-        </button>
-        <button className="bg-mainClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueHover flex justify-center items-center">
-          <LoginEyeCloseIcon className="h-full aspect-square [&>path]:stroke-blueI" />
-        </button>
+
+        {props.productData.product_status !== 1 ? (
+          <button
+            onClick={() =>
+              props.setPopAlert({
+                open: true,
+                headText: "განცხადების დამალვა",
+                descText:
+                  "ნამდვილად გსურთ დამალოთ განცხადება? (თქვენ ნებისმიერ დროს შეგიძლიათ გახადოთ ის ხილვადი)",
+                nextFunction: () => {
+                  hideProduct(props.userData, props.productData.id, true).then(
+                    () => {
+                      props.setPopAlert({
+                        open: false,
+                        headText: "",
+                        descText: "",
+                        nextFunction: () => {},
+                      });
+                      props.fetchProducts();
+                    }
+                  );
+                },
+              })
+            }
+            className="bg-mainClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueHover flex justify-center items-center"
+          >
+            <LoginEyeCloseIcon className="h-full aspect-square [&>path]:stroke-blueI" />
+          </button>
+        ) : (
+          <button
+            onClick={() =>
+              props.setPopAlert({
+                open: true,
+                headText: "განცხადების გამოჩენა",
+                descText: "ნამდვილად გსურთ გამოაჩინოთ განცხადება?",
+                nextFunction: () => {
+                  hideProduct(props.userData, props.productData.id, false).then(
+                    () => {
+                      props.setPopAlert({
+                        open: false,
+                        headText: "",
+                        descText: "",
+                        nextFunction: () => {},
+                      });
+                      props.fetchProducts();
+                    }
+                  );
+                },
+              })
+            }
+            className="bg-blueI text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueLightI flex justify-center items-center"
+          >
+            <LoginEyeIcon className="h-full aspect-square [&>path]:fill-buttonText" />
+          </button>
+        )}
         <button
           onClick={() =>
             props.setPopAlert({

@@ -90,7 +90,29 @@ export default function MyProducts() {
     }
   }, [choice, saveProducts.current]);
 
-  const choices: string[] = ["აქტიური", "დაბლოკილი", "ვადაგასული"];
+  const choices: string[] = [
+    `აქტიური (${
+      saveProducts.current
+        ? saveProducts.current.filter(
+            (item: TProductData) => item.product_status == 0
+          ).length
+        : ""
+    })`,
+    `დამალული (${
+      saveProducts.current
+        ? saveProducts.current.filter(
+            (item: TProductData) => item.product_status == 1
+          ).length
+        : ""
+    })`,
+    `დაბლოკილი (${
+      saveProducts.current
+        ? saveProducts.current.filter(
+            (item: TProductData) => item.product_status == 2
+          ).length
+        : ""
+    })`,
+  ];
   return (
     <>
       {popAlert.open ? (

@@ -61,17 +61,9 @@ export function changeDarkThemeColors(makeDark: boolean) {
   localStorage.setItem("darkmode", JSON.stringify(makeDark));
 
   if (makeDark) {
-    let colArray = Object.keys(darkColors);
-    for (let i = 0; i < colArray.length; i++) {
-      r.style.setProperty(`--${colArray[i]}`, `${darkColors[colArray[i]]}`);
-    }
+    r.classList.add("dark_mode");
   } else {
-    r.style.cssText = "";
-
-    // let colArray = Object.keys(defaultColors);
-    // for (let i = 0; i < colArray.length; i++) {
-    //   r.style.setProperty(`--${colArray[i]}`, `${darkColors[colArray[i]]}`);
-    // }
+    r.classList.remove("dark_mode");
   }
 }
 
