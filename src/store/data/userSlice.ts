@@ -7,6 +7,7 @@ export type Tuser = {
   mail: string | null;
   mobile: string | null;
   favorites: number[];
+  last_seen: number[];
   create_date: string | null;
   verified: boolean;
   isLogged: boolean | null;
@@ -18,6 +19,7 @@ const initialState: Tuser = {
   mail: null,
   mobile: null,
   favorites: [],
+  last_seen: [],
   create_date: null,
   verified: false,
   isLogged: null,
@@ -28,6 +30,7 @@ const sessionState: Tuser = {
   surname: "",
   mail: null,
   favorites: [],
+  last_seen: [],
   mobile: null,
   create_date: null,
   verified: false,
@@ -46,6 +49,9 @@ const userSlice = createSlice({
     updateFavorites: (state, action: PayloadAction<number[]>) => {
       state.favorites = action.payload;
     },
+    updateLast_seen: (state, action: PayloadAction<number[]>) => {
+      state.last_seen = action.payload;
+    },
     clearSession: () => {
       return sessionState;
     },
@@ -57,6 +63,7 @@ export const {
   setUserLoginStatus,
   clearSession,
   updateFavorites,
+  updateLast_seen,
 } = userSlice.actions;
 
 export default userSlice.reducer;

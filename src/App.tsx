@@ -13,7 +13,7 @@ import MaclerChoose from "./pages/MaclerService/MaclerChoose";
 import Maclerconditions from "./pages/MaclerService/Maclerconditions";
 // import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { checkUIStorage } from "./hooks/UIFunctions";
 import { useDispatch, useSelector } from "react-redux";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
@@ -38,16 +38,20 @@ function App() {
   const user: Tuser = useSelector((store: RootState) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const refresh = useRef<boolean>(true);
 
   useEffect(() => {
-    axiosCall
-      .get("authentication/user_get", { withCredentials: true })
-      .then((res) =>
-        makeUserSession(dispatch, {
-          ...res.data,
-          favorites: JSON.parse(res.data.favorites),
-        })
-      );
+    if (refresh.current) {
+      refresh.current = false;
+      axiosCall
+        .get("authentication/user_get", { withCredentials: true })
+        .then((res) => {
+          makeUserSession(dispatch, {
+            ...res.data,
+            favorites: JSON.parse(res.data.favorites),
+          });
+        });
+    }
   }, []);
 
   useEffect(() => {

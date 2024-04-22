@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   BookmarkIcon,
   DocumentsIcon,
@@ -32,15 +32,19 @@ export default function Navbar() {
   const [activeLang, setActiveLang] = useState<boolean>(false);
   const [langImg, setLangImg] = useState<string>(georgianFlag);
   const [notificationsData, setNotificationsData] = useState<any[]>([]);
+  const refresh = useRef<boolean>(true);
 
   useEffect(() => {
-    axiosCall
-      .get("/get_notifications", { withCredentials: true })
-      .then((res) => {
-        if (res.data) {
-          setNotificationsData([...res.data]);
-        }
-      });
+    if (refresh.current) {
+      refresh.current = false;
+      axiosCall
+        .get("/get_notifications", { withCredentials: true })
+        .then((res) => {
+          if (res.data) {
+            setNotificationsData([...res.data]);
+          }
+        });
+    }
   }, []);
 
   return (

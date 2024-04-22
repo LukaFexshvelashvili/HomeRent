@@ -1,10 +1,37 @@
-import productImage from "../../assets/images/estates/2.jpeg";
 import { LoginEyeIcon } from "../../assets/icons/Icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axiosCall from "../../hooks/axiosCall";
+import { TProductData } from "../Profile/components/MyProducts";
+import { sendMaclerRequest } from "../../hooks/serverProductFunctions";
+import { useSelector } from "react-redux";
+
+import { RootState } from "../../store/store";
+import { useNavigate } from "react-router-dom";
 
 export default function MaclerChoose() {
+  const userData = useSelector((store: RootState) => store.user);
+  const navigate = useNavigate();
   const [productId, setProductId] = useState<number | null>(null);
   const [message, setMessage] = useState<{ status: number }>({ status: -1 });
+  const [myProducts, setMyProducts] = useState<any[]>([]);
+  if (userData.isLogged === false) {
+    navigate("/Login");
+  }
+  const maclerRequest = () => {
+    if (productId) {
+      sendMaclerRequest(userData, productId, 1000).then((res) =>
+        setMessage({ status: res })
+      );
+    }
+  };
+  useEffect(() => {
+    axiosCall
+      .get("fetch/my_products", { withCredentials: true })
+      .then((res) => {
+        res.data && setMyProducts(res.data);
+      });
+  }, []);
+
   return (
     <main className="min-h-screen mt-[30px]">
       {message.status !== -1 && (
@@ -16,20 +43,21 @@ export default function MaclerChoose() {
             {" "}
           </div>
           <div className=" w-[650px] rounded-section bg-whiteMain p-5 relative z-10  max-w-[90%]">
-            {message.status == 1 ? (
+            {message.status == 100 ? (
               <div className="w-[550px] mx-auto">
                 <h2 className="text-maclerMain font-mainBold text-center text-[18px]  mb-4">
                   მოთხოვნა წარმატებით გაიგზავნა
                 </h2>
                 <p className="text-textDesc  text-center text-[14px] mt-2">
-                  მაკლერის სერვისის მოთხოვნა განცხადებაზე #18495518
+                  მაკლერის სერვისის მოთხოვნა განცხადებაზე #{productId}
                 </p>
                 <p className="text-textDesc  text-center text-[14px] ">
-                  სერვისის დადასტურების შემთხვევაში დაგიკავშირდებით
+                  სერვისის დადასტურების შემთხვევაში დაგიკავშირდებით თქვენი
+                  ანგარიშის ნომერზე
                 </p>
 
                 <button
-                  onClick={() => setMessage({ status: -1 })}
+                  onClick={() => navigate("/")}
                   className="bg-maclerMain text-[14px] h-[35px] w-[200px] text-buttonText tracking-wider rounded-md mx-auto block mt-6  transition-colors hover:bg-maclerMainHover"
                 >
                   გასაგებია
@@ -68,10 +96,15 @@ export default function MaclerChoose() {
                 თქვენი განცხადებები
               </p>
             </div>
-
-            <ProductBannerMacler setProduct={setProductId} />
-            <ProductBannerMacler setProduct={setProductId} />
-            <ProductBannerMacler setProduct={setProductId} />
+            {myProducts.length > 0
+              ? myProducts.map((e: TProductData) => (
+                  <ProductBannerMacler
+                    key={e.id}
+                    productData={e}
+                    setProduct={setProductId}
+                  />
+                ))
+              : null}{" "}
           </>
         ) : (
           <>
@@ -80,7 +113,15 @@ export default function MaclerChoose() {
                 მაკლერის სერვისი - შეთანხმება
               </h1>
               <div className="bg-maclerMainClear rounded-xl [&>div]:border-none mt-[30px]">
-                <ProductBannerMacler setProduct={setProductId} setOff />
+                <ProductBannerMacler
+                  productData={
+                    myProducts.filter(
+                      (product: TProductData) => product.id == productId
+                    )[0]
+                  }
+                  setProduct={setProductId}
+                  setOff
+                />
               </div>
               <p className="text-textHead  mt-[30px] mb-[20px]">
                 უძრავი ქონების ფასი
@@ -130,7 +171,7 @@ export default function MaclerChoose() {
                 </div>
               </div>
               <button
-                onClick={() => setMessage({ status: 0 })}
+                onClick={maclerRequest}
                 className="bg-maclerMain text-[14px] h-[36px] w-[220px] text-buttonText tracking-wider font-mainMedium rounded-md mx-auto block mt-8 mb-2 transition-colors hover:bg-maclerMainHover"
               >
                 სერვისის მოთხოვნა
@@ -146,41 +187,51 @@ export default function MaclerChoose() {
 function ProductBannerMacler(props: {
   setProduct: Function;
   setOff?: boolean;
+  productData: TProductData;
 }) {
   return (
     <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center  mobile:flex-col">
       <div className="w-[170px] h-[100px] rounded-lg bg-whiteLoad relative overflow-hidden mobile:w-[100%] mobile:aspect-video mobile:h-auto">
         <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2]"></div>
         <img
-          src={productImage}
+          src={
+            "http://localhost/HomeRentServer/" +
+            props.productData.estate_active_image
+          }
           className="absolute h-full w-full object-cover  top-0 left-0"
         />
       </div>
       <div className="flex flex-col ml-3 h-full relative  mobile:w-full mobile:mt-3 mobile:h-auto">
         <h3 className="text-[15px] mb-[2px] text-textHeadBlack">
-          იყიდება 5 ოთახიანი ბინა
+          {props.productData.estate_title}
         </h3>
         <p className="text-[13px] text-textDesc">
           განახლდა:{" "}
-          <span className="text-[13px] text-textHeadBlack">1-27-2024</span>
+          <span className="text-[13px] text-textHeadBlack">
+            {props.productData.update_time.split(" ")[0]}
+          </span>
         </p>
         <p className="text-[13px] text-textDesc">
           ვადა:{" "}
-          <span className="text-[13px] text-textHeadBlack">3-27-2024</span>
+          <span className="text-[13px] text-textHeadBlack">
+            {props.productData.update_time.split(" ")[0]}
+          </span>
         </p>
         <div className="flex items-center gap-5 mt-3">
           <p className="flex items-center text-[13px] text-textDesc gap-1">
             <LoginEyeIcon className="h-4 aspect-square [&>path]:fill-textDesc" />{" "}
-            2 234
+            {props.productData.views}
           </p>
-          <p className="text-[13px] text-textDesc">ID - 18495519</p>
+          <p className="text-[13px] text-textDesc">
+            ID - {props.productData.id}
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-3 ml-auto mobile:mx-auto">
         {props.setOff == null ? (
           <button
             className="bg-maclerMain mobile:mt-5  text-buttonText h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-maclerMainHover"
-            onClick={() => props.setProduct(3)}
+            onClick={() => props.setProduct(props.productData.id)}
           >
             არჩევა
           </button>

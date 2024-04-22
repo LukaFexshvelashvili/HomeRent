@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import BlueHouseDecoration from "../../../assets/images/decorations/bluehouse.png";
 
 export default function MaclerCard() {
@@ -36,9 +37,11 @@ export default function MaclerCard() {
             სწრაფი მომსახურება
           </div>
         </div>
-        <button className="small:mx-auto block mt-3 bg-main rounded-[5px] w-[190px] h-[40px] mobileSmall:h-[36px] mobileSmall:w-[160px] mobileSmall:text-[14px] text-buttonText text-[14px] tracking-widest transition-colors hover:bg-mainHover">
-          სრულად
-        </button>
+        <Link to={"/MaclerService"} className="block small:mx-auto mt-3 w-min">
+          <button className=" block bg-main rounded-[5px] w-[190px] h-[40px] mobileSmall:h-[36px] mobileSmall:w-[160px] mobileSmall:text-[14px] text-buttonText text-[14px] tracking-widest transition-colors hover:bg-mainHover">
+            სრულად
+          </button>
+        </Link>
       </div>
     </section>
   );

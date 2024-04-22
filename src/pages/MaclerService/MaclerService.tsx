@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   ClientContact,
   MediaFiles,
@@ -70,9 +71,14 @@ export default function MaclerService() {
               სწრაფი მომსახურება
             </div>
           </div>
-          <button className="block mt-5 bg-maclerMain rounded-[5px] w-[190px] h-[40px] small:mx-auto small:mt-8  text-buttonText text-[15px] tracking-widest transition-colors hover:bg-maclerMainHover">
-            დაწყება
-          </button>
+          <Link
+            to={"/MaclerChoose"}
+            className="mt-5 block small:mx-auto   small:mt-8 w-min"
+          >
+            <button className="block  bg-maclerMain rounded-[5px] w-[190px] h-[40px] text-buttonText text-[15px] tracking-widest transition-colors hover:bg-maclerMainHover">
+              დაწყება
+            </button>
+          </Link>
         </div>
         <div className="flex justify-center items-end maclerSideBorder ">
           <MaclerHouse3 className="h-[250px] large:h-[210px] mediumSmall:h-[110px] mobileTab:h-[120px] mobileSmall:h-[90px] translate-x-[40%]" />

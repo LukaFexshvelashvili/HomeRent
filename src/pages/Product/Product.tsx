@@ -7,26 +7,43 @@ import {
 import CardSlider from "../../components/global/CardSlider";
 import ImageSlider from "./components/ImageSlider";
 import ProductSideBar from "./components/ProductSideBar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axiosCall from "../../hooks/axiosCall";
 import ContentLoader from "../../components/global/ContentLoader";
 import { TProductData } from "../Profile/components/MyProducts";
+import { addLastProduct } from "../../hooks/UIFunctions";
+import { useDispatch } from "react-redux";
+import { productViewPlus } from "../../hooks/serverProductFunctions";
 
 export default function Product() {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const [productData, setProductData] = useState<null | TProductData>(null);
   const [sameProducts, setSameProducts] = useState<null | TProductData[]>(null);
+  const makeRefresh = useRef({ id: id, refresh: true });
   useEffect(() => {
-    axiosCall.post("fetch/product", `product_id=${id}`).then((res) => {
-      if (res.data.status === 100) {
-        setProductData(res.data.product_data[0]);
-        let formData = new FormData();
-        formData.append("city", res.data.product_data[0].estate_city);
-        axiosCall
-          .post("fetch/same_products", formData)
-          .then((res) => setSameProducts(res.data));
+    if (
+      (makeRefresh.current.id == id && makeRefresh.current.refresh == true) ||
+      makeRefresh.current.id !== id
+    ) {
+      makeRefresh.current.id = id;
+      makeRefresh.current.refresh = false;
+      axiosCall.post("fetch/product", `product_id=${id}`).then((res) => {
+        if (res.data.status === 100) {
+          setProductData(res.data.product_data[0]);
+          let formData = new FormData();
+          formData.append("city", res.data.product_data[0].estate_city);
+          axiosCall
+            .post("fetch/same_products", formData)
+            .then((res) => setSameProducts(res.data));
+        }
+      });
+
+      if (id) {
+        productViewPlus(parseInt(id));
+        addLastProduct(dispatch, parseInt(id));
       }
-    });
+    }
   }, [id]);
 
   return (

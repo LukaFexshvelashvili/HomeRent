@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   Home1Decor,
   Home2Decor,
@@ -23,9 +24,14 @@ export default function CreateOffer() {
           ჩვენი სერვისი საშუალებას გაძლევთ გამოაქვეყნოთ თქვენი უძრავი ქონება
           რათა დაგეხმაროთ მის გაყიდვა/გაქირავება -ში
         </p>
-        <button className="small:mx-auto   mt-9 mobileSmall:mt-4  mobileSmall:h-[36px] mobileSmall:w-[160px] mobileSmall:text-[14px] bg-main rounded-[5px] w-[190px] h-[40px] text-buttonText text-[15px] tracking-widest transition-colors hover:bg-mainHover">
-          დაწყება
-        </button>
+        <Link
+          to={"/AddProduct"}
+          className="small:mx-auto mt-9 mobileSmall:mt-4 w-min block"
+        >
+          <button className="    mobileSmall:h-[36px] mobileSmall:w-[160px] mobileSmall:text-[14px] bg-main rounded-[5px] w-[190px] h-[40px] text-buttonText text-[15px] tracking-widest transition-colors hover:bg-mainHover">
+            დაწყება
+          </button>
+        </Link>
       </div>
       <div className="flex flex-col flex-1 pl-7  mobile:px-2">
         <SkeletonDecor className=" w-full aspect-auto" />

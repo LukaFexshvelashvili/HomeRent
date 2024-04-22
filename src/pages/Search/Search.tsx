@@ -1,9 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  DropDownIcon,
-  PopupCloseIcon,
-  SearchIcon,
-} from "../../assets/icons/Icons";
+import { useEffect, useMemo, useState } from "react";
+import { PopupCloseIcon, SearchIcon } from "../../assets/icons/Icons";
 import {
   PriceSlider,
   SelectNumbers,
@@ -36,6 +32,7 @@ export default function Search() {
     () => cities.subLocs.map((item) => item.name.ka),
     []
   );
+
   useEffect(() => {
     setLoader(true);
     axiosCall.get(`fetch/search${debouncedSearch}`).then((res) => {
@@ -80,6 +77,7 @@ export default function Search() {
 
     return buttons; // Return the array of buttons after the loop
   };
+
   return (
     <main className="flex gap-4 flex-col">
       <div className="flex gap-3">
@@ -95,7 +93,9 @@ export default function Search() {
               type="text"
               placeholder="სიტყვით ძებნა..."
               className="w-full h-full px-4 bg-bodyBg outline-none text-blackMain tracking-wider text-[14px] transition-colors focus:bg-whiteLoad"
-              onChange={(e) => setSearchTitle(e.target.value)}
+              onChange={(e) => {
+                setSearchTitle(e.target.value);
+              }}
               value={searchTitle}
             />
           </form>
@@ -115,7 +115,7 @@ export default function Search() {
           </div>
         </div>
         <button
-          onClick={() => titleSubmit}
+          onClick={titleSubmit}
           className=" h-[45px] w-[60px] text-[14px]   font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
         >
           <SearchIcon className="h-[16px] aspect-square " />
@@ -123,7 +123,7 @@ export default function Search() {
       </div>
 
       <div className="flex  gap-5 mediumSmallXl:flex-col">
-        <FiltersSection citiesAPI={citiesAPI} />
+        <FiltersSection citiesAPI={citiesAPI} setSearchTitle={setSearchTitle} />
         <ResponsiveFiltersSection citiesAPI={citiesAPI} />
         <section className="flex-[3]  rounded-normal">
           <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
@@ -131,7 +131,7 @@ export default function Search() {
           </p>
           <div className="flex flex-wrap relative min-h-[150px] gap-5 gap-y-7 large:justify-center large:gap-5">
             {!loader ? (
-              searched !== null ? (
+              searched !== null && searched.length > 0 ? (
                 searched.map((product: TProductData) => (
                   <Card key={product.id} product={product} />
                 ))
@@ -253,18 +253,22 @@ function ResponsiveFiltersSection(props: { citiesAPI: any }) {
   );
 }
 
-function FiltersSection(props: { citiesAPI: any }) {
+function FiltersSection(props: { citiesAPI: any; setSearchTitle: Function }) {
+  const [params, setParams] = useSearchParams();
+
   const [openFilters, setOpenFilters] = useState<boolean>(false);
 
   return (
-    <section className=" mobile:hidden flex-[1.5] large:flex-[2] bg-whiteMain mediumSmallXl:rounded-[10px] rounded-[18px] shadow-sectionShadow mediumSmallXl:shadow-none">
+    <section className=" mobile:hidden relative flex-[1.5] large:flex-[2] bg-whiteMain mediumSmallXl:rounded-[10px] rounded-[18px] shadow-sectionShadow mediumSmallXl:shadow-none">
       <div
         className={` px-4 py-3 pb-12 mediumSmallXl:p-0 mediumSmallXl:pb-8 overflow-hidden ${
           openFilters ? "mediumSmallXl:max-h-min" : "mediumSmallXl:max-h-[55px]"
         }`}
       >
         <button
-          onClick={() => setOpenFilters((state) => !state)}
+          onClick={() => {
+            setOpenFilters((state) => !state);
+          }}
           className="h-[55px] min-h-[55px] hidden mediumSmallXl:flex w-full bg-main rounded-[10px] text-buttonText tracking-wider font-mainMedium relative items-center justify-center"
         >
           <div className="flex  flex-col h-[30px] aspect-square justify-center items-center gap-1 absolute left-5">
@@ -274,6 +278,17 @@ function FiltersSection(props: { citiesAPI: any }) {
           </div>
           ფილტრები
         </button>
+        {params.size > 0 ? (
+          <button
+            onClick={() => {
+              setParams({});
+              props.setSearchTitle("");
+            }}
+            className="absolute top-3 right-3 text-buttonText px-3 py-1 rounded-md bg-main text-[12px] tracking-widest font-mainMedium cursor-pointer transition-colors hover:bg-mainHover"
+          >
+            ფილტრების წაშლა
+          </button>
+        ) : null}
         <p className="text-Asmall mediumSmallXl:hidden text-textDesc tracking-wider font-mainBold">
           ფილტრები
         </p>
