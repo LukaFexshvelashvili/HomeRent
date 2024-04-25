@@ -4,6 +4,7 @@ import { RealEstateTypes, TRealEstateTypes } from "./FiltersArray";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { deleteParams, updateParams } from "../../../hooks/routerHooks";
+import { currencyConvertor } from "../../../components/convertors/convertors";
 
 export function SelectNumbers(props: {
   name?: string;
@@ -121,7 +122,14 @@ export function SelectType() {
 export function PriceSlider(props: { setData?: Function }) {
   const [params, setParams] = useSearchParams();
   const startCounting = useRef<boolean>(false);
-
+  const firstRender = useRef<boolean>(true);
+  const [PricesPercentages, setPricesPercentages] = useState<number[]>([
+    0, 100,
+  ]);
+  const [Prices, setPrices] = useState<number[]>([-1, 0]);
+  const [currency, setCurrency] = useState<number>(0);
+  const priceDistance = [20000, 80000];
+  const priceGap = 5000;
   useEffect(() => {
     const searchPrices = params.get("prices");
     if (searchPrices) {
@@ -133,13 +141,16 @@ export function PriceSlider(props: { setData?: Function }) {
       ]);
     }
   }, []);
+  useEffect(() => {
+    const searchPrices = params.get("prices");
 
-  const [PricesPercentages, setPricesPercentages] = useState<number[]>([
-    0, 100,
-  ]);
-  const [Prices, setPrices] = useState<number[]>([0, 0]);
-  const priceDistance = [20000, 80000];
-  const priceGap = 5000;
+    if (firstRender.current && searchPrices) {
+      const getSearchPrices = JSON.parse(searchPrices);
+      changeCurrency(getSearchPrices.currency);
+      firstRender.current = false;
+    }
+  }, [Prices[0] >= 0]);
+
   useEffect(() => {
     if (startCounting.current) {
       setPrices([
@@ -150,7 +161,7 @@ export function PriceSlider(props: { setData?: Function }) {
         prices: JSON.stringify({
           start: Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
           end: Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
-          currency: 0,
+          currency: currency,
         }),
       });
 
@@ -159,12 +170,41 @@ export function PriceSlider(props: { setData?: Function }) {
       }
     }
   }, [PricesPercentages]);
+  const changeCurrency = (newCurrency: number) => {
+    setCurrency(newCurrency);
+    if (Prices[0] >= 0) {
+      setPrices([
+        currencyConvertor(Prices[0], currency),
+        currencyConvertor(Prices[1], currency),
+      ]);
+      updateParams(params, setParams, {
+        prices: JSON.stringify({
+          start: currencyConvertor(Prices[0], currency),
+          end: currencyConvertor(Prices[1], currency),
+          currency: newCurrency,
+        }),
+      });
+    }
+  };
   return (
     <div className="flex flex-col items-center relative w-10/12 mx-auto">
-      <p className=" text-textHead tracking-wider font-mainBold ">ფასი</p>
-      <div className="h-[30px] w-[70px] flex items-center absolute top-0 right-0 outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg text-textDescCard cursor-pointer">
-        <div className="flex-1 h-full flex items-center justify-center">₾</div>
-        <div className="flex-1 h-full flex items-center justify-center text-buttonText bg-main rounded-lg relative">
+      <p className=" text-textHead tracking-wider font-mainBold ">ფასი</p>{" "}
+      <div
+        onClick={() => changeCurrency(currency == 0 ? 1 : 0)}
+        className={`h-[30px] w-[70px] flex items-center absolute select-none top-0 right-0 outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg  text-textDescCard cursor-pointer`}
+      >
+        <div
+          className={`flex-1 transition-all h-full flex items-center justify-center font-mainRegular ${
+            currency == 0 ? "" : "text-buttonText bg-main rounded-lg relative"
+          } `}
+        >
+          ₾
+        </div>
+        <div
+          className={`flex-1 transition-all h-full flex items-center justify-center font-mainRegular ${
+            currency == 0 ? "text-buttonText bg-main rounded-lg relative" : ""
+          }`}
+        >
           $
         </div>
       </div>
@@ -221,7 +261,9 @@ export function PriceSlider(props: { setData?: Function }) {
             }}
             value={Prices[0]}
           />
-          <p className="text-Asmall ml-2 text-textDesc">$ -დან</p>
+          <p className="text-Asmall ml-2 text-textDesc">
+            {currency == 0 ? "$" : "₾"} -დან
+          </p>
         </div>
         <div className="flex items-center">
           <input
@@ -261,7 +303,9 @@ export function PriceSlider(props: { setData?: Function }) {
             }}
             value={Prices[1]}
           />
-          <p className="text-Asmall ml-2 text-textDesc">$ -მდე</p>
+          <p className="text-Asmall ml-2 text-textDesc">
+            {currency == 0 ? "$" : "₾"} -მდე
+          </p>
         </div>
       </div>
     </div>

@@ -14,14 +14,23 @@ import {
 } from "../../../assets/icons/Icons";
 import { RootState } from "../../../store/store";
 import { TProductData } from "../../Profile/components/MyProducts";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { addFavorite, removeFavorite } from "../../../hooks/serverFunctions";
+import { currencyConvertor } from "../../../components/convertors/convertors";
 export default function ProductSideBar(props: { productData: TProductData }) {
   const userFavorites = useSelector((store: RootState) => store.user.favorites);
   const dispatch = useDispatch();
   const [favorited, setFavorited] = useState(
     userFavorites.includes(props.productData.id)
   );
+
+  const [currency, setCurrency] = useState<number>(0);
+  const [price, setPrice] = useState<{ full: number; perSize: number }>({
+    full: Math.floor(props.productData.estate_price),
+    perSize: Math.floor(
+      props.productData.estate_price / props.productData.estate_size
+    ),
+  });
   const changeFavorite = () => {
     if (favorited) {
       removeFavorite(dispatch, props.productData.id);
@@ -32,7 +41,13 @@ export default function ProductSideBar(props: { productData: TProductData }) {
       setFavorited(true);
     }
   };
-
+  const changeCurrency = (newCurrency: number) => {
+    setPrice({
+      full: currencyConvertor(price.full, currency),
+      perSize: currencyConvertor(price.perSize, currency),
+    });
+    setCurrency(newCurrency);
+  };
   return (
     <div className="flex-1 flex flex-col gap-3">
       <div className="bg-whiteMain rounded-block  shadow-sectionShadow">
@@ -59,31 +74,33 @@ export default function ProductSideBar(props: { productData: TProductData }) {
           <div className="flex items-center mt-5 justify-between px-3 mobile:px-0">
             <div className="flex items-center gap-4 mobileSmall:gap-2">
               <p className="text-[20px] font-mainBold text-textHeadCard mobile:text-[18px] mobileSmall:text-[16px]">
-                {Math.floor(props.productData.estate_price)}{" "}
-                {props.productData.estate_currency == 0
-                  ? "$"
-                  : props.productData.estate_currency == 1
-                  ? "₾"
-                  : ""}
+                {price.full} {currency == 0 ? "$" : currency == 1 ? "₾" : ""}
               </p>
               <p className="text-[16px] font-mainBold text-textDescCard mobile:text-[14px] mobileSmall:text-[12px]">
-                1 მ² -{" "}
-                {Math.floor(
-                  props.productData.estate_price / props.productData.estate_size
-                )}{" "}
-                $
-                {props.productData.estate_currency == 0
-                  ? "$"
-                  : props.productData.estate_currency == 1
-                  ? "₾"
-                  : ""}
+                1 მ² - {price.perSize}{" "}
+                {currency == 0 ? "$" : currency == 1 ? "₾" : ""}
               </p>
             </div>
-            <div className="h-[35px] w-[80px] flex items-center  outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg text-textDescCard cursor-pointer">
-              <div className="flex-1 h-full flex items-center justify-center">
+            <div
+              onClick={() => changeCurrency(currency == 0 ? 1 : 0)}
+              className={`h-[30px] w-[70px] flex items-center select-none outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg  text-textDescCard cursor-pointer`}
+            >
+              <div
+                className={`flex-1 transition-all h-full flex items-center justify-center font-mainRegular ${
+                  currency == 0
+                    ? ""
+                    : "text-buttonText bg-main rounded-lg relative"
+                } `}
+              >
                 ₾
               </div>
-              <div className="flex-1 h-full flex items-center justify-center text-buttonText bg-main rounded-lg relative">
+              <div
+                className={`flex-1 transition-all h-full flex items-center justify-center font-mainRegular ${
+                  currency == 0
+                    ? "text-buttonText bg-main rounded-lg relative"
+                    : ""
+                }`}
+              >
                 $
               </div>
             </div>

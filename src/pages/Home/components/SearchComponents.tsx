@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ReactSlider from "react-slider";
+import { currencyConvertor } from "../../../components/convertors/convertors";
 
 export function InputSizeSlider(props: {
   setData: Function;
@@ -20,8 +21,8 @@ export function InputSizeSlider(props: {
   }, [PricesPercentages]);
   return (
     <div
-      className={`flex flex-col items-center relative w-10/12 mx-auto ${
-        props.toFull ? "w-full" : ""
+      className={`flex flex-col items-center relative  mx-auto ${
+        props.toFull ? "w-full max-w-[900px]" : "w-10/12"
       }`}
     >
       <ReactSlider
@@ -138,6 +139,7 @@ export function InputPriceSlider(props: {
     0, 100,
   ]);
   const [Prices, setPrices] = useState<number[]>([0, 0]);
+  const [currency, setCurrency] = useState<number>(0);
   const priceDistance = [20000, 80000];
   const priceGap = 5000;
   useEffect(() => {
@@ -146,19 +148,38 @@ export function InputPriceSlider(props: {
       Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
     ]);
   }, [PricesPercentages]);
+
+  const changeCurrency = (newCurrency: number) => {
+    setCurrency(newCurrency);
+    setPrices([
+      currencyConvertor(Prices[0], currency),
+      currencyConvertor(Prices[1], currency),
+    ]);
+  };
   return (
     <div
-      className={`flex flex-col items-center relative w-10/12 mx-auto ${
-        props.toFull ? "w-full" : ""
+      className={`flex flex-col items-center relative  mx-auto ${
+        props.toFull ? "w-full max-w-[900px]" : "w-10/12"
       }`}
     >
       <div
-        className={`h-[30px] w-[70px] flex items-center absolute ${
+        onClick={() => changeCurrency(currency == 0 ? 1 : 0)}
+        className={`h-[30px] w-[70px] flex items-center absolute select-none ${
           props.toFull ? "mt-2" : ""
-        }  top-0 right-0 outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg text-textDescCard cursor-pointer`}
+        }  top-0 right-0 outline outline-2 -outline-offset-2 outline-borderCol1 rounded-lg  text-textDescCard cursor-pointer`}
       >
-        <div className="flex-1 h-full flex items-center justify-center">₾</div>
-        <div className="flex-1 h-full flex items-center justify-center text-buttonText bg-main rounded-lg relative">
+        <div
+          className={`flex-1 transition-all h-full flex items-center justify-center font-mainRegular ${
+            currency == 0 ? "" : "text-buttonText bg-main rounded-lg relative"
+          } `}
+        >
+          ₾
+        </div>
+        <div
+          className={`flex-1 transition-all h-full flex items-center justify-center font-mainRegular ${
+            currency == 0 ? "text-buttonText bg-main rounded-lg relative" : ""
+          }`}
+        >
           $
         </div>
       </div>
@@ -212,7 +233,9 @@ export function InputPriceSlider(props: {
             }}
             value={Prices[0]}
           />
-          <p className="text-Asmall ml-2 text-textDesc">$ -დან</p>
+          <p className="text-Asmall ml-2 text-textDesc">
+            {currency == 0 ? "$" : "₾"} -დან
+          </p>
         </div>
         <div className="flex items-center">
           <input
@@ -252,7 +275,9 @@ export function InputPriceSlider(props: {
             }}
             value={Prices[1]}
           />
-          <p className="text-Asmall ml-2 text-textDesc">$ -მდე</p>
+          <p className="text-Asmall ml-2 text-textDesc">
+            {currency == 0 ? "$" : "₾"} -მდე
+          </p>
         </div>
       </div>
       <button
@@ -260,7 +285,7 @@ export function InputPriceSlider(props: {
           props.setData({
             start: Prices[0],
             end: Prices[1],
-            currency: 0,
+            currency: currency,
           });
           props.closeWindow(null);
         }}

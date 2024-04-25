@@ -48,6 +48,7 @@ import { SearchCityFilter } from "../../Search/components/SearchFilters";
 import { RootState } from "../../../store/store";
 import axiosCall from "../../../hooks/axiosCall";
 import BubbleSelector from "../../../components/global/BubbleSelector";
+import { currencyConvertor } from "../../../components/convertors/convertors";
 
 export const submitProduct = (
   productData: TproductInfoStart | any,
@@ -88,10 +89,17 @@ export const submitProduct = (
     formData.append("estateRooms", productData.estateRooms);
     formData.append("estateBedrooms", productData.estateBedrooms);
     formData.append("estateBathrooms", productData.estateBathrooms);
-    formData.append("estatePrice", productData.estatePrice);
+    if (productData.estateCurrency !== 0) {
+      formData.append(
+        "estatePrice",
+        `${currencyConvertor(productData.estatePrice, 1)}`
+      );
+    } else {
+      formData.append("estatePrice", productData.estatePrice);
+    }
     formData.append("estateAddons", productData.estateAddons);
     formData.append("estateClosePlaces", productData.estateClosePlaces);
-    formData.append("estateCurrency", productData.estateCurrency);
+    formData.append("estateCurrency", "0");
     formData.append("estateVip", productData.estateVip);
     formData.append("estateVipExpire", productData.estateVipExpire);
     productData.estateImages.forEach((image: any) => {

@@ -68,12 +68,26 @@ export default function ProductBanner(props: {
         </div>
       </div>
       <div className="flex items-center gap-3 ml-auto mediumSmallXl:flex-wrap mediumSmallXl:justify-end small:justify-start small:w-full small:mt-5">
-        <button
-          className="bg-purpleClear text-purpleI h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-purpleHover"
-          onClick={() => props.setPopbuy({ id: 2 })}
-        >
-          ნახვების გაზრდა
-        </button>
+        {props.productData.macler_status == 0 ? (
+          <button
+            className="bg-purpleClear text-purpleI h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-purpleHover"
+            onClick={() => props.setPopbuy({ id: 2 })}
+          >
+            ნახვების გაზრდა
+          </button>
+        ) : props.productData.macler_status == 1 ? (
+          <button className="bg-maclerMainClear pointer-events-none mobile:mt-5  text-maclerMain h-[35px] w-[200px] rounded-md text-[13px] font-mainBold tracking-wide">
+            მოთხოვნა გაგზავნილია
+          </button>
+        ) : props.productData.macler_status == 2 ? (
+          <button className="bg-redClear pointer-events-none mobile:mt-5  text-redI h-[35px] w-[220px] rounded-md text-[13px] font-mainMedium tracking-wider">
+            მოთხოვნა უარყოფილია
+          </button>
+        ) : props.productData.macler_status == 3 ? (
+          <button className="bg-maclerMainClear pointer-events-none mobile:mt-5  text-maclerMain h-[35px] w-[240px] rounded-md text-[13px] font-mainBold tracking-wide">
+            მოთხოვნა დადასტურებულია
+          </button>
+        ) : null}
 
         {props.productData.product_status !== 1 ? (
           <button

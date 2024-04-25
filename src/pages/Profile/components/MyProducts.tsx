@@ -43,6 +43,7 @@ export type TProductData = {
   update_time: string;
   expire_time: string;
   product_status: number;
+  macler_status: number;
 };
 
 type TAlertPop = {
@@ -82,11 +83,19 @@ export default function MyProducts() {
   }, []);
   useEffect(() => {
     if (saveProducts.current !== null) {
-      setMyProducts(
-        saveProducts.current.filter(
-          (item: TProductData) => item.product_status == choice
-        )
-      );
+      if (choice !== choices.length - 1) {
+        setMyProducts(
+          saveProducts.current.filter(
+            (item: TProductData) => item.product_status == choice
+          )
+        );
+      } else {
+        setMyProducts(
+          saveProducts.current.filter(
+            (item: TProductData) => item.macler_status !== 0
+          )
+        );
+      }
     }
   }, [choice, saveProducts.current]);
 
@@ -112,6 +121,13 @@ export default function MyProducts() {
           ).length
         : ""
     })`,
+    `მაკლერის მოთხოვნები (${
+      saveProducts.current
+        ? saveProducts.current.filter(
+            (item: TProductData) => item.macler_status !== 0
+          ).length
+        : ""
+    })`,
   ];
   return (
     <>
@@ -134,19 +150,33 @@ export default function MyProducts() {
       <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3  mobile:px-3">
         <h1 className="mobileSmall:text-[14px]">ჩემი განცხადებები</h1>
         <div className="flex gap-3 items-center flex-wrap mobile:justify-center">
-          {choices.map((e: string, i: number) => (
-            <button
-              key={i}
-              onClick={() => setChoice(i)}
-              className={`px-4 py-2 transition-colors rounded-lg text-[14px]  ${
-                choice == i
-                  ? "text-buttonText bg-main"
-                  : "text-main bg-mainClear"
-              }`}
-            >
-              {e}
-            </button>
-          ))}
+          {choices.map((e: string, i: number) =>
+            i !== choices.length - 1 ? (
+              <button
+                key={i}
+                onClick={() => setChoice(i)}
+                className={`px-4 py-2 transition-colors rounded-lg text-[14px]  ${
+                  choice == i
+                    ? "text-buttonText bg-main"
+                    : "text-main bg-mainClear"
+                }`}
+              >
+                {e}
+              </button>
+            ) : (
+              <button
+                key={i}
+                onClick={() => setChoice(i)}
+                className={`px-4 py-2 transition-colors rounded-lg text-[14px]  ${
+                  choice == i
+                    ? "text-buttonText bg-maclerMain"
+                    : "text-maclerMain bg-maclerMainClear"
+                }`}
+              >
+                {e}
+              </button>
+            )
+          )}
         </div>
         <input
           type="text"
@@ -162,32 +192,46 @@ export default function MyProducts() {
           </p>
         )}
         <div className="flex flex-col">
-          {myProducts && myProducts.length !== 0
-            ? myProducts.map((e: TProductData) => (
-                <ProductBanner
-                  key={e.id}
-                  setPopbuy={setPopbuy}
-                  productData={e}
-                  setPopAlert={setPopAlert}
-                  userData={userData}
-                  fetchProducts={fetchProducts}
-                />
-              ))
-            : myProducts &&
-              myProducts.length === 0 && (
-                <div>
-                  <p className="px-4 text-[15px] text-textDesc my-2 text-center">
-                    განცხადებები ვერ მოიძებნა
-                  </p>
-                  <div className="flex justify-center my-3 mt-5">
-                    <Link to={"/addProduct"} className=" rounded-lg">
-                      <button className=" block text-buttonText bg-main rounded-lg text-[14px] px-4 py-2 tracking-wide">
-                        განცხადების დამატება
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              )}
+          {myProducts && myProducts.length !== 0 ? (
+            myProducts.map((e: TProductData) => (
+              <ProductBanner
+                key={e.id}
+                setPopbuy={setPopbuy}
+                productData={e}
+                setPopAlert={setPopAlert}
+                userData={userData}
+                fetchProducts={fetchProducts}
+              />
+            ))
+          ) : myProducts &&
+            myProducts.length === 0 &&
+            choice !== choices.length - 1 ? (
+            <div>
+              <p className="px-4 text-[15px] text-textDesc my-2 text-center">
+                განცხადებები ვერ მოიძებნა
+              </p>
+              <div className="flex justify-center my-3 mt-5">
+                <Link to={"/addProduct"} className=" rounded-lg">
+                  <button className=" block text-buttonText bg-main rounded-lg text-[14px] px-4 py-2 tracking-wide">
+                    განცხადების დამატება
+                  </button>
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <p className="px-4 text-[15px] text-textDesc my-2 text-center">
+                მაკლერის მოთხოვნები ვერ მოიძებნა
+              </p>
+              <div className="flex justify-center my-3 mt-5">
+                <Link to={"/maclerChoose"} className=" rounded-lg">
+                  <button className=" block text-buttonText bg-maclerMain rounded-lg text-[14px] px-4 py-2 tracking-wide">
+                    მოთხოვნის გაგზავნა
+                  </button>
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

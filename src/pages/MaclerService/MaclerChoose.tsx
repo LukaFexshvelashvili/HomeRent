@@ -6,7 +6,7 @@ import { sendMaclerRequest } from "../../hooks/serverProductFunctions";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../../store/store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function MaclerChoose() {
   const userData = useSelector((store: RootState) => store.user);
@@ -55,13 +55,14 @@ export default function MaclerChoose() {
                   სერვისის დადასტურების შემთხვევაში დაგიკავშირდებით თქვენი
                   ანგარიშის ნომერზე
                 </p>
-
-                <button
-                  onClick={() => navigate("/")}
-                  className="bg-maclerMain text-[14px] h-[35px] w-[200px] text-buttonText tracking-wider rounded-md mx-auto block mt-6  transition-colors hover:bg-maclerMainHover"
+                <Link
+                  to={"/Profile/MyProducts"}
+                  className="block w-min mx-auto"
                 >
-                  გასაგებია
-                </button>
+                  <button className="bg-maclerMain text-[14px] h-[35px] w-[200px] text-buttonText tracking-wider rounded-md mx-auto block mt-6  transition-colors hover:bg-maclerMainHover">
+                    გასაგებია
+                  </button>
+                </Link>
               </div>
             ) : (
               <div className="w-[550px] mx-auto  max-w-[100%] ">
@@ -228,21 +229,35 @@ function ProductBannerMacler(props: {
         </div>
       </div>
       <div className="flex items-center gap-3 ml-auto mobile:mx-auto">
-        {props.setOff == null ? (
-          <button
-            className="bg-maclerMain mobile:mt-5  text-buttonText h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-maclerMainHover"
-            onClick={() => props.setProduct(props.productData.id)}
-          >
-            არჩევა
+        {props.productData.macler_status === 0 ? (
+          props.setOff == null ? (
+            <button
+              className="bg-maclerMain mobile:mt-5  text-buttonText h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-maclerMainHover"
+              onClick={() => props.setProduct(props.productData.id)}
+            >
+              არჩევა
+            </button>
+          ) : (
+            <button
+              className="bg-whiteMain text-maclerMain mobile:mt-5  h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-whiteHover"
+              onClick={() => props.setProduct(null)}
+            >
+              არჩეული
+            </button>
+          )
+        ) : props.productData.macler_status == 1 ? (
+          <button className="bg-maclerMainClear pointer-events-none mobile:mt-5  text-maclerMain h-[35px] w-[200px] rounded-md text-[13px] font-mainBold tracking-wide">
+            მოთხოვნა გაგზავნილია
           </button>
-        ) : (
-          <button
-            className="bg-whiteMain text-maclerMain mobile:mt-5  h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-whiteHover"
-            onClick={() => props.setProduct(null)}
-          >
-            არჩეული
+        ) : props.productData.macler_status == 2 ? (
+          <button className="bg-redClear pointer-events-none mobile:mt-5  text-redI h-[35px] w-[220px] rounded-md text-[13px] font-mainMedium tracking-wider">
+            მოთხოვნა უარყოფილია
           </button>
-        )}
+        ) : props.productData.macler_status == 3 ? (
+          <button className="bg-maclerMainClear pointer-events-none mobile:mt-5  text-maclerMain h-[35px] w-[240px] rounded-md text-[13px] font-mainBold tracking-wide">
+            მოთხოვნა დადასტურებულია
+          </button>
+        ) : null}
       </div>
     </div>
   );

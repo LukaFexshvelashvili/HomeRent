@@ -8,12 +8,8 @@ import {
   UserLinearIcon,
 } from "../../assets/icons/Icons";
 import { useLayoutEffect, useState } from "react";
-import MyProducts from "./components/MyProducts";
-import SavedProducts from "./components/SavedProducts";
-import LastSeenProducts from "./components/LastSeenProducts";
-import Settings from "./components/Settings";
-import ProfileInfo from "./components/ProfileInfo";
-import { Link, Outlet, Route, Routes, useNavigate } from "react-router-dom";
+
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const navigate = useNavigate();
