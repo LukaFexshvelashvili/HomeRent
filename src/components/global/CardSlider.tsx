@@ -1,5 +1,5 @@
 import { Swiper } from "swiper";
-import Card, { CardSkeleton } from "./Card";
+import Card, { CardSkeleton, TProductCard } from "./Card";
 import "swiper/css";
 import "swiper/css/pagination";
 import { LeftArrowIcon } from "../../assets/icons/Icons";
@@ -7,11 +7,10 @@ import { Navigation } from "swiper/modules";
 import { memo, useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-import { TProductData } from "../../pages/Profile/components/MyProducts";
 
 function CardSlider(props: {
   uniqueId?: string | number;
-  products: null | TProductData[];
+  products: undefined | null | TProductCard[];
 }) {
   const rand = Math.floor(Math.random() * 999999);
   const rand2 = Math.floor(Math.random() * 999);
@@ -120,9 +119,9 @@ function CardSlider(props: {
       >
         <div className="swiper-wrapper ">
           {props.products != null ? (
-            props.products.map((e: TProductData) => (
+            props.products.map((e: TProductCard, i) => (
               <SwiperSlide
-                key={e.id}
+                key={e.id + i * Math.floor(Math.random() * 200)}
                 className="flex justify-center w-auto mr-4"
               >
                 <Card autoWidth={true} product={e} />

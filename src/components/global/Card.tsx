@@ -4,7 +4,6 @@ import {
   RoomIcon,
   SquareFrameIcon,
 } from "../../assets/icons/Icons";
-import { TProductData } from "../../pages/Profile/components/MyProducts";
 import { getCurrency } from "../convertors/convertors";
 import numeral from "numeral";
 import {
@@ -15,9 +14,25 @@ import {
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
+export type TProductCard = {
+  id: number;
+  estate_title: string;
+  estate_active_image: string;
+  estate_city: string;
+  estate_address: string;
+  estate_exact_address: string;
+  estate_size: number;
+  estate_price: number;
+  estate_currency: number;
+  estate_rooms: number;
+  estate_vip: number;
+  views: number;
+  created_time: Date;
+};
+
 export default function Card(props: {
   autoWidth?: boolean;
-  product: TProductData;
+  product: TProductCard;
 }) {
   const dispatch = useDispatch();
   const [favorite, setFavorite] = useState<boolean>(false);
