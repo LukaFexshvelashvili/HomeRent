@@ -13,6 +13,7 @@ import { RootState } from "../../../store/store";
 function SavedProducts() {
   const userFavorites = useSelector((store: RootState) => store.user.favorites);
   const [products, setProducts] = useState<[] | TProductData[]>([]);
+
   useEffect(() => {
     getFavorites().then((data: TProductData[]) => setProducts(data));
   }, [userFavorites]);

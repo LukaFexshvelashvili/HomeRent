@@ -11,7 +11,6 @@ export function makeUserSession(dispatch: Function, userData: any) {
   if (userData) {
     let last_seen_storage: any = localStorage.getItem("last_seen");
     let last_seen: number[] = JSON.parse(last_seen_storage);
-
     const sessionUser: Tuser = {
       id: `${userData.id}`,
       name: userData.name,
@@ -20,10 +19,13 @@ export function makeUserSession(dispatch: Function, userData: any) {
       mobile: userData.mobile,
       favorites: userData.favorites,
       last_seen: last_seen,
+      notifications: JSON.parse(userData.notifications),
       verified: userData.verified,
       create_date: userData.create_date,
       isLogged: true,
     };
+    console.log(sessionUser);
+
     dispatch(setUserSessionData(sessionUser));
   } else {
     dispatch(setUserLoginStatus(false));

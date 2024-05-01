@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import ProductBanner from "./ProductBanner";
 import Buypopup from "./Buypopup";
 import axiosCall from "../../../hooks/axiosCall";
@@ -53,7 +53,7 @@ type TAlertPop = {
   nextFunction: Function;
 };
 
-export default function MyProducts() {
+function MyProducts() {
   const [popbuy, setPopbuy] = useState<{ id: null | number }>({ id: null });
   const [choice, setChoice] = useState<number>(0);
   const [myProducts, setMyProducts] = useState<any[] | null>(null);
@@ -65,6 +65,7 @@ export default function MyProducts() {
   });
   const userData: Tuser = useSelector((store: RootState) => store.user);
   const saveProducts = useRef<any>(null);
+  const refresh = useRef<boolean>(true);
   const fetchProducts = useCallback(() => {
     axiosCall
       .get("fetch/my_products", { withCredentials: true })
@@ -79,7 +80,10 @@ export default function MyProducts() {
       });
   }, []);
   useEffect(() => {
-    fetchProducts();
+    if (refresh.current) {
+      fetchProducts();
+      refresh.current = false;
+    }
   }, []);
   useEffect(() => {
     if (saveProducts.current !== null) {
@@ -237,3 +241,4 @@ export default function MyProducts() {
     </>
   );
 }
+export default memo(MyProducts);

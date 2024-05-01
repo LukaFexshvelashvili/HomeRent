@@ -20,6 +20,8 @@ import { Link } from "react-router-dom";
 import { RealEstateTypes } from "../pages/Search/components/FiltersArray";
 import { toggleDarkMode } from "../store/data/webUISlice";
 import axiosCall from "../hooks/axiosCall";
+import { updateNotifications } from "../store/data/userSlice";
+import { Tnotification } from "../assets/types/types";
 export default function Navbar() {
   const userData = useSelector((store: RootState) => store.user);
   const darkmode: boolean = useSelector(
@@ -31,21 +33,6 @@ export default function Navbar() {
   const [activePop, setActivePop] = useState<null | string>(null);
   const [activeLang, setActiveLang] = useState<boolean>(false);
   const [langImg, setLangImg] = useState<string>(georgianFlag);
-  const [notificationsData, setNotificationsData] = useState<any[]>([]);
-  const refresh = useRef<boolean>(true);
-
-  useEffect(() => {
-    if (refresh.current) {
-      refresh.current = false;
-      axiosCall
-        .get("/get_notifications", { withCredentials: true })
-        .then((res) => {
-          if (res.data) {
-            setNotificationsData([...res.data]);
-          }
-        });
-    }
-  }, []);
 
   return (
     <nav className="h-[60px] w-full sticky bg-navBg shadow-navbarShadow flex items-center top-0 z-20">
@@ -132,16 +119,28 @@ export default function Navbar() {
                 activePop == "notifications" ? "bg-mainClear" : "bg-transparent"
               }   rounded-md `}
             >
-              {notificationsData.length !== 0 &&
-                notificationsData.some((obj) => obj.seen == 0) && (
+              {userData.notifications.length !== 0 &&
+                userData.notifications.some((item) => item.seen == false) && (
                   <div className="absolute h-[8px] aspect-square top-[6px] right-[6px] z-20 rounded-circle bg-main"></div>
                 )}
               <NotificationIcon
-                onClick={() =>
+                onClick={() => {
+                  if (
+                    userData.notifications.some((item) => item.seen == false)
+                  ) {
+                    axiosCall
+                      .get("/set_notifications", {
+                        withCredentials: true,
+                      })
+                      .then((res) => {
+                        let updatedNotifications: Tnotification[] = res.data;
+                        dispatch(updateNotifications(updatedNotifications));
+                      });
+                  }
                   setActivePop((state) =>
                     state !== "notifications" ? "notifications" : null
-                  )
-                }
+                  );
+                }}
                 className={`h-[20px] aspect-square  cursor-pointer translate-y-[1px]  select-none ${
                   activePop == "notifications"
                     ? " [&>path]:fill-main"
@@ -149,34 +148,38 @@ export default function Navbar() {
                 }`}
               />
               <div
-                className={` absolute h-auto pb-[40px] min-h-[250px] max-h-[250px] w-[200px] overflow-hidden bg-whiteMain rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
+                className={` absolute h-auto   ${
+                  userData.notifications.length == 0
+                    ? "min-h-min pb-0"
+                    : "pb-[40px] min-h-[250px]"
+                } max-h-[250px] w-[200px] overflow-hidden bg-whiteMain rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
                   activePop == "notifications"
                     ? "visible opacity-100"
                     : "invisible opacity-0"
                 }`}
               >
                 <div className="flex flex-col ">
-                  {notificationsData.length == 0 ? (
-                    <p className=" text-textHead text-[14px] font-mainRegular p-3 text-center">
+                  {userData.notifications.length == 0 ? (
+                    <p className=" text-textHead text-[12px] tracking-wider font-mainRegular p-3 text-center">
                       შეტყობინებები არ არის
                     </p>
                   ) : (
-                    notificationsData.map((item, i) => (
+                    userData.notifications.map((item, i) => (
                       <button
                         key={i}
                         className=" px-3 py-2 transition-colors hover:bg-whiteHover"
                       >
                         <div className="flex items-center relative">
                           <div className="h-[30px] aspect-square bg-main rounded-md"></div>
-                          {item["seen"] == 0 && (
+                          {item.seen == false && (
                             <div className="h-[10px] aspect-square rounded-circle bg-main absolute right-0"></div>
                           )}
                           <div className="flex flex-col text-start ml-2">
                             <p className="text-[12px] tracking-wider font-mainSemiBold text-userName">
-                              {item["title"].slice(0, 18)}
+                              {item.title.slice(0, 18)}
                             </p>
                             <p className="text-[11px] w-[90%] overflow-hidden text-ellipsis font-mainMedium tracking-wider text-userLastName">
-                              {item["content"].slice(0, 22)}
+                              {item.description.slice(0, 22)}
                             </p>
                           </div>
                         </div>
@@ -184,9 +187,11 @@ export default function Navbar() {
                     ))
                   )}
                 </div>
-                <button className="absolute bottom-0 w-full h-[40px] bg-mainClear text-main left-0 tracking-wider font-mainBold text-[12px]">
-                  ყველას ნახვა
-                </button>
+                {userData.notifications.length !== 0 ? (
+                  <button className="absolute bottom-0 w-full h-[40px] bg-mainClear text-main left-0 tracking-wider font-mainBold text-[12px]">
+                    ყველას ნახვა
+                  </button>
+                ) : null}
               </div>
             </div>
           </div>

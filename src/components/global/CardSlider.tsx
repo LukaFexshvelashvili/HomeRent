@@ -120,10 +120,7 @@ function CardSlider(props: {
         <div className="swiper-wrapper ">
           {props.products != null ? (
             props.products.map((e: TProductCard, i) => (
-              <SwiperSlide
-                key={e.id + i * Math.floor(Math.random() * 200)}
-                className="flex justify-center w-auto mr-4"
-              >
+              <SwiperSlide key={e.id + i * Math.floor(Math.random() * 200)}>
                 <Card autoWidth={true} product={e} />
               </SwiperSlide>
             ))

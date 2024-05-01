@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Tnotification } from "../../assets/types/types";
 
 export type Tuser = {
   id: string | null;
@@ -8,6 +9,7 @@ export type Tuser = {
   mobile: string | null;
   favorites: number[];
   last_seen: number[];
+  notifications: Tnotification[];
   create_date: string | null;
   verified: boolean;
   isLogged: boolean | null;
@@ -20,6 +22,7 @@ const initialState: Tuser = {
   mobile: null,
   favorites: [],
   last_seen: [],
+  notifications: [],
   create_date: null,
   verified: false,
   isLogged: null,
@@ -31,6 +34,7 @@ const sessionState: Tuser = {
   mail: null,
   favorites: [],
   last_seen: [],
+  notifications: [],
   mobile: null,
   create_date: null,
   verified: false,
@@ -52,6 +56,9 @@ const userSlice = createSlice({
     updateLast_seen: (state, action: PayloadAction<number[]>) => {
       state.last_seen = action.payload;
     },
+    updateNotifications: (state, action: PayloadAction<Tnotification[]>) => {
+      state.notifications = action.payload;
+    },
     clearSession: () => {
       return sessionState;
     },
@@ -64,6 +71,7 @@ export const {
   clearSession,
   updateFavorites,
   updateLast_seen,
+  updateNotifications,
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,4 +1,4 @@
-import { memo, useLayoutEffect, useState } from "react";
+import { memo, useLayoutEffect, useRef, useState } from "react";
 import {
   CrownIcon,
   ListIcon,
@@ -16,12 +16,16 @@ import { TProductCard } from "../../components/global/Card";
 
 function Home() {
   const [products, setProducts] = useState<null | TProductCard[]>([]);
+  const firstRender = useRef<boolean>(true);
   useLayoutEffect(() => {
-    axiosCall.get("fetch/products").then((res) => {
-      if (res.data) {
-        setProducts(res.data.products);
-      }
-    });
+    if (firstRender.current) {
+      axiosCall.get("fetch/products").then((res) => {
+        if (res.data) {
+          setProducts(res.data.products);
+        }
+      });
+      firstRender.current = false;
+    }
   }, []);
   const viewedProducts = (): undefined | TProductCard[] => {
     if (products) {
