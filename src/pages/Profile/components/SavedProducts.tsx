@@ -13,7 +13,7 @@ import { RootState } from "../../../store/store";
 function SavedProducts() {
   const userFavorites = useSelector((store: RootState) => store.user.favorites);
   const [products, setProducts] = useState<[] | TProductData[]>([]);
-
+  const [search, setSearch] = useState<string>("");
   useEffect(() => {
     getFavorites().then((data: TProductData[]) => setProducts(data));
   }, [userFavorites]);
@@ -28,20 +28,55 @@ function SavedProducts() {
           type="text"
           placeholder="მოძებნა  ( ID ან სათაური )"
           className=" text-[14px] h-[40px] w-full bg-LoginInput outline-none rounded-lg px-4 transition-colors focus:bg-LoginInputActive"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </div>
       <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex  py-2 flex-col gap-3">
-        <p className="px-4 text-[13px] text-textDesc my-1">
-          სულ {products.length} განცხადება
-        </p>
+        {products && search.length == 0 ? (
+          products.length !== 0 && (
+            <p className="px-4 text-[13px] text-textDesc my-1">
+              სულ {products.length} განცხადება
+            </p>
+          )
+        ) : products &&
+          products.filter(
+            (item: TProductData) =>
+              item.id.toString().includes(search) ||
+              item.estate_title.includes(search)
+          ).length !== 0 ? (
+          <p className="px-4 text-[13px] text-textDesc my-1">
+            სულ{" "}
+            {
+              products.filter(
+                (item: TProductData) =>
+                  item.id.toString().includes(search) ||
+                  item.estate_title.includes(search)
+              ).length
+            }{" "}
+            განცხადება
+          </p>
+        ) : (
+          <p className="px-4 text-[13px] text-textDesc my-1">
+            მსგავსი განცხადება ვერ მოიძებნა
+          </p>
+        )}
         <div className="flex flex-col">
           {products ? (
-            products.length > 0 ? (
+            products.length > 0 && search.length !== 0 ? (
+              products
+                .filter(
+                  (item: TProductData) =>
+                    item.id.toString().includes(search) ||
+                    item.estate_title.includes(search)
+                )
+                .map((e: TProductData) => (
+                  <FavoriteBanner key={e.id} product={e} />
+                ))
+            ) : (
               products.map((e: TProductData) => (
                 <FavoriteBanner key={e.id} product={e} />
               ))
-            ) : (
-              <></>
             )
           ) : (
             <></>

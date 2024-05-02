@@ -56,6 +56,7 @@ type TAlertPop = {
 function MyProducts() {
   const [popbuy, setPopbuy] = useState<{ id: null | number }>({ id: null });
   const [choice, setChoice] = useState<number>(0);
+  const [search, setSearch] = useState<string>("");
   const [myProducts, setMyProducts] = useState<any[] | null>(null);
   const [popAlert, setPopAlert] = useState<TAlertPop>({
     open: false,
@@ -133,6 +134,8 @@ function MyProducts() {
         : ""
     })`,
   ];
+  console.log(myProducts);
+
   return (
     <>
       {popAlert.open ? (
@@ -186,56 +189,101 @@ function MyProducts() {
           type="text"
           placeholder="მოძებნა  ( ID ან სათაური )"
           className=" text-[14px] h-[40px] w-full bg-LoginInput outline-none rounded-lg px-4 transition-colors focus:bg-LoginInputActive"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </div>
       <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex  py-2 flex-col gap-3 min-h-[200px]">
         {myProducts === null && <ContentLoader />}
-        {myProducts && myProducts.length !== 0 && (
+        {myProducts && search.length == 0 ? (
+          myProducts.length !== 0 && (
+            <p className="px-4 text-[13px] text-textDesc my-1">
+              სულ {myProducts.length} განცხადება
+            </p>
+          )
+        ) : myProducts &&
+          myProducts.filter(
+            (item: TProductData) =>
+              item.id.toString().includes(search) ||
+              item.estate_title.includes(search)
+          ).length !== 0 ? (
           <p className="px-4 text-[13px] text-textDesc my-1">
-            სულ {myProducts.length} განცხადება
+            სულ{" "}
+            {
+              myProducts.filter(
+                (item: TProductData) =>
+                  item.id.toString().includes(search) ||
+                  item.estate_title.includes(search)
+              ).length
+            }{" "}
+            განცხადება
+          </p>
+        ) : (
+          <p className="px-4 text-[13px] text-textDesc my-1">
+            მსგავსი განცხადება ვერ მოიძებნა
           </p>
         )}
         <div className="flex flex-col">
-          {myProducts && myProducts.length !== 0 ? (
-            myProducts.map((e: TProductData) => (
-              <ProductBanner
-                key={e.id}
-                setPopbuy={setPopbuy}
-                productData={e}
-                setPopAlert={setPopAlert}
-                userData={userData}
-                fetchProducts={fetchProducts}
-              />
-            ))
-          ) : myProducts &&
-            myProducts.length === 0 &&
-            choice !== choices.length - 1 ? (
-            <div>
-              <p className="px-4 text-[15px] text-textDesc my-2 text-center">
-                განცხადებები ვერ მოიძებნა
-              </p>
-              <div className="flex justify-center my-3 mt-5">
-                <Link to={"/addProduct"} className=" rounded-lg">
-                  <button className=" block text-buttonText bg-main rounded-lg text-[14px] px-4 py-2 tracking-wide">
-                    განცხადების დამატება
-                  </button>
-                </Link>
+          {search.length == 0 ? (
+            myProducts && myProducts.length !== 0 ? (
+              myProducts.map((e: TProductData) => (
+                <ProductBanner
+                  key={e.id}
+                  setPopbuy={setPopbuy}
+                  productData={e}
+                  setPopAlert={setPopAlert}
+                  userData={userData}
+                  fetchProducts={fetchProducts}
+                />
+              ))
+            ) : myProducts &&
+              myProducts.length === 0 &&
+              choice !== choices.length - 1 ? (
+              <div>
+                <p className="px-4 text-[15px] text-textDesc my-2 text-center">
+                  განცხადებები ვერ მოიძებნა
+                </p>
+                <div className="flex justify-center my-3 mt-5">
+                  <Link to={"/addProduct"} className=" rounded-lg">
+                    <button className=" block text-buttonText bg-main rounded-lg text-[14px] px-4 py-2 tracking-wide">
+                      განცხადების დამატება
+                    </button>
+                  </Link>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div>
-              <p className="px-4 text-[15px] text-textDesc my-2 text-center">
-                მაკლერის მოთხოვნები ვერ მოიძებნა
-              </p>
-              <div className="flex justify-center my-3 mt-5">
-                <Link to={"/maclerChoose"} className=" rounded-lg">
-                  <button className=" block text-buttonText bg-maclerMain rounded-lg text-[14px] px-4 py-2 tracking-wide">
-                    მოთხოვნის გაგზავნა
-                  </button>
-                </Link>
+            ) : (
+              <div>
+                <p className="px-4 text-[15px] text-textDesc my-2 text-center">
+                  მაკლერის მოთხოვნები ვერ მოიძებნა
+                </p>
+                <div className="flex justify-center my-3 mt-5">
+                  <Link to={"/maclerChoose"} className=" rounded-lg">
+                    <button className=" block text-buttonText bg-maclerMain rounded-lg text-[14px] px-4 py-2 tracking-wide">
+                      მოთხოვნის გაგზავნა
+                    </button>
+                  </Link>
+                </div>
               </div>
-            </div>
-          )}
+            )
+          ) : null}
+          {search.length !== 0 &&
+            myProducts &&
+            myProducts
+              .filter(
+                (item: TProductData) =>
+                  item.id.toString().includes(search) ||
+                  item.estate_title.includes(search)
+              )
+              .map((e: TProductData) => (
+                <ProductBanner
+                  key={e.id}
+                  setPopbuy={setPopbuy}
+                  productData={e}
+                  setPopAlert={setPopAlert}
+                  userData={userData}
+                  fetchProducts={fetchProducts}
+                />
+              ))}
         </div>
       </div>
     </>

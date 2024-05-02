@@ -25,6 +25,7 @@ export function makeUserSession(dispatch: Function, userData: any) {
       isLogged: true,
     };
     console.log(sessionUser);
+    localStorage.setItem("favorites", JSON.stringify(userData.favorites));
 
     dispatch(setUserSessionData(sessionUser));
   } else {
@@ -76,12 +77,17 @@ export function addFavorite(dispatch: Function, id: number) {
     const getFavoritesStorage: any = localStorage.getItem("favorites");
     let getFavorites = JSON.parse(getFavoritesStorage);
     if (!getFavorites.includes(id)) getFavorites.unshift(id);
+
     localStorage.setItem("favorites", JSON.stringify(getFavorites));
     dispatch(updateFavorites(getFavorites));
     const formData = new FormData();
 
     formData.append("favorites", JSON.stringify(getFavorites));
-    axiosCall.post("user/favorites", formData, { withCredentials: true });
+    console.log(getFavorites);
+
+    axiosCall
+      .post("user/favorites", formData, { withCredentials: true })
+      .then((res) => console.log(res.data));
   }
 }
 export function removeFavorite(dispatch: Function, id: number) {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { PopupCloseIcon, SearchIcon } from "../../assets/icons/Icons";
 import {
   PriceSlider,
@@ -7,8 +7,7 @@ import {
   SizeSlider,
 } from "./components/Filters";
 import axiosCall from "../../hooks/axiosCall";
-import { TProductData } from "../Profile/components/MyProducts";
-import Card from "../../components/global/Card";
+import Card, { TProductCard } from "../../components/global/Card";
 import { useDebounce } from "../../hooks/serverFunctions";
 import ContentLoader from "../../components/global/ContentLoader";
 import DropDownSelector from "../../components/global/DropDownSelector";
@@ -20,37 +19,31 @@ import {
 } from "../../assets/lists/productAddons";
 import { deleteParams, updateParams } from "../../hooks/routerHooks";
 import { useSearchParams } from "react-router-dom";
-
-export default function Search() {
+function Search() {
   const [searched, setSearched] = useState<any>(null);
+  const [params, setParams] = useSearchParams();
   const [loader, setLoader] = useState<boolean>(false);
   const [pages, setPages] = useState<number>(0);
-  const [searchTitle, setSearchTitle] = useState<string>("");
-  const [params, setParams] = useSearchParams();
+  const [searchTitle, setSearchTitle] = useState<string>(() => {
+    const title = params.get("title");
+    return title !== null ? title : "";
+  });
   const debouncedSearch = useDebounce(location.search, 300);
-  const citiesAPI: any = useMemo(
+  const citiesAPI: string[] = useMemo(
     () => cities.subLocs.map((item) => item.name.ka),
     []
   );
-
   useEffect(() => {
     setLoader(true);
     axiosCall.get(`fetch/search${debouncedSearch}`).then((res) => {
       setLoader(false);
-
       setSearched(res.data);
     });
   }, [debouncedSearch]);
-  useEffect(() => {
-    if (params.get("title") && params.get("title") !== null) {
-      let gotTitle: any = params.get("title");
-      setSearchTitle(gotTitle);
-    }
-  }, []);
 
   useEffect(() => {
     if (searched !== null) {
-      setPages(Math.floor(searched / 25));
+      setPages(Math.floor(searched.length / 25));
     }
   }, [searched]);
 
@@ -132,7 +125,7 @@ export default function Search() {
           <div className="flex flex-wrap relative min-h-[150px] gap-5 gap-y-7 large:justify-center large:gap-5">
             {!loader ? (
               searched !== null && searched.length > 0 ? (
-                searched.map((product: TProductData) => (
+                searched.map((product: TProductCard) => (
                   <Card key={product.id} product={product} />
                 ))
               ) : null
@@ -148,6 +141,7 @@ export default function Search() {
     </main>
   );
 }
+export default memo(Search);
 
 function ResponsiveFiltersSection(props: { citiesAPI: any }) {
   const [openFilters, setOpenFilters] = useState<boolean>(false);
