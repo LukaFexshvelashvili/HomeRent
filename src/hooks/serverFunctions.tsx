@@ -17,6 +17,7 @@ export function makeUserSession(dispatch: Function, userData: any) {
       surname: userData.surname,
       mail: userData.mail,
       mobile: userData.mobile,
+      money: userData.money,
       favorites: userData.favorites,
       last_seen: last_seen,
       notifications: JSON.parse(userData.notifications),

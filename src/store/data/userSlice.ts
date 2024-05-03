@@ -7,6 +7,7 @@ export type Tuser = {
   surname: string;
   mail: string | null;
   mobile: string | null;
+  money: number;
   favorites: number[];
   last_seen: number[];
   notifications: Tnotification[];
@@ -20,6 +21,7 @@ const initialState: Tuser = {
   surname: "",
   mail: null,
   mobile: null,
+  money: 0,
   favorites: [],
   last_seen: [],
   notifications: [],
@@ -32,10 +34,11 @@ const sessionState: Tuser = {
   name: "სტუმარი",
   surname: "",
   mail: null,
+  mobile: null,
+  money: 0,
   favorites: [],
   last_seen: [],
   notifications: [],
-  mobile: null,
   create_date: null,
   verified: false,
   isLogged: false,
@@ -59,6 +62,9 @@ const userSlice = createSlice({
     updateNotifications: (state, action: PayloadAction<Tnotification[]>) => {
       state.notifications = action.payload;
     },
+    updateMoney: (state, action: PayloadAction<number>) => {
+      state.money = action.payload;
+    },
     clearSession: () => {
       return sessionState;
     },
@@ -72,6 +78,7 @@ export const {
   updateFavorites,
   updateLast_seen,
   updateNotifications,
+  updateMoney,
 } = userSlice.actions;
 
 export default userSlice.reducer;

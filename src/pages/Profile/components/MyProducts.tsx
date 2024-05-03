@@ -134,7 +134,6 @@ function MyProducts() {
         : ""
     })`,
   ];
-  console.log(myProducts);
 
   return (
     <>
@@ -236,35 +235,35 @@ function MyProducts() {
                   fetchProducts={fetchProducts}
                 />
               ))
-            ) : myProducts &&
-              myProducts.length === 0 &&
+            ) : myProducts && myProducts.length === 0 ? (
               choice !== choices.length - 1 ? (
-              <div>
-                <p className="px-4 text-[15px] text-textDesc my-2 text-center">
-                  განცხადებები ვერ მოიძებნა
-                </p>
-                <div className="flex justify-center my-3 mt-5">
-                  <Link to={"/addProduct"} className=" rounded-lg">
-                    <button className=" block text-buttonText bg-main rounded-lg text-[14px] px-4 py-2 tracking-wide">
-                      განცხადების დამატება
-                    </button>
-                  </Link>
+                <div>
+                  <p className="px-4 text-[15px] text-textDesc my-2 text-center">
+                    განცხადებები ვერ მოიძებნა
+                  </p>
+                  <div className="flex justify-center my-3 mt-5">
+                    <Link to={"/addProduct"} className=" rounded-lg">
+                      <button className=" block text-buttonText bg-main rounded-lg text-[14px] px-4 py-2 tracking-wide">
+                        განცხადების დამატება
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div>
-                <p className="px-4 text-[15px] text-textDesc my-2 text-center">
-                  მაკლერის მოთხოვნები ვერ მოიძებნა
-                </p>
-                <div className="flex justify-center my-3 mt-5">
-                  <Link to={"/maclerChoose"} className=" rounded-lg">
-                    <button className=" block text-buttonText bg-maclerMain rounded-lg text-[14px] px-4 py-2 tracking-wide">
-                      მოთხოვნის გაგზავნა
-                    </button>
-                  </Link>
+              ) : (
+                <div>
+                  <p className="px-4 text-[15px] text-textDesc my-2 text-center">
+                    მაკლერის მოთხოვნები ვერ მოიძებნა
+                  </p>
+                  <div className="flex justify-center my-3 mt-5">
+                    <Link to={"/maclerChoose"} className=" rounded-lg">
+                      <button className=" block text-buttonText bg-maclerMain rounded-lg text-[14px] px-4 py-2 tracking-wide">
+                        მოთხოვნის გაგზავნა
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            )
+              )
+            ) : null
           ) : null}
           {search.length !== 0 &&
             myProducts &&

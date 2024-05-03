@@ -4,6 +4,7 @@ import {
   BookmarkIcon,
   DocumentsIcon,
   HistoryIcon,
+  MoneyDollarIcon,
   SettingsIcon,
   UserLinearIcon,
 } from "../../assets/icons/Icons";
@@ -18,17 +19,20 @@ export default function Profile() {
     if (location.pathname.includes("MyProducts")) {
       setActiveNav(1);
     }
-    if (location.pathname.includes("SavedProducts")) {
+    if (location.pathname.includes("Balance")) {
       setActiveNav(2);
     }
-    if (location.pathname.includes("LastSeenProducts")) {
+    if (location.pathname.includes("SavedProducts")) {
       setActiveNav(3);
     }
-    if (location.pathname.includes("Settings")) {
+    if (location.pathname.includes("LastSeenProducts")) {
       setActiveNav(4);
     }
-    if (location.pathname.includes("ProfileInfo")) {
+    if (location.pathname.includes("Settings")) {
       setActiveNav(5);
+    }
+    if (location.pathname.includes("ProfileInfo")) {
+      setActiveNav(6);
     }
   }, [navigate]);
   const userData = useSelector((store: RootState) => store.user);
@@ -97,6 +101,14 @@ const ProfileNavs: TProfileNav[] = [
   },
   {
     id: 2,
+    name: "ბალანსი",
+    link: "Balance",
+    icon: () => (
+      <MoneyDollarIcon className="h-[26px] aspect-square mr-[10px] [&>path]:stroke-textHead" />
+    ),
+  },
+  {
+    id: 3,
     name: "შენახული განცხადებები",
     link: "SavedProducts",
     icon: () => (
@@ -104,7 +116,7 @@ const ProfileNavs: TProfileNav[] = [
     ),
   },
   {
-    id: 3,
+    id: 4,
     name: "ბოლოს ნანახი",
     link: "LastSeenProducts",
     icon: () => (
@@ -112,7 +124,7 @@ const ProfileNavs: TProfileNav[] = [
     ),
   },
   {
-    id: 4,
+    id: 5,
     name: "პარამეტრები",
     link: "Settings",
     icon: () => (
@@ -120,7 +132,7 @@ const ProfileNavs: TProfileNav[] = [
     ),
   },
   {
-    id: 5,
+    id: 6,
     name: "ჩემს შესახებ",
     link: "ProfileInfo",
     icon: () => (

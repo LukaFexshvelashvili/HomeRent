@@ -28,6 +28,7 @@ import SavedProducts from "./pages/Profile/components/SavedProducts";
 import LastSeenProducts from "./pages/Profile/components/LastSeenProducts";
 import Settings from "./pages/Profile/components/Settings";
 import ProfileInfo from "./pages/Profile/components/ProfileInfo";
+import Balance from "./pages/Profile/components/Balance";
 
 // import { useSelector } from "react-redux";
 // import { RootState } from "./store/store";
@@ -81,6 +82,7 @@ function App() {
             <Route path="Profile/*" element={<Profile />}>
               <Route index element={<MyProducts />} />
               <Route path="MyProducts" element={<MyProducts />} />
+              <Route path="Balance" element={<Balance />} />
               <Route path="SavedProducts" element={<SavedProducts />} />
               <Route path="LastSeenProducts" element={<LastSeenProducts />} />
               <Route path="Settings" element={<Settings />} />

@@ -20,7 +20,7 @@ function Home() {
   useLayoutEffect(() => {
     if (firstRender.current) {
       axiosCall.get("fetch/products").then((res) => {
-        if (res.data) {
+        if (res.data.status == 100) {
           setProducts(res.data.products);
         }
       });
