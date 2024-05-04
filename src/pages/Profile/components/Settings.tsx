@@ -7,6 +7,7 @@ import { setDarkMode, setMainColor } from "../../../store/data/webUISlice";
 export default function Settings() {
   const dispatch = useDispatch();
   const UISettings = useSelector((store: RootState) => store.webUI);
+  const user = useSelector((store: RootState) => store.user);
   const [activeColor, setActiveColor] = useState<number>(0);
   const [webDarkMode, setWebDarkMode] = useState<boolean>(false);
   const [security, setSecurity] = useState<boolean>(false);
@@ -63,38 +64,44 @@ export default function Settings() {
           ))}
         </div>
       </div>
-      <h2 className="text-textHeadCard mb-2 font-mainBold mt-6">უსაფრთხოება</h2>
-      <div className="flex items-center justify-between relative">
-        <div className="group text-textDesc mr-3 text-[14px]  flex items-center ">
-          დამატებით უსაფრთხოება{" "}
-          <InfoIcon className="h-[18px] aspect-square [&>path]:fill-textDesc ml-2" />
-          <div className=" transition-all opacity-0 invisible bg-whiteMain rounded-xl absolute w-[300px] p-3 text-[12px] text-center shadow-cardShadow top-7 left-0 group-hover:visible group-hover:opacity-100">
-            დამატებითი უსაფრთხოება გულისხმობს სესიებთან ერთად IP ADDRESS ის
-            შენახვას რათა სხვა მოწყობილობიდან გაუთვალისწინებელი ავტორიზაცია
-            თავიდან ავიცილოთ
+      {user.isLogged ? (
+        <>
+          <h2 className="text-textHeadCard mb-2 font-mainBold mt-6">
+            უსაფრთხოება
+          </h2>
+          <div className="flex items-center justify-between relative">
+            <div className="group text-textDesc mr-3 text-[14px]  flex items-center ">
+              დამატებით უსაფრთხოება{" "}
+              <InfoIcon className="h-[18px] aspect-square [&>path]:fill-textDesc ml-2" />
+              <div className=" transition-all opacity-0 invisible bg-whiteMain rounded-xl absolute w-[300px] p-3 text-[12px] text-center shadow-cardShadow top-7 left-0 group-hover:visible group-hover:opacity-100">
+                დამატებითი უსაფრთხოება გულისხმობს სესიებთან ერთად IP ADDRESS ის
+                შენახვას რათა სხვა მოწყობილობიდან გაუთვალისწინებელი ავტორიზაცია
+                თავიდან ავიცილოთ
+              </div>
+            </div>
+            <div
+              onClick={() => setSecurity((state) => !state)}
+              className={`h-[18px] w-[36px] outline-2 outline outline-main rounded-[4px] relative cursor-pointer duration-150 transition-colors ${
+                security ? "bg-main" : "bg-transparent"
+              }`}
+            >
+              <div
+                className={`h-full aspect-square bg-main rounded border-2  transition-all ${
+                  security ? " border-whiteMain" : "border-mainHover"
+                } ${security && "translate-x-full"} `}
+              ></div>
+            </div>
           </div>
-        </div>
-        <div
-          onClick={() => setSecurity((state) => !state)}
-          className={`h-[18px] w-[36px] outline-2 outline outline-main rounded-[4px] relative cursor-pointer duration-150 transition-colors ${
-            security ? "bg-main" : "bg-transparent"
-          }`}
-        >
-          <div
-            className={`h-full aspect-square bg-main rounded border-2  transition-all ${
-              security ? " border-whiteMain" : "border-mainHover"
-            } ${security && "translate-x-full"} `}
-          ></div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-2">
-        <p className="text-[14px] text-main cursor-pointer w-max">
-          პაროლის შეცვლა
-        </p>
-        <p className="text-[14px] text-main cursor-pointer w-max">
-          სხვა მოწყობილობების გაგდება
-        </p>
-      </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-[14px] text-main cursor-pointer w-max">
+              პაროლის შეცვლა
+            </p>
+            <p className="text-[14px] text-main cursor-pointer w-max">
+              სხვა მოწყობილობების გაგდება
+            </p>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

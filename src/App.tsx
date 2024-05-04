@@ -1,5 +1,3 @@
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Authentication/Login";
 import Product from "./pages/Product/Product";
@@ -11,7 +9,7 @@ import Profile from "./pages/Profile/Profile";
 import MaclerService from "./pages/MaclerService/MaclerService";
 import MaclerChoose from "./pages/MaclerService/MaclerChoose";
 import Maclerconditions from "./pages/MaclerService/Maclerconditions";
-// import AdminPanel from "./pages/AdminPanel/AdminPanel";
+
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { checkUIStorage } from "./hooks/UIFunctions";
@@ -20,7 +18,7 @@ import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import axiosCall from "./hooks/axiosCall";
 import { loggedUser, makeUserSession } from "./hooks/serverFunctions";
 import { RootState } from "./store/store";
-import { Tuser } from "./store/data/userSlice";
+import { Tuser, clearSession } from "./store/data/userSlice";
 import CheckRoutes from "./CheckRoutes";
 import Logout from "./pages/Logout";
 import MyProducts from "./pages/Profile/components/MyProducts";
@@ -29,10 +27,7 @@ import LastSeenProducts from "./pages/Profile/components/LastSeenProducts";
 import Settings from "./pages/Profile/components/Settings";
 import ProfileInfo from "./pages/Profile/components/ProfileInfo";
 import Balance from "./pages/Profile/components/Balance";
-
-// import { useSelector } from "react-redux";
-// import { RootState } from "./store/store";
-// import { Tuser } from "./store/data/userSlice";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const UISettings = useSelector((store: RootState) => store.webUI);
@@ -47,10 +42,17 @@ function App() {
       axiosCall
         .get("authentication/user_get", { withCredentials: true })
         .then((res) => {
-          makeUserSession(dispatch, {
-            ...res.data,
-            favorites: JSON.parse(res.data.favorites),
-          });
+          if (res.data.status == 100) {
+            makeUserSession(dispatch, {
+              ...res.data.user,
+              favorites: JSON.parse(res.data.user.favorites),
+            });
+            if (res.data.user.banned == 1) {
+              navigate("/SuspendedAccount");
+            }
+          } else if (res.data.status == 0) {
+            dispatch(clearSession());
+          }
         });
     }
   }, []);
@@ -67,31 +69,45 @@ function App() {
 
   return (
     <>
-      <CheckRoutes>
+      <CheckRoutes user={user}>
         <Routes>
           <Route path="/">
             <Route index element={<Home />} />
+            <Route path="*" element={<NotFound />} />
             <Route path="Login" element={<Login />} />
             <Route path="Register" element={<Register />} />
             <Route path="ForgotPassword" element={<ForgotPassword />} />
-            <Route path="Logout" element={<Logout />} />
+            {user.isLogged ? (
+              <Route path="Logout" element={<Logout />} />
+            ) : null}
             <Route path="Search" element={<Search />} />
             <Route path="Product" element={<Product />} />
             <Route path="Product/:id" element={<Product />} />
             <Route path="AddProduct" element={<AddProduct />} />
+            <Route path="SuspendedAccount" />
             <Route path="Profile/*" element={<Profile />}>
-              <Route index element={<MyProducts />} />
-              <Route path="MyProducts" element={<MyProducts />} />
-              <Route path="Balance" element={<Balance />} />
+              {user.isLogged ? <Route index element={<MyProducts />} /> : null}
+              {user.isLogged ? (
+                <Route path="MyProducts" element={<MyProducts />} />
+              ) : null}
+              {user.isLogged ? (
+                <Route path="Balance" element={<Balance />} />
+              ) : null}
               <Route path="SavedProducts" element={<SavedProducts />} />
-              <Route path="LastSeenProducts" element={<LastSeenProducts />} />
+              {user.isLogged ? (
+                <Route path="LastSeenProducts" element={<LastSeenProducts />} />
+              ) : null}
               <Route path="Settings" element={<Settings />} />
-              <Route path="ProfileInfo" element={<ProfileInfo />} />
+              {user.isLogged ? (
+                <Route path="ProfileInfo" element={<ProfileInfo />} />
+              ) : null}
             </Route>
             <Route path="MaclerService" element={<MaclerService />} />
             <Route path="MaclerChoose" element={<MaclerChoose />} />
             <Route path="Maclerconditions" element={<Maclerconditions />} />
-            <Route path="AdminPanel" element={<AdminPanel />} />
+            {user.isLogged ? (
+              <Route path="AdminPanel" element={<AdminPanel />} />
+            ) : null}
           </Route>
         </Routes>
       </CheckRoutes>

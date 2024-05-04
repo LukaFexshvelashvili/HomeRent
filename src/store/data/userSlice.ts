@@ -14,6 +14,7 @@ export type Tuser = {
   create_date: string | null;
   verified: boolean;
   isLogged: boolean | null;
+  banned: number;
 };
 const initialState: Tuser = {
   id: null,
@@ -28,6 +29,7 @@ const initialState: Tuser = {
   create_date: null,
   verified: false,
   isLogged: null,
+  banned: 0,
 };
 const sessionState: Tuser = {
   id: null,
@@ -42,6 +44,7 @@ const sessionState: Tuser = {
   create_date: null,
   verified: false,
   isLogged: false,
+  banned: 0,
 };
 const userSlice = createSlice({
   name: "user",

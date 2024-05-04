@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   BookmarkIcon,
   DocumentsIcon,
@@ -159,32 +159,44 @@ export default function Navbar() {
                 }`}
               >
                 <div className="flex flex-col ">
-                  {userData.notifications.length == 0 ? (
-                    <p className=" text-textHead text-[12px] tracking-wider font-mainRegular p-3 text-center">
-                      შეტყობინებები არ არის
-                    </p>
-                  ) : (
-                    userData.notifications.map((item, i) => (
-                      <button
-                        key={i}
-                        className=" px-3 py-2 transition-colors hover:bg-whiteHover"
-                      >
-                        <div className="flex items-center relative">
-                          <div className="h-[30px] aspect-square bg-main rounded-md"></div>
-                          {item.seen == false && (
-                            <div className="h-[10px] aspect-square rounded-circle bg-main absolute right-0"></div>
-                          )}
-                          <div className="flex flex-col text-start ml-2">
-                            <p className="text-[12px] tracking-wider font-mainSemiBold text-userName">
-                              {item.title.slice(0, 18)}
-                            </p>
-                            <p className="text-[11px] w-[90%] overflow-hidden text-ellipsis font-mainMedium tracking-wider text-userLastName">
-                              {item.description.slice(0, 22)}
-                            </p>
+                  {userData.isLogged ? (
+                    userData.notifications.length == 0 ? (
+                      <p className=" text-textHead text-[12px] tracking-wider font-mainRegular p-3 text-center">
+                        შეტყობინებები არ არის
+                      </p>
+                    ) : (
+                      userData.notifications.map((item, i) => (
+                        <button
+                          key={i}
+                          className=" px-3 py-2 transition-colors hover:bg-whiteHover"
+                        >
+                          <div className="flex items-center relative">
+                            <div className="h-[30px] aspect-square bg-main rounded-md"></div>
+                            {item.seen == false && (
+                              <div className="h-[10px] aspect-square rounded-circle bg-main absolute right-0"></div>
+                            )}
+                            <div className="flex flex-col text-start ml-2">
+                              <p className="text-[12px] tracking-wider font-mainSemiBold text-userName">
+                                {item.title.slice(0, 18)}
+                              </p>
+                              <p className="text-[11px] w-[90%] overflow-hidden text-ellipsis font-mainMedium tracking-wider text-userLastName">
+                                {item.description.slice(0, 22)}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      </button>
-                    ))
+                        </button>
+                      ))
+                    )
+                  ) : (
+                    <p className=" text-textHead text-[12px] tracking-wider font-mainRegular p-3 text-center">
+                      შეტყობინებების მისაღებად გაიარეთ{" "}
+                      <Link
+                        to={"/Login"}
+                        className=" text-main font-mainBold underline"
+                      >
+                        ავტორიზაცია
+                      </Link>
+                    </p>
                   )}
                 </div>
                 {userData.notifications.length !== 0 ? (
@@ -468,6 +480,7 @@ const unloggedButtons: TProfileButton[] = [
       <LogoutIcon className="h-[20px] aspect-square stroke-textHead mr-2" />
     ),
   },
+
   {
     link: "ChangeDarkTheme",
     name: "მუქი თემა",

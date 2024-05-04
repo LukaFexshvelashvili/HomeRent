@@ -47,6 +47,20 @@ export default function SearchInput() {
     getPrices && params.append("prices", JSON.stringify(getPrices));
     navigate(`/search?${params.toString()}`);
   };
+  const isEmpty = useMemo(() => {
+    return getType
+      ? false
+      : getCity
+      ? false
+      : searchTitle
+      ? false
+      : getSizes
+      ? false
+      : getPrices
+      ? false
+      : true;
+  }, [getType, getCity, searchTitle, getSizes, getPrices]);
+
   return (
     <div className="w-10/12 mediumSmall:w-full flex gap-3 small:w-auto small:h-auto   my-10 mx-auto small:flex-col small:gap-1 flex-wrap">
       <div className="w-full flex items-center border-2 border-whiteLoad rounded-normal overflow-hidden relative h-[45px]">
@@ -213,13 +227,17 @@ export default function SearchInput() {
       </div>
       <button
         onClick={handleSearch}
-        className="small:hidden h-[45px] w-[60px] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
+        className={`small:hidden h-[45px] w-[60px] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest transition-all hover:bg-mainHover ${
+          isEmpty ? "opacity-30 pointer-events-none" : "opacity-100"
+        }`}
       >
         <SearchIcon className="h-[16px] aspect-square " />
       </button>
       <button
         onClick={handleSearch}
-        className="hidden h-full  text-[14px] w-full py-3 mt-2 rounded-normal font-mainMedium  rounded-r-[6px] text-buttonText bg-main small:flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
+        className={`hidden h-full  text-[14px] w-full py-3 mt-2 rounded-normal font-mainMedium  rounded-r-[6px] text-buttonText bg-main small:flex items-center justify-center tracking-widest  transition-all hover:bg-mainHover ${
+          isEmpty ? "opacity-30 pointer-events-none" : "opacity-100"
+        } `}
       >
         <SearchIcon className="h-[16px] aspect-square mr-2" /> მოძებნა
       </button>

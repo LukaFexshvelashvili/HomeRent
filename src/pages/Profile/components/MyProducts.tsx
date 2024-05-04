@@ -44,6 +44,7 @@ export type TProductData = {
   expire_time: string;
   product_status: number;
   macler_status: number;
+  banned: number;
 };
 
 type TAlertPop = {

@@ -24,8 +24,8 @@ export function makeUserSession(dispatch: Function, userData: any) {
       verified: userData.verified,
       create_date: userData.create_date,
       isLogged: true,
+      banned: userData.banned,
     };
-    console.log(sessionUser);
     localStorage.setItem("favorites", JSON.stringify(userData.favorites));
 
     dispatch(setUserSessionData(sessionUser));
