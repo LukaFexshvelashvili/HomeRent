@@ -603,7 +603,7 @@ export function EstateTitle(props: { error: boolean }) {
           სავალდებულოა შეავსოთ სათაურის ველი
         </div>
       )}
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center ">
         <input
           type="text"
           className="AddProductInputTitle"

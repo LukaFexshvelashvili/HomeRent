@@ -126,7 +126,7 @@ export function PriceSlider(props: { setData?: Function }) {
   const [PricesPercentages, setPricesPercentages] = useState<number[]>([
     0, 100,
   ]);
-  const [Prices, setPrices] = useState<number[]>([-1, 0]);
+  const [Prices, setPrices] = useState<number[]>([0, 0]);
   const [currency, setCurrency] = useState<number>(0);
   const priceDistance = [20000, 80000];
   const priceGap = 5000;

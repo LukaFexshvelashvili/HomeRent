@@ -28,10 +28,12 @@ import Settings from "./pages/Profile/components/Settings";
 import ProfileInfo from "./pages/Profile/components/ProfileInfo";
 import Balance from "./pages/Profile/components/Balance";
 import NotFound from "./pages/NotFound";
+import SuspendedAccount from "./pages/SuspendedAccount";
 
 function App() {
   const UISettings = useSelector((store: RootState) => store.webUI);
   const user: Tuser = useSelector((store: RootState) => store.user);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const refresh = useRef<boolean>(true);
@@ -42,6 +44,7 @@ function App() {
       axiosCall
         .get("authentication/user_get", { withCredentials: true })
         .then((res) => {
+          setLoading(false);
           if (res.data.status == 100) {
             makeUserSession(dispatch, {
               ...res.data.user,
@@ -69,6 +72,7 @@ function App() {
 
   return (
     <>
+      {loading ? <MainLoader /> : null}
       <CheckRoutes user={user}>
         <Routes>
           <Route path="/">
@@ -84,7 +88,7 @@ function App() {
             <Route path="Product" element={<Product />} />
             <Route path="Product/:id" element={<Product />} />
             <Route path="AddProduct" element={<AddProduct />} />
-            <Route path="SuspendedAccount" />
+            <Route path="SuspendedAccount" element={<SuspendedAccount />} />
             <Route path="Profile/*" element={<Profile />}>
               {user.isLogged ? <Route index element={<MyProducts />} /> : null}
               {user.isLogged ? (
@@ -116,3 +120,59 @@ function App() {
 }
 
 export default App;
+
+function MainLoader() {
+  return (
+    <div className="fixed top-0 bottom-0 h-full w-full bg-whiteMain z-[99] flex justify-center items-center">
+      <svg
+        className="animwhole translate-y-[-30px]"
+        width="102"
+        height="116"
+        viewBox="0 0 102 116"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect x="13" y="48" width="75" height="67" rx="6" fill="var(--main)" />
+        <path
+          className="animdown"
+          d="M47 3.34794C49 1 52 1 54 3.34794L86 34.0012C89 37 87 42 82 42.6H19.219C14 42 12 37 15 34.0012L47 3.34794Z"
+          fill="var(--main)"
+        />
+        <rect
+          x="54"
+          y="59"
+          width="26"
+          height="17"
+          rx="5"
+          fill="var(--whiteMain)"
+        />
+        <rect
+          className="animdoor"
+          x="54"
+          y="86"
+          width="26"
+          height="300"
+          rx="5"
+          fill="var(--whiteMain)"
+        />
+        <rect
+          className="animfill"
+          x="21"
+          y="59"
+          width="26"
+          height="17"
+          rx="5"
+          fill="var(--whiteMain)"
+        />
+        <rect
+          x="21"
+          y="86"
+          width="26"
+          height="17"
+          rx="5"
+          fill="var(--whiteMain)"
+        />
+      </svg>
+    </div>
+  );
+}

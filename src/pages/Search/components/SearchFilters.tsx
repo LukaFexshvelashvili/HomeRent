@@ -8,6 +8,7 @@ import {
 } from "../../../store/data/addProductSlice";
 
 import axiosCall from "../../../hooks/axiosCall";
+import { OutsideClickClose } from "../../../components/global/OutsideClickClose";
 
 export function SearchCityFilter(props: { setCity: Function }) {
   const citiesAPI = useMemo(
@@ -30,6 +31,11 @@ export function SearchCityFilter(props: { setCity: Function }) {
       setSearchWindow(false);
       dispatch(updateCity(active));
       props.setCity(active);
+    }
+    if (active == "") {
+      dispatch(updateAddress(null));
+      dispatch(updateCity(null));
+      setSearch("");
     }
   }, [active]);
 
@@ -74,17 +80,25 @@ export function SearchCityFilter(props: { setCity: Function }) {
           placeholder="ქალაქი"
         />
 
-        {searchWindow && (
-          <div className="absolute h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden">
+        <OutsideClickClose
+          activePop={searchWindow}
+          setActivePop={setSearchWindow}
+        >
+          <div
+            className={`absolute ${
+              searchWindow ? "block" : "hidden"
+            } h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden`}
+          >
             <div className="flex flex-col h-full overflow-y-scroll">
               {fetchSearch()}
             </div>
           </div>
-        )}
+        </OutsideClickClose>
       </div>
-      {active !== "" && (
+      {active !== "" ? (
         <SearchAddressFilter getActiveCity={active == "" ? null : active} />
-      )}
+      ) : null}
+      <SearchExactAddressFilter />
     </>
   );
 }
@@ -108,9 +122,11 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
       dispatch(updateAddress(active));
     }
   }, [active]);
+
   useEffect(() => {
     if (getInput.current !== null) {
       getInput.current.focus();
+      setSearchWindow(true);
     }
     const formData = new FormData();
     if (props.getActiveCity) {
@@ -171,111 +187,39 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
           ref={getInput}
         />
 
-        {searchWindow && (
-          <div className="absolute h-auto max-h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-auto">
+        <OutsideClickClose
+          activePop={searchWindow}
+          setActivePop={setSearchWindow}
+        >
+          <div
+            className={`absolute ${
+              searchWindow ? "block" : "hidden"
+            } h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden`}
+          >
             <div className="flex flex-col h-full overflow-y-scroll">
               {fetchSearch()}
             </div>
           </div>
-        )}
+        </OutsideClickClose>
       </div>
-      {active !== "" && (
-        <SearchExactAddressFilter activeAddress={active} childs={citiesAPI} />
-      )}
     </>
   );
 }
 
-export function SearchExactAddressFilter(props: {
-  activeAddress: string | null;
-  childs: any[];
-}) {
-  const getInput = useRef<any>(null);
-
-  const [citiesAPI, setCitiesAPI] = useState<any[]>([]);
-  const [search, setSearch] = useState("");
-  const [searchWindow, setSearchWindow] = useState(false);
-  const [active, setActive] = useState("");
+export function SearchExactAddressFilter() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (active !== "" && search !== active) {
-      setActive("");
-    }
-  }, [search]);
-  useEffect(() => {
-    if (active !== "") {
-      setSearch(active);
-      setSearchWindow(false);
-      dispatch(updateExactAddress(active));
-    }
-  }, [active]);
-  useEffect(() => {
-    if (getInput.current !== null) {
-      getInput.current.focus();
-    }
-    const activeAdresses = props.childs.filter(
-      (item: any) => item.name.ka == props.activeAddress
-    );
 
-    setCitiesAPI(activeAdresses[0].childs);
-  }, []);
-
-  if (props.activeAddress == null) {
-    return null;
-  }
-
-  const fetchSearch = () => {
-    if (search == "" && citiesAPI && citiesAPI.length !== 0) {
-      return citiesAPI.map((e: any, i: number) => (
-        <button
-          key={i}
-          onClick={() => setActive(e.name.ka)}
-          className={`w-full h-auto py-2 text-start px-5 text-Asmall transition-colors hover:bg-mainClear ${
-            active == e.name.ka ? "text-main" : "text-textHead"
-          }`}
-        >
-          {e.name.ka}
-        </button>
-      ));
-    } else if (citiesAPI && citiesAPI.length !== 0) {
-      return citiesAPI
-        .filter((item: any) => item.name.ka.includes(search))
-        .map((e: any, i: number) => (
-          <button
-            key={i}
-            onClick={() => setActive(e.name.ka)}
-            className={`w-full h-auto py-2 text-start px-5 text-Asmall transition-colors hover:bg-mainClear ${
-              active == e.name.ka ? "text-main" : "text-textHead"
-            }`}
-          >
-            {e.name.ka}
-          </button>
-        ));
-    }
-  };
   return (
     <>
       <div className="relative">
         <input
           onChange={(e) => {
-            setSearch(e.target.value);
             dispatch(updateExactAddress(e.target.value));
           }}
-          value={search}
-          onFocus={() => setSearchWindow(true)}
           type="text"
           className="AddProductInput"
-          placeholder="ქუჩა"
-          ref={getInput}
+          placeholder="ზუსტი მისამართი"
         />
-
-        {searchWindow && (
-          <div className="absolute h-auto max-h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-auto">
-            <div className="flex flex-col h-full overflow-y-scroll">
-              {fetchSearch()}
-            </div>
-          </div>
-        )}
       </div>
     </>
   );

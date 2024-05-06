@@ -6,7 +6,6 @@ import {
   LogoutIcon,
   MessageIcon,
   MoonIcon,
-  NotificationIcon,
   NotificationResponsiveIcon,
   PlusIcon,
   SunIcon,
@@ -19,16 +18,14 @@ import { RootState } from "../store/store";
 import { Link } from "react-router-dom";
 import { RealEstateTypes } from "../pages/Search/components/FiltersArray";
 import { toggleDarkMode } from "../store/data/webUISlice";
-import axiosCall from "../hooks/axiosCall";
-import { updateNotifications } from "../store/data/userSlice";
-import { Tnotification } from "../assets/types/types";
+
+import { NotificationBar, ProfileBar } from "./NavbarComponents";
+import { OutsideClickClose } from "./global/OutsideClickClose";
 export default function Navbar() {
   const userData = useSelector((store: RootState) => store.user);
   const darkmode: boolean = useSelector(
     (store: RootState) => store.webUI.darkMode
   );
-
-  const dispatch = useDispatch();
 
   const [activePop, setActivePop] = useState<null | string>(null);
   const [activeLang, setActiveLang] = useState<boolean>(false);
@@ -42,52 +39,57 @@ export default function Navbar() {
             <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
             <div className=" mobile:hidden h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
           </Link>
-          <div className="relative h-[36px] aspect-square flex items-center justify-center">
-            <button
-              onClick={() => setActiveLang((state) => !state)}
-              className=" h-[26px] aspect-square rounded-circle border border-buttonStroke flex items-center justify-center cursor-pointer"
-            >
-              <img
-                className="max-h-[20px] aspect-square"
-                src={langImg}
-                alt="georgia"
-              />
-            </button>
-            <div
-              className={` absolute h-auto w-[150px] overflow-hidden flex flex-col bg-white rounded-normal shadow-sectionShadow top-[60px] left-0 duration-200 transition-[opacity,visibility]  ${
-                activeLang ? "visible opacity-100" : "invisible opacity-0"
-              }`}
-            >
+          <OutsideClickClose
+            setActivePop={setActiveLang}
+            activePop={activeLang}
+          >
+            <div className="relative h-[36px] aspect-square flex items-center justify-center">
               <button
-                onClick={() => {
-                  setActiveLang(false);
-                  setLangImg(georgianFlag);
-                }}
-                className="px-4 text-start py-3 transition-colors hover:bg-whiteHover text-Asmall flex items-center"
+                onClick={() => setActiveLang((state) => !state)}
+                className=" h-[26px] aspect-square rounded-circle border border-buttonStroke flex items-center justify-center cursor-pointer"
               >
                 <img
-                  className="max-h-[20px] aspect-square mr-3"
-                  src={georgianFlag}
-                  alt="georgian flag"
+                  className="max-h-[20px] aspect-square"
+                  src={langImg}
+                  alt="georgia"
                 />
-                ქართული
               </button>
-              <button
-                onClick={() => {
-                  setActiveLang(false);
-                  setLangImg(englishFlag);
-                }}
-                className="px-4 text-start py-3 transition-colors hover:bg-whiteHover text-Asmall flex items-center"
+              <div
+                className={` absolute h-auto w-[150px] overflow-hidden flex flex-col bg-whiteMain rounded-normal shadow-sectionShadow top-[50px] left-0 duration-200 transition-[opacity,visibility]  ${
+                  activeLang ? "visible opacity-100" : "invisible opacity-0"
+                }`}
               >
-                <img
-                  className="max-h-[20px] aspect-square mr-3"
-                  src={englishFlag}
-                  alt="uk flag"
-                />
-                English
-              </button>
+                <button
+                  onClick={() => {
+                    setActiveLang(false);
+                    setLangImg(georgianFlag);
+                  }}
+                  className="px-4 text-start py-3 transition-colors hover:bg-whiteHover text-[12px] flex items-center text-textHead"
+                >
+                  <img
+                    className="max-h-[18px] aspect-square mr-3"
+                    src={georgianFlag}
+                    alt="georgian flag"
+                  />
+                  ქართული
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveLang(false);
+                    setLangImg(englishFlag);
+                  }}
+                  className="px-4 text-start py-3 transition-colors hover:bg-whiteHover text-[12px] flex items-center text-textHead"
+                >
+                  <img
+                    className="max-h-[18px] aspect-square mr-3"
+                    src={englishFlag}
+                    alt="uk flag"
+                  />
+                  English
+                </button>
+              </div>
             </div>
-          </div>
+          </OutsideClickClose>
         </div>
         <div className="mobile:hidden flex items-center gap-4">
           <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-orangeClear text-orangeI rounded-[8px] text-[12px] transition-colors hover:bg-orangeHover">
@@ -113,190 +115,20 @@ export default function Navbar() {
 
                 <BookmarkIcon className="h-[20px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon p-[0.2px]" />
               </button>
-            </Link>
-            <div
-              className={`relative h-[34px] aspect-square cursor-default flex items-center justify-center transition-colors ${
-                activePop == "notifications" ? "bg-mainClear" : "bg-transparent"
-              }   rounded-md `}
-            >
-              {userData.notifications.length !== 0 &&
-                userData.notifications.some((item) => item.seen == false) && (
-                  <div className="absolute h-[8px] aspect-square top-[6px] right-[6px] z-20 rounded-circle bg-main"></div>
-                )}
-              <NotificationIcon
-                onClick={() => {
-                  if (
-                    userData.notifications.some((item) => item.seen == false)
-                  ) {
-                    axiosCall
-                      .get("/set_notifications", {
-                        withCredentials: true,
-                      })
-                      .then((res) => {
-                        let updatedNotifications: Tnotification[] = res.data;
-                        dispatch(updateNotifications(updatedNotifications));
-                      });
-                  }
-                  setActivePop((state) =>
-                    state !== "notifications" ? "notifications" : null
-                  );
-                }}
-                className={`h-[20px] aspect-square  cursor-pointer translate-y-[1px]  select-none ${
-                  activePop == "notifications"
-                    ? " [&>path]:fill-main"
-                    : " [&>path]:fill-navIcon"
-                }`}
-              />
-              <div
-                className={` absolute h-auto   ${
-                  userData.notifications.length == 0
-                    ? "min-h-min pb-0"
-                    : "pb-[40px] min-h-[250px]"
-                } max-h-[250px] w-[200px] overflow-hidden bg-whiteMain rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
-                  activePop == "notifications"
-                    ? "visible opacity-100"
-                    : "invisible opacity-0"
-                }`}
-              >
-                <div className="flex flex-col ">
-                  {userData.isLogged ? (
-                    userData.notifications.length == 0 ? (
-                      <p className=" text-textHead text-[12px] tracking-wider font-mainRegular p-3 text-center">
-                        შეტყობინებები არ არის
-                      </p>
-                    ) : (
-                      userData.notifications.map((item, i) => (
-                        <button
-                          key={i}
-                          className=" px-3 py-2 transition-colors hover:bg-whiteHover"
-                        >
-                          <div className="flex items-center relative">
-                            <div className="h-[30px] aspect-square bg-main rounded-md"></div>
-                            {item.seen == false && (
-                              <div className="h-[10px] aspect-square rounded-circle bg-main absolute right-0"></div>
-                            )}
-                            <div className="flex flex-col text-start ml-2">
-                              <p className="text-[12px] tracking-wider font-mainSemiBold text-userName">
-                                {item.title.slice(0, 18)}
-                              </p>
-                              <p className="text-[11px] w-[90%] overflow-hidden text-ellipsis font-mainMedium tracking-wider text-userLastName">
-                                {item.description.slice(0, 22)}
-                              </p>
-                            </div>
-                          </div>
-                        </button>
-                      ))
-                    )
-                  ) : (
-                    <p className=" text-textHead text-[12px] tracking-wider font-mainRegular p-3 text-center">
-                      შეტყობინებების მისაღებად გაიარეთ{" "}
-                      <Link
-                        to={"/Login"}
-                        className=" text-main font-mainBold underline"
-                      >
-                        ავტორიზაცია
-                      </Link>
-                    </p>
-                  )}
-                </div>
-                {userData.notifications.length !== 0 ? (
-                  <button className="absolute bottom-0 w-full h-[40px] bg-mainClear text-main left-0 tracking-wider font-mainBold text-[12px]">
-                    ყველას ნახვა
-                  </button>
-                ) : null}
-              </div>
-            </div>
+            </Link>{" "}
+            <NotificationBar
+              userData={userData}
+              activePop={activePop}
+              setActivePop={setActivePop}
+            />
           </div>
 
-          <div className="h-[34px]  aspect-square rounded-circle bg-main p-[3px] flex justify-center items-center relative">
-            <div
-              onClick={() =>
-                setActivePop((state) =>
-                  state !== "profile" ? "profile" : null
-                )
-              }
-              className="h-full border-2 border-whiteMain aspect-square rounded-circle bg-main select-none cursor-pointer "
-            ></div>
-            <div
-              className={`absolute  overflow-hidden h-auto w-[230px] bg-navBg rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
-                activePop == "profile"
-                  ? "visible opacity-100"
-                  : "invisible opacity-0"
-              }`}
-            >
-              <div className="px-6 pt-5 pb-2 flex items-center">
-                <div className="h-[34px]  aspect-square rounded-circle bg-main p-[3px] flex justify-center items-center relative">
-                  <div className="h-full border-2 border-whiteMain aspect-square rounded-circle bg-main select-none cursor-pointer "></div>
-                </div>
-                <div className=" flex flex-col ml-3">
-                  <p className="text-[13px] font-mainBold text-userName">
-                    {userData.name}
-                  </p>
-                  <p className="text-[11px] font-mainBold text-userLastName">
-                    {userData.surname}
-                  </p>
-                </div>
-              </div>
-              <div className=" mx-auto my-2 mb-4 bg-lineBg h-[2px] w-[50px] rounded-md"></div>
-              <div className="flex flex-col">
-                {userData.isLogged
-                  ? profileButtons.map((e: TProfileButton, i: number) =>
-                      e.link !== "ChangeDarkTheme" ? (
-                        <Link
-                          key={i}
-                          to={e.link}
-                          onClick={() => setActivePop(null)}
-                        >
-                          <button className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover">
-                            {e.icon}
-                            {e.name}
-                          </button>
-                        </Link>
-                      ) : (
-                        <button
-                          key={i}
-                          onClick={() => dispatch(toggleDarkMode())}
-                          className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover"
-                        >
-                          {darkmode ? (
-                            <SunIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
-                          ) : (
-                            e.icon
-                          )}
-                          {darkmode ? "ღია თემა" : "მუქი თემა"}
-                        </button>
-                      )
-                    )
-                  : unloggedButtons.map((e: TProfileButton, i: number) =>
-                      e.link !== "ChangeDarkTheme" ? (
-                        <Link
-                          key={i}
-                          to={e.link}
-                          onClick={() => setActivePop(null)}
-                        >
-                          <button className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover">
-                            {e.icon}
-                            {e.name}
-                          </button>
-                        </Link>
-                      ) : (
-                        <button
-                          key={i}
-                          onClick={() => dispatch(toggleDarkMode())}
-                          className="w-full border-t border-lineBg px-5 py-[10px] text-textHead text-start text-[13px] tracking-wider flex items center transition-colors hover:bg-whiteHover"
-                        >
-                          {darkmode ? (
-                            <SunIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
-                          ) : (
-                            e.icon
-                          )}
-                          {darkmode ? "ღია თემა" : "მუქი თემა"}
-                        </button>
-                      )
-                    )}
-              </div>
-            </div>
-          </div>
+          <ProfileBar
+            userData={userData}
+            activePop={activePop}
+            setActivePop={setActivePop}
+            darkmode={darkmode}
+          />
         </div>
         <div className="hidden mobile:block">
           <ResponsiveNavbar userData={userData} />
@@ -485,41 +317,5 @@ const unloggedButtons: TProfileButton[] = [
     link: "ChangeDarkTheme",
     name: "მუქი თემა",
     icon: <MoonIcon className="h-[20px] aspect-square fill-textHead mr-2" />,
-  },
-];
-
-const profileButtons: TProfileButton[] = [
-  {
-    link: "/Profile",
-    name: "ჩემი პროფილი",
-    icon: (
-      <UserLinearIcon className=" h-[20px] aspect-square fill-textHead mr-2" />
-    ),
-  },
-  {
-    link: "/Profile/MyProducts",
-    name: "ჩემი განცხადებები",
-    icon: (
-      <DocumentsIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
-    ),
-  },
-  {
-    link: "ChangeDarkTheme",
-    name: "მუქი თემა",
-    icon: <MoonIcon className=" h-[20px] aspect-square fill-textHead mr-2" />,
-  },
-  {
-    link: "/Contact",
-    name: "კონტაქტი",
-    icon: (
-      <MessageIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
-    ),
-  },
-  {
-    link: "/Logout",
-    name: "გასვლა",
-    icon: (
-      <LogoutIcon className=" h-[20px] aspect-square stroke-textHead mr-2" />
-    ),
   },
 ];
