@@ -5,16 +5,16 @@ import "./css/index.css";
 import "./css/components.css";
 import "./css/responsive.css";
 import { StrictMode } from "react";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <HashRouter>
+      <BrowserRouter basename="HomeRent/">
         <App />
-      </HashRouter>
+      </BrowserRouter>
     </Provider>
   </StrictMode>
 );
