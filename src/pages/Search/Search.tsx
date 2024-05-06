@@ -37,7 +37,9 @@ function Search() {
     setLoader(true);
     axiosCall.get(`fetch/search${debouncedSearch}`).then((res) => {
       setLoader(false);
-      setSearched(res.data);
+      if (res.data.status == 100) {
+        setSearched(res.data.products);
+      }
     });
   }, [debouncedSearch]);
 

@@ -14,12 +14,13 @@ import { TProductData } from "../Profile/components/MyProducts";
 import { addLastProduct } from "../../hooks/UIFunctions";
 import { useDispatch } from "react-redux";
 import { productViewPlus } from "../../hooks/serverProductFunctions";
+import { TProductCard } from "../../components/global/Card";
 
 export default function Product() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [productData, setProductData] = useState<null | TProductData>(null);
-  const [sameProducts, setSameProducts] = useState<null | TProductData[]>(null);
+  const [sameProducts, setSameProducts] = useState<null | TProductCard[]>(null);
   const makeRefresh = useRef({ id: id, refresh: true });
   useEffect(() => {
     if (

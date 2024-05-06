@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import ReactSlider from "react-slider";
-import { RealEstateTypes, TRealEstateTypes } from "./FiltersArray";
+import { RealEstateTypes } from "./FiltersArray";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { deleteParams, updateParams } from "../../../hooks/routerHooks";

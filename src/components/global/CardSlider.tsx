@@ -10,7 +10,7 @@ import "swiper/swiper-bundle.css";
 
 function CardSlider(props: {
   uniqueId?: string | number;
-  products: undefined | null | TProductCard[];
+  products: TProductCard[] | undefined;
 }) {
   const rand = Math.floor(Math.random() * 999999);
   const rand2 = Math.floor(Math.random() * 999);

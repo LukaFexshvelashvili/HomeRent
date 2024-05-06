@@ -304,18 +304,3 @@ const profileResponsiveButtons: TProfileButton[] = [
     ),
   },
 ];
-const unloggedButtons: TProfileButton[] = [
-  {
-    link: "/Login",
-    name: "ანგარიშში შესვლა",
-    icon: (
-      <LogoutIcon className="h-[20px] aspect-square stroke-textHead mr-2" />
-    ),
-  },
-
-  {
-    link: "ChangeDarkTheme",
-    name: "მუქი თემა",
-    icon: <MoonIcon className="h-[20px] aspect-square fill-textHead mr-2" />,
-  },
-];

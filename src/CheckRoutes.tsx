@@ -21,7 +21,8 @@ export default function CheckRoutes(props: {
     ) {
       navigate("/SuspendedAccount");
     }
-
+    if (path) {
+    }
     setPath(location.pathname);
   }, [navigate, props.user.banned]);
 

@@ -250,25 +250,25 @@ function getDealType(dealID: number) {
       break;
   }
 }
-function getType(typeID: number) {
-  switch (typeID) {
-    case 0:
-      return "კერძო სახლი";
-      break;
-    case 1:
-      return "კორპუსის ბინა";
-      break;
-    case 2:
-      return "კომერციული ფართი";
-      break;
-    case 3:
-      return "მიწის ნაკვეთი";
-      break;
-    case 4:
-      return "სასტუმრო";
-      break;
-  }
-}
+// function getType(typeID: number) {
+//   switch (typeID) {
+//     case 0:
+//       return "კერძო სახლი";
+//       break;
+//     case 1:
+//       return "კორპუსის ბინა";
+//       break;
+//     case 2:
+//       return "კომერციული ფართი";
+//       break;
+//     case 3:
+//       return "მიწის ნაკვეთი";
+//       break;
+//     case 4:
+//       return "სასტუმრო";
+//       break;
+//   }
+// }
 function getStatus(statusID: number) {
   switch (statusID) {
     case 0:
