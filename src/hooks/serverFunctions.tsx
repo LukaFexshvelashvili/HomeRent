@@ -124,14 +124,20 @@ export function checkFavorite(id: number): boolean {
   }
 }
 
-export const useDebounce = (value: any, delay: number) => {
+export const useDebounce = (
+  value: any,
+  delay: number,
+  setLoader?: Function
+) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
 
+    if (setLoader) {
+      setLoader(true);
+    }
     // Cleanup function to clear the timeout
     return () => clearTimeout(timeout);
   }, [value, delay]);

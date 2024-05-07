@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { PopupCloseIcon, SearchIcon } from "../../assets/icons/Icons";
 import {
   PriceSlider,
@@ -23,31 +23,43 @@ function Search() {
   const [searched, setSearched] = useState<any>(null);
   const [params, setParams] = useSearchParams();
   const [loader, setLoader] = useState<boolean>(false);
-  const [pages, setPages] = useState<number>(0);
+  const [pages, setPages] = useState<number>(1);
+  const cachedFirst = useRef<any[]>([]);
+  const getFullCount = useRef<number>(0);
+  const [activePage, setActivePage] = useState<number>(() => {
+    const page = params.get("page");
+    return page !== null ? parseInt(page) : 1;
+  });
+
   const [searchTitle, setSearchTitle] = useState<string>(() => {
     const title = params.get("title");
     return title !== null ? title : "";
   });
-  const debouncedSearch = useDebounce(location.search, 300);
+  const debouncedSearch = useDebounce(location.search, 300, setLoader);
   const citiesAPI: string[] = useMemo(
     () => cities.subLocs.map((item) => item.name.ka),
     []
   );
   useEffect(() => {
-    setLoader(true);
     axiosCall.get(`fetch/search${debouncedSearch}`).then((res) => {
       setLoader(false);
       if (res.data.status == 100) {
         setSearched(res.data.products);
+        setPages(Math.floor(res.data.length / res.data.per_page_length));
+        getFullCount.current = res.data.length;
+        if (
+          activePage < 1 ||
+          activePage > Math.floor(res.data.length / res.data.per_page_length)
+        ) {
+          deleteParams(params, setParams, "page");
+        }
       }
     });
-  }, [debouncedSearch]);
-
-  useEffect(() => {
-    if (searched !== null) {
-      setPages(Math.floor(searched.length / 25));
+    if (activePage < 1) {
+      deleteParams(params, setParams, "page");
+      setActivePage(1);
     }
-  }, [searched]);
+  }, [debouncedSearch]);
 
   const titleSubmit = () => {
     if (searchTitle !== "") {
@@ -56,14 +68,33 @@ function Search() {
       deleteParams(params, setParams, "title");
     }
   };
+
+  const changePage = useMemo(() => {
+    if (activePage !== 1) {
+      setSearched([]);
+    } else {
+      setSearched(cachedFirst.current);
+    }
+  }, [activePage]);
+
   const fetchPageButtons = () => {
     const buttons = []; // Create an array to hold the buttons
 
-    for (let i = 0; i < pages; i++) {
+    for (let i = 1; i <= pages; i++) {
       buttons.push(
         <button
           key={i}
-          className="h-[32px] aspect-square text-[15px] text-buttonText bg-main rounded-md flex items-center justify-center"
+          className={`h-[32px] aspect-square text-[15px] text-buttonText ${
+            activePage == i ? "bg-main" : "bg-whiteHover"
+          } rounded-md flex items-center justify-center`}
+          onClick={() => {
+            if (i == 1) {
+              deleteParams(params, setParams, "page");
+            } else {
+              updateParams(params, setParams, { page: i });
+            }
+            setActivePage(i);
+          }}
         >
           {i}
         </button>
@@ -122,7 +153,7 @@ function Search() {
         <ResponsiveFiltersSection citiesAPI={citiesAPI} />
         <section className="flex-[3]  rounded-normal">
           <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
-            {searched !== null ? `ნაპოვნია ${searched.length} შედეგი` : ""}
+            {searched !== null ? `ნაპოვნია ${getFullCount.current} შედეგი` : ""}
           </p>
           <div className="flex flex-wrap relative min-h-[150px] gap-5 gap-y-7 large:justify-center large:gap-5">
             {!loader ? (
