@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   BookmarkIcon,
   DocumentsIcon,
   HelpIcon,
   LogoutIcon,
-  MessageIcon,
   MoonIcon,
   NotificationResponsiveIcon,
   PlusIcon,
@@ -21,6 +20,7 @@ import { toggleDarkMode } from "../store/data/webUISlice";
 
 import { NotificationBar, ProfileBar } from "./NavbarComponents";
 import { OutsideClickClose } from "./global/OutsideClickClose";
+import { Tuser } from "../store/data/userSlice";
 export default function Navbar() {
   const userData = useSelector((store: RootState) => store.user);
   const darkmode: boolean = useSelector(
@@ -30,6 +30,16 @@ export default function Navbar() {
   const [activePop, setActivePop] = useState<null | string>(null);
   const [activeLang, setActiveLang] = useState<boolean>(false);
   const [langImg, setLangImg] = useState<string>(georgianFlag);
+
+  let favNums = 0;
+  if (localStorage.getItem("favorites")) {
+    const getStorage: any = localStorage.getItem("favorites");
+    const getFavorites = JSON.parse(getStorage);
+    favNums = getFavorites.length;
+  }
+  if (userData.isLogged) {
+    favNums = userData.favorites.length;
+  }
 
   return (
     <nav className="h-[60px] w-full sticky bg-navBg shadow-navbarShadow flex items-center top-0 z-20">
@@ -96,8 +106,15 @@ export default function Navbar() {
             <HelpIcon className="h-[16px] aspect-square" />
             დახმარება
           </button>
-          {userData.isLogged && (
+          {userData.isLogged ? (
             <Link to={"/AddProduct"}>
+              <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-greenClear text-greenI rounded-[8px] text-[12px] transition-colors hover:bg-greenHover">
+                <PlusIcon className="h-[13px] aspect-square" />
+                დამატება
+              </button>
+            </Link>
+          ) : (
+            <Link to={"/Login"}>
               <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-greenClear text-greenI rounded-[8px] text-[12px] transition-colors hover:bg-greenHover">
                 <PlusIcon className="h-[13px] aspect-square" />
                 დამატება
@@ -107,9 +124,9 @@ export default function Navbar() {
           <div className="flex mx-2 items-center justify-center gap-2">
             <Link to={"/profile/SavedProducts"}>
               <button className="relative h-[34px] aspect-square cursor-pointer flex items-center justify-center select-none">
-                {userData.favorites.length > 0 ? (
+                {favNums > 0 ? (
                   <div className="absolute h-[16px] aspect-square top-[2px] right-[2px] z-20 text-[9px] flex justify-center items-center text-buttonText font-mainRegular rounded-circle bg-main">
-                    {userData.favorites.length}
+                    {favNums}
                   </div>
                 ) : null}
 
@@ -138,7 +155,7 @@ export default function Navbar() {
   );
 }
 
-function ResponsiveNavbar(props: { userData: any }) {
+function ResponsiveNavbar({ userData }: { userData: Tuser }) {
   const darkmode: boolean = useSelector(
     (store: RootState) => store.webUI.darkMode
   );
@@ -183,50 +200,87 @@ function ResponsiveNavbar(props: { userData: any }) {
             </div>
             <div className="ml-1">
               <p className=" font-mainBold text-textHeadCard leading-[25px] text-[16px]">
-                {props.userData.name}
+                {userData.name}
               </p>
               <p className=" font-mainBold text-textDescCard leading-[25px] text-[15px]">
-                {props.userData.surname}
+                {userData.surname}
               </p>
             </div>
           </div>
           <div className="bg-lineBg h-[5px] rounded-md w-[50px] mx-auto my-6"></div>
           <div className="flex flex-col gap-[2px]">
-            {profileResponsiveButtons.map((e: TProfileButton, i: number) =>
-              e.link !== "ChangeDarkTheme" ? (
-                <Link key={i} onClick={() => setActive(false)} to={e.link}>
-                  <button
-                    key={i}
-                    className={` outline-none cursor-pointer text-textHead transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
-                  >
-                    {e.icon} {e.name}
-                  </button>
-                </Link>
-              ) : (
-                <button
-                  key={i}
-                  onClick={() => dispatch(toggleDarkMode())}
-                  className={` outline-none cursor-pointer text-textHead transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
-                >
-                  {darkmode ? (
-                    <SunIcon className=" h-[26px] aspect-square fill-textHead mr-2" />
+            {userData.isLogged
+              ? profileResponsiveButtons.map((e: TProfileButton, i: number) =>
+                  e.link !== "ChangeDarkTheme" ? (
+                    <Link key={i} onClick={() => setActive(false)} to={e.link}>
+                      <button
+                        key={i}
+                        className={` outline-none cursor-pointer text-textHead transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
+                      >
+                        {e.icon} {e.name}
+                      </button>
+                    </Link>
                   ) : (
-                    e.icon
-                  )}
-                  {darkmode ? "ღია თემა" : "მუქი თემა"}
-                </button>
-              )
-            )}
+                    <button
+                      key={i}
+                      onClick={() => dispatch(toggleDarkMode())}
+                      className={` outline-none cursor-pointer text-textHead transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
+                    >
+                      {darkmode ? (
+                        <SunIcon className=" h-[26px] aspect-square fill-textHead mr-2" />
+                      ) : (
+                        e.icon
+                      )}
+                      {darkmode ? "ღია თემა" : "მუქი თემა"}
+                    </button>
+                  )
+                )
+              : responsiveUnloggedButtons.map((e: TProfileButton, i: number) =>
+                  e.link !== "ChangeDarkTheme" ? (
+                    <Link key={i} onClick={() => setActive(false)} to={e.link}>
+                      <button
+                        key={i}
+                        className={` outline-none cursor-pointer text-textHead transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
+                      >
+                        {e.icon} {e.name}
+                      </button>
+                    </Link>
+                  ) : (
+                    <button
+                      key={i}
+                      onClick={() => dispatch(toggleDarkMode())}
+                      className={` outline-none cursor-pointer text-textHead transition-colors w-full text-start px-5 py-[10px] font-mainMedium flex items-center relative text-[15px] `}
+                    >
+                      {darkmode ? (
+                        <SunIcon className=" h-[26px] aspect-square fill-textHead mr-2" />
+                      ) : (
+                        e.icon
+                      )}
+                      {darkmode ? "ღია თემა" : "მუქი თემა"}
+                    </button>
+                  )
+                )}
           </div>
           <div className=" flex items-center justify-center mt-8 gap-4">
             <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-orangeClear text-orangeI rounded-[8px] text-[14px] transition-colors hover:bg-orangeHover">
               <HelpIcon className="h-[18px] aspect-square" />
               დახმარება
             </button>
-            <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-greenClear text-greenI rounded-[8px] text-[14px] transition-colors hover:bg-greenHover">
-              <PlusIcon className="h-[16px] aspect-square" />
-              დამატება
-            </button>
+            {userData.isLogged ? (
+              <Link to={"/AddProduct"}>
+                <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-greenClear text-greenI rounded-[8px] text-[14px] transition-colors hover:bg-greenHover">
+                  <PlusIcon className="h-[16px] aspect-square" />
+                  დამატება
+                </button>
+              </Link>
+            ) : (
+              <Link to={"/Login"}>
+                <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-greenClear text-greenI rounded-[8px] text-[14px] transition-colors hover:bg-greenHover">
+                  <PlusIcon className="h-[16px] aspect-square" />
+                  დამატება
+                </button>
+              </Link>
+            )}
           </div>
           <div className="bg-lineBg h-[5px] rounded-md w-[50px] mx-auto mb-5 mt-7"></div>
 
@@ -283,14 +337,7 @@ const profileResponsiveButtons: TProfileButton[] = [
     icon: <MoonIcon className=" h-[26px] aspect-square fill-textHead mr-2" />,
   },
   {
-    link: "/Contact",
-    name: "კონტაქტი",
-    icon: (
-      <MessageIcon className=" h-[26px] aspect-square stroke-textHead mr-2" />
-    ),
-  },
-  {
-    link: "/Notifications",
+    link: "Profile/Notifications",
     name: "შეტყობინებები",
     icon: (
       <NotificationResponsiveIcon className=" h-[26px] flex items-center justify-center stroke-textHead mr-2" />
@@ -302,5 +349,20 @@ const profileResponsiveButtons: TProfileButton[] = [
     icon: (
       <LogoutIcon className=" h-[26px] aspect-square stroke-textHead mr-2" />
     ),
+  },
+];
+const responsiveUnloggedButtons: TProfileButton[] = [
+  {
+    link: "/Login",
+    name: "ანგარიშში შესვლა",
+    icon: (
+      <LogoutIcon className="h-[26px] aspect-square stroke-textHead mr-2" />
+    ),
+  },
+
+  {
+    link: "ChangeDarkTheme",
+    name: "მუქი თემა",
+    icon: <MoonIcon className="h-[26px] aspect-square fill-textHead mr-2" />,
   },
 ];

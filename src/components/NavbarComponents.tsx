@@ -60,17 +60,6 @@ export function NotificationBar({
         )}
       <NotificationIcon
         onClick={() => {
-          if (userData.notifications.some((item) => item.seen == false)) {
-            axiosCall
-              .get("/set_notifications", {
-                withCredentials: true,
-              })
-              .then((res) => {
-                let updatedNotifications: Tnotification[] = res.data;
-                dispatch(updateNotifications(updatedNotifications));
-              });
-          }
-
           setActivePop((state: string | null) =>
             state !== "notifications" ? "notifications" : null
           );
@@ -86,7 +75,7 @@ export function NotificationBar({
           userData.notifications.length == 0
             ? "min-h-min pb-0"
             : "pb-[40px] min-h-[250px]"
-        } max-h-[250px] w-[200px] overflow-hidden bg-whiteMain rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
+        } max-h-[250px] w-[220px] overflow-hidden bg-whiteMain rounded-normal shadow-sectionShadow top-[60px] right-0 duration-200 transition-[opacity,visibility]  ${
           activePop == "notifications"
             ? "visible opacity-100"
             : "invisible opacity-0"
@@ -100,25 +89,31 @@ export function NotificationBar({
               </p>
             ) : (
               userData.notifications.map((item, i) => (
-                <button
+                <Link
                   key={i}
-                  className=" px-3 py-2 transition-colors hover:bg-whiteHover"
+                  to={"/Profile/Notifications/" + item.id}
+                  className="w-full px-3 py-2 transition-colors hover:bg-whiteHover"
+                  onClick={() => {
+                    setActivePop(null);
+                  }}
                 >
-                  <div className="flex items-center relative">
-                    <div className="h-[30px] aspect-square bg-main rounded-md"></div>
-                    {item.seen == false && (
-                      <div className="h-[10px] aspect-square rounded-circle bg-main absolute right-0"></div>
-                    )}
-                    <div className="flex flex-col text-start ml-2">
-                      <p className="text-[12px] tracking-wider font-mainSemiBold text-userName">
-                        {item.title.slice(0, 18)}
-                      </p>
-                      <p className="text-[11px] w-[90%] overflow-hidden text-ellipsis font-mainMedium tracking-wider text-userLastName">
-                        {item.description.slice(0, 22)}
-                      </p>
+                  <button className="w-full">
+                    <div className="flex items-center relative">
+                      <div className="h-[26px] aspect-square bg-main rounded-md"></div>
+                      {item.seen == false && (
+                        <div className="h-[10px] aspect-square rounded-circle bg-main absolute right-0"></div>
+                      )}
+                      <div className="flex flex-col text-start ml-2">
+                        <p className="text-[11px] tracking-wider font-mainSemiBold text-userName">
+                          {item.title.slice(0, 18)}
+                        </p>
+                        <p className="text-[10px] w-[99%] text-nowrap overflow-hidden text-ellipsis font-mainMedium tracking-wider text-userLastName">
+                          {item.description.slice(0, 22)}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </button>
+                  </button>
+                </Link>
               ))
             )
           ) : (
@@ -134,9 +129,15 @@ export function NotificationBar({
           )}
         </div>
         {userData.notifications.length !== 0 ? (
-          <button className="absolute bottom-0 w-full h-[40px] bg-mainClear text-main left-0 tracking-wider font-mainBold text-[12px]">
-            ყველას ნახვა
-          </button>
+          <Link
+            className="absolute bottom-0 w-full h-[40px]"
+            to={"/Profile/Notifications"}
+            onClick={() => setActivePop(null)}
+          >
+            <button className=" w-full h-full bg-mainClear text-main left-0 tracking-wider font-mainBold text-[12px]">
+              ყველას ნახვა
+            </button>
+          </Link>
         ) : null}
       </div>
     </div>

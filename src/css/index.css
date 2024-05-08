@@ -38,13 +38,16 @@ textarea {
   background-color: rgba(244, 244, 244, 0.1);
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #3a86ff;
+  background-color: var(--main);
 }
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+.notificationList::-webkit-scrollbar {
+  width: 4px;
 }
 
 input[type="number"] {

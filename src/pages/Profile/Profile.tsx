@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import {
   BookmarkIcon,
+  ChatIcon,
   DocumentsIcon,
   HistoryIcon,
   MoneyDollarIcon,
@@ -28,11 +29,14 @@ export default function Profile() {
     if (location.pathname.includes("LastSeenProducts")) {
       setActiveNav(4);
     }
-    if (location.pathname.includes("Settings")) {
+    if (location.pathname.includes("Notifications")) {
       setActiveNav(5);
     }
-    if (location.pathname.includes("ProfileInfo")) {
+    if (location.pathname.includes("Settings")) {
       setActiveNav(6);
+    }
+    if (location.pathname.includes("ProfileInfo")) {
+      setActiveNav(7);
     }
   }, [navigate]);
   const userData = useSelector((store: RootState) => store.user);
@@ -154,6 +158,15 @@ const ProfileNavs: TProfileNav[] = [
   },
   {
     id: 5,
+    name: "შეტყობინებები",
+    link: "Notifications",
+    icon: () => (
+      <ChatIcon className="h-[27px] aspect-square mr-[10px]  [&>path]:stroke-[1.5px] p-[3px] [&>path]:stroke-textHead" />
+    ),
+  },
+
+  {
+    id: 6,
     name: "პარამეტრები",
     link: "Settings",
     icon: () => (
@@ -161,7 +174,7 @@ const ProfileNavs: TProfileNav[] = [
     ),
   },
   {
-    id: 6,
+    id: 7,
     name: "ჩემს შესახებ",
     link: "ProfileInfo",
     icon: () => (

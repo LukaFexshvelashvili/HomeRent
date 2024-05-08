@@ -21,10 +21,12 @@ export default function ForgotPassword() {
       <main className="m-0 p-0">
         <div className="h-[70px] w-full absolute  bg-transparent flex items-center top-0 z-10">
           <div className="login_container flex justify-between">
-            <div className="flex items-center gap-3">
-              <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
-              <div className="h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
-            </div>
+            <Link to={"/"}>
+              <div className="flex items-center gap-3">
+                <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
+                <div className="h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
+              </div>
+            </Link>
           </div>
         </div>
         <div className="flex h-screen">

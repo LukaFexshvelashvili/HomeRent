@@ -18,7 +18,10 @@ export function makeUserSession(dispatch: Function, userData: any) {
       mail: userData.mail,
       mobile: userData.mobile,
       money: userData.money,
-      favorites: userData.favorites,
+      favorites:
+        typeof userData.favorites === "string"
+          ? JSON.parse(userData.favorites)
+          : userData.favorites,
       last_seen: last_seen,
       notifications: JSON.parse(userData.notifications),
       verified: userData.verified,
@@ -26,7 +29,7 @@ export function makeUserSession(dispatch: Function, userData: any) {
       isLogged: true,
       banned: userData.banned,
     };
-    localStorage.setItem("favorites", JSON.stringify(userData.favorites));
+    localStorage.setItem("favorites", JSON.stringify(sessionUser.favorites));
 
     dispatch(setUserSessionData(sessionUser));
   } else {

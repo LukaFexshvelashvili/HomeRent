@@ -71,10 +71,12 @@ export default function Login() {
       <main className="m-0 p-0">
         <div className="h-[70px] w-full absolute   bg-transparent flex items-center top-0 z-10">
           <div className="login_container flex justify-between">
-            <div className="flex items-center gap-3">
-              <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
-              <div className="h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
-            </div>
+            <Link to={"/"}>
+              <div className="flex items-center gap-3">
+                <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
+                <div className="h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
+              </div>
+            </Link>
           </div>
         </div>
         <div className="flex h-screen overflow-hidden min-h-[600px]">
@@ -100,7 +102,7 @@ export default function Login() {
                 <div className="h-[40px] w-full rounded-normal flex items-center relative ">
                   <MailIcon className="h-[24px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
                   <input
-                    type="text"
+                    type="email"
                     placeholder="მეილი"
                     name="email"
                     ref={mailRef}

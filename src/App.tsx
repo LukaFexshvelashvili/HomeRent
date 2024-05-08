@@ -29,6 +29,7 @@ import ProfileInfo from "./pages/Profile/components/ProfileInfo";
 import Balance from "./pages/Profile/components/Balance";
 import NotFound from "./pages/NotFound";
 import SuspendedAccount from "./pages/SuspendedAccount";
+import Notifications from "./pages/Profile/components/Notifications";
 
 function App() {
   const UISettings = useSelector((store: RootState) => store.webUI);
@@ -50,6 +51,7 @@ function App() {
               ...res.data.user,
               favorites: JSON.parse(res.data.user.favorites),
             });
+
             if (res.data.user.banned == 1) {
               navigate("/SuspendedAccount");
             }
@@ -98,6 +100,11 @@ function App() {
                 <Route path="Balance" element={<Balance />} />
               ) : null}
               <Route path="SavedProducts" element={<SavedProducts />} />
+              {user.isLogged ? (
+                <Route path="Notifications/" element={<Notifications />}>
+                  <Route path=":id" element={<Notifications />} />
+                </Route>
+              ) : null}
               {user.isLogged ? (
                 <Route path="LastSeenProducts" element={<LastSeenProducts />} />
               ) : null}
