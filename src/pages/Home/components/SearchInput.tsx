@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import {
   FilterFrameIcon,
   FilterHomeIcon,
   FilterPlaceIcon,
   MoneyIcon,
   PopupCloseIcon,
+  RoomIcon,
   SearchIcon,
 } from "../../../assets/icons/Icons";
 import {
@@ -12,8 +13,13 @@ import {
   TRealEstateTypes,
 } from "../../Search/components/FiltersArray";
 import { cities } from "../../../assets/lists/cities";
-import { InputPriceSlider, InputSizeSlider } from "./SearchComponents";
+import {
+  InputPriceSlider,
+  InputSizeSlider,
+  ProjectDealSelectorSearch,
+} from "./SearchComponents";
 import { useNavigate } from "react-router-dom";
+import { SelectNumbers } from "../../Search/components/Filters";
 
 type TPriceGet = {
   start: number;
@@ -21,13 +27,15 @@ type TPriceGet = {
   currency: number;
 };
 
-export default function SearchInput() {
+function SearchInput() {
   const navigate = useNavigate();
   const [inputSelect, setInputSelect] = useState<null | number>(null);
   const [getType, setGetType] = useState<null | string>(null);
+  const [getDeal, setGetDeal] = useState<null | number>(null);
   const [getCity, setGetCity] = useState<null | string>(null);
   const [searchTitle, setSearchTitle] = useState<string>("");
   const [getSizes, setGetSizes] = useState<null | number[]>(null);
+  const [getRooms, setGetRooms] = useState<number | null>(null);
   const [getPrices, setGetPrices] = useState<null | TPriceGet>(null);
 
   const handleSearch = () => {
@@ -43,197 +51,235 @@ export default function SearchInput() {
     getCity && params.append("city", getCity);
     searchTitle !== "" && params.append("title", searchTitle);
     getSizes && params.append("sizes", JSON.stringify(getSizes));
+    getRooms && params.append("rooms", JSON.stringify(getRooms));
+    getDeal !== null ? params.append("deal", JSON.stringify(getDeal)) : null;
 
     getPrices && params.append("prices", JSON.stringify(getPrices));
     navigate(`/search?${params.toString()}`);
   };
 
   return (
-    <div className="w-10/12 mediumSmall:w-full flex gap-3 small:w-auto small:h-auto   my-10 mx-auto small:flex-col small:gap-1 flex-wrap">
-      <div className="w-full flex items-center border-2 border-whiteLoad rounded-normal overflow-hidden relative h-[45px]">
-        <form
-          className="w-full h-full"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSearch();
-          }}
-        >
-          <input
-            type="text"
-            placeholder="სიტყვით ძებნა..."
-            className="w-full h-full px-4 bg-bodyBg outline-none text-blackMain tracking-wider text-[14px] transition-colors focus:bg-whiteLoad"
-            onChange={(e) => setSearchTitle(e.target.value)}
-            value={searchTitle}
-          />
-        </form>
-        <div
-          onClick={() => setSearchTitle("")}
-          className={`absolute h-[28px] aspect-square rounded-md bg-whiteHoverDark  flex items-center justify-center right-2  transition-all ${
-            searchTitle == ""
-              ? " pointer-events-none cursor-default invisible opacity-0"
-              : "cursor-pointer visible opacity-100"
-          } hover:bg-whiteCont`}
-        >
-          <PopupCloseIcon className="h-[10px] aspect-square [&>path]:fill-blackMain" />
+    <div className="w-full    my-10   bg-whiteMain rounded-[25px] shadow-sectionShadow">
+      <div className="w-full  flex gap-3 small:w-auto small:h-auto small:flex-col small:gap-1 flex-wrap mx-auto py-[20px] px-[25px] ">
+        <div className="flex flex-wrap gap-2 justify-center">
+          <ProjectDealSelectorSearch setData={setGetDeal} />
         </div>
-      </div>
-
-      <div className="relative  rounded-normal flex  small:flex-col  h-[45px] items-center  w-[calc(100%-72px)] border-2 border-whiteLoad overflow-hidden">
-        <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
-          <div
-            onClick={() => setInputSelect(1)}
-            className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
+        <div className="w-full flex items-center border-2 border-whiteLoad rounded-normal overflow-hidden relative h-[45px]">
+          <form
+            className="w-full h-full"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearch();
+            }}
           >
-            <FilterHomeIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-            <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
-              {getType ? getType : "ბინა"}
-            </p>
-          </div>
-          {getType && (
-            <button
-              onClick={() => setGetType(null)}
-              className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
-            >
-              <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
-            </button>
-          )}
-        </div>
-        <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+            <input
+              type="text"
+              placeholder="სიტყვით ძებნა..."
+              className="w-full h-full px-4  outline-none font-mainRegular text-blackMain tracking-wider text-[14px] transition-colors focus:bg-whiteLoad"
+              onChange={(e) => setSearchTitle(e.target.value)}
+              value={searchTitle}
+            />
+          </form>
           <div
-            onClick={() => setInputSelect(2)}
-            className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
+            onClick={() => setSearchTitle("")}
+            className={`absolute h-[28px] aspect-square rounded-md bg-whiteHoverDark  flex items-center justify-center right-2  transition-all ${
+              searchTitle == ""
+                ? " pointer-events-none cursor-default invisible opacity-0"
+                : "cursor-pointer visible opacity-100"
+            } hover:bg-whiteCont`}
           >
-            <FilterPlaceIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-            <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
-              {getCity ? getCity : "მდებარეობა"}
-            </p>
+            <PopupCloseIcon className="h-[10px] aspect-square [&>path]:fill-blackMain" />
           </div>
-          {getCity && (
-            <button
-              onClick={() => setGetCity(null)}
-              className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
-            >
-              <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
-            </button>
-          )}
-        </div>
-        <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
-          <div
-            onClick={() => setInputSelect(3)}
-            className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
-          >
-            <FilterFrameIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-            <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
-              {getSizes ? `${getSizes[0]} მ² - ${getSizes[1]} მ²` : "ფართი"}
-            </p>
-          </div>
-          {getSizes && (
-            <button
-              onClick={() => setGetSizes(null)}
-              className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
-            >
-              <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
-            </button>
-          )}
-        </div>
-        <div className="flex small:border-none  items-center w-[25%] text-textDesc  small:w-full h-full  cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
-          <div
-            onClick={() => setInputSelect(4)}
-            className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
-          >
-            <MoneyIcon className=" h-[18px] [&>path]:fill-navIcon" />{" "}
-            <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
-              {getPrices
-                ? `${getPrices.start}${getPrices.currency == 0 ? "$" : "₾"} - ${
-                    getPrices.end
-                  }${getPrices.currency == 0 ? "$" : "₾"}`
-                : "ფასი"}
-            </p>
-          </div>
-          {getPrices && (
-            <button
-              onClick={() => setGetPrices(null)}
-              className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
-            >
-              <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
-            </button>
-          )}
         </div>
 
+        <div className="relative  rounded-normal flex  small:flex-col  h-[45px] items-center  w-[calc(100%-72px)] border-2 border-whiteLoad overflow-hidden">
+          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+            <div
+              onClick={() => setInputSelect(1)}
+              className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
+            >
+              <FilterHomeIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
+              <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
+                {getType ? getType : "ბინა"}
+              </p>
+            </div>
+            {getType && (
+              <button
+                onClick={() => setGetType(null)}
+                className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
+              >
+                <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+              </button>
+            )}
+          </div>
+          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+            <div
+              onClick={() => setInputSelect(2)}
+              className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
+            >
+              <FilterPlaceIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
+              <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
+                {getCity ? getCity : "მდებარეობა"}
+              </p>
+            </div>
+            {getCity && (
+              <button
+                onClick={() => setGetCity(null)}
+                className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
+              >
+                <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+              </button>
+            )}
+          </div>
+          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+            <div
+              onClick={() => setInputSelect(3)}
+              className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
+            >
+              <FilterFrameIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
+              <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
+                {getSizes ? `${getSizes[0]} მ² - ${getSizes[1]} მ²` : "ფართი"}
+              </p>
+            </div>
+            {getSizes && (
+              <button
+                onClick={() => setGetSizes(null)}
+                className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
+              >
+                <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+              </button>
+            )}
+          </div>
+          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+            <div
+              onClick={() => setInputSelect(4)}
+              className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
+            >
+              <MoneyIcon className=" h-[18px] [&>path]:fill-navIcon" />{" "}
+              <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
+                {getPrices
+                  ? `${getPrices.start}${
+                      getPrices.currency == 0 ? "$" : "₾"
+                    } - ${getPrices.end}${getPrices.currency == 0 ? "$" : "₾"}`
+                  : "ფასი"}
+              </p>
+            </div>
+            {getPrices && (
+              <button
+                onClick={() => setGetPrices(null)}
+                className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
+              >
+                <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+              </button>
+            )}
+          </div>
+          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+            <div
+              onClick={() => setInputSelect(5)}
+              className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
+            >
+              <RoomIcon className=" h-[18px] translate-y-[1px] [&>path]:fill-navIcon" />{" "}
+              <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
+                {getRooms ? `${getRooms} ოთახი` : "ოთახები"}
+              </p>
+            </div>
+            {getRooms && (
+              <button
+                onClick={() => setGetRooms(null)}
+                className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
+              >
+                <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+              </button>
+            )}
+          </div>
+
+          {inputSelect && (
+            <div className="fixed left-2/4 -translate-x-2/4 -translate-y-2/4 top-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4 w-[80%] mx-auto z-[21] small:top-2/4 small:-translate-y-2/4">
+              <button
+                onClick={() => setInputSelect(null)}
+                className="h-[26px] aspect-square  absolute top-3 right-3 flex justify-center items-center p-1"
+              >
+                <PopupCloseIcon className=" [&>path]:fill-whiteCont" />
+              </button>
+              {inputSelect == 1 ? (
+                <>
+                  <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                    აირჩიეთ უძრავი ქონების ტიპი
+                  </p>
+                  <SelectType
+                    setData={setGetType}
+                    closeWindow={setInputSelect}
+                  />
+                </>
+              ) : inputSelect == 2 ? (
+                <>
+                  <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                    აირჩიეთ ქალაქი
+                  </p>
+                  <SelectCity
+                    setData={setGetCity}
+                    closeWindow={setInputSelect}
+                  />
+                </>
+              ) : inputSelect == 3 ? (
+                <>
+                  <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                    აირჩიეთ ფართის ზომა
+                  </p>
+                  <InputSizeSlider
+                    setData={setGetSizes}
+                    closeWindow={setInputSelect}
+                    toFull
+                  />
+                </>
+              ) : inputSelect == 4 ? (
+                <>
+                  <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                    აირჩიეთ ფასის ინტერვალი
+                  </p>
+                  <InputPriceSlider
+                    setData={setGetPrices}
+                    closeWindow={setInputSelect}
+                    toFull
+                  />
+                </>
+              ) : inputSelect == 5 ? (
+                <>
+                  <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                    აირჩიეთ ოთახების რაოდენობა
+                  </p>
+                  <SelectRooms
+                    setData={setGetRooms}
+                    closeWindow={setInputSelect}
+                  />
+                </>
+              ) : null}
+            </div>
+          )}
+        </div>
+        <button
+          onClick={handleSearch}
+          className={`small:hidden h-[45px] w-[60px] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest transition-all hover:bg-mainHover`}
+        >
+          <SearchIcon className="h-[16px] aspect-square " />
+        </button>
+        <button
+          onClick={handleSearch}
+          className={`hidden h-full  text-[14px] w-full py-3 mt-2 rounded-normal font-mainMedium  rounded-r-[6px] text-buttonText bg-main small:flex items-center justify-center tracking-widest  transition-all hover:bg-mainHover  `}
+        >
+          <SearchIcon className="h-[16px] aspect-square mr-2" /> მოძებნა
+        </button>
         {inputSelect && (
-          <div className="fixed left-2/4 -translate-x-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4 w-[80%] mx-auto z-20 small:top-2/4 small:-translate-y-2/4">
-            <button
-              onClick={() => setInputSelect(null)}
-              className="h-[26px] aspect-square  absolute top-3 right-3 flex justify-center items-center p-1"
-            >
-              <PopupCloseIcon className=" [&>path]:fill-whiteCont" />
-            </button>
-            {inputSelect == 1 && (
-              <>
-                <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
-                  აირჩიეთ უძრავი ქონების ტიპი
-                </p>
-                <SelectType setData={setGetType} closeWindow={setInputSelect} />
-              </>
-            )}
-            {inputSelect == 2 && (
-              <>
-                <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
-                  აირჩიეთ ქალაქი
-                </p>
-                <SelectCity setData={setGetCity} closeWindow={setInputSelect} />
-              </>
-            )}
-            {inputSelect == 3 && (
-              <>
-                <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
-                  აირჩიეთ ფართის ზომა
-                </p>
-                <InputSizeSlider
-                  setData={setGetSizes}
-                  closeWindow={setInputSelect}
-                  toFull
-                />
-              </>
-            )}
-
-            {inputSelect == 4 && (
-              <>
-                <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
-                  აირჩიეთ ფასის ინტერვალი
-                </p>
-                <InputPriceSlider
-                  setData={setGetPrices}
-                  closeWindow={setInputSelect}
-                  toFull
-                />
-              </>
-            )}
-          </div>
+          <div
+            onClick={() => setInputSelect(null)}
+            className="fixed h-full w-full aspect-square bg-blackFade top-0 left-0 z-20 "
+          ></div>
         )}
       </div>
-      <button
-        onClick={handleSearch}
-        className={`small:hidden h-[45px] w-[60px] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest transition-all hover:bg-mainHover`}
-      >
-        <SearchIcon className="h-[16px] aspect-square " />
-      </button>
-      <button
-        onClick={handleSearch}
-        className={`hidden h-full  text-[14px] w-full py-3 mt-2 rounded-normal font-mainMedium  rounded-r-[6px] text-buttonText bg-main small:flex items-center justify-center tracking-widest  transition-all hover:bg-mainHover  `}
-      >
-        <SearchIcon className="h-[16px] aspect-square mr-2" /> მოძებნა
-      </button>
-      {inputSelect && (
-        <div
-          onClick={() => setInputSelect(null)}
-          className="fixed h-full w-full aspect-square bg-blackFade top-0 left-0 z-10 "
-        ></div>
-      )}
     </div>
   );
 }
-
+export default memo(SearchInput);
 function SelectCity(props: { setData: Function; closeWindow: Function }) {
   const [search, setSearch] = useState("");
 
@@ -268,6 +314,30 @@ function SelectCity(props: { setData: Function; closeWindow: Function }) {
               {e}
             </div>
           ))}
+      </div>
+    </>
+  );
+}
+
+function SelectRooms(props: { setData: Function; closeWindow: Function }) {
+  const [room, setRoom] = useState<number>(-2);
+  useEffect(() => {
+    if (room !== -2) {
+      if (room !== -1) {
+        props.setData(room);
+        props.closeWindow(null);
+      } else if (room == -1) {
+        props.setData(null);
+        props.closeWindow(null);
+      }
+    }
+  }, [room]);
+  console.log(room);
+
+  return (
+    <>
+      <div className="flex flex-col   mobileTab:overflow-x-hidden mobileTab:overflow-y-scroll mobileTab:flex-nowrap  flex-wrap gap-x-10 h-auto overflow-x-scroll mt-6 gap-y-2">
+        <SelectNumbers setData={setRoom} />
       </div>
     </>
   );

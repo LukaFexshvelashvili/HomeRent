@@ -1,18 +1,10 @@
 .loginSection {
-  background: rgb(58, 134, 255);
-  background: linear-gradient(
-    45deg,
-    rgba(58, 134, 255, 1) 0%,
-    rgba(94, 156, 255, 1) 100%
-  );
+  background: var(--main);
+  background: linear-gradient(45deg, var(--main), var(--mainHover));
 }
 .linearButton {
-  background: rgb(58, 134, 255);
-  background: linear-gradient(
-    90deg,
-    rgba(58, 134, 255, 1) 0%,
-    rgba(109, 165, 255, 1) 100%
-  );
+  background: var(--main);
+  background: linear-gradient(90deg, var(--main), var(--mainHover));
 }
 .loginSectionBlock {
   background: rgb(255, 255, 255);

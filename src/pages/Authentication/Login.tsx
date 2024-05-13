@@ -30,6 +30,8 @@ export default function Login() {
   }
 
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
+    setError("");
+
     e.preventDefault();
     if (mailRef.current?.value && passwordRef.current?.value) {
       var mail: string = mailRef.current.value;
@@ -142,7 +144,7 @@ export default function Login() {
                     <Link to={"/ForgotPassword"}>პაროლის აღდგენა</Link>
                   </p>
                 </div>
-                <button className="linearButton mobile:mt-4  font-mainBold text-buttonText h-[40px] w-[200px] mobile:h-[36px] mobile:w-[180px] mobile:text-[14px] rounded-normal tracking-wider transition-shadow hover:shadow-buttonShadow">
+                <button className="linearButton mobile:mt-4  font-mainBold text-buttonText h-[40px] w-[200px] mobile:h-[36px] mobile:w-[180px] mobile:text-[14px] rounded-normal tracking-wider transition-shadow hover:shadow-[0px_6px_15px_var(--mainClear)]">
                   შესვლა
                 </button>
               </form>

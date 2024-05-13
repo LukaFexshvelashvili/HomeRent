@@ -120,7 +120,9 @@ function CardSlider(props: {
         <div className="swiper-wrapper ">
           {props.products != null ? (
             props.products.map((e: TProductCard, i) => (
-              <SwiperSlide key={e.id + i * Math.floor(Math.random() * 200)}>
+              <SwiperSlide
+                key={`${e.id}${i}${Math.floor(Math.random() * 200)}`}
+              >
                 <Card autoWidth={true} product={e} />
               </SwiperSlide>
             ))
@@ -139,13 +141,13 @@ function CardSlider(props: {
       </div>
       <button
         onClick={() => swiperInstance.slidePrev()}
-        className="h-14 mobile:hidden aspect-square rounded-circle bg-whiteMain p-[18px] absolute z-[1] left-0 -translate-x-2/4 shadow-slideNavShadow transition-colors hover:bg-whiteHover"
+        className="h-14 mobile:hidden aspect-square rounded-circle bg-whiteMain p-[18px] absolute z-[1] left-0 -translate-x-2/4 shadow-[0px_6px_15px_var(--mainClear)] transition-colors hover:bg-whiteHover"
       >
         <LeftArrowIcon className="h-full aspect-square" />{" "}
       </button>{" "}
       <button
         onClick={() => swiperInstance.slideNext()}
-        className="h-14 mobile:hidden aspect-square rounded-circle bg-whiteMain p-[18px] absolute z-[1] right-0 translate-x-2/4 shadow-slideNavShadow transition-colors hover:bg-whiteHover"
+        className="h-14 mobile:hidden aspect-square rounded-circle bg-whiteMain p-[18px] absolute z-[1] right-0 translate-x-2/4 shadow-[0px_6px_15px_var(--mainClear)] transition-colors hover:bg-whiteHover"
       >
         <LeftArrowIcon className="h-full aspect-square rotate-180" />{" "}
       </button>

@@ -16,6 +16,10 @@ import { Tuser } from "../../store/data/userSlice";
 import axiosCall from "../../hooks/axiosCall";
 import { makeUserSession } from "../../hooks/serverFunctions";
 import { useEffect, useRef, useState } from "react";
+import {
+  hasNumbersAndLetters,
+  hasUppercase,
+} from "../../hooks/AdditionalFunctions";
 
 export default function Register() {
   const user: Tuser = useSelector((store: RootState) => store.user);
@@ -33,17 +37,6 @@ export default function Register() {
   const passwordRef = useRef<null | HTMLInputElement>(null);
   const confirmPasswordRef = useRef<null | HTMLInputElement>(null);
 
-  function hasNumbersAndLetters(str: string) {
-    var digitRegex = /\d/;
-    var letterRegex = /[a-zA-Z]/;
-
-    return digitRegex.test(str) && letterRegex.test(str);
-  }
-  function hasUppercase(str: string) {
-    var uppercaseRegex = /[A-Z]/;
-
-    return uppercaseRegex.test(str);
-  }
   const darkMode: boolean = useSelector(
     (store: RootState) => store.webUI.darkMode
   );
@@ -94,7 +87,7 @@ export default function Register() {
         formInputs.password &&
         formInputs.confirmPassword
       ) {
-        if (formInputs.password.length > 8) {
+        if (formInputs.password.length >= 8) {
           if (formInputs.password === formInputs.confirmPassword) {
             setError("");
             const formData = new FormData();
@@ -282,7 +275,7 @@ export default function Register() {
                     </span>
                   </div>
                 </div>
-                <button className=" mt-4 mobile:mt-0 linearButton font-mainBold text-whiteMain h-[40px] w-[200px] mobile:text-[14px] mobile:h-[36px] rounded-normal tracking-wider transition-shadow hover:shadow-buttonShadow">
+                <button className=" mt-4 mobile:mt-0 linearButton font-mainBold text-whiteMain h-[40px] w-[200px] mobile:text-[14px] mobile:h-[36px] rounded-normal tracking-wider transition-shadow hover:shadow-[0px_6px_15px_var(--mainClear)]">
                   რეგისტრაცია
                 </button>
               </form>

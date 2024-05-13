@@ -3,24 +3,24 @@ import { DropDownIcon } from "../assets/icons/Icons";
 
 export default function Footer() {
   return (
-    <footer className="w-full mt-[50px] h-auto bg-navBg pt-10 shadow-footerShadow medium:pt-5">
+    <footer className="w-full mt-[50px] h-auto bg-navBg pt-10 shadow-footerShadow medium:pt-5 font-mainRegular">
       <div className="content_container">
         <div className=" flex flex-wrap justify-between w-full medium:hidden">
-          <div className="flex flex-col gap-3 [&>p]:text-Asmall [&>p]:text-textDesc [&>p]:cursor-pointer">
+          <div className="flex flex-col gap-3 [&>p]:text-Asmall text-Asmall [&>p]:text-textDesc [&>p]:cursor-pointer">
             <h3 className="mb-2 text-textHeadBlack">ჩვენს შესახებ</h3>
             <p className="max-w-[300px]">
               უძრავი ქონების გაყიდვის/გაქირავების სერვისი - გეხმარებით
               განათავსოთ თქვენი პროდუქტი კლიენტების მოსაზიდად
             </p>
           </div>
-          <div className="flex flex-col gap-2 [&>p]:text-Asmall [&>p]:text-textDesc [&>p]:cursor-pointer">
+          <div className="flex flex-col gap-2 [&>p]:text-Asmall text-Asmall [&>p]:text-textDesc [&>p]:cursor-pointer">
             <h3 className="mb-2  text-textHeadBlack">ნავიგაცია</h3>
             <p>მთავარი</p>
             <p>მოძებნა</p>
             <p>პროექტები</p>
             <p>მაკლერის სერვისი</p>
           </div>
-          <div className="flex flex-col gap-2 [&>p]:text-Asmall [&>p]:text-textDesc [&>p]:cursor-pointer">
+          <div className="flex flex-col gap-2 [&>p]:text-Asmall text-Asmall [&>p]:text-textDesc [&>p]:cursor-pointer">
             <h3 className="mb-2  text-textHeadBlack">დახმარება</h3>
             <p>კონტაქტი</p>
             <p>რეკლამა</p>
@@ -30,7 +30,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-col gap-3 ">
             <h3 className="mb-2  text-textHeadBlack">იყიდება</h3>
-            <div className="flex flex-wrap flex-col gap-2 gap-x-6 h-[160px] [&>p]:text-Asmall [&>p]:text-textDesc [&>p]:cursor-pointer">
+            <div className="flex flex-wrap flex-col gap-2 gap-x-6 h-[160px] [&>p]:text-Asmall text-Asmall [&>p]:text-textDesc [&>p]:cursor-pointer">
               <p>იყიდება 1 ოთახიანი ბინა</p>
               <p>იყიდება 2 ოთახიანი ბინა</p>
               <p>იყიდება 3 ოთახიანი ბინა</p>
@@ -112,8 +112,8 @@ export default function Footer() {
       </div>
 
       <div className="h-[2px] w-full bg-lineBg mt-5"></div>
-      <div className="content_container flex justify-between  [&>p]:text-Asmall [&>p]:text-textInfo [&>p]:cursor-pointer py-3">
-        <div className="flex gap-4  [&>p]:text-Asmall [&>p]:text-textInfo [&>p]:cursor-pointer flex-wrap">
+      <div className="content_container flex justify-between  [&>p]:text-Asmall text-Asmall [&>p]:text-textInfo [&>p]:cursor-pointer py-3">
+        <div className="flex gap-4  [&>p]:text-Asmall text-Asmall [&>p]:text-textInfo [&>p]:cursor-pointer flex-wrap">
           <p> წესები და პირობები</p>
           <p>კონფიდენციალურობა</p>
         </div>
@@ -131,7 +131,7 @@ function ResponsiveFooterLi(props: { title: string; content: JSX.Element }) {
         onClick={() => setactive((state: boolean) => !state)}
         className="flex h-[32px] justify-between items-center w-full"
       >
-        <h3 className="mb-2 text-textHeadBlack mobile:text-[14px] opacity-90">
+        <h3 className="mb-2 text-textHeadBlack mobile:text-[12px] opacity-90">
           {props.title}
         </h3>
         <DropDownIcon
@@ -140,7 +140,7 @@ function ResponsiveFooterLi(props: { title: string; content: JSX.Element }) {
           }`}
         />
       </button>
-      <div className="flex flex-col [&>p]:text-[16px] [&>p]:text-textDesc gap-1 mobile:[&>p]:text-[14px]">
+      <div className="flex flex-col [&>p]:text-[16px] [&>p]:text-textDesc gap-1 mobile:[&>p]:text-[12px]">
         {props.content}
       </div>
     </div>

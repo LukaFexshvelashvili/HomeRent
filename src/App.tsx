@@ -30,6 +30,7 @@ import Balance from "./pages/Profile/components/Balance";
 import NotFound from "./pages/NotFound";
 import SuspendedAccount from "./pages/SuspendedAccount";
 import Notifications from "./pages/Profile/components/Notifications";
+import PasswordRecover from "./pages/Authentication/PasswordRecover";
 
 function App() {
   const UISettings = useSelector((store: RootState) => store.webUI);
@@ -83,6 +84,7 @@ function App() {
             <Route path="Login" element={<Login />} />
             <Route path="Register" element={<Register />} />
             <Route path="ForgotPassword" element={<ForgotPassword />} />
+            <Route path="ForgotPassword/:url" element={<PasswordRecover />} />
             {user.isLogged ? (
               <Route path="Logout" element={<Logout />} />
             ) : null}

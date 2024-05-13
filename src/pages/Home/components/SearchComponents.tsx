@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactSlider from "react-slider";
 import { currencyConvertor } from "../../../components/convertors/convertors";
+import { projectDealTypes } from "../../../assets/lists/productAddons";
 
 export function InputSizeSlider(props: {
   setData: Function;
@@ -11,7 +12,7 @@ export function InputSizeSlider(props: {
     0, 100,
   ]);
   const [Prices, setPrices] = useState<number[]>([0, 0]);
-  const priceDistance = [50, 500];
+  const priceDistance = [10, 500000];
   const priceGap = 5;
   useEffect(() => {
     setPrices([
@@ -19,6 +20,7 @@ export function InputSizeSlider(props: {
       Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
     ]);
   }, [PricesPercentages]);
+
   return (
     <div
       className={`flex flex-col items-center relative  mx-auto ${
@@ -35,13 +37,13 @@ export function InputSizeSlider(props: {
         onChange={(state) => setPricesPercentages(state)}
         ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
         pearling
-        minDistance={10}
+        minDistance={2}
       />
       <div className="flex items-center gap-6 mt-4 mobile:flex-wrap">
         <div className="flex items-center">
           <input
             type="number"
-            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors text-buttonText focus:bg-LoginInputActive text-[15px]"
+            className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors text-textHeadCard focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               if (
                 e.target.valueAsNumber <= priceDistance[1] &&
@@ -140,7 +142,7 @@ export function InputPriceSlider(props: {
   ]);
   const [Prices, setPrices] = useState<number[]>([0, 0]);
   const [currency, setCurrency] = useState<number>(0);
-  const priceDistance = [20000, 80000];
+  const priceDistance = [0, 1000000];
   const priceGap = 5000;
   useEffect(() => {
     setPrices([
@@ -193,7 +195,7 @@ export function InputPriceSlider(props: {
         onChange={(state) => setPricesPercentages(state)}
         ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
         pearling
-        minDistance={10}
+        minDistance={5}
       />
       <div className="flex items-center gap-6 mt-4 mobileTab:flex-wrap ">
         <div className="flex items-center">
@@ -294,5 +296,39 @@ export function InputPriceSlider(props: {
         დადასტურება
       </button>
     </div>
+  );
+}
+export function ProjectDealSelectorSearch(props: { setData: Function }) {
+  const [active, setActive] = useState<null | number>(null);
+
+  return (
+    <>
+      {projectDealTypes.map((e: string, i: number) => (
+        <button
+          key={i}
+          onClick={() => {
+            if (active == i) {
+              props.setData(null);
+
+              setActive(null);
+            } else {
+              props.setData(i);
+              setActive(i);
+            }
+          }}
+          className={`  p-2 px-4 rounded-xl transition-colors ${
+            active == i ? "bg-main" : "bg-mainClear"
+          }`}
+        >
+          <p
+            className={`text-Asmall tracking-wide ${
+              active == i ? "text-buttonText" : "text-main"
+            }`}
+          >
+            {e}
+          </p>
+        </button>
+      ))}
+    </>
   );
 }

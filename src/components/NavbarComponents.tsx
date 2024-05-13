@@ -12,8 +12,6 @@ import {
 import { toggleDarkMode } from "../store/data/webUISlice";
 import { useDispatch } from "react-redux";
 import { useEffect, useRef } from "react";
-import axiosCall from "../hooks/axiosCall";
-import { Tnotification } from "../assets/types/types";
 
 export function NotificationBar({
   userData,
@@ -24,8 +22,6 @@ export function NotificationBar({
   activePop: string | null;
   setActivePop: Function;
 }) {
-  const dispatch = useDispatch();
-
   const popupBlock = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     function handleClickOutside(event: any) {

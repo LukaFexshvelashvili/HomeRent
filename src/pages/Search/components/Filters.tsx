@@ -19,7 +19,7 @@ export function SelectNumbers(props: {
   const Length = [0, 1, 2, 3, 4, 5, 6, 7, 7];
   useEffect(() => {
     if (props.setDataDispatch) {
-      dispatch(props.setDataDispatch(active));
+      dispatch(props.setDataDispatch(active !== -1 ? active : 0));
     }
   }, [active]);
   const changeProps = (newActive: number) => {
@@ -55,7 +55,12 @@ export function SelectNumbers(props: {
         {Length.map((e, i) => (
           <button
             key={i}
-            onClick={() => changeProps(i)}
+            onClick={() => {
+              changeProps(i);
+              if (props.setData) {
+                props.setData(i);
+              }
+            }}
             className={` h-[36px] text-[15px] aspect-square rounded-circle flex justify-center items-center transition-colors ${
               active == i ? "bg-main text-buttonText" : "bg-mainClear text-main"
             }`}
