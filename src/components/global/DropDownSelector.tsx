@@ -39,8 +39,11 @@ export default function DropDownSelector(props: {
       if (searchType && !props.itemsList.includes(searchType)) {
         deleteParams(params, setParams, props.engName);
       }
+      if (!searchType) {
+        setActiveItem(null);
+      }
     }
-  }, []);
+  }, [params]);
   return (
     <div className="relative ">
       <button

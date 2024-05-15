@@ -20,6 +20,7 @@ import {
 } from "./SearchComponents";
 import { useNavigate } from "react-router-dom";
 import { SelectNumbers } from "../../Search/components/Filters";
+import searchBg from "../../../assets/images/estates/searchBg.webp";
 
 type TPriceGet = {
   start: number;
@@ -59,12 +60,18 @@ function SearchInput() {
   };
 
   return (
-    <div className="w-full    my-10   bg-whiteMain rounded-[25px] shadow-sectionShadow">
-      <div className="w-full  flex gap-3 small:w-auto small:h-auto small:flex-col small:gap-1 flex-wrap mx-auto py-[20px] px-[25px] ">
-        <div className="flex flex-wrap gap-2 justify-center">
+    <div className="w-full    my-10 overflow-hidden  bg-whiteMain rounded-[25px] shadow-sectionShadow">
+      <div className="w-full relative  flex gap-3 small:w-auto small:h-auto small:flex-col small:gap-1 flex-wrap mx-auto py-[20px] px-[25px] ">
+        <img
+          src={searchBg}
+          className="absolute w-full h-full object-cover top-0 left-0 z-0"
+          alt="search_background"
+        />
+        <div className="absolute w-full h-full object-cover top-0 left-0 bg-[#0000009a] backdrop-blur-md z-0"></div>
+        <div className="flex flex-wrap gap-2 justify-center small:flex-col  z-10">
           <ProjectDealSelectorSearch setData={setGetDeal} />
         </div>
-        <div className="w-full flex items-center border-2 border-whiteLoad rounded-normal overflow-hidden relative h-[45px]">
+        <div className="w-full flex items-center border-2 border-[#ffffff55] rounded-normal overflow-hidden relative h-[45px] small:my-2">
           <form
             className="w-full h-full"
             onSubmit={(e) => {
@@ -75,31 +82,31 @@ function SearchInput() {
             <input
               type="text"
               placeholder="სიტყვით ძებნა..."
-              className="w-full h-full px-4  outline-none font-mainRegular text-blackMain tracking-wider text-[14px] transition-colors focus:bg-whiteLoad"
+              className="w-full h-full px-4  outline-none font-mainRegular bg-transparent text-blackMain tracking-wider text-[14px] transition-colors focus:bg-[#ffffff11]"
               onChange={(e) => setSearchTitle(e.target.value)}
               value={searchTitle}
             />
           </form>
           <div
             onClick={() => setSearchTitle("")}
-            className={`absolute h-[28px] aspect-square rounded-md bg-whiteHoverDark  flex items-center justify-center right-2  transition-all ${
+            className={`absolute h-[28px] aspect-square rounded-md bg-[#ffffff21]  flex items-center justify-center right-2  transition-all ${
               searchTitle == ""
                 ? " pointer-events-none cursor-default invisible opacity-0"
                 : "cursor-pointer visible opacity-100"
             } hover:bg-whiteCont`}
           >
-            <PopupCloseIcon className="h-[10px] aspect-square [&>path]:fill-blackMain" />
+            <PopupCloseIcon className="h-[10px] aspect-square [&>path]:fill-white" />
           </div>
         </div>
 
-        <div className="relative  rounded-normal flex  small:flex-col  h-[45px] items-center  w-[calc(100%-72px)] border-2 border-whiteLoad overflow-hidden">
-          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+        <div className="relative  rounded-normal flex small:w-full small:h-auto small:flex-col  h-[45px] items-center  w-[calc(100%-72px)] border-2 border-[#ffffff55] overflow-hidden">
+          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-[#ffffff55] cursor-pointer transition-colors hover:bg-[#ffffff11] relative">
             <div
               onClick={() => setInputSelect(1)}
               className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
             >
-              <FilterHomeIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-              <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
+              <FilterHomeIcon className=" h-[16px] [&>path]:fill-white" />{" "}
+              <p className="max-w-[150px] text-[14px] font-mainRegular text-[#ffffffd3]">
                 {getType ? getType : "ბინა"}
               </p>
             </div>
@@ -108,17 +115,17 @@ function SearchInput() {
                 onClick={() => setGetType(null)}
                 className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
               >
-                <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+                <PopupCloseIcon className=" [&>path]:fill-white" />
               </button>
             )}
           </div>
-          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-[#ffffff55] cursor-pointer transition-colors hover:bg-[#ffffff11] relative">
             <div
               onClick={() => setInputSelect(2)}
               className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
             >
-              <FilterPlaceIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-              <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
+              <FilterPlaceIcon className=" h-[16px] [&>path]:fill-white" />{" "}
+              <p className="max-w-[150px] text-[14px] font-mainRegular text-[#ffffffd3]">
                 {getCity ? getCity : "მდებარეობა"}
               </p>
             </div>
@@ -127,17 +134,17 @@ function SearchInput() {
                 onClick={() => setGetCity(null)}
                 className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
               >
-                <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+                <PopupCloseIcon className=" [&>path]:fill-white" />
               </button>
             )}
           </div>
-          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-[#ffffff55] cursor-pointer transition-colors hover:bg-[#ffffff11] relative">
             <div
               onClick={() => setInputSelect(3)}
               className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
             >
-              <FilterFrameIcon className=" h-[16px] [&>path]:fill-navIcon" />{" "}
-              <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
+              <FilterFrameIcon className=" h-[16px] [&>path]:fill-white" />{" "}
+              <p className="max-w-[150px] text-[14px] font-mainRegular text-[#ffffffd3]">
                 {getSizes ? `${getSizes[0]} მ² - ${getSizes[1]} მ²` : "ფართი"}
               </p>
             </div>
@@ -146,17 +153,17 @@ function SearchInput() {
                 onClick={() => setGetSizes(null)}
                 className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
               >
-                <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+                <PopupCloseIcon className=" [&>path]:fill-white" />
               </button>
             )}
           </div>
-          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-whiteLoad cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full border-r-2 border-[#ffffff55] cursor-pointer transition-colors hover:bg-[#ffffff11] relative">
             <div
               onClick={() => setInputSelect(4)}
               className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
             >
-              <MoneyIcon className=" h-[18px] [&>path]:fill-navIcon" />{" "}
-              <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
+              <MoneyIcon className=" h-[18px] [&>path]:fill-white" />{" "}
+              <p className="max-w-[150px] text-[14px] font-mainRegular text-[#ffffffd3]">
                 {getPrices
                   ? `${getPrices.start}${
                       getPrices.currency == 0 ? "$" : "₾"
@@ -169,17 +176,17 @@ function SearchInput() {
                 onClick={() => setGetPrices(null)}
                 className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
               >
-                <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+                <PopupCloseIcon className=" [&>path]:fill-white" />
               </button>
             )}
           </div>
-          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full cursor-pointer transition-colors hover:bg-whiteHoverDark relative">
+          <div className="flex small:border-none beforeInputBlock items-center w-[25%] text-textDesc  small:w-full h-full cursor-pointer transition-colors hover:bg-[#ffffff11] relative">
             <div
               onClick={() => setInputSelect(5)}
               className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
             >
-              <RoomIcon className=" h-[18px] translate-y-[1px] [&>path]:fill-navIcon" />{" "}
-              <p className="max-w-[150px] text-[14px] font-mainMedium text-textDesc">
+              <RoomIcon className=" h-[18px] translate-y-[1px] [&>path]:fill-white" />{" "}
+              <p className="max-w-[150px] text-[14px] font-mainRegular text-[#ffffffd3]">
                 {getRooms ? `${getRooms} ოთახი` : "ოთახები"}
               </p>
             </div>
@@ -188,7 +195,7 @@ function SearchInput() {
                 onClick={() => setGetRooms(null)}
                 className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
               >
-                <PopupCloseIcon className=" [&>path]:fill-[rgba(0,0,0,0.2)]" />
+                <PopupCloseIcon className=" [&>path]:fill-white" />
               </button>
             )}
           </div>
@@ -259,7 +266,7 @@ function SearchInput() {
         </div>
         <button
           onClick={handleSearch}
-          className={`small:hidden h-[45px] w-[60px] text-[14px] small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest transition-all hover:bg-mainHover`}
+          className={`small:hidden h-[45px] w-[60px] text-[14px] z-10 small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest transition-all hover:bg-mainHover`}
         >
           <SearchIcon className="h-[16px] aspect-square " />
         </button>
@@ -332,11 +339,10 @@ function SelectRooms(props: { setData: Function; closeWindow: Function }) {
       }
     }
   }, [room]);
-  console.log(room);
 
   return (
     <>
-      <div className="flex flex-col   mobileTab:overflow-x-hidden mobileTab:overflow-y-scroll mobileTab:flex-nowrap  flex-wrap gap-x-10 h-auto overflow-x-scroll mt-6 gap-y-2">
+      <div className="flex flex-col w-full mt-6 gap-y-2">
         <SelectNumbers setData={setRoom} />
       </div>
     </>

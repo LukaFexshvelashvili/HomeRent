@@ -42,7 +42,6 @@ function Search() {
   );
   useEffect(() => {
     axiosCall.get(`fetch/search${debouncedSearch}`).then((res) => {
-      setLoader(false);
       if (res.data.status == 100) {
         setSearched(res.data.products);
         setPages(Math.floor(res.data.length / res.data.per_page_length));
@@ -54,6 +53,7 @@ function Search() {
           deleteParams(params, setParams, "page");
         }
       }
+      setLoader(false);
     });
     if (activePage < 1) {
       deleteParams(params, setParams, "page");
@@ -386,15 +386,16 @@ function FiltersSection(props: { citiesAPI: any; setSearchTitle: Function }) {
 function ProjectDealSelector() {
   const [params, setParams] = useSearchParams();
   const [active, setActive] = useState<null | number>(null);
-  useEffect(() => {}, [active]);
 
   useEffect(() => {
     const searchType = params.get("deal");
 
     if (searchType) {
       setActive(parseInt(searchType));
+    } else {
+      setActive(null);
     }
-  }, []);
+  }, [params]);
   return (
     <>
       {projectDealTypes.map((e: string, i: number) => (

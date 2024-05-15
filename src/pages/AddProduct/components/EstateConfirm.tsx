@@ -9,9 +9,13 @@ import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import numeral from "numeral";
-import { updateVip } from "../../../store/data/addProductSlice";
+import {
+  updateEstateVipDays,
+  updateVip,
+} from "../../../store/data/addProductSlice";
 import DaysDropdown from "./DaysDropdown";
 import { submitProduct } from "./Selectors";
+import { Link } from "react-router-dom";
 
 export default function EstateConfirm(props: {
   setShowError: Function;
@@ -19,12 +23,14 @@ export default function EstateConfirm(props: {
   setUploadStatus: Function;
 }) {
   const data = useSelector((state: RootState) => state.addProduct);
+  const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const vipStatus = useSelector(
     (store: RootState) => store.addProduct.estateVip
   );
   const [activeOffer, setActiveOffer] = useState<number>(vipStatus);
   const [selectedDays, setSelectedDays] = useState<number>(1);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     setActiveOffer(vipStatus);
@@ -50,11 +56,30 @@ export default function EstateConfirm(props: {
           />
           <p className=" text-Asmall text-textDesc mt-3">ბარათის ვიზუალი</p>
         </div>
+        <p className="text-Asmall text-textDesc mt-3 flex justify-between">
+          ბალანსი{": "}
+          <span className="text-main ml-1">
+            {(user.money / 100).toFixed(2) + "₾"}
+          </span>
+          <Link
+            className="text-main underline ml-auto  w-min text-nowrap"
+            to={"/Profile/Balance"}
+          >
+            ბალანსის შევსება
+          </Link>
+        </p>
         <div className="flex gap-2 items-center mt-5">
           {ActiveOffers.map((e: TOffer, i: number) => (
             <div
               key={i}
-              onClick={() => dispatch(updateVip(e.id))}
+              onClick={() => {
+                setError("");
+
+                dispatch(updateVip(e.id));
+                if (e.id == 0) {
+                  dispatch(updateEstateVipDays(null));
+                }
+              }}
               className="text-Asmall h-[30px] w-[80px] flex items-center justify-center cursor-pointer rounded-md transition-colors"
               style={{
                 backgroundColor:
@@ -70,7 +95,11 @@ export default function EstateConfirm(props: {
           <DaysDropdown
             offerData={offerData}
             value={selectedDays}
-            setValue={setSelectedDays}
+            setValue={(days: number) => {
+              setSelectedDays(days);
+              dispatch(updateEstateVipDays(days));
+              setError("");
+            }}
           />
         )}
         <div className="flex justify-between mt-6">
@@ -91,14 +120,26 @@ export default function EstateConfirm(props: {
             </div>
           </>
         )}
+        {error !== "" && (
+          <div className="max-w-full w-full mt-3 h-auto p-3 rounded-lg bg-pinkClear text-pinkI border-2 border-pinkI  flex justify-center items-center text-center text-[14px] tracking-wider font-mainSemiBold">
+            {error}
+          </div>
+        )}
         <button
           onClick={() => {
-            submitProduct(
-              data,
-              props.setShowError,
-              props.setUploadStatus,
-              props.setAlertBlock
-            );
+            setError("");
+
+            if (offerData.price * selectedDays * 100 > user.money) {
+              setError("საკმარის თანხა არარის ბალანსზე");
+            } else {
+              submitProduct(
+                data,
+                props.setShowError,
+                props.setUploadStatus,
+                props.setAlertBlock,
+                setError
+              );
+            }
           }}
           className="h-[42px] w-full rounded-md bg-main text-buttonText tracking-wider text-[15px] transition-colors mt-3 hover:bg-mainHover"
         >
@@ -159,6 +200,7 @@ export function CardExample(props: {
           </div>
         </div>
       </div>
+
       <div className="flex flex-col py-1">
         <h2 className="text-textHeadCard font-mainBold">ვაკე რეზიდენსი</h2>
         <p className="text-textDescCard text-Asmall font-mainRegular">

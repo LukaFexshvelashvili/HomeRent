@@ -25,7 +25,7 @@ export type TproductInfoStart = {
   estateClosePlaces: null | number[];
   estateCurrency: number;
   estateVip: number;
-  estateVipExpire: null | string;
+  estateVipDays: null | number;
 };
 
 const initialState: TproductInfoStart = {
@@ -53,7 +53,7 @@ const initialState: TproductInfoStart = {
   estateClosePlaces: null,
   estateCurrency: 0,
   estateVip: 0,
-  estateVipExpire: null,
+  estateVipDays: null,
 };
 
 const addProductSlice = createSlice({
@@ -132,8 +132,8 @@ const addProductSlice = createSlice({
     updateVip: (state, action: PayloadAction<number>) => {
       state.estateVip = action.payload;
     },
-    updateVipExpire: (state, action: PayloadAction<string | null>) => {
-      state.estateVipExpire = action.payload;
+    updateEstateVipDays: (state, action: PayloadAction<number | null>) => {
+      state.estateVipDays = action.payload;
     },
     updateCurrency: (state, action: PayloadAction<number>) => {
       state.estateCurrency = action.payload;
@@ -166,7 +166,7 @@ export const {
   updateClosePlaces,
   updateCurrency,
   updateVip,
-  updateVipExpire,
+  updateEstateVipDays,
 } = addProductSlice.actions;
 
 export default addProductSlice.reducer;

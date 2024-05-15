@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import EstateConfirm from "./components/EstateConfirm";
 import {
   DealType,
@@ -14,16 +14,22 @@ import {
   EstateType,
 } from "./components/Selectors";
 import { RootState } from "../../store/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContentLoader from "../../components/global/ContentLoader";
 import { Link } from "react-router-dom";
+import { updateStatus } from "../../store/data/addProductSlice";
 
 export default function AddProduct() {
   const productData = useSelector((store: RootState) => store.addProduct);
   const [showError, setShowError] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<number | null>(null);
-
+  const dispatch = useDispatch();
   const [alertBlock, setAlertBlock] = useState<boolean>(false);
+  useEffect(() => {
+    if (productData.estateType == "მიწის ნაკვეთი") {
+      dispatch(updateStatus(null));
+    }
+  }, [productData.estateType]);
 
   return (
     <main className="flex flex-row-reverse gap-3 min-h-screen items-start smallXl:flex-col">
@@ -80,7 +86,8 @@ export default function AddProduct() {
         <div className="py-4 px-5 flex flex-col gap-8  mobile:px-3">
           <EstateType />
           {productData.estateType !== null && <DealType />}
-          {productData.estateDeal !== null && <EstateStatus />}
+          {productData.estateDeal !== null &&
+            productData.estateType !== "მიწის ნაკვეთი" && <EstateStatus />}
 
           {productData.estateStatus !== null && (
             <EstateTitle

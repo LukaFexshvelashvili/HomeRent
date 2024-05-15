@@ -134,15 +134,20 @@ export const useDebounce = (
 ) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
     if (setLoader) {
       setLoader(true);
     }
+    const timeout = setTimeout(() => {
+      if (setLoader) {
+        setLoader(false);
+      }
+      setDebouncedValue(value);
+    }, delay);
+
     // Cleanup function to clear the timeout
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [value, delay]);
 
   return debouncedValue;

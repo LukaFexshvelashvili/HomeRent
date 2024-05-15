@@ -54,7 +54,8 @@ export const submitProduct = (
   productData: TproductInfoStart | any,
   setShowError: Function,
   setUploadStatus: Function,
-  setAlertBlock: Function
+  setAlertBlock: Function,
+  setError: Function
 ) => {
   let error: boolean = false;
 
@@ -101,7 +102,7 @@ export const submitProduct = (
     formData.append("estateClosePlaces", productData.estateClosePlaces);
     formData.append("estateCurrency", "0");
     formData.append("estateVip", productData.estateVip);
-    formData.append("estateVipExpire", productData.estateVipExpire);
+    formData.append("estateVipDays", productData.estateVipDays);
     productData.estateImages.forEach((image: any) => {
       if (image.cover == true) {
         formData.append("estateActiveImage", image.image);
@@ -117,7 +118,11 @@ export const submitProduct = (
         },
       })
       .then((res) => {
-        setUploadStatus(res.data.status);
+        console.log(res.data);
+        if (res.data.status === 12) {
+          setError("ანგარიშზე არ არის საკმარისი თანხა");
+        }
+        // setUploadStatus(res.data.status);
       });
   }
 };

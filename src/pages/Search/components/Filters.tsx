@@ -41,9 +41,11 @@ export function SelectNumbers(props: {
       const searchType = params.get(props.engName);
       if (searchType) {
         setActive(parseInt(searchType));
+      } else if (!searchType) {
+        setActive(-1);
       }
     }
-  }, []);
+  }, [params]);
   return (
     <div className="flex flex-col items-center">
       {props.name && (
@@ -82,8 +84,10 @@ export function SelectType() {
     const searchType = params.get("estate_type");
     if (searchType) {
       setActive(parseInt(searchType));
+    } else if (!searchType) {
+      setActive(null);
     }
-  }, []);
+  }, [params]);
 
   return (
     <div className="flex flex-col items-center">
@@ -133,7 +137,7 @@ export function PriceSlider(props: { setData?: Function }) {
   ]);
   const [Prices, setPrices] = useState<number[]>([0, 0]);
   const [currency, setCurrency] = useState<number>(0);
-  const priceDistance = [20000, 80000];
+  const priceDistance = [0, 1000000];
   const priceGap = 5000;
   useEffect(() => {
     const searchPrices = params.get("prices");
@@ -153,8 +157,12 @@ export function PriceSlider(props: { setData?: Function }) {
       const getSearchPrices = JSON.parse(searchPrices);
       changeCurrency(getSearchPrices.currency);
       firstRender.current = false;
+    } else if (!searchPrices) {
+      startCounting.current = false;
+      setPricesPercentages([0, 100]);
+      setPrices([priceDistance[0], priceDistance[1]]);
     }
-  }, [Prices[0] >= 0]);
+  }, [Prices[0] >= 0, params]);
 
   useEffect(() => {
     if (startCounting.current) {
@@ -320,24 +328,29 @@ export function SizeSlider(props: { setData?: Function }) {
   const [params, setParams] = useSearchParams();
   const startCounting = useRef<boolean>(false);
 
-  useEffect(() => {
-    const searchSizes = params.get("sizes");
+  const [PricesPercentages, setPricesPercentages] = useState<number[]>([
+    0, 100,
+  ]);
+  const [Prices, setPrices] = useState<number[]>([0, 0]);
+  const priceDistance = [0, 500];
+  const priceGap = 5;
 
-    if (searchSizes) {
+  const searchSizes = params.get("sizes");
+  useEffect(() => {
+    if (searchSizes && !startCounting.current) {
       const getSearchSizes = JSON.parse(searchSizes);
       setPrices([getSearchSizes[0], getSearchSizes[1]]);
       setPricesPercentages([
         getSearchSizes[0] / (priceDistance[1] / 100),
         getSearchSizes[1] / (priceDistance[1] / 100),
       ]);
+    } else if (!searchSizes) {
+      startCounting.current = false;
+      setPricesPercentages([0, 100]);
+      setPrices([priceDistance[0], priceDistance[1]]);
     }
-  }, []);
-  const [PricesPercentages, setPricesPercentages] = useState<number[]>([
-    0, 100,
-  ]);
-  const [Prices, setPrices] = useState<number[]>([0, 0]);
-  const priceDistance = [50, 500];
-  const priceGap = 5;
+  }, [searchSizes]);
+
   useEffect(() => {
     if (startCounting.current) {
       setPrices([
