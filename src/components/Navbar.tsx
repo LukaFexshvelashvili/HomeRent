@@ -207,7 +207,15 @@ function ResponsiveNavbar({ userData }: { userData: Tuser }) {
               </p>
             </div>
           </div>
-          <div className="bg-lineBg h-[5px] rounded-md w-[50px] mx-auto my-6"></div>
+          <p className="text-[12px] text-textDesc mt-3 text-center px-4">
+            ბალანსი{": "}
+            <span className="text-main ml-1">
+              {(userData.money / 100)
+                .toFixed(2)
+                .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "₾"}
+            </span>
+          </p>
+          <div className="bg-lineBg h-[5px] rounded-md w-[50px] mx-auto my-6 mt-5"></div>
           <div className="flex flex-col gap-[2px]">
             {userData.isLogged
               ? profileResponsiveButtons.map((e: TProfileButton, i: number) =>

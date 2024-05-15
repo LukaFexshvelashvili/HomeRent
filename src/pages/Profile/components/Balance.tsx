@@ -9,7 +9,9 @@ export default function Balance() {
       <h2 className="text-textHeadCard text-[15px] tracking-wider">
         ბალანსი:{" "}
         <span className=" ml-1 text-main">
-          {(userData.money / 100).toFixed(2)}₾
+          {(userData.money / 100)
+            .toFixed(2)
+            .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "₾"}
         </span>
       </h2>
 

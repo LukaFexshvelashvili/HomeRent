@@ -50,7 +50,7 @@ export default function Profile() {
             </p>
             <div className="flex gap-2 items-center">
               <div className="">
-                <div className="h-[38px]  aspect-square rounded-circle bg-main p-[3px] flex justify-center items-center relative">
+                <div className="h-[38px]  aspect-square rounded-circle bg-main p-[4px] flex justify-center items-center relative">
                   <div className="h-full border-2 border-whiteMain aspect-square rounded-circle bg-main select-none cursor-pointer "></div>
                 </div>
               </div>

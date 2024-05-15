@@ -59,7 +59,9 @@ export default function EstateConfirm(props: {
         <p className="text-Asmall text-textDesc mt-3 flex justify-between">
           ბალანსი{": "}
           <span className="text-main ml-1">
-            {(user.money / 100).toFixed(2) + "₾"}
+            {(user.money / 100)
+              .toFixed(2)
+              .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "₾"}
           </span>
           <Link
             className="text-main underline ml-auto  w-min text-nowrap"

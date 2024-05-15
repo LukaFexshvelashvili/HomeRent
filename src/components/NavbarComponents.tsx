@@ -192,7 +192,7 @@ export function ProfileBar({
           activePop == "profile" ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        <div className="px-6 pt-5 pb-2 flex items-center">
+        <div className="px-6 pt-5  flex items-center">
           <div className="h-[34px]  aspect-square rounded-circle bg-main p-[3px] flex justify-center items-center relative">
             <div className="h-full border-2 border-whiteMain aspect-square rounded-circle bg-main select-none cursor-pointer "></div>
           </div>
@@ -205,6 +205,14 @@ export function ProfileBar({
             </p>
           </div>
         </div>
+        <p className="text-[12px] text-textDesc mt-3 text-center px-4">
+          ბალანსი{": "}
+          <span className="text-main ml-1">
+            {(userData.money / 100)
+              .toFixed(2)
+              .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "₾"}
+          </span>
+        </p>
         <div className=" mx-auto my-2 mb-4 bg-lineBg h-[2px] w-[50px] rounded-md"></div>
         <div className="flex flex-col">
           {userData.isLogged

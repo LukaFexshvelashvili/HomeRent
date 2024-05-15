@@ -118,11 +118,11 @@ export const submitProduct = (
         },
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.status === 12) {
           setError("ანგარიშზე არ არის საკმარისი თანხა");
+        } else {
+          setUploadStatus(res.data.status);
         }
-        // setUploadStatus(res.data.status);
       });
   }
 };
