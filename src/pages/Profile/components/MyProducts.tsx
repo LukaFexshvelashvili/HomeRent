@@ -153,7 +153,9 @@ function MyProducts() {
           nextFunction={popAlert.nextFunction}
         />
       ) : null}{" "}
-      {popbuy.id && <Buypopup setPopbuy={setPopbuy} />}
+      {popbuy.id !== null ? (
+        <Buypopup setPopbuy={setPopbuy} popbuy={popbuy} />
+      ) : null}
       <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3  mobile:px-3">
         <h1 className="mobileSmall:text-[14px]">ჩემი განცხადებები</h1>
         <div className="flex gap-3 items-center flex-wrap mobile:justify-center">

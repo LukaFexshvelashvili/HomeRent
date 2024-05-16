@@ -71,7 +71,7 @@ export default function ProductBanner(props: {
         {props.productData.macler_status == 0 ? (
           <button
             className="bg-purpleClear text-purpleI h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-purpleHover"
-            onClick={() => props.setPopbuy({ id: 2 })}
+            onClick={() => props.setPopbuy({ id: props.productData.id })}
           >
             ნახვების გაზრდა
           </button>
