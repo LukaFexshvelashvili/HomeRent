@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { LeftArrowIcon } from "../../../assets/icons/Icons";
+import { AdBannerProductSlider } from "../../../components/global/AdComponents";
 
 export default function ImageSlider(props: { productData: any }) {
   const [slider, setSlider] = useState<number>(0);
+
   const imageList = JSON.parse(props.productData.estate_images);
 
   const sliderNext = () => {
@@ -19,8 +21,13 @@ export default function ImageSlider(props: { productData: any }) {
       setSlider((state) => state - 1);
     }
   };
+  if (props.productData.estate_images.length > 1 && !imageList.includes("AD")) {
+    imageList.splice(1, 0, "AD");
+  }
   useEffect(() => {
     setSlider(0);
+    if (Math.floor(Math.random() * 15) == 4) {
+    }
   }, [props.productData]);
 
   return (
@@ -35,20 +42,30 @@ export default function ImageSlider(props: { productData: any }) {
               slider == i ? "outline-main" : "outline-whiteMain"
             }`}
           >
-            <img
-              src={"http://localhost/HomeRentServer/" + item}
-              className=" h-full w-full object-cover rounded-[5px]"
-              alt="Product Image"
-            />
+            {item !== "AD" ? (
+              <img
+                src={"http://localhost/HomeRentServer/" + item}
+                className=" h-full w-full object-cover rounded-[5px]"
+                alt="Product Image"
+              />
+            ) : (
+              <div className="h-full w-full bg-whiteLoad flex justify-center items-center">
+                AD
+              </div>
+            )}
           </div>
         ))}
       </div>
       <div className="relative overflow-hidden h-full w-full rounded-block z-[1] medium:min-h-[500px] small:min-h-[400px] mobile:min-h-[300px] mobileSmall:min-h-[200px]">
-        <img
-          src={"http://localhost/HomeRentServer/" + imageList[slider]}
-          className="absolute top-0 left-0 h-full w-full object-cover"
-          alt="Product Image"
-        />
+        {imageList[slider] !== "AD" ? (
+          <img
+            src={"http://localhost/HomeRentServer/" + imageList[slider]}
+            className="absolute top-0 left-0 h-full w-full object-cover"
+            alt="Product Image"
+          />
+        ) : (
+          <AdBannerProductSlider />
+        )}
       </div>
       {imageList.length !== 1 && (
         <>

@@ -2,11 +2,13 @@ import { useState } from "react";
 import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
 import DaysDropdown from "../../AddProduct/components/DaysDropdown";
 import { PopupCloseIcon } from "../../../assets/icons/Icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ContentLoader from "../../../components/global/ContentLoader";
 import axiosCall from "../../../hooks/axiosCall";
+import { makeUserSession } from "../../../hooks/serverFunctions";
+import { clearSession } from "../../../store/data/userSlice";
 
 type Trequest = {
   pending: number;
@@ -20,7 +22,8 @@ type Trequest = {
 
 export default function Buypopup(props: {
   setPopbuy: Function;
-  popbuy: { id: number | null };
+  popbuy: { id?: number | null };
+  fetchProducts: Function;
 }) {
   const [error, setError] = useState<string>("");
   const [status, setStatus] = useState<number>(0);
@@ -30,6 +33,8 @@ export default function Buypopup(props: {
     status: null,
     data: null,
   });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   let offerData = ActiveOffers.filter((item) => item.status == status)[0];
   const buyVip = () => {
@@ -49,11 +54,30 @@ export default function Buypopup(props: {
             }
           )
           .then((res) => {
-            setRequest({
-              pending: 2,
-              status: res.data.status,
-              data: res.data.payload,
-            });
+            axiosCall
+              .get("authentication/user_get", { withCredentials: true })
+              .then((res) => {
+                if (res.data.status == 100) {
+                  makeUserSession(dispatch, {
+                    ...res.data.user,
+                    favorites: JSON.parse(res.data.user.favorites),
+                  });
+
+                  if (res.data.user.banned == 1) {
+                    navigate("/SuspendedAccount");
+                  }
+                } else if (res.data.status == 0) {
+                  dispatch(clearSession());
+                }
+              })
+              .then(() => {
+                props.fetchProducts();
+                setRequest({
+                  pending: 2,
+                  status: res.data.status,
+                  data: res.data.payload,
+                });
+              });
           });
       } else {
         setError("ანგარიშზე არა არის საკმარისი თანხა");
@@ -214,35 +238,55 @@ export default function Buypopup(props: {
           </>
         ) : request.pending == 2 ? (
           <>
-            <h2 className="text-greenI font-mainBold text-center text-[18px] ">
-              VIP სტატუსი წარმატებით დაყენდა
-            </h2>
-            <p className="text-textDesc  text-center text-[14px] mt-2">
-              VIP სტატუსი წარმატებით ჩაირთო განცხადებაზე - #
-              {request.data?.product_id}
-            </p>
-
-            <div className="text-start text-Asmall text-textDesc mt-4 flex flex-col gap-2">
-              <p>
-                სტატუსი:{" "}
-                <span
-                  style={{
-                    color: ActiveOffers.filter(
-                      (item) => item.name == request.data?.vip_name
-                    )[0].mainColor,
-                  }}
+            {request.status == 100 ? (
+              <>
+                {" "}
+                <h2 className="text-greenI font-mainBold text-center text-[18px] ">
+                  VIP სტატუსი წარმატებით დაყენდა
+                </h2>
+                <p className="text-textDesc  text-center text-[14px] mt-2">
+                  VIP სტატუსი წარმატებით ჩაირთო განცხადებაზე - #
+                  {request.data?.product_id}
+                </p>
+                <div className="text-start text-Asmall text-textDesc mt-4 flex flex-col gap-2">
+                  <p>
+                    სტატუსი:{" "}
+                    <span
+                      style={{
+                        color: ActiveOffers.filter(
+                          (item) => item.name == request.data?.vip_name
+                        )[0].mainColor,
+                      }}
+                    >
+                      {request.data?.vip_name}{" "}
+                    </span>
+                  </p>
+                  <p>ამოწურვის ვადა: {request.data?.expire}</p>
+                </div>
+                <button
+                  onClick={() => props.setPopbuy({ id: null })}
+                  className="block h-[34px] w-[180px] rounded-md bg-greenClear text-greenI text-[14px] tracking-wider transition-colors hover:bg-greenHover mx-auto mt-5"
                 >
-                  {request.data?.vip_name}{" "}
-                </span>
-              </p>
-              <p>ამოწურვის ვადა: {request.data?.expire}</p>
-            </div>
-            <button
-              onClick={() => props.setPopbuy(null)}
-              className="block h-[34px] w-[180px] rounded-md bg-greenClear text-greenI text-[14px] tracking-wider transition-colors hover:bg-greenHover mx-auto mt-5"
-            >
-              დახურვა
-            </button>
+                  დახურვა
+                </button>
+              </>
+            ) : (
+              <>
+                {" "}
+                <h2 className="text-redI font-mainBold text-center text-[18px] ">
+                  წარმოიშვა შეცდომა
+                </h2>
+                <p className="text-textDesc  text-center text-[14px] mt-2">
+                  სერვერზე შეფერხებაა, სცადეთ მოგვიანებით
+                </p>
+                <button
+                  onClick={() => props.setPopbuy({ id: null })}
+                  className="block h-[34px] w-[180px] rounded-md bg-redClear text-redI text-[14px] tracking-wider transition-colors hover:bg-redHover mx-auto mt-5"
+                >
+                  გასაგებია
+                </button>
+              </>
+            )}
           </>
         ) : (
           <ContentLoader />

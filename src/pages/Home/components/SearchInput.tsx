@@ -60,7 +60,7 @@ function SearchInput() {
   };
 
   return (
-    <div className="w-full    my-10 overflow-hidden  bg-whiteMain rounded-[25px] shadow-sectionShadow">
+    <div className="w-full my-4 overflow-hidden  bg-whiteMain rounded-[25px] shadow-sectionShadow">
       <div className="w-full relative  flex gap-3 small:w-auto small:h-auto small:flex-col small:gap-1 flex-wrap mx-auto py-[20px] px-[25px] ">
         <img
           src={searchBg}

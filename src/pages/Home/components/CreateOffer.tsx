@@ -9,7 +9,7 @@ import {
 
 export default function CreateOffer() {
   return (
-    <section className="flex items-center gap-20 mobile:gap-10 my-[120px]  mobile:my-[60px]  mobile:mb-[50px] small:flex-col small:items-stretch">
+    <section className="flex items-center gap-20 mobile:gap-10 my-[120px] mt-[80px]  mobile:my-[60px]  mobile:mb-[50px] small:flex-col small:items-stretch">
       <div className="flex flex-col flex-1 gap-2 ">
         <div className="flex justify-center gap-16 items-end border-b-8 border-mainClear mediumSmall:gap-10 small:gap-12 mobile:gap-3">
           <Home3Decor className=" h-[90px] mediumSmall:h-[80px] small:h-[90px] mobileSmall:h-[60px] aspect-auto translate-y-[1px]" />

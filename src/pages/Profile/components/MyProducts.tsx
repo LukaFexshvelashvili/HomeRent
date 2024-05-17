@@ -154,7 +154,11 @@ function MyProducts() {
         />
       ) : null}{" "}
       {popbuy.id !== null ? (
-        <Buypopup setPopbuy={setPopbuy} popbuy={popbuy} />
+        <Buypopup
+          setPopbuy={setPopbuy}
+          popbuy={popbuy}
+          fetchProducts={fetchProducts}
+        />
       ) : null}
       <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3  mobile:px-3">
         <h1 className="mobileSmall:text-[14px]">ჩემი განცხადებები</h1>

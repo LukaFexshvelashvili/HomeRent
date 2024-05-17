@@ -13,6 +13,7 @@ import MainSlider from "./components/MainSlider";
 import SearchInput from "./components/SearchInput";
 import axiosCall from "../../hooks/axiosCall";
 import { TProductCard } from "../../components/global/Card";
+import { AdBanner1, AdBanner2 } from "../../components/global/AdComponents";
 
 function Home() {
   const [products, setProducts] = useState<null | TProductCard[]>([]);
@@ -65,7 +66,7 @@ function Home() {
     <main>
       <MainSlider />
       <SearchInput />
-
+      <AdBanner1 />
       <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4">
         <CrownIcon className=" h-[18px] mobileSmall:h-[17px] [&>path]:fill-redI mr-3 mobileSmall:mr-2 translate-y-[-1px] " />{" "}
         <span className="text-redI mr-2">VIP+</span> განცხადებები
@@ -88,6 +89,7 @@ function Home() {
         პოპულარული
       </div>
       <CardSlider uniqueId={3} products={viewedProducts()} />
+      <AdBanner2 />
       <CreateOffer />
       <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4">
         <ListIcon className=" h-[36px] mobileSmall:h-[34px] mobileSmall:mr-1  [&>path]:fill-orangeI mr-2 translate-y-[-1px]" />{" "}

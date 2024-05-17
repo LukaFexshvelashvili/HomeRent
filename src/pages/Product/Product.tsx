@@ -15,6 +15,7 @@ import { addLastProduct } from "../../hooks/UIFunctions";
 import { useDispatch } from "react-redux";
 import { productViewPlus } from "../../hooks/serverProductFunctions";
 import { TProductCard } from "../../components/global/Card";
+import { AdBanner3 } from "../../components/global/AdComponents";
 
 export default function Product() {
   const { id } = useParams();
@@ -96,11 +97,7 @@ export default function Product() {
               </div>
             </div>
             <div className="flex-1 flex flex-col gap-3  small:flex-col-reverse">
-              <div className="w-full  aspect-[2/1] small:h-[200px] rounded-block bg-whiteLoad relative">
-                <div className="bg-mainClear text-main px-5 py-1 rounded-md text-Asmall absolute top-3 right-3 cursor-pointer">
-                  განათავსე რეკლამა
-                </div>
-              </div>
+              <AdBanner3 />
               <div className=" rounded-block bg-whiteMain p-4">
                 <p className=" text-[15px] font-mainBold text-textHeadCard">
                   ახლოს მდებარეობს

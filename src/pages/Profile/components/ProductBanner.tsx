@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import {
   DateIcon,
+  LightningIcon,
   LoginEyeCloseIcon,
   LoginEyeIcon,
   TrashIcon,
@@ -12,6 +13,7 @@ import {
 import { Tuser } from "../../../store/data/userSlice";
 import { TProductData } from "./MyProducts";
 import { Link } from "react-router-dom";
+import { ActiveOffers } from "../../../assets/lists/offers";
 
 export default function ProductBanner(props: {
   setPopbuy: Function;
@@ -21,6 +23,9 @@ export default function ProductBanner(props: {
   fetchProducts: Function;
 }) {
   const dispatch = useDispatch();
+  const vipOffer = ActiveOffers.filter(
+    (item) => item.id == props.productData.estate_vip
+  )[0];
   return (
     <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center small:flex-col ">
       <Link to={"/Product/" + props.productData.id}>
@@ -37,21 +42,36 @@ export default function ProductBanner(props: {
       </Link>
       <div className="flex flex-col ml-3 h-full relative small:w-full small:mt-3 small:h-auto">
         <h3 className="text-[15px] mb-[2px] text-textHeadBlack">
-          {props.productData.estate_title}
+          {props.productData.estate_title.length > 20
+            ? props.productData.estate_title.slice(0, 20) + "..."
+            : props.productData.estate_title}
         </h3>
-        <p className="text-[13px] text-textDesc">
-          განახლდა:{" "}
-          <span className="text-[13px] text-textHeadBlack">
-            {props.productData.update_time.slice(0, 10)}
-          </span>
-        </p>
         <p className="text-[13px] text-textDesc">
           ვადა:{" "}
           <span className="text-[13px] text-textHeadBlack">
             {" "}
             {props.productData.expire_time.slice(0, 10)}
           </span>
+        </p>{" "}
+        <p className="text-[13px] text-textDesc">
+          სტატუსი:{" "}
+          <span
+            style={{
+              color: vipOffer.mainColor,
+            }}
+          >
+            {vipOffer.name}{" "}
+          </span>
         </p>
+        {vipOffer.id !== 0 ? (
+          <p className="text-[13px] text-textDesc mb-2">
+            სტატუსის ვადა:{" "}
+            <span className="text-[13px] text-textHeadBlack">
+              {" "}
+              {props.productData.estate_vip_expire.slice(0, 10)}
+            </span>
+          </p>
+        ) : null}
         <div className="flex items-center gap-5 mt-auto small:mt-2">
           {" "}
           <p className="flex items-center text-[13px] text-textDesc gap-1">
@@ -68,14 +88,7 @@ export default function ProductBanner(props: {
         </div>
       </div>
       <div className="flex items-center gap-3 ml-auto mediumSmallXl:flex-wrap mediumSmallXl:justify-end small:justify-start small:w-full small:mt-5">
-        {props.productData.macler_status == 0 ? (
-          <button
-            className="bg-purpleClear text-purpleI h-[35px] w-[180px] rounded-md text-[13px] font-mainBold tracking-wide transition-colors hover:bg-purpleHover"
-            onClick={() => props.setPopbuy({ id: props.productData.id })}
-          >
-            ნახვების გაზრდა
-          </button>
-        ) : props.productData.macler_status == 1 ? (
+        {props.productData.macler_status == 1 ? (
           <button className="bg-maclerMainClear pointer-events-none mobile:mt-5  text-maclerMain h-[35px] w-[200px] rounded-md text-[13px] font-mainBold tracking-wide">
             მოთხოვნა გაგზავნილია
           </button>
@@ -88,7 +101,26 @@ export default function ProductBanner(props: {
             მოთხოვნა დადასტურებულია
           </button>
         ) : null}
-
+        {props.productData.macler_status == 0 ? (
+          props.productData.estate_vip == 0 ? (
+            <button
+              onClick={() => props.setPopbuy({ id: props.productData.id })}
+              className="bg-purpleClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-purpleHover flex justify-center items-center"
+            >
+              <LightningIcon className="h-full aspect-square [&>path]:fill-purpleI" />
+            </button>
+          ) : (
+            <button
+              className="bg-purpleClear text-blueI h-[35px] px-3 rounded-md tracking-wider transition-colors p-2 text-[12px] font-mainBold flex justify-center items-center"
+              style={{
+                color: vipOffer.mainColor,
+                backgroundColor: vipOffer.secondColor,
+              }}
+            >
+              {vipOffer.name}
+            </button>
+          )
+        ) : null}
         {props.productData.product_status !== 1 ? (
           <button
             onClick={() =>
