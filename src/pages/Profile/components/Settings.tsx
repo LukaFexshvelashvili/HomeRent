@@ -13,7 +13,12 @@ export default function Settings() {
   const [security, setSecurity] = useState<boolean>(false);
   const colors = UISettings.colors;
   useLayoutEffect(() => {
-    setActiveColor(colors.indexOf(UISettings.mainColor));
+    if (colors.indexOf(UISettings.mainColor) !== -1) {
+      setActiveColor(colors.indexOf(UISettings.mainColor));
+    } else {
+      setActiveColor(0);
+    }
+
     setWebDarkMode(UISettings.darkMode);
   }, [UISettings]);
   return (

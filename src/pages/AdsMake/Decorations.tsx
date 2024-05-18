@@ -30,7 +30,7 @@ export const WholePageAd = () => {
             width="18"
             height="18"
             rx="4"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -39,7 +39,7 @@ export const WholePageAd = () => {
             width="18"
             height="18"
             rx="9"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -130,7 +130,7 @@ export const WholePageAd = () => {
             width="50"
             height="11"
             rx="2"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -139,7 +139,7 @@ export const WholePageAd = () => {
             width="50"
             height="11"
             rx="2"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -148,7 +148,7 @@ export const WholePageAd = () => {
             width="50"
             height="11"
             rx="2"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -157,7 +157,7 @@ export const WholePageAd = () => {
             width="11"
             height="11"
             rx="2"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -216,7 +216,7 @@ export const WholePageAd = () => {
             rx="3"
             fill="var(--whiteBgLow)"
           />
-          <rect x="12" y="15" width="360" height="18" fill="#3DFF96" />
+          <rect x="12" y="15" width="360" height="18" fill="var(--main)" />
           <rect
             x="101"
             y="269"
@@ -333,7 +333,7 @@ export const HomePageAd1 = () => {
             width="18"
             height="18"
             rx="4"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -342,7 +342,7 @@ export const HomePageAd1 = () => {
             width="18"
             height="18"
             rx="9"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -433,17 +433,24 @@ export const HomePageAd1 = () => {
             width="50"
             height="11"
             rx="2"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
-          <rect x="24" y="230" width="328" height="30" rx="4" fill="#3DFF96" />
+          <rect
+            x="24"
+            y="230"
+            width="328"
+            height="30"
+            rx="4"
+            fill="var(--main)"
+          />
           <rect
             x="88"
             y="172"
             width="50"
             height="11"
             rx="2"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -452,7 +459,7 @@ export const HomePageAd1 = () => {
             width="50"
             height="11"
             rx="2"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -461,7 +468,7 @@ export const HomePageAd1 = () => {
             width="11"
             height="11"
             rx="2"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -636,7 +643,7 @@ export const HomePageAd2 = () => {
             width="18"
             height="18"
             rx="4"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -645,7 +652,7 @@ export const HomePageAd2 = () => {
             width="18"
             height="18"
             rx="9"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
           <rect
@@ -698,7 +705,14 @@ export const HomePageAd2 = () => {
             rx="1.5"
             fill="var(--whiteMain)"
           />
-          <rect x="26" y="145" width="328" height="30" rx="4" fill="#3DFF96" />
+          <rect
+            x="26"
+            y="145"
+            width="328"
+            height="30"
+            rx="4"
+            fill="var(--main)"
+          />
           <rect
             x="30"
             y="61"
@@ -911,7 +925,7 @@ export const HomePageAd2 = () => {
             y="207"
             width="5"
             height="76"
-            fill="#3A86FF"
+            fill="var(--main)"
             fillOpacity="0.2"
           />
         </g>
@@ -991,7 +1005,7 @@ export const ProductPageAd1 = () => {
           width="18"
           height="18"
           rx="4"
-          fill="#3A86FF"
+          fill="var(--main)"
           fillOpacity="0.2"
         />
         <rect
@@ -1000,7 +1014,7 @@ export const ProductPageAd1 = () => {
           width="18"
           height="18"
           rx="9"
-          fill="#3A86FF"
+          fill="var(--main)"
           fillOpacity="0.2"
         />
         <rect
@@ -1019,7 +1033,7 @@ export const ProductPageAd1 = () => {
           rx="4"
           fill="var(--skeleton6)"
         />
-        <rect x="24" y="62" width="165" height="90" rx="8" fill="#3DFF96" />
+        <rect x="24" y="62" width="165" height="90" rx="8" fill="var(--main)" />
         <rect
           x="197"
           y="62"
@@ -1092,7 +1106,7 @@ export const ProductPageAd1 = () => {
           width="3.4"
           height="3.4"
           rx="1.7"
-          fill="#3DFF96"
+          fill="var(--main)"
           stroke="var(--whiteMain)"
           strokeWidth="0.4"
         />
@@ -1182,7 +1196,7 @@ export const ProductPageAd2 = () => {
           width="18"
           height="18"
           rx="4"
-          fill="#3A86FF"
+          fill="var(--main)"
           fillOpacity="0.2"
         />
         <rect
@@ -1191,7 +1205,7 @@ export const ProductPageAd2 = () => {
           width="18"
           height="18"
           rx="9"
-          fill="#3A86FF"
+          fill="var(--main)"
           fillOpacity="0.2"
         />
         <rect
@@ -1250,7 +1264,14 @@ export const ProductPageAd2 = () => {
           rx="5"
           fill="var(--whiteBgLow)"
         />
-        <rect x="252" y="161" width="100" height="85" rx="5" fill="#3DFF96" />
+        <rect
+          x="252"
+          y="161"
+          width="100"
+          height="85"
+          rx="5"
+          fill="var(--main)"
+        />
         <rect
           x="197"
           y="112"
