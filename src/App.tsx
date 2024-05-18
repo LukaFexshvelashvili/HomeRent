@@ -31,6 +31,7 @@ import NotFound from "./pages/NotFound";
 import SuspendedAccount from "./pages/SuspendedAccount";
 import Notifications from "./pages/Profile/components/Notifications";
 import PasswordRecover from "./pages/Authentication/PasswordRecover";
+import AdsMake from "./pages/AdsMake/AdsMake";
 
 function App() {
   const UISettings = useSelector((store: RootState) => store.webUI);
@@ -117,6 +118,7 @@ function App() {
             </Route>
             <Route path="MaclerService" element={<MaclerService />} />
             <Route path="MaclerChoose" element={<MaclerChoose />} />
+            <Route path="AdsMake" element={<AdsMake />} />
             <Route path="Maclerconditions" element={<Maclerconditions />} />
             {user.isLogged ? (
               <Route path="AdminPanel" element={<AdminPanel />} />
