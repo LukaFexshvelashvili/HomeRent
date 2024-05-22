@@ -1,5 +1,5 @@
 import { Swiper } from "swiper";
-import Card, { CardSkeleton, TProductCard } from "./Card";
+import Card, { CardSkeleton, SeeMoreCard, TProductCard } from "./Card";
 import "swiper/css";
 import "swiper/css/pagination";
 import { LeftArrowIcon } from "../../assets/icons/Icons";
@@ -11,6 +11,7 @@ import "swiper/swiper-bundle.css";
 function CardSlider(props: {
   uniqueId?: string | number;
   products: TProductCard[] | undefined;
+  link?: string;
 }) {
   const rand = Math.floor(Math.random() * 999999);
   const rand2 = Math.floor(Math.random() * 999);
@@ -119,13 +120,29 @@ function CardSlider(props: {
       >
         <div className="swiper-wrapper ">
           {props.products != null ? (
-            props.products.map((e: TProductCard, i) => (
-              <SwiperSlide
-                key={`${e.id}${i}${Math.floor(Math.random() * 200)}`}
-              >
-                <Card autoWidth={true} product={e} />
-              </SwiperSlide>
-            ))
+            <>
+              {props.products.map((e: TProductCard, i) => (
+                <SwiperSlide
+                  key={`${e.id}${i}${Math.floor(Math.random() * 200)}`}
+                >
+                  <Card autoWidth={true} product={e} />
+                </SwiperSlide>
+              ))}
+              {props.link ? (
+                <SwiperSlide
+                  key={`${
+                    Math.floor(Math.random() * 200) *
+                    Math.floor(Math.random() * 200)
+                  }${
+                    props.uniqueId
+                      ? props.uniqueId
+                      : Math.floor(Math.random() * 200)
+                  }`}
+                >
+                  <SeeMoreCard autoWidth={true} link={props.link} />
+                </SwiperSlide>
+              ) : null}
+            </>
           ) : (
             <>
               <div className="flex gap-[20px]">

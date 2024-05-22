@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { LeftArrowIcon } from "../../../assets/icons/Icons";
 import { AdBannerProductSlider } from "../../../components/global/AdComponents";
 
-export default function ImageSlider(props: { productData: any }) {
+function ImageSlider(props: { productData: any }) {
   const [slider, setSlider] = useState<number>(0);
 
-  const imageList = JSON.parse(props.productData.estate_images);
+  const imageList = useRef(JSON.parse(props.productData.estate_images));
 
   const sliderNext = () => {
-    if (slider == imageList.length - 1) {
+    if (slider == imageList.current.length - 1) {
       setSlider(0);
     } else {
       setSlider((state) => state + 1);
@@ -16,7 +16,7 @@ export default function ImageSlider(props: { productData: any }) {
   };
   const sliderPrev = () => {
     if (slider == 0) {
-      setSlider(imageList.length - 1);
+      setSlider(imageList.current.length - 1);
     } else {
       setSlider((state) => state - 1);
     }
@@ -24,9 +24,9 @@ export default function ImageSlider(props: { productData: any }) {
   if (Math.floor(Math.random() * 15) == 4) {
     if (
       props.productData.estate_images.length > 1 &&
-      !imageList.includes("AD")
+      !imageList.current.includes("AD")
     ) {
-      imageList.splice(1, 0, "AD");
+      imageList.current.splice(1, 0, "AD");
     }
   }
   useEffect(() => {
@@ -34,10 +34,10 @@ export default function ImageSlider(props: { productData: any }) {
   }, [props.productData]);
 
   return (
-    <div className="flex-[1.3] bg-whiteMain rounded-block relative flex items-center justify-center  shadow-sectionShadow">
+    <div className="flex-[1.3] bg-whiteMain rounded-block relative flex items-center justify-center  shadow-sectionShadow max-h-[450px]">
       <div className="slider-shade absolute h-full w-full left-0 top-0 z-[2] rounded-b-block"></div>
       <div className="flex items-center gap-4 absolute bottom-3 z-[3] mobileSmall:gap-3">
-        {imageList.map((item: string, i: number) => (
+        {imageList.current.map((item: string, i: number) => (
           <div
             key={i}
             onClick={() => setSlider(i)}
@@ -60,9 +60,9 @@ export default function ImageSlider(props: { productData: any }) {
         ))}
       </div>
       <div className="relative overflow-hidden h-full w-full rounded-block z-[1] medium:min-h-[500px] small:min-h-[400px] mobile:min-h-[300px] mobileSmall:min-h-[200px]">
-        {imageList[slider] !== "AD" ? (
+        {imageList.current[slider] !== "AD" ? (
           <img
-            src={"http://localhost/HomeRentServer/" + imageList[slider]}
+            src={"http://localhost/HomeRentServer/" + imageList.current[slider]}
             className="absolute top-0 left-0 h-full w-full object-cover"
             alt="Product Image"
           />
@@ -70,7 +70,7 @@ export default function ImageSlider(props: { productData: any }) {
           <AdBannerProductSlider />
         )}
       </div>
-      {imageList.length !== 1 && (
+      {imageList.current.length !== 1 && (
         <>
           <button
             onClick={() => sliderPrev()}
@@ -89,3 +89,4 @@ export default function ImageSlider(props: { productData: any }) {
     </div>
   );
 }
+export default memo(ImageSlider);

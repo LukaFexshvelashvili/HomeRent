@@ -28,7 +28,20 @@ export default function ProductBanner(props: {
   )[0];
   return (
     <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center small:flex-col ">
-      <Link to={"/Product/" + props.productData.id} className="small:w-full">
+      {props.productData.product_status !== 1 ? (
+        <Link to={"/Product/" + props.productData.id} className="small:w-full">
+          <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden small:w-[100%] small:aspect-video small:h-auto">
+            <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2] "></div>
+            <img
+              src={
+                "http://localhost/homeRentServer/" +
+                props.productData.estate_active_image
+              }
+              className="absolute h-full w-full object-cover  top-0 left-0"
+            />
+          </div>
+        </Link>
+      ) : (
         <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden small:w-[100%] small:aspect-video small:h-auto">
           <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2] "></div>
           <img
@@ -39,7 +52,7 @@ export default function ProductBanner(props: {
             className="absolute h-full w-full object-cover  top-0 left-0"
           />
         </div>
-      </Link>
+      )}
       <div className="flex flex-col ml-3 h-full relative small:w-full small:mt-3 small:h-auto">
         <h3 className="text-[15px] mb-[2px] text-textHeadBlack">
           {props.productData.estate_title.length > 20
@@ -101,80 +114,89 @@ export default function ProductBanner(props: {
             მოთხოვნა დადასტურებულია
           </button>
         ) : null}
-        {props.productData.macler_status == 0 ? (
-          props.productData.estate_vip == 0 ? (
+
+        {props.productData.product_status !== 2 ? (
+          props.productData.macler_status == 0 ? (
+            props.productData.estate_vip == 0 ? (
+              <button
+                onClick={() => props.setPopbuy({ id: props.productData.id })}
+                className="bg-purpleClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-purpleHover flex justify-center items-center"
+              >
+                <LightningIcon className="h-full aspect-square [&>path]:fill-purpleI" />
+              </button>
+            ) : (
+              <button
+                className="bg-purpleClear text-blueI h-[35px] px-3 rounded-md tracking-wider transition-colors p-2 text-[12px] font-mainBold flex justify-center items-center"
+                style={{
+                  color: vipOffer.mainColor,
+                  backgroundColor: vipOffer.secondColor,
+                }}
+              >
+                {vipOffer.name}
+              </button>
+            )
+          ) : null
+        ) : null}
+        {props.productData.product_status !== 2 ? (
+          props.productData.product_status !== 1 ? (
             <button
-              onClick={() => props.setPopbuy({ id: props.productData.id })}
-              className="bg-purpleClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-purpleHover flex justify-center items-center"
+              onClick={() =>
+                props.setPopAlert({
+                  open: true,
+                  headText: "განცხადების დამალვა",
+                  descText:
+                    "ნამდვილად გსურთ დამალოთ განცხადება? (თქვენ ნებისმიერ დროს შეგიძლიათ გახადოთ ის ხილვადი)",
+                  nextFunction: () => {
+                    hideProduct(
+                      props.userData,
+                      props.productData.id,
+                      true
+                    ).then(() => {
+                      props.setPopAlert({
+                        open: false,
+                        headText: "",
+                        descText: "",
+                        nextFunction: () => {},
+                      });
+                      props.fetchProducts();
+                    });
+                  },
+                })
+              }
+              className="bg-mainClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueHover flex justify-center items-center"
             >
-              <LightningIcon className="h-full aspect-square [&>path]:fill-purpleI" />
+              <LoginEyeCloseIcon className="h-full aspect-square [&>path]:stroke-blueI" />
             </button>
           ) : (
             <button
-              className="bg-purpleClear text-blueI h-[35px] px-3 rounded-md tracking-wider transition-colors p-2 text-[12px] font-mainBold flex justify-center items-center"
-              style={{
-                color: vipOffer.mainColor,
-                backgroundColor: vipOffer.secondColor,
-              }}
+              onClick={() =>
+                props.setPopAlert({
+                  open: true,
+                  headText: "განცხადების გამოჩენა",
+                  descText: "ნამდვილად გსურთ გამოაჩინოთ განცხადება?",
+                  nextFunction: () => {
+                    hideProduct(
+                      props.userData,
+                      props.productData.id,
+                      false
+                    ).then(() => {
+                      props.setPopAlert({
+                        open: false,
+                        headText: "",
+                        descText: "",
+                        nextFunction: () => {},
+                      });
+                      props.fetchProducts();
+                    });
+                  },
+                })
+              }
+              className="bg-blueI text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueLightI flex justify-center items-center"
             >
-              {vipOffer.name}
+              <LoginEyeIcon className="h-full aspect-square [&>path]:fill-buttonText" />
             </button>
           )
         ) : null}
-        {props.productData.product_status !== 1 ? (
-          <button
-            onClick={() =>
-              props.setPopAlert({
-                open: true,
-                headText: "განცხადების დამალვა",
-                descText:
-                  "ნამდვილად გსურთ დამალოთ განცხადება? (თქვენ ნებისმიერ დროს შეგიძლიათ გახადოთ ის ხილვადი)",
-                nextFunction: () => {
-                  hideProduct(props.userData, props.productData.id, true).then(
-                    () => {
-                      props.setPopAlert({
-                        open: false,
-                        headText: "",
-                        descText: "",
-                        nextFunction: () => {},
-                      });
-                      props.fetchProducts();
-                    }
-                  );
-                },
-              })
-            }
-            className="bg-mainClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueHover flex justify-center items-center"
-          >
-            <LoginEyeCloseIcon className="h-full aspect-square [&>path]:stroke-blueI" />
-          </button>
-        ) : (
-          <button
-            onClick={() =>
-              props.setPopAlert({
-                open: true,
-                headText: "განცხადების გამოჩენა",
-                descText: "ნამდვილად გსურთ გამოაჩინოთ განცხადება?",
-                nextFunction: () => {
-                  hideProduct(props.userData, props.productData.id, false).then(
-                    () => {
-                      props.setPopAlert({
-                        open: false,
-                        headText: "",
-                        descText: "",
-                        nextFunction: () => {},
-                      });
-                      props.fetchProducts();
-                    }
-                  );
-                },
-              })
-            }
-            className="bg-blueI text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueLightI flex justify-center items-center"
-          >
-            <LoginEyeIcon className="h-full aspect-square [&>path]:fill-buttonText" />
-          </button>
-        )}
         <button
           onClick={() =>
             props.setPopAlert({

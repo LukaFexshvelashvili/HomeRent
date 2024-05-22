@@ -73,6 +73,7 @@ function Home() {
       </div>
       <CardSlider
         uniqueId={1}
+        link="vip=2"
         products={products?.filter(
           (product: TProductCard) => product.estate_vip == 2
         )}
@@ -84,6 +85,7 @@ function Home() {
       </div>
       <CardSlider
         uniqueId={3}
+        link="vip=1"
         products={products?.filter(
           (product: TProductCard) => product.estate_vip == 1
         )}
@@ -93,13 +95,13 @@ function Home() {
         <NewsIcon className=" h-[32px] mobileSmall:h-[30px] mobileSmall:mr-1 [&>path]:fill-purpleI mr-2 translate-y-[-1px]" />{" "}
         ახალი
       </div>
-      <CardSlider uniqueId={2} products={lastProducts()} />
+      <CardSlider link="new=1" uniqueId={2} products={lastProducts()} />
       {/* <MaclerCard /> */}
       <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4 mt-[50px]">
         <StarIcon className=" h-[32px] mobileSmall:h-[30px] mobileSmall:mr-1 [&>path]:fill-pinkI mr-2 translate-y-[-1px]" />{" "}
         პოპულარული
       </div>
-      <CardSlider uniqueId={3} products={viewedProducts()} />
+      <CardSlider link="views=1" uniqueId={3} products={viewedProducts()} />
       <AdBanner2 />
       <CreateOffer />
     </main>

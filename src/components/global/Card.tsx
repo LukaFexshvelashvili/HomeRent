@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   BookmarkIcon,
+  PlusIcon,
   RoomIcon,
   SquareFrameIcon,
 } from "../../assets/icons/Icons";
@@ -181,5 +182,21 @@ export function CardSkeleton(props: { autoWidth?: boolean }) {
         </button>
       </div>
     </div>
+  );
+}
+export function SeeMoreCard(props: { autoWidth?: boolean; link: string }) {
+  return (
+    <>
+      <Link to={"/Search?" + props.link}>
+        <div
+          className={`h-[328px] cursor-pointer transition-colors hover:bg-whiteHover  ${
+            props.autoWidth ? "w-full" : "w-[280px]"
+          } bg-whiteMain border-2 border-cardBorder  rounded-normal p-3 pb-14 relative text-blackMain flex justify-center flex-col gap-3 items-center text-[20px] tracking-wider`}
+        >
+          მეტის ნახვა
+          <PlusIcon className="h-[20px] [&>path]:fill-blackMain " />
+        </div>
+      </Link>
+    </>
   );
 }

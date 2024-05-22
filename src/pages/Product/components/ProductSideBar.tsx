@@ -17,6 +17,7 @@ import { TProductData } from "../../Profile/components/MyProducts";
 import { useState } from "react";
 import { addFavorite, removeFavorite } from "../../../hooks/serverFunctions";
 import { currencyConvertor } from "../../../components/convertors/convertors";
+import { projectStatuses } from "../../../assets/lists/productAddons";
 export default function ProductSideBar(props: { productData: TProductData }) {
   const userFavorites = useSelector((store: RootState) => store.user.favorites);
   const dispatch = useDispatch();
@@ -65,14 +66,27 @@ export default function ProductSideBar(props: { productData: TProductData }) {
             <span>ID - {props.productData.id}</span>
           </div>
           <div className="flex items-center mt-2 justify-between mobile:flex-col-reverse mobile:mt-3 mobile:gap-3 mobile:items-stretch">
-            <h2 className="text-[20px] text-textHeadCard tracking-wide font-mainBold mobile:text-[18px] mobileSmall:text-[16px]">
+            <h2 className="text-[20px] text-textHeadCard tracking-wide font-mainBold mobile:text-[18px] mobileSmall:text-[16px] max-w-[300px] overflow-hidden text-nowrap text-ellipsis">
               {props.productData.estate_title}
             </h2>
             <div className=" flex justify-center items-center bg-mainClear text-main h-[32px] w-[120px] font-mainBold tracking-wider rounded-lg text-Asmall mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
               {getDealType(props.productData.estate_deal)}
-            </div>
+            </div>{" "}
           </div>
-
+          <div className=" flex text-textHead items-center h-[30px] font-mainSemiBold tracking-wider rounded-lg text-Asmall mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
+            ტიპი:{" "}
+            <span className="ml-2 text-main ">
+              {getType(props.productData.estate_type)}
+            </span>
+          </div>{" "}
+          {props.productData.estate_condition ? (
+            <div className=" flex text-textHead items-center h-[30px] font-mainSemiBold tracking-wider rounded-lg text-Asmall mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
+              მდგომარეობა:{" "}
+              <span className="ml-2 text-main ">
+                {projectStatuses[props.productData.estate_condition]}
+              </span>
+            </div>
+          ) : null}
           <div className="flex items-center mt-5 justify-between px-3 mobile:px-0">
             <div className="flex items-center gap-4 mobileSmall:gap-2">
               <p className="text-[20px] font-mainBold text-textHeadCard mobile:text-[18px] mobileSmall:text-[16px]">
@@ -252,38 +266,26 @@ function getDealType(dealID: number) {
       break;
   }
 }
-// function getType(typeID: number) {
-//   switch (typeID) {
-//     case 0:
-//       return "კერძო სახლი";
-//       break;
-//     case 1:
-//       return "კორპუსის ბინა";
-//       break;
-//     case 2:
-//       return "კომერციული ფართი";
-//       break;
-//     case 3:
-//       return "მიწის ნაკვეთი";
-//       break;
-//     case 4:
-//       return "სასტუმრო";
-//       break;
-//   }
-// }
-function getStatus(statusID: number) {
-  switch (statusID) {
+function getType(typeID: number) {
+  switch (typeID) {
     case 0:
-      return "ახალი აშენებული";
+      return "კერძო სახლი";
       break;
     case 1:
-      return "ძველი აშენებული";
+      return "კორპუსის ბინა";
       break;
     case 2:
-      return "მშენებარე";
+      return "კომერციული ფართი";
+      break;
+    case 3:
+      return "მიწის ნაკვეთი";
+      break;
+    case 4:
+      return "სასტუმრო";
       break;
   }
 }
+
 function getProject(projectID: number) {
   const projectTypes: string[] = [
     "ლენინგრადის",

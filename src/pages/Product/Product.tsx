@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { TClosePlace, closePlacesList } from "../../assets/lists/closePlaces";
 import {
   TProductAddon,
@@ -22,6 +22,7 @@ import { AdBanner3 } from "../../components/global/AdComponents";
 export default function Product() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [productData, setProductData] = useState<null | TProductData>(null);
   const [sameProducts, setSameProducts] = useState<null | TProductCard[]>(null);
   const makeRefresh = useRef({ id: id, refresh: true });
@@ -33,13 +34,17 @@ export default function Product() {
       makeRefresh.current.id = id;
       makeRefresh.current.refresh = false;
       axiosCall.post("fetch/product", `product_id=${id}`).then((res) => {
-        if (res.data.status === 100) {
-          setProductData(res.data.product_data[0]);
-          let formData = new FormData();
-          formData.append("city", res.data.product_data[0].estate_city);
-          axiosCall
-            .post("fetch/same_products", formData)
-            .then((res) => setSameProducts(res.data));
+        if (res.data.product_data.length == 0) {
+          navigate("/");
+        } else {
+          if (res.data.status === 100) {
+            setProductData(res.data.product_data[0]);
+            let formData = new FormData();
+            formData.append("city", res.data.product_data[0].estate_city);
+            axiosCall
+              .post("fetch/same_products", formData)
+              .then((res) => setSameProducts(res.data));
+          }
         }
       });
 
@@ -67,7 +72,8 @@ export default function Product() {
                   აღწერა
                 </p>
                 <p className=" text-[14px] font-mainSemiBold text-textDescCard leading-[23px] mt-2 tracking-normal">
-                  {productData.estate_description
+                  {productData.estate_description &&
+                  productData.estate_description !== "null"
                     ? productData.estate_description
                     : "აღწერა არ არის დამატებული"}
                 </p>
@@ -86,7 +92,7 @@ export default function Product() {
                   დამატებითი ინფორმაცია
                 </p>
                 <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[150px] my-[25px] pl-5 medium:max-h-none medium:flex-row ">
-                  {productData.estate_addons !== null
+                  {JSON.parse(productData.estate_addons) !== null
                     ? productData.estate_type == 3
                       ? productAddonsListForLand.map(
                           (item: TProductAddon, i: number) => (
@@ -168,7 +174,7 @@ export default function Product() {
                   ახლოს მდებარეობს
                 </p>
                 <div className="flex gap-3 flex-wrap mt-5 mobile:justify-center">
-                  {productData.estate_close_places !== null
+                  {JSON.parse(productData.estate_close_places) !== null
                     ? closePlacesList.map((item: TClosePlace, i: number) =>
                         JSON.parse(productData.estate_close_places).includes(
                           i
