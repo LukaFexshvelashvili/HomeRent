@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import numeral from "numeral";
 import {
+  clearAddProduct,
   updateEstateVipDays,
   updateVip,
 } from "../../../store/data/addProductSlice";
@@ -139,7 +140,10 @@ export default function EstateConfirm(props: {
                 props.setShowError,
                 props.setUploadStatus,
                 props.setAlertBlock,
-                setError
+                setError,
+                () => {
+                  dispatch(clearAddProduct());
+                }
               );
             }
           }}
@@ -198,7 +202,12 @@ export function CardExample(props: {
           </div>
           <div className="bg-cardInfoBg backdrop-blur-[2px] rounded-[3px] flex justify-center items-center px-2 py-[6px] text-WhiteFade font-mainSemiBold text-sm">
             <SquareFrameIcon className="h-[18px] mr-3 [&>path]:stroke-WhiteFade" />{" "}
-            92მ²
+            {props.size
+              ? props.size.toString().length > 7
+                ? props.size.toString().slice(0, 7) + "+"
+                : props.size.toString()
+              : 0}
+            მ²
           </div>
         </div>
       </div>

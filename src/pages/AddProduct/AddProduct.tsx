@@ -26,7 +26,7 @@ export default function AddProduct() {
   const dispatch = useDispatch();
   const [alertBlock, setAlertBlock] = useState<boolean>(false);
   useEffect(() => {
-    if (productData.estateType == "მიწის ნაკვეთი") {
+    if (productData.estateType == 3) {
       dispatch(updateStatus(null));
     }
   }, [productData.estateType]);
@@ -86,8 +86,9 @@ export default function AddProduct() {
         <div className="py-4 px-5 flex flex-col gap-8  mobile:px-3">
           <EstateType />
           {productData.estateType !== null && <DealType />}
-          {productData.estateDeal !== null &&
-            productData.estateType !== "მიწის ნაკვეთი" && <EstateStatus />}
+          {productData.estateDeal !== null && (
+            <EstateStatus productData={productData} />
+          )}
 
           {productData.estateStatus !== null && (
             <EstateTitle
@@ -111,12 +112,15 @@ export default function AddProduct() {
           )}
           {productData.estateStatus !== null && (
             <EstateInformation
+              productData={productData}
               error={
                 showError && productData.estatePrice == null ? true : false
               }
             />
           )}
-          {productData.estateStatus !== null && <EstateAddons />}
+          {productData.estateStatus !== null && (
+            <EstateAddons productData={productData} />
+          )}
           {productData.estateStatus !== null && <EstateClosePlaces />}
           {productData.estateStatus !== null && <EstateOption />}
         </div>

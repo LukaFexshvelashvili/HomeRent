@@ -21,13 +21,16 @@ export default function ImageSlider(props: { productData: any }) {
       setSlider((state) => state - 1);
     }
   };
-  if (props.productData.estate_images.length > 1 && !imageList.includes("AD")) {
-    imageList.splice(1, 0, "AD");
+  if (Math.floor(Math.random() * 15) == 4) {
+    if (
+      props.productData.estate_images.length > 1 &&
+      !imageList.includes("AD")
+    ) {
+      imageList.splice(1, 0, "AD");
+    }
   }
   useEffect(() => {
     setSlider(0);
-    if (Math.floor(Math.random() * 15) == 4) {
-    }
   }, [props.productData]);
 
   return (

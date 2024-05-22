@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Tuser } from "./store/data/userSlice";
 import SuspendedAccount from "./pages/SuspendedAccount";
 import Logout from "./pages/Logout";
+import { useDispatch } from "react-redux";
+import { clearAddProduct } from "./store/data/addProductSlice";
 
 export default function CheckRoutes(props: {
   children: JSX.Element;
@@ -13,6 +15,7 @@ export default function CheckRoutes(props: {
   const [path, setPath] = useState(location.pathname);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     if (
       props.user.isLogged &&
@@ -21,8 +24,8 @@ export default function CheckRoutes(props: {
     ) {
       navigate("/SuspendedAccount");
     }
-    if (path) {
-    }
+    dispatch(clearAddProduct());
+
     setPath(location.pathname);
   }, [navigate, props.user.banned]);
 

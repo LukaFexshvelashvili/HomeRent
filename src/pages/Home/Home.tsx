@@ -77,21 +77,8 @@ function Home() {
           (product: TProductCard) => product.estate_vip == 2
         )}
       />
-      <ChooseSection />
-      <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4">
-        <NewsIcon className=" h-[32px] mobileSmall:h-[30px] mobileSmall:mr-1 [&>path]:fill-purpleI mr-2 translate-y-[-1px]" />{" "}
-        ახალი
-      </div>
-      <CardSlider uniqueId={2} products={lastProducts()} />
-      <MaclerCard />
-      <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4">
-        <StarIcon className=" h-[32px] mobileSmall:h-[30px] mobileSmall:mr-1 [&>path]:fill-pinkI mr-2 translate-y-[-1px]" />{" "}
-        პოპულარული
-      </div>
-      <CardSlider uniqueId={3} products={viewedProducts()} />
-      <AdBanner2 />
-      <CreateOffer />
-      <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4">
+
+      <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4 mt-[50px]">
         <ListIcon className=" h-[36px] mobileSmall:h-[34px] mobileSmall:mr-1  [&>path]:fill-orangeI mr-2 translate-y-[-1px]" />{" "}
         <span className="text-orangeI mr-2">VIP</span> განცხადებები
       </div>
@@ -101,6 +88,20 @@ function Home() {
           (product: TProductCard) => product.estate_vip == 1
         )}
       />
+      <ChooseSection />
+      <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4">
+        <NewsIcon className=" h-[32px] mobileSmall:h-[30px] mobileSmall:mr-1 [&>path]:fill-purpleI mr-2 translate-y-[-1px]" />{" "}
+        ახალი
+      </div>
+      <CardSlider uniqueId={2} products={lastProducts()} />
+      {/* <MaclerCard /> */}
+      <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4 mt-[50px]">
+        <StarIcon className=" h-[32px] mobileSmall:h-[30px] mobileSmall:mr-1 [&>path]:fill-pinkI mr-2 translate-y-[-1px]" />{" "}
+        პოპულარული
+      </div>
+      <CardSlider uniqueId={3} products={viewedProducts()} />
+      <AdBanner2 />
+      <CreateOffer />
     </main>
   );
 }

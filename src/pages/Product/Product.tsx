@@ -3,6 +3,7 @@ import { TClosePlace, closePlacesList } from "../../assets/lists/closePlaces";
 import {
   TProductAddon,
   productAddonsList,
+  productAddonsListForLand,
 } from "../../assets/lists/productAddons";
 import CardSlider from "../../components/global/CardSlider";
 import ImageSlider from "./components/ImageSlider";
@@ -84,15 +85,59 @@ export default function Product() {
                   დამატებითი ინფორმაცია
                 </p>
                 <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[150px] my-[25px] pl-5 medium:max-h-none medium:flex-row ">
-                  {productAddonsList.map((item: TProductAddon, i: number) => (
-                    <div key={i} className="flex items-center  ">
-                      {item.icon("h-[20px]")}{" "}
-                      <p className="text-Asmall ml-2 text-textDesc">
-                        {" "}
-                        {item.name}
-                      </p>
-                    </div>
-                  ))}
+                  {productData.estate_type == 3
+                    ? productData.estate_addons !== null
+                      ? productAddonsListForLand.map(
+                          (item: TProductAddon, i: number) => (
+                            <div
+                              key={i}
+                              className={`flex items-center ${
+                                JSON.parse(productData.estate_addons).includes(
+                                  i
+                                )
+                                  ? "opacity-100"
+                                  : "opacity-20 line-through decoration-blackMain"
+                              } `}
+                            >
+                              {item.icon("h-[20px]")}{" "}
+                              <p className="text-Asmall ml-2 text-textDesc">
+                                {" "}
+                                {item.name}
+                              </p>
+                            </div>
+                          )
+                        )
+                      : null
+                    : productData.estate_addons !== null
+                    ? productAddonsList.map(
+                        (item: TProductAddon, i: number) => {
+                          if (
+                            productData.estate_type !== 0 &&
+                            item.name == "კანალიზაცია"
+                          ) {
+                            return null;
+                          }
+                          return (
+                            <div
+                              key={i}
+                              className={`flex items-center ${
+                                JSON.parse(productData.estate_addons).includes(
+                                  i
+                                )
+                                  ? "opacity-100"
+                                  : "opacity-20 line-through decoration-blackMain"
+                              } `}
+                            >
+                              {item.icon("h-[20px]")}{" "}
+                              <p className="text-Asmall ml-2 text-textDesc">
+                                {" "}
+                                {item.name}
+                              </p>
+                            </div>
+                          );
+                        }
+                      )
+                    : null}
                 </div>
               </div>
             </div>
@@ -103,22 +148,28 @@ export default function Product() {
                   ახლოს მდებარეობს
                 </p>
                 <div className="flex gap-3 flex-wrap mt-5 mobile:justify-center">
-                  {closePlacesList.map((item: TClosePlace, i: number) => (
-                    <div
-                      className="h-[35px] px-4 flex items-center rounded-md "
-                      style={{ backgroundColor: item.bgColor }}
-                      key={i}
-                    >
-                      {item.icon("h-[24px]")}{" "}
-                      <p
-                        className="ml-2 text-Asmall font-mainMedium tracking-widest"
-                        style={{ color: item.color }}
-                      >
-                        {" "}
-                        {item.name}
-                      </p>
-                    </div>
-                  ))}
+                  {productData.estate_close_places !== null
+                    ? closePlacesList.map((item: TClosePlace, i: number) =>
+                        JSON.parse(productData.estate_close_places).includes(
+                          i
+                        ) ? (
+                          <div
+                            className="h-[35px] px-4 flex items-center rounded-md "
+                            style={{ backgroundColor: item.bgColor }}
+                            key={i}
+                          >
+                            {item.icon("h-[24px]")}{" "}
+                            <p
+                              className="ml-2 text-Asmall font-mainMedium tracking-widest"
+                              style={{ color: item.color }}
+                            >
+                              {" "}
+                              {item.name}
+                            </p>
+                          </div>
+                        ) : null
+                      )
+                    : null}
                 </div>
               </div>
             </div>

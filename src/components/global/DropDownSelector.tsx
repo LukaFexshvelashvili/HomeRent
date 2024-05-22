@@ -46,60 +46,62 @@ export default function DropDownSelector(props: {
   }, [params]);
   return (
     <div className="relative ">
-      <button
-        onClick={() => setOpenDialog((state) => !state)}
-        className="bg-main flex items-center px-6 py-[6px] min-w-[300px] justify-center rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall"
-      >
-        {activeItem == null ? props.name : activeItem}
-        <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-      </button>
       <OutsideClickClose activePop={openDialog} setActivePop={setOpenDialog}>
-        <div
-          className={` w-full z-10 absolute shadow-cardShadow bg-whiteMain rounded-lg top-[50px] overflow-hidden transition-all  ${
-            openDialog ? "opacity-100 visible" : "invisible opacity-0"
-          }`}
-        >
-          <input
-            type="text"
-            placeholder="მოძებნა"
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
-            className="w-full h-[35px] bg-LoginInputBg font-mainRegular text-blackMain text-[14px] px-2 tracking-wider outline-none caret-blackMain"
-          />
-          <div className="max-h-[250px] overflow-x-hidden overflow-auto">
-            {items.length > 0 ? (
-              items.map((e: string, i: number) => (
-                <button
-                  key={i}
-                  onClick={() => {
-                    setOpenDialog(false);
-                    if (e == activeItem) {
-                      deleteParams(params, setParams, props.engName);
+        <>
+          <button
+            onClick={() => setOpenDialog((state) => !state)}
+            className="bg-main flex items-center px-6 py-[6px] min-w-[300px] justify-center rounded-lg text-buttonText tracking-widest mt-3 font-mainMedium text-Asmall"
+          >
+            {activeItem == null ? props.name : activeItem}
+            <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
+          </button>
+          <div
+            className={` w-full z-10 absolute shadow-cardShadow bg-whiteMain rounded-lg top-[50px] overflow-hidden transition-all  ${
+              openDialog ? "opacity-100 visible" : "invisible opacity-0"
+            }`}
+          >
+            <input
+              type="text"
+              placeholder="მოძებნა"
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+              className="w-full h-[35px] bg-LoginInputBg font-mainRegular text-blackMain text-[14px] px-2 tracking-wider outline-none caret-blackMain"
+            />
+            <div className="max-h-[250px] overflow-x-hidden overflow-auto">
+              {items.length > 0 ? (
+                items.map((e: string, i: number) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setOpenDialog(false);
+                      if (e == activeItem) {
+                        deleteParams(params, setParams, props.engName);
 
-                      setActiveItem(null);
-                    } else {
-                      if (props.engName) {
-                        let newProp: any = {};
-                        newProp[props.engName] = e;
-                        updateParams(params, setParams, newProp);
+                        setActiveItem(null);
+                      } else {
+                        if (props.engName) {
+                          let newProp: any = {};
+                          newProp[props.engName] = e;
+                          updateParams(params, setParams, newProp);
+                        }
+                        setActiveItem(e);
                       }
-                      setActiveItem(e);
-                    }
-                  }}
-                  className={` w-full flex justify-center items-center font-mainRegular text-[14px] tracking-wider p-2 text-textHead transition-colors hover:bg-whiteHover ${
-                    activeItem == e ? "bg-whiteHover" : ""
-                  }`}
-                >
-                  {e}
-                </button>
-              ))
-            ) : (
-              <div className="text-center w-full flex justify-center items-center font-mainRegular text-[14px] tracking-wider p-2 text-textHead ">
-                შედეგი ვერ მოიძებნა
-              </div>
-            )}
+                    }}
+                    className={` w-full flex justify-center items-center font-mainRegular text-[14px] tracking-wider p-2 text-textHead transition-colors hover:bg-whiteHover ${
+                      activeItem == e ? "bg-whiteHover" : ""
+                    }`}
+                  >
+                    {e}
+                  </button>
+                ))
+              ) : (
+                <div className="text-center w-full flex justify-center items-center font-mainRegular text-[14px] tracking-wider p-2 text-textHead ">
+                  შედეგი ვერ მოიძებნა
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       </OutsideClickClose>
     </div>
   );

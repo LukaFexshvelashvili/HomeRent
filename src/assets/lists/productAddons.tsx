@@ -1,4 +1,5 @@
 import {
+  AcceptedIcon,
   BalconyIcon,
   BathIcon,
   BoxesIcon,
@@ -8,12 +9,16 @@ import {
   FirewallIcon,
   FurnitureIcon,
   GarageIcon,
+  HomeIcon,
   ParkingIcon,
   PoolIcon,
+  RoadIcon,
+  SplitIcon,
   TvIcon,
   WaterCelsiusIcon,
   WaterIcon,
   WifiIcon,
+  ZapIcon,
 } from "../icons/Icons";
 
 export const projectDealTypes = [
@@ -67,13 +72,25 @@ export const productAddonsList = [
     icon: (props: string) => (
       <WaterIcon className={`${props} aspect-square [&>path]:stroke-main`} />
     ),
-    name: "სასმელი წყალი",
+    name: "წყალი",
+  },
+  {
+    icon: (props: string) => (
+      <WaterIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
+    name: "კანალიზაცია",
   },
   {
     icon: (props: string) => (
       <PoolIcon className={`${props} aspect-square [&>path]:fill-main`} />
     ),
-    name: "აუზი",
+    name: "ღია აუზი",
+  },
+  {
+    icon: (props: string) => (
+      <PoolIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
+    name: "დახურული აუზი",
   },
   {
     icon: (props: string) => (
@@ -109,9 +126,9 @@ export const productAddonsList = [
   },
   {
     icon: (props: string) => (
-      <BathIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+      <ElevatorIcon className={`${props} aspect-square [&>path]:fill-main`} />
     ),
-    name: "სველი წერტილი 1",
+    name: "სატვირთო ლიფტი",
   },
   {
     icon: (props: string) => (
@@ -135,7 +152,7 @@ export const productAddonsList = [
     icon: (props: string) => (
       <GarageIcon className={`${props} aspect-square [&>path]:stroke-main`} />
     ),
-    name: "გარაჟი",
+    name: "ავტოფარეხი",
   },
   {
     icon: (props: string) => (
@@ -150,7 +167,134 @@ export const productAddonsList = [
     name: "ტელევიზორი",
   },
 ];
+export const productAddonsListForHotel = [
+  {
+    icon: (props: string) => (
+      <PoolIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
+    name: "ღია აუზი",
+  },
+  {
+    icon: (props: string) => (
+      <PoolIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
+    name: "დახურული აუზი",
+  },
+  {
+    icon: (props: string) => (
+      <BalconyIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
+    name: "აივანი",
+  },
+  {
+    icon: (props: string) => (
+      <ConditionerIcon
+        className={`${props} aspect-square [&>path]:stroke-main`}
+      />
+    ),
+    name: "კონდიციონერი",
+  },
+  {
+    icon: (props: string) => (
+      <ParkingIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
+    name: "პარკინგი",
+  },
+  {
+    icon: (props: string) => (
+      <FirewallIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
+    name: "გათბობა",
+  },
+  {
+    icon: (props: string) => (
+      <WifiIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
+    name: "ინტერნეტი",
+  },
+  {
+    icon: (props: string) => (
+      <ElevatorIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
+    name: "ლიფტი",
+  },
+  {
+    icon: (props: string) => (
+      <FireIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
+    name: "555",
+  },
+  {
+    icon: (props: string) => (
+      <GarageIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
+    name: "ავტოფარეხი",
+  },
+  {
+    icon: (props: string) => (
+      <WaterCelsiusIcon className={` ${props} aspect-square `} />
+    ),
+    name: "ცხელი წყალი",
+  },
+  {
+    icon: (props: string) => (
+      <TvIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
+    name: "ტელევიზორი",
+  },
+];
+export const productAddonsListForLand = [
+  {
+    icon: (props: string) => (
+      <SplitIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
+    name: "შესაძლებელია გაყოფა",
+  },
+  {
+    icon: (props: string) => (
+      <WaterIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
+    name: "წყალი",
+  },
+  {
+    icon: (props: string) => (
+      <WaterIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
+    name: "კანალიზაცია",
+  },
+  {
+    icon: (props: string) => (
+      <FireIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
+    name: "ბუნებრივი აირი",
+  },
 
+  {
+    icon: (props: string) => (
+      <ZapIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
+    name: "ელექტროენერგია",
+  },
+  {
+    icon: (props: string) => (
+      <HomeIcon className={`${props} aspect-square [&>path]:fill-main`} />
+    ),
+    name: "შენობა-ნაგებობით",
+  },
+
+  {
+    icon: (props: string) => (
+      <RoadIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
+    name: "ასფალტის გზა",
+  },
+  {
+    icon: (props: string) => (
+      <AcceptedIcon className={`${props} aspect-square [&>path]:stroke-main`} />
+    ),
+    name: "დამტკიცებული პროექტით",
+  },
+];
 // 0 Furniture
 // 1 Water
 // 2 Pool

@@ -10,6 +10,7 @@ import { SelectNumbers } from "../../Search/components/Filters";
 import {
   TProductAddon,
   productAddonsList,
+  productAddonsListForLand,
   projectDealTypes,
   projectStatuses,
   projectTypes,
@@ -49,13 +50,15 @@ import { RootState } from "../../../store/store";
 import axiosCall from "../../../hooks/axiosCall";
 import BubbleSelector from "../../../components/global/BubbleSelector";
 import { currencyConvertor } from "../../../components/convertors/convertors";
+import { TProductData } from "../../Profile/components/MyProducts";
 
 export const submitProduct = (
   productData: TproductInfoStart | any,
   setShowError: Function,
   setUploadStatus: Function,
   setAlertBlock: Function,
-  setError: Function
+  setError: Function,
+  clearAddProduct: Function
 ) => {
   let error: boolean = false;
 
@@ -98,8 +101,11 @@ export const submitProduct = (
     } else {
       formData.append("estatePrice", productData.estatePrice);
     }
-    formData.append("estateAddons", productData.estateAddons);
-    formData.append("estateClosePlaces", productData.estateClosePlaces);
+    formData.append("estateAddons", JSON.stringify(productData.estateAddons));
+    formData.append(
+      "estateClosePlaces",
+      JSON.stringify(productData.estateClosePlaces)
+    );
     formData.append("estateCurrency", "0");
     formData.append("estateVip", productData.estateVip);
     formData.append("estateVipDays", productData.estateVipDays);
@@ -122,6 +128,7 @@ export const submitProduct = (
           setError("ანგარიშზე არ არის საკმარისი თანხა");
         } else {
           setUploadStatus(res.data.status);
+          clearAddProduct();
         }
       });
   }
@@ -263,8 +270,9 @@ function ClosePlaceBlock(props: {
     </div>
   );
 }
-export function EstateAddons() {
+export function EstateAddons({ productData }: { productData: any }) {
   const [selectedAddons, setSelectedAddons] = useState<number[]>([]);
+  const [addonList, setAddonList] = useState<any[]>(productAddonsList);
   const dispatch = useDispatch();
   useEffect(() => {
     if (selectedAddons.length === 0) {
@@ -273,7 +281,13 @@ export function EstateAddons() {
       dispatch(updateAddons(selectedAddons));
     }
   }, [selectedAddons]);
-
+  useEffect(() => {
+    if (productData.estateType == 3) {
+      setAddonList(productAddonsListForLand);
+    } else {
+      setAddonList(productAddonsList);
+    }
+  }, [productData.estateType]);
   const addAddon = (index: number) => {
     if (selectedAddons.includes(index)) {
       let newAddons = selectedAddons.filter((item) => item !== index);
@@ -290,9 +304,12 @@ export function EstateAddons() {
         მონიშნეთ დამატებები
       </p>
       <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[200px] my-[25px] pl-5 mediumSmallXl:max-h-[350px] mobileTab:pl-0 mobileSmall:pl-5 mobileSmall:max-h-fit">
-        {productAddonsList.map((e: TProductAddon, i: number) => (
-          <AddonBlock key={i} i={i} e={e} addAddon={addAddon} />
-        ))}
+        {addonList.map((e: TProductAddon, i: number) => {
+          if (productData.estateType !== 0 && e.name == "კანალიზაცია") {
+            return null;
+          }
+          return <AddonBlock key={i} i={i} e={e} addAddon={addAddon} />;
+        })}
       </div>
     </div>
   );
@@ -441,7 +458,7 @@ export function EstateImages(props: { error: boolean }) {
 }
 
 export function EstateType() {
-  const [active, setActive] = useState<null | string>(null);
+  const [active, setActive] = useState<null | number>(null);
   const dispatch = useDispatch();
   useEffect(() => {
     if (active !== null) {
@@ -458,19 +475,19 @@ export function EstateType() {
         {RealEstateTypes.map((e, i) => (
           <button
             key={i}
-            onClick={() => setActive(e.name)}
+            onClick={() => setActive(i)}
             className={`  p-2 px-4 rounded-xl transition-colors ${
-              active == e.name ? "bg-main" : "bg-mainClear"
+              active == i ? "bg-main" : "bg-mainClear"
             }`}
           >
             <e.icon
               className={` h-[24px] aspect-square ${
-                active == e.name && "[&>path]:fill-buttonText"
+                active == i && "[&>path]:fill-buttonText"
               } `}
             />
             <p
               className={`text-Asmall ml-7 tracking-wide ${
-                active == e.name ? "text-buttonText" : "text-main"
+                active == i ? "text-buttonText" : "text-main"
               }`}
             >
               {e.name}
@@ -517,15 +534,50 @@ export function DealType() {
     </div>
   );
 }
-export function EstateStatus() {
+export function EstateStatus({ productData }: { productData: any }) {
   const [active, setActive] = useState<null | string>(null);
+  const [DealTypes, setDealTypes] = useState<string[]>([
+    "ახალი აშენებული",
+    "ძველი აშენებული",
+    "მშენებარე",
+  ]);
   const dispatch = useDispatch();
   useEffect(() => {
     if (active !== null) {
       dispatch(updateStatus(active));
     }
   }, [active]);
-  const DealTypes = ["ახალი აშენებული", "ძველი აშენებული", "მშენებარე"];
+  useEffect(() => {
+    if (productData.estateType == 3) {
+      setDealTypes([
+        "სასოფლო სამეურნეო",
+        "არა სასოფლო სამეურნეო",
+        "კომერციული",
+        "სპეციალური",
+        "საინვესტიციო/სამშენებლო",
+      ]);
+    } else if (productData.estateType == 2) {
+      setDealTypes([
+        "საოფისე",
+        "სავაჭრო",
+        "სასაწყობე",
+        "საწარმოო ფართი",
+        "უნივერსალური",
+        "სპეციალური",
+        "კვების ობიექტები",
+        "ავტოფარეხი",
+        "სარდაფი",
+        "ნახევარსარდაფი",
+        "მთლიანი შენობა",
+        "ავტოსამრეცხაო",
+        "ავტოსერვისი",
+      ]);
+    } else {
+      setDealTypes(["ახალი აშენებული", "ძველი აშენებული", "მშენებარე"]);
+    }
+
+    setActive(null);
+  }, [productData.estateType]);
   return (
     <div className="flex flex-col">
       <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
@@ -661,7 +713,7 @@ export function EstateDescription() {
   );
 }
 
-export function EstateInformation(props: { error: boolean }) {
+export function EstateInformation(props: { error: boolean; productData: any }) {
   const [size, setSize] = useState<null | number>(null);
   const [openDeal, setOpenDeal] = useState(false);
   const [currency, setCurrency] = useState(1);
@@ -718,151 +770,165 @@ export function EstateInformation(props: { error: boolean }) {
               />{" "}
             </div>
           </div>
+          {props.productData.estateType !== 3 ? (
+            <>
+              {props.productData.estateType !== 2 ? (
+                <>
+                  <div className="flex items-start mobileSmall:flex-col h-auto   mobileSmall:items-stretch">
+                    <p className="text-textDesc font-mainMedium w-[200px] min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
+                      პროექტის ტიპი
+                    </p>
+                    <BubbleSelector
+                      itemList={projectTypes}
+                      setData={(item: any) => dispatch(updateProject(item))}
+                    />
+                  </div>
+                </>
+              ) : null}
+              <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch ">
+                <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
+                  მდგომარეობა
+                </p>
 
-          <div className="flex items-start mobileSmall:flex-col h-auto   mobileSmall:items-stretch">
-            <p className="text-textDesc font-mainMedium w-[200px] min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
-              პროექტის ტიპი
-            </p>
-            <BubbleSelector
-              itemList={projectTypes}
-              setData={(item: any) => dispatch(updateProject(item))}
-            />
-          </div>
+                <BubbleSelector
+                  itemList={projectStatuses}
+                  setData={(item: any) => dispatch(updateCondition(item))}
+                />
+              </div>
 
-          <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch ">
-            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
-              მდგომარეობა
-            </p>
+              <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
+                <p className="text-textDesc font-mainMedium min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
+                  სართული
+                </p>
+                <div className="flex gap-4 flex-wrap mobileTab:justify-end mobileSmall:justify-center w-full justify-end">
+                  <input
+                    type="number"
+                    className="AddProductInput"
+                    placeholder="სართულები"
+                    onChange={(e) => {
+                      dispatch(updateFloor(e.target.valueAsNumber));
+                    }}
+                  />{" "}
+                  <input
+                    type="number"
+                    className="AddProductInput"
+                    placeholder="სართული სულ"
+                    onChange={(e) => {
+                      dispatch(updateFloors(e.target.valueAsNumber));
+                    }}
+                  />
+                </div>
+              </div>
 
-            <BubbleSelector
-              itemList={projectStatuses}
-              setData={(item: any) => dispatch(updateCondition(item))}
-            />
-          </div>
-
-          <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
-            <p className="text-textDesc font-mainMedium min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
-              სართული
-            </p>
-            <div className="flex gap-4 flex-wrap mobileTab:justify-end mobileSmall:justify-center w-full justify-end">
-              <input
-                type="number"
-                className="AddProductInput"
-                placeholder="სართულები"
-                onChange={(e) => {
-                  dispatch(updateFloor(e.target.valueAsNumber));
-                }}
-              />{" "}
-              <input
-                type="number"
-                className="AddProductInput"
-                placeholder="სართული სულ"
-                onChange={(e) => {
-                  dispatch(updateFloors(e.target.valueAsNumber));
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center mobileTab:flex-col">
-            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
-              ოთახები
-            </p>
-            <div className="w-full flex justify-end">
-              <SelectNumbers setDataDispatch={updateRooms} name="" />
-            </div>
-          </div>
-          <div className="flex items-center mobileTab:flex-col">
-            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
-              საძინებელი
-            </p>{" "}
-            <div className="w-full flex justify-end">
-              <SelectNumbers setDataDispatch={updateBedrooms} name="" />{" "}
-            </div>
-          </div>
-          <div className="flex items-center mobileTab:flex-col">
-            <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
-              სველი წერტილი
-            </p>{" "}
-            <div className="w-full flex justify-end">
-              <SelectNumbers setDataDispatch={updateBathrooms} name="" />{" "}
-            </div>
-          </div>
+              <div className="flex items-center mobileTab:flex-col">
+                <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
+                  ოთახები
+                </p>
+                <div className="w-full flex justify-end">
+                  <SelectNumbers setDataDispatch={updateRooms} name="" />
+                </div>
+              </div>
+              <div className="flex items-center mobileTab:flex-col">
+                <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
+                  საძინებელი
+                </p>{" "}
+                <div className="w-full flex justify-end">
+                  <SelectNumbers setDataDispatch={updateBedrooms} name="" />{" "}
+                </div>
+              </div>
+              <div className="flex items-center mobileTab:flex-col">
+                <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
+                  სველი წერტილი
+                </p>{" "}
+                <div className="w-full flex justify-end">
+                  <SelectNumbers setDataDispatch={updateBathrooms} name="" />{" "}
+                </div>
+              </div>
+            </>
+          ) : null}
         </div>
       </div>
       <div className="flex flex-col">
-        {size !== null && size > 0 && (
-          <>
-            <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-              ფასი
-            </p>
-            <div className="flex gap-4 items-center  pl-3 mt-4">
-              <div className="relative">
+        <>
+          {size == null || size <= 0 ? (
+            <div className=" rounded-xl text-orangeI bg-orangeClear py-3 px-4 text-sm tracking-wider  mb-4 text-center">
+              {" "}
+              ფასის შევსებამდე შეიყვანეთ ფართი
+            </div>
+          ) : null}
+          <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+            ფასი
+          </p>
+          <div
+            className={`flex gap-4 items-center  pl-3 mt-4 transition-opacity ${
+              size == null || size <= 0 ? "pointer-events-none opacity-40" : ""
+            } `}
+          >
+            <div className="relative">
+              <button
+                onClick={() => setOpenDeal((state) => !state)}
+                className="bg-main flex items-center w-[150px] justify-center py-[8px] rounded-lg text-buttonText tracking-widest font-mainMedium text-Asmall"
+              >
+                {currency == 0 ? "$ დოლარი" : "₾ ლარი"}
+                <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
+              </button>
+              <div
+                className={` w-[150px] absolute shadow-cardShadow bg-whiteMain rounded-lg top-[45px] overflow-hidden transition-all  ${
+                  openDeal ? "opacity-100 visible" : "invisible opacity-0"
+                }`}
+              >
                 <button
-                  onClick={() => setOpenDeal((state) => !state)}
-                  className="bg-main flex items-center w-[150px] justify-center py-[8px] rounded-lg text-whiteMain tracking-widest font-mainMedium text-Asmall"
-                >
-                  {currency == 0 ? "$ დოლარი" : "₾ ლარი"}
-                  <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-                </button>
-                <div
-                  className={` w-[150px] absolute shadow-cardShadow bg-whiteMain rounded-lg top-[45px] overflow-hidden transition-all  ${
-                    openDeal ? "opacity-100 visible" : "invisible opacity-0"
+                  onClick={() => {
+                    setOpenDeal(false);
+                    setCurrency(1);
+                  }}
+                  className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
+                    currency == 0 && "bg-whiteHover"
                   }`}
                 >
-                  <button
-                    onClick={() => {
-                      setOpenDeal(false);
-                      setCurrency(1);
-                    }}
-                    className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
-                      currency == 0 && "bg-whiteHover"
-                    }`}
-                  >
-                    ₾ ლარი
-                  </button>
-                  <button
-                    onClick={() => {
-                      setOpenDeal(false);
-                      setCurrency(0);
-                    }}
-                    className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
-                      currency == 0 && "bg-whiteHover"
-                    }`}
-                  >
-                    $ დოლარი
-                  </button>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  className="AddProductInput"
-                  placeholder="სრული ფასი"
-                  onChange={(e) => {
-                    setFullPrice(e.target.valueAsNumber);
-                    calculateSizePrice(e.target.valueAsNumber);
+                  ₾ ლარი
+                </button>
+                <button
+                  onClick={() => {
+                    setOpenDeal(false);
+                    setCurrency(0);
                   }}
-                  value={fullPrice ? fullPrice : ""}
-                />{" "}
-                <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>{" "}
-              </div>
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  className="AddProductInput"
-                  placeholder="მ² ფასი"
-                  onChange={(e) => {
-                    setSizePrice(e.target.valueAsNumber);
-                    calculateFullPrice(e.target.valueAsNumber);
-                  }}
-                  value={sizePrice ? sizePrice : ""}
-                />{" "}
-                <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>
+                  className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
+                    currency == 0 && "bg-whiteHover"
+                  }`}
+                >
+                  $ დოლარი
+                </button>
               </div>
             </div>
-          </>
-        )}
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                className="AddProductInput"
+                placeholder="სრული ფასი"
+                onChange={(e) => {
+                  setFullPrice(e.target.valueAsNumber);
+                  calculateSizePrice(e.target.valueAsNumber);
+                }}
+                value={fullPrice ? fullPrice : ""}
+              />{" "}
+              <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>{" "}
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                className="AddProductInput"
+                placeholder="მ² ფასი"
+                onChange={(e) => {
+                  setSizePrice(e.target.valueAsNumber);
+                  calculateFullPrice(e.target.valueAsNumber);
+                }}
+                value={sizePrice ? sizePrice : ""}
+              />{" "}
+              <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>
+            </div>
+          </div>
+        </>
       </div>
     </>
   );

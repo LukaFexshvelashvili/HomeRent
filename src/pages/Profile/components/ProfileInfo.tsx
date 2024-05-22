@@ -58,7 +58,9 @@ export default function ProfileInfo() {
             ბალანსი
           </p>
           <p className=" text-[15px] text-[rgb(255,255,255)] leading-[15px] font-mainBold ml-auto">
-            0.00₾
+            {(user.money / 100)
+              .toFixed(2)
+              .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "₾"}
           </p>
         </div>
         <div className="h-[50px] w-[270px] spentMoneyBg rounded-lg flex flex-col justify-center px-3 ">

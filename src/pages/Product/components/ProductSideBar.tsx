@@ -48,6 +48,7 @@ export default function ProductSideBar(props: { productData: TProductData }) {
     });
     setCurrency(newCurrency);
   };
+
   return (
     <div className="flex-1 flex flex-col gap-3">
       <div className="bg-whiteMain rounded-block  shadow-sectionShadow">
@@ -71,6 +72,7 @@ export default function ProductSideBar(props: { productData: TProductData }) {
               {getDealType(props.productData.estate_deal)}
             </div>
           </div>
+
           <div className="flex items-center mt-5 justify-between px-3 mobile:px-0">
             <div className="flex items-center gap-4 mobileSmall:gap-2">
               <p className="text-[20px] font-mainBold text-textHeadCard mobile:text-[18px] mobileSmall:text-[16px]">
@@ -203,7 +205,7 @@ export default function ProductSideBar(props: { productData: TProductData }) {
             სტატუსი
           </p>
           <p className="text-textHeadCard text-[13px] font-mainBold tracking-wider">
-            {getStatus(props.productData.estate_status)}
+            {props.productData.estate_status}
           </p>
         </div>
       </div>

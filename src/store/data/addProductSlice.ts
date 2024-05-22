@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export type TproductInfoStart = {
   estateTitle: null | string;
   estateDescription: null | string;
-  estateType: null | string;
+  estateType: null | number;
   estateDeal: null | string;
   estateStatus: null | string;
   estateCity: null | string;
@@ -60,7 +60,7 @@ const addProductSlice = createSlice({
   name: "addProduct",
   initialState,
   reducers: {
-    updateType: (state, action: PayloadAction<string | null>) => {
+    updateType: (state, action: PayloadAction<number | null>) => {
       state.estateType = action.payload;
     },
     updateTitle: (state, action: PayloadAction<string | null>) => {
@@ -138,6 +138,9 @@ const addProductSlice = createSlice({
     updateCurrency: (state, action: PayloadAction<number>) => {
       state.estateCurrency = action.payload;
     },
+    clearAddProduct: () => {
+      return initialState;
+    },
   },
 });
 
@@ -167,6 +170,7 @@ export const {
   updateCurrency,
   updateVip,
   updateEstateVipDays,
+  clearAddProduct,
 } = addProductSlice.actions;
 
 export default addProductSlice.reducer;

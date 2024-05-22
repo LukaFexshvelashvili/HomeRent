@@ -4,7 +4,7 @@ import imageExample3 from "../../../assets/images/estates/4.jpg";
 
 export default function ChooseSection() {
   return (
-    <section className="my-[70px] mobile:my-[50px]">
+    <section className="my-[40px] mobile:my-[50px]">
       <div className="flex gap-4 mobile:gap-2 w-full [&>div]:rounded-section [&>div>div]:rounded-section  mobile:flex-col mobile:items-stretch">
         <div className="flex flex-[2] flex-wrap gap-4 mobile:gap-2 [&>div]:h-[270px] mobile:flex-col mobile:items-stretch">
           <div className="flex w-full bg-whiteLoad mobile:flex-1 mobile:aspect-video overflow-hidden cursor-pointer group relative">

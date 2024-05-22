@@ -82,7 +82,7 @@ function SearchInput() {
             <input
               type="text"
               placeholder="სიტყვით ძებნა..."
-              className="w-full h-full px-4  outline-none font-mainRegular bg-transparent text-blackMain tracking-wider text-[14px] transition-colors focus:bg-[#ffffff11]"
+              className="w-full h-full px-4  outline-none font-mainRegular bg-transparent text-buttonText tracking-wider text-[14px] transition-colors focus:bg-[#ffffff11]"
               onChange={(e) => setSearchTitle(e.target.value)}
               value={searchTitle}
             />

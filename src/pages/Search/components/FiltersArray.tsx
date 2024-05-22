@@ -11,7 +11,7 @@ export type TRealEstateTypes = {
   name: string;
 };
 export const RealEstateTypes: TRealEstateTypes[] = [
-  { icon: (props: any) => <HomeIcon {...props} />, name: "კერძო სახლი" },
+  { icon: (props: any) => <HomeIcon {...props} />, name: "სახლი/აგარაკი" },
   { icon: (props: any) => <ApartmentIcon {...props} />, name: "კორპუსის ბინა" },
   {
     icon: (props: any) => <CommercialIcon {...props} />,
