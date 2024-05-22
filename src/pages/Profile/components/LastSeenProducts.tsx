@@ -23,7 +23,7 @@ export default function LastSeenProducts() {
         <p className="px-4 text-[13px] text-textDesc my-1">
           სულ {products.length} განცხადება
         </p>
-        <div className="flex flex-col">
+        <div className="flex flex-col  max-h-[550px] overflow-hidden overflow-y-auto">
           {products.length > 0 ? (
             products.map((e: TProductData) => (
               <BasicBanner key={e.id} productData={e} />

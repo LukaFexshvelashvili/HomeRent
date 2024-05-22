@@ -6,6 +6,7 @@ import {
   MessageIcon,
   MoonIcon,
   NotificationIcon,
+  SettingsIcon,
   SunIcon,
   UserLinearIcon,
 } from "../assets/icons/Icons";
@@ -309,6 +310,13 @@ const profileButtons: TProfileButton[] = [
     link: "ChangeDarkTheme",
     name: "მუქი თემა",
     icon: <MoonIcon className=" h-[20px] aspect-square fill-textHead mr-2" />,
+  },
+  {
+    link: "/Profile/Settings",
+    name: "პარამეტრები",
+    icon: (
+      <SettingsIcon className=" h-[20px] aspect-square [&>path]:stroke-textHead mr-2" />
+    ),
   },
   {
     link: "/Contact",

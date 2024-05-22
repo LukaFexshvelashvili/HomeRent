@@ -71,7 +71,9 @@ export async function FetchLastSeenProducts() {
           },
         }
       )
-      .then((res) => (getProductsData = res.data));
+      .then(
+        (res) => (getProductsData = sortProductsByLastSeen(res.data, getList))
+      );
   } else {
     return getProductsData;
   }
@@ -102,4 +104,15 @@ export async function sendMaclerRequest(
     return status;
   }
   return status;
+}
+function sortProductsByLastSeen(products: any, lastSeenIds: number[]) {
+  return products.sort((a: any, b: any) => {
+    const indexA = lastSeenIds.indexOf(a.id);
+    const indexB = lastSeenIds.indexOf(b.id);
+
+    if (indexA === -1) return 1;
+    if (indexB === -1) return -1;
+
+    return indexA - indexB;
+  });
 }

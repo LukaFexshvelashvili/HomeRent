@@ -3,6 +3,7 @@ import { TClosePlace, closePlacesList } from "../../assets/lists/closePlaces";
 import {
   TProductAddon,
   productAddonsList,
+  productAddonsListForHotel,
   productAddonsListForLand,
 } from "../../assets/lists/productAddons";
 import CardSlider from "../../components/global/CardSlider";
@@ -85,8 +86,8 @@ export default function Product() {
                   დამატებითი ინფორმაცია
                 </p>
                 <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[150px] my-[25px] pl-5 medium:max-h-none medium:flex-row ">
-                  {productData.estate_type == 3
-                    ? productData.estate_addons !== null
+                  {productData.estate_addons !== null
+                    ? productData.estate_type == 3
                       ? productAddonsListForLand.map(
                           (item: TProductAddon, i: number) => (
                             <div
@@ -107,17 +108,9 @@ export default function Product() {
                             </div>
                           )
                         )
-                      : null
-                    : productData.estate_addons !== null
-                    ? productAddonsList.map(
-                        (item: TProductAddon, i: number) => {
-                          if (
-                            productData.estate_type !== 0 &&
-                            item.name == "კანალიზაცია"
-                          ) {
-                            return null;
-                          }
-                          return (
+                      : productData.estate_type == 4
+                      ? productAddonsListForHotel.map(
+                          (item: TProductAddon, i: number) => (
                             <div
                               key={i}
                               className={`flex items-center ${
@@ -134,9 +127,36 @@ export default function Product() {
                                 {item.name}
                               </p>
                             </div>
-                          );
-                        }
-                      )
+                          )
+                        )
+                      : productAddonsList.map(
+                          (item: TProductAddon, i: number) => {
+                            if (
+                              productData.estate_type !== 0 &&
+                              item.name == "კანალიზაცია"
+                            ) {
+                              return null;
+                            }
+                            return (
+                              <div
+                                key={i}
+                                className={`flex items-center ${
+                                  JSON.parse(
+                                    productData.estate_addons
+                                  ).includes(i)
+                                    ? "opacity-100"
+                                    : "opacity-20 line-through decoration-blackMain"
+                                } `}
+                              >
+                                {item.icon("h-[20px]")}{" "}
+                                <p className="text-Asmall ml-2 text-textDesc">
+                                  {" "}
+                                  {item.name}
+                                </p>
+                              </div>
+                            );
+                          }
+                        )
                     : null}
                 </div>
               </div>

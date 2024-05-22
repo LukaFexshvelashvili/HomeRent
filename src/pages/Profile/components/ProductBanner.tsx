@@ -28,7 +28,7 @@ export default function ProductBanner(props: {
   )[0];
   return (
     <div className=" w-full border-t-[2px] border-lineBg py-5 px-4 flex items-center small:flex-col ">
-      <Link to={"/Product/" + props.productData.id}>
+      <Link to={"/Product/" + props.productData.id} className="small:w-full">
         <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden small:w-[100%] small:aspect-video small:h-auto">
           <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2] "></div>
           <img

@@ -7,11 +7,12 @@ import {
   MoonIcon,
   NotificationResponsiveIcon,
   PlusIcon,
+  SettingsIcon,
   SunIcon,
   UserLinearIcon,
 } from "../assets/icons/Icons";
-import georgianFlag from "../assets/images/languages/georgia.png";
-import englishFlag from "../assets/images/languages/english.png";
+// import georgianFlag from "../assets/images/languages/georgia.png";
+// import englishFlag from "../assets/images/languages/english.png";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Link } from "react-router-dom";
@@ -29,7 +30,7 @@ export default function Navbar() {
 
   const [activePop, setActivePop] = useState<null | string>(null);
   const [activeLang, setActiveLang] = useState<boolean>(false);
-  const [langImg, setLangImg] = useState<string>(georgianFlag);
+  // const [langImg, setLangImg] = useState<string>(georgianFlag);
 
   let favNums = 0;
   if (localStorage.getItem("favorites")) {
@@ -49,7 +50,7 @@ export default function Navbar() {
             <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
             <div className=" mobile:hidden h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
           </Link>
-          <OutsideClickClose
+          {/* <OutsideClickClose
             setActivePop={setActiveLang}
             activePop={activeLang}
           >
@@ -99,7 +100,7 @@ export default function Navbar() {
                 </button>
               </div>
             </div>
-          </OutsideClickClose>
+          </OutsideClickClose> */}
         </div>
         <div className="mobile:hidden flex items-center gap-4">
           <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-orangeClear text-orangeI rounded-[8px] text-[12px] transition-colors hover:bg-orangeHover">
@@ -349,6 +350,13 @@ const profileResponsiveButtons: TProfileButton[] = [
     name: "შეტყობინებები",
     icon: (
       <NotificationResponsiveIcon className=" h-[26px] flex items-center justify-center stroke-textHead mr-2" />
+    ),
+  },
+  {
+    link: "/Profile/Settings",
+    name: "პარამეტრები",
+    icon: (
+      <SettingsIcon className=" h-[26px] aspect-square [&>path]:stroke-textHead mr-2" />
     ),
   },
   {

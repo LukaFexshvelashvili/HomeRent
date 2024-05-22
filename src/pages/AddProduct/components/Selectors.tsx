@@ -10,6 +10,7 @@ import { SelectNumbers } from "../../Search/components/Filters";
 import {
   TProductAddon,
   productAddonsList,
+  productAddonsListForHotel,
   productAddonsListForLand,
   projectDealTypes,
   projectStatuses,
@@ -284,6 +285,8 @@ export function EstateAddons({ productData }: { productData: any }) {
   useEffect(() => {
     if (productData.estateType == 3) {
       setAddonList(productAddonsListForLand);
+    } else if (productData.estateType == 4) {
+      setAddonList(productAddonsListForHotel);
     } else {
       setAddonList(productAddonsList);
     }

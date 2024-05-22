@@ -22,7 +22,9 @@ function SavedProducts() {
     <>
       {" "}
       <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3  mobile:px-3">
-        <h1 className="mobileSmall:text-[14px]">შენახული განცხადებები</h1>
+        <h1 className="mobileSmall:text-[14px] mobile:text-center">
+          შენახული განცხადებები
+        </h1>
 
         <input
           type="text"
@@ -61,7 +63,7 @@ function SavedProducts() {
             მსგავსი განცხადება ვერ მოიძებნა
           </p>
         )}
-        <div className="flex flex-col">
+        <div className="flex flex-col  max-h-[550px] overflow-hidden overflow-y-auto">
           {products ? (
             products.length > 0 && search.length !== 0 ? (
               products

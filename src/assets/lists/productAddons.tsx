@@ -222,13 +222,7 @@ export const productAddonsListForHotel = [
     icon: (props: string) => (
       <FireIcon className={`${props} aspect-square [&>path]:fill-main`} />
     ),
-    name: "555",
-  },
-  {
-    icon: (props: string) => (
-      <GarageIcon className={`${props} aspect-square [&>path]:stroke-main`} />
-    ),
-    name: "ავტოფარეხი",
+    name: "ბუნებრივი აირი",
   },
   {
     icon: (props: string) => (
@@ -241,6 +235,34 @@ export const productAddonsListForHotel = [
       <TvIcon className={`${props} aspect-square [&>path]:fill-main`} />
     ),
     name: "ტელევიზორი",
+  },
+  {
+    icon: (props: string) => <></>,
+    name: "სპა",
+  },
+  {
+    icon: (props: string) => <></>,
+    name: "სამრეცხაო",
+  },
+  {
+    icon: (props: string) => <></>,
+    name: "გათბობა",
+  },
+  {
+    icon: (props: string) => <></>,
+    name: "ბარი",
+  },
+  {
+    icon: (props: string) => <></>,
+    name: "სპორტ დარბაზი",
+  },
+  {
+    icon: (props: string) => <></>,
+    name: "მარანი",
+  },
+  {
+    icon: (props: string) => <></>,
+    name: "სიგნალიზაცია",
   },
 ];
 export const productAddonsListForLand = [

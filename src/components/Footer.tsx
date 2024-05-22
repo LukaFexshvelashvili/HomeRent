@@ -11,7 +11,7 @@ export default function Footer() {
             <h3 className="mb-2 text-textHeadBlack">ჩვენს შესახებ</h3>
             <p className="max-w-[300px]">
               უძრავი ქონების გაყიდვის/გაქირავების სერვისი - გეხმარებით
-              განათავსოთ თქვენი პროდუქტი კლიენტების მოსაზიდად
+              განათავსოთ თქვენი უძრავი ქონება კლიენტების მოსაზიდად
             </p>
           </div>
           <div className="flex flex-col gap-2 [&>p]:text-Asmall text-Asmall [&>a]:text-textDesc [&>p]:cursor-pointer">
@@ -58,7 +58,7 @@ export default function Footer() {
             content={
               <p className="max-w-[500px]">
                 უძრავი ქონების გაყიდვის/გაქირავების სერვისი - გეხმარებით
-                განათავსოთ თქვენი პროდუქტი კლიენტების მოსაზიდად
+                განათავსოთ თქვენი უძრავი ქონება კლიენტების მოსაზიდად
               </p>
             }
           />

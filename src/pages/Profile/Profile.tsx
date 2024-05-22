@@ -38,7 +38,18 @@ export default function Profile() {
     if (location.pathname.includes("ProfileInfo")) {
       setActiveNav(7);
     }
-  }, [navigate]);
+    let forScroll: any = null;
+
+    if (window.innerWidth <= 800) {
+      let forScroll = setTimeout(() => {
+        window.scrollTo(0, 400);
+      }, 0);
+    }
+    return () => {
+      clearTimeout(forScroll);
+    };
+  }, [navigate, location.pathname]);
+
   const userData = useSelector((store: RootState) => store.user);
   return (
     <main className="min-h-screen flex gap-4 mobile:flex-col">

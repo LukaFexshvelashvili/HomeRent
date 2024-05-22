@@ -78,7 +78,7 @@ function MyProducts() {
               (item: TProductData) => item.product_status == choice
             )
           );
-        saveProducts.current = res.data;
+        saveProducts.current = res.data.reverse();
       });
   }, []);
   useEffect(() => {
@@ -161,7 +161,9 @@ function MyProducts() {
         />
       ) : null}
       <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3  mobile:px-3">
-        <h1 className="mobileSmall:text-[14px]">ჩემი განცხადებები</h1>
+        <h1 className="mobileSmall:text-[14px] mobile:text-center">
+          ჩემი განცხადებები
+        </h1>
         <div className="flex gap-3 items-center flex-wrap mobile:justify-center">
           {choices.map((e: string, i: number) =>
             i !== choices.length - 1 ? (
@@ -229,7 +231,7 @@ function MyProducts() {
             მსგავსი განცხადება ვერ მოიძებნა
           </p>
         )}
-        <div className="flex flex-col">
+        <div className="flex flex-col  max-h-[550px] overflow-hidden overflow-y-auto">
           {search.length == 0 ? (
             myProducts && myProducts.length !== 0 ? (
               myProducts.map((e: TProductData) => (

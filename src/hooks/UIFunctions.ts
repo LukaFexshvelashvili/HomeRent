@@ -1,19 +1,32 @@
 import { updateLast_seen } from "../store/data/userSlice";
 import { setDarkMode, setMainColor } from "../store/data/webUISlice";
+import { Dispatch } from "redux";
 
-export function addLastProduct(dispatch: any, product_id: number) {
+export function addLastProduct(dispatch: Dispatch, product_id: number) {
   if (!localStorage.getItem("last_seen")) {
     localStorage.setItem("last_seen", "[]");
   }
-  let getListStorage: any = localStorage.getItem("last_seen");
+
+  let getListStorage: string | null = localStorage.getItem("last_seen");
+  if (getListStorage === null) {
+    getListStorage = "[]";
+  }
+
   let getList: number[] = JSON.parse(getListStorage);
+  const existingIndex = getList.indexOf(product_id);
+  if (existingIndex > -1) {
+    getList.splice(existingIndex, 1);
+  }
   getList.unshift(product_id);
+
   let getSort: number[] = Array.from(new Set(getList));
 
   if (getSort.length > 5) {
-    getSort.slice(0, 5);
+    getSort = getSort.slice(0, 5);
   }
+
   localStorage.setItem("last_seen", JSON.stringify(getSort));
+
   dispatch(updateLast_seen(getSort));
 }
 
