@@ -32,6 +32,7 @@ import SuspendedAccount from "./pages/SuspendedAccount";
 import Notifications from "./pages/Profile/components/Notifications";
 import PasswordRecover from "./pages/Authentication/PasswordRecover";
 import AdsMake from "./pages/AdsMake/AdsMake";
+import Seller from "./pages/Seller/Seller";
 
 function App() {
   const UISettings = useSelector((store: RootState) => store.webUI);
@@ -66,7 +67,6 @@ function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
     loggedUser(navigate, user.isLogged);
   }, [navigate, user.isLogged, location.pathname]);
 
@@ -120,6 +120,8 @@ function App() {
             <Route path="MaclerChoose" element={<MaclerChoose />} />
             <Route path="AdsMake" element={<AdsMake />} />
             <Route path="Maclerconditions" element={<Maclerconditions />} />
+            <Route path="Seller/:id" element={<Seller />} />
+
             {user.isLogged ? (
               <Route path="AdminPanel" element={<AdminPanel />} />
             ) : null}

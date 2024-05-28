@@ -135,7 +135,7 @@ function PaymentCard({ paymentData }: { paymentData: TuserCardInfoPayments }) {
     (item) => item.name == paymentData.payment_for
   )[0].mainColor;
   return (
-    <div className="flex [&>div]:text-textDesc [&>div]:text-[14px]">
+    <div className="flex [&>div]:text-textDesc [&>div]:text-[14px] my-1">
       <div className=" w-1/12">{paymentData.id}</div>
       <div className=" w-4/12">
         <p className="text-main">
