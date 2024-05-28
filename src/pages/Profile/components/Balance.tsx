@@ -40,14 +40,6 @@ export default function Balance() {
           </div>
         </div>
       </div>
-      <h2 className="text-textHeadCard text-[14px] tracking-wider mt-5">
-        ბალანსის შევსების ისტორია
-      </h2>
-      <div className="flex flex-col border-t border-borderCol1">
-        <p className="mt-5 text-textDesc text-center text-[12px] tracking-wider">
-          სია ცარიელია
-        </p>
-      </div>
     </div>
   );
 }
