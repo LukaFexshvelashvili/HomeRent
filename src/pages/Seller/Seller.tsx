@@ -3,6 +3,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosCall from "../../hooks/axiosCall";
 import { PhoneFIlledIcon, ReportIcon } from "../../assets/icons/Icons";
 import Card, { TProductCard } from "../../components/global/Card";
+import { useDispatch } from "react-redux";
+import { setReportProblem } from "../../store/data/popupsSlice";
 
 type Tseller = {
   user_data: { name: string; surname: string; mobile: string };
@@ -10,6 +12,7 @@ type Tseller = {
 };
 
 function Seller() {
+  const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState<null | Tseller>(null);
@@ -48,7 +51,18 @@ function Seller() {
             : null}
         </p>
         <div className="flex items-center gap-5 ml-auto">
-          <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-pinkClear rounded-[8px] text-[13px] text-pinkI tracking-wider cursor-pointer transition-colors hover:bg-pinkHover">
+          <div
+            onClick={() =>
+              dispatch(
+                setReportProblem({
+                  show: true,
+                  link: `${window.location}`,
+                  message: "",
+                })
+              )
+            }
+            className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-pinkClear rounded-[8px] text-[13px] text-pinkI tracking-wider cursor-pointer transition-colors hover:bg-pinkHover"
+          >
             <ReportIcon className="h-[16px] aspect-square [&>path]:fill-pinkI mr-3" />{" "}
             გასაჩივრება
           </div>

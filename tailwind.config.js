@@ -8,6 +8,8 @@ export default {
         main: "var(--main)",
         mainHover: "var(--mainHover)",
         mainClear: "var(--mainClear)",
+        mainClearHover: "var(--mainClearHover)",
+
         mainClearActive: "var(--mainClearActive)",
         LoginInputBg: "var(--LoginInputBg)",
         navBg: "var(--navBg)",

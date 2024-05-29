@@ -33,10 +33,14 @@ import Notifications from "./pages/Profile/components/Notifications";
 import PasswordRecover from "./pages/Authentication/PasswordRecover";
 import AdsMake from "./pages/AdsMake/AdsMake";
 import Seller from "./pages/Seller/Seller";
+import { TPopups } from "./store/data/popupsSlice";
+import ProblemReport from "./components/popups/ProblemReport";
+import SharePopup from "./components/popups/SharePopup";
 
 function App() {
   const UISettings = useSelector((store: RootState) => store.webUI);
   const user: Tuser = useSelector((store: RootState) => store.user);
+  const popups: TPopups = useSelector((store: RootState) => store.popups);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -77,6 +81,9 @@ function App() {
   return (
     <>
       {loading ? <MainLoader /> : null}
+      {UISettings.loader ? <MainLoader /> : null}
+      {popups.reportProblem.show ? <ProblemReport /> : null}
+      {popups.share.show ? <SharePopup /> : null}
       <CheckRoutes user={user}>
         <Routes>
           <Route path="/">

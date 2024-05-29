@@ -8,11 +8,13 @@ export type TWebUI = {
   darkMode: boolean;
   mainColor: string;
   colors: string[];
+  loader: boolean;
 };
 const initialState: TWebUI = {
   darkMode: false,
   mainColor: "#3a86ff",
   colors: ["#3A86FF", "#C727FF", "#A6E81B"],
+  loader: false,
 };
 
 const webUISlice = createSlice({
@@ -32,8 +34,12 @@ const webUISlice = createSlice({
       changeMainColor(action.payload);
       state.mainColor = action.payload;
     },
+    setWebLoader: (state, action: PayloadAction<boolean>) => {
+      state.loader = action.payload;
+    },
   },
 });
-export const { toggleDarkMode, setDarkMode, setMainColor } = webUISlice.actions;
+export const { toggleDarkMode, setDarkMode, setMainColor, setWebLoader } =
+  webUISlice.actions;
 
 export default webUISlice.reducer;

@@ -2,6 +2,7 @@
   --main: #3a86ff;
   --mainHover: #4f92fe;
   --mainClear: rgba(58, 134, 255, 0.1);
+  --mainClearHover: rgba(58, 134, 255, 0.3);
   --mainClear2: rgba(58, 133, 255, 0.7);
   --mainClearActive: rgba(58, 134, 255, 0.15);
   --LoginInputBg: rgba(58, 134, 255, 0.05);

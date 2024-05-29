@@ -1,3 +1,4 @@
+import { TPopupReport } from "../store/data/popupsSlice";
 import { Tuser } from "../store/data/userSlice";
 import axiosCall from "./axiosCall";
 import { removeFavorite } from "./serverFunctions";
@@ -115,4 +116,22 @@ function sortProductsByLastSeen(products: any, lastSeenIds: number[]) {
 
     return indexA - indexB;
   });
+}
+export async function submitReport(reportData: TPopupReport) {
+  let status = -1;
+  await axiosCall
+    .post(
+      "actions/report",
+      { reportData: JSON.stringify(reportData) },
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    )
+    .then((res) => {
+      status = res.data;
+    });
+  return status;
 }

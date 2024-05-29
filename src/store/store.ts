@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./data/userSlice";
 import addProductSlice from "./data/addProductSlice";
 import webUISlice from "./data/webUISlice";
+import popupsSlice from "./data/popupsSlice";
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
     addProduct: addProductSlice,
     webUI: webUISlice,
+    popups: popupsSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

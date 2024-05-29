@@ -19,6 +19,7 @@ import { currencyConvertor } from "../../../components/convertors/convertors";
 import { projectStatuses } from "../../../assets/lists/productAddons";
 import { TproductPage } from "../Product";
 import { Link } from "react-router-dom";
+import { setReportProblem, setShare } from "../../../store/data/popupsSlice";
 export default function ProductSideBar({
   pageData,
 }: {
@@ -258,7 +259,7 @@ export default function ProductSideBar({
           onClick={changeFavorite}
           className={` shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto select-none transition-colors ${
             favorited ? "bg-orangeClear" : "bg-whiteMain"
-          } rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer `}
+          } rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer transition-colors hover:bg-whiteHover`}
         >
           <BookmarkIcon
             className={`h-[16px] aspect-square [&>path]:stroke-orangeI mr-3 [&>path]:transition-colors ${
@@ -267,11 +268,32 @@ export default function ProductSideBar({
           />{" "}
           {favorited ? "შენახულია" : "შენახვა"}
         </div>
-        <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer">
+        <div
+          onClick={() =>
+            dispatch(
+              setShare({
+                show: true,
+                link: `${window.location}`,
+              })
+            )
+          }
+          className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer transition-colors hover:bg-whiteHover"
+        >
           <ShareIcon className="h-[16px] aspect-square [&>path]:stroke-main mr-3" />{" "}
           გაზიარება
         </div>
-        <div className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer">
+        <div
+          onClick={() =>
+            dispatch(
+              setReportProblem({
+                show: true,
+                link: `${window.location}`,
+                message: "",
+              })
+            )
+          }
+          className=" shadow-sectionShadow flex items-center px-3 pr-6 h-[40px] w-auto bg-whiteMain rounded-[8px] text-[13px] text-textHeadCard tracking-wider cursor-pointer transition-colors hover:bg-whiteHover"
+        >
           <ReportIcon className="h-[16px] aspect-square [&>path]:fill-reportIcon mr-3" />{" "}
           გასაჩივრება
         </div>
