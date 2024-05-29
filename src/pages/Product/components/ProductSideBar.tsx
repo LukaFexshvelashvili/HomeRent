@@ -13,31 +13,37 @@ import {
   UserIcon,
 } from "../../../assets/icons/Icons";
 import { RootState } from "../../../store/store";
-import { TProductData } from "../../Profile/components/MyProducts";
 import { useState } from "react";
 import { addFavorite, removeFavorite } from "../../../hooks/serverFunctions";
 import { currencyConvertor } from "../../../components/convertors/convertors";
 import { projectStatuses } from "../../../assets/lists/productAddons";
-export default function ProductSideBar(props: { productData: TProductData }) {
+import { TproductPage } from "../Product";
+import { Link } from "react-router-dom";
+export default function ProductSideBar({
+  pageData,
+}: {
+  pageData: TproductPage;
+}) {
   const userFavorites = useSelector((store: RootState) => store.user.favorites);
   const dispatch = useDispatch();
   const [favorited, setFavorited] = useState(
-    userFavorites.includes(props.productData.id)
+    userFavorites.includes(pageData.productData.id)
   );
 
   const [currency, setCurrency] = useState<number>(0);
+  const [seeNumber, setSeeNumber] = useState<boolean>(false);
   const [price, setPrice] = useState<{ full: number; perSize: number }>({
-    full: Math.floor(props.productData.estate_price),
+    full: Math.floor(pageData.productData.estate_price),
     perSize: Math.floor(
-      props.productData.estate_price / props.productData.estate_size
+      pageData.productData.estate_price / pageData.productData.estate_size
     ),
   });
   const changeFavorite = () => {
     if (favorited) {
-      removeFavorite(dispatch, props.productData.id);
+      removeFavorite(dispatch, pageData.productData.id);
       setFavorited(false);
     } else {
-      addFavorite(dispatch, props.productData.id);
+      addFavorite(dispatch, pageData.productData.id);
 
       setFavorited(true);
     }
@@ -57,33 +63,33 @@ export default function ProductSideBar(props: { productData: TProductData }) {
           <div className=" mobileSmall:max-h-[18px] mobileSmall:overflow-hidden flex items-center text-[13px] font-mainBold text-textDescCard gap-7 mobile:justify-center mobile:gap-4 mobile:flex-wrap mobile:text-[11px] mobileSmall:text-[10px]">
             <span className="flex items-center">
               <LoginEyeIcon className=" h-[18px] aspect-square [&>path]:fill-textDesc mr-3 mobile:mr-2" />{" "}
-              {props.productData.views}
+              {pageData.productData.views}
             </span>
             <span className="flex items-center">
               <DateIcon className=" h-[18px] aspect-square [&>path]:fill-textDesc mr-3 mobile:mr-2 translate-y-[-1px]" />{" "}
-              {props.productData.created_time.slice(0, 10)}
+              {pageData.productData.created_time.slice(0, 10)}
             </span>
-            <span>ID - {props.productData.id}</span>
+            <span>ID - {pageData.productData.id}</span>
           </div>
           <div className="flex items-center mt-2 justify-between mobile:flex-col-reverse mobile:mt-3 mobile:gap-3 mobile:items-stretch">
             <h2 className="text-[20px] text-textHeadCard tracking-wide font-mainBold mobile:text-[18px] mobileSmall:text-[16px] max-w-[300px] overflow-hidden text-nowrap text-ellipsis">
-              {props.productData.estate_title}
+              {pageData.productData.estate_title}
             </h2>
             <div className=" flex justify-center items-center bg-mainClear text-main h-[32px] w-[120px] font-mainBold tracking-wider rounded-lg text-Asmall mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
-              {getDealType(props.productData.estate_deal)}
+              {getDealType(pageData.productData.estate_deal)}
             </div>{" "}
           </div>
           <div className=" flex text-textHead items-center h-[30px] font-mainSemiBold tracking-wider rounded-lg text-Asmall mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
             ტიპი:{" "}
             <span className="ml-2 text-main ">
-              {getType(props.productData.estate_type)}
+              {getType(pageData.productData.estate_type)}
             </span>
           </div>{" "}
-          {props.productData.estate_condition ? (
+          {pageData.productData.estate_condition ? (
             <div className=" flex text-textHead items-center h-[30px] font-mainSemiBold tracking-wider rounded-lg text-Asmall mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
               მდგომარეობა:{" "}
               <span className="ml-2 text-main ">
-                {projectStatuses[props.productData.estate_condition]}
+                {projectStatuses[pageData.productData.estate_condition]}
               </span>
             </div>
           ) : null}
@@ -122,23 +128,47 @@ export default function ProductSideBar(props: { productData: TProductData }) {
             </div>
           </div>
           <div className="outline outline-2 -outline-offset-2 outline-borderCol1 mobile:flex-col mobile:h-auto  rounded-xl  w-full h-[48px] mt-4 flex items-center">
-            <button className="flex-1  text-buttonText flex justify-center items-center h-full rounded-xl min-h-[48px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors hover:bg-mainHover">
-              <PhoneFIlledIcon className="mobile:h-[21px] mobileSmall:h-[18px] h-[19px] aspect-square [&>path]:fill-text-buttonText mr-3 translate-y-[-1px]" />{" "}
-              511 22 ** ** ნომრის ჩვენება
-            </button>
+            {seeNumber ? (
+              <Link to={"tel:" + pageData.userData.mobile} className="w-auto">
+                <button className="flex-1  text-buttonText flex justify-center min-w-[300px] items-center h-full rounded-xl min-h-[48px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors hover:bg-mainHover">
+                  <PhoneFIlledIcon className="mobile:h-[21px] mobileSmall:h-[18px] h-[19px] aspect-square [&>path]:fill-text-buttonText mr-3 translate-y-[-1px]" />{" "}
+                  {pageData.userData.mobile.slice(0, 3) +
+                    " " +
+                    pageData.userData.mobile.slice(3, 5) +
+                    " " +
+                    pageData.userData.mobile.slice(5, 7) +
+                    " " +
+                    pageData.userData.mobile.slice(7, 9) +
+                    " დარეკვა"}
+                </button>
+              </Link>
+            ) : (
+              <button
+                onClick={() => setSeeNumber(true)}
+                className="flex-1  text-buttonText flex justify-center min-w-[300px] items-center h-full rounded-xl min-h-[48px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors hover:bg-mainHover"
+              >
+                <PhoneFIlledIcon className="mobile:h-[21px] mobileSmall:h-[18px] h-[19px] aspect-square [&>path]:fill-text-buttonText mr-3 translate-y-[-1px]" />{" "}
+                {pageData.userData.mobile.slice(0, 3) +
+                  " " +
+                  pageData.userData.mobile.slice(3, 5) +
+                  " ** ** ნომრის ჩვენება"}
+              </button>
+            )}{" "}
             <div className="flex-1 ">
-              <div className=" pl-5 flex items-center cursor-pointer mobile:h-auto mobile:py-[10px] mobile:justify-start ">
-                <UserIcon className="mobile:h-[21px] mobileSmall:text-[18px] h-[19px] aspect-square [&>g>path]:fill-userIconFilled mr-3 translate-y-[-1px]" />
-                <div className="flex flex-col ">
-                  <p className="text-Asmallest text-textHeadCard font-mainBold leading-4 mobile:text-[13px] mobileSmall:text-[12px] mobile:leading-[18px]">
-                    ლუკა
-                  </p>
-                  <p className="text-Asmallest text-textDescCard font-mainBold leading-4 mobile:text-[13px] mobileSmall:text-[12px] mobile:leading-[18px]">
-                    ყველა განცხადების ნახვა
-                  </p>
+              <Link to={"/Seller/" + pageData.userData.id}>
+                <div className=" pl-5 flex items-center cursor-pointer mobile:h-auto mobile:py-[10px] mobile:justify-start ">
+                  <UserIcon className="mobile:h-[21px] mobileSmall:text-[18px] h-[19px] aspect-square [&>g>path]:fill-userIconFilled mr-3 translate-y-[-1px]" />
+                  <div className="flex flex-col ">
+                    <p className="text-Asmallest text-textHeadCard font-mainBold leading-4 mobile:text-[13px] mobileSmall:text-[12px] mobile:leading-[18px]">
+                      {pageData.userData.name}
+                    </p>
+                    <p className="text-Asmallest text-textDescCard font-mainBold leading-4 mobile:text-[13px] mobileSmall:text-[12px] mobile:leading-[18px]">
+                      ყველა განცხადების ნახვა
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </Link>
+            </div>{" "}
           </div>
         </div>
       </div>
@@ -150,7 +180,7 @@ export default function ProductSideBar(props: { productData: TProductData }) {
               ფართი
             </p>
             <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
-              {props.productData.estate_size} მ²
+              {pageData.productData.estate_size} მ²
             </p>
           </div>
         </div>
@@ -161,7 +191,7 @@ export default function ProductSideBar(props: { productData: TProductData }) {
               ოთახები
             </p>
             <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
-              {props.productData.estate_rooms}
+              {pageData.productData.estate_rooms}
             </p>
           </div>
         </div>
@@ -172,11 +202,11 @@ export default function ProductSideBar(props: { productData: TProductData }) {
               საძინებელი
             </p>
             <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
-              {props.productData.estate_bedrooms}
+              {pageData.productData.estate_bedrooms}
             </p>
           </div>
         </div>
-        {props.productData.estate_floor ? (
+        {pageData.productData.estate_floor ? (
           <div className="flex-1 px-5 flex items-center  mobile:min-w-[50%] ">
             <StairsIcon className=" h-[25px] aspect-square [&>path]:stroke-textHeadCard" />
             <div className="flex flex-col ml-3">
@@ -184,10 +214,10 @@ export default function ProductSideBar(props: { productData: TProductData }) {
                 სართული
               </p>
               <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
-                {props.productData.estate_floor}{" "}
-                {props.productData.estate_floors && (
+                {pageData.productData.estate_floor}{" "}
+                {pageData.productData.estate_floors && (
                   <span className="text-textDescCard">
-                    / {props.productData.estate_floors}
+                    / {pageData.productData.estate_floors}
                   </span>
                 )}
               </p>
@@ -203,7 +233,7 @@ export default function ProductSideBar(props: { productData: TProductData }) {
             მდებარეობა
           </p>
           <p className="text-textHeadCard text-[13px] font-mainBold tracking-wider">
-            {props.productData.estate_city}
+            {pageData.productData.estate_city}
           </p>
         </div>
         <div className=" flex flex-col mobile:text-center px-4 gap-[2px]">
@@ -211,7 +241,7 @@ export default function ProductSideBar(props: { productData: TProductData }) {
             პროექტი
           </p>
           <p className="text-textHeadCard text-[13px] font-mainBold tracking-wider">
-            {getProject(props.productData.estate_project)}
+            {getProject(pageData.productData.estate_project)}
           </p>
         </div>
         <div className=" flex flex-col mobile:text-center px-4 gap-[2px]">
@@ -219,7 +249,7 @@ export default function ProductSideBar(props: { productData: TProductData }) {
             სტატუსი
           </p>
           <p className="text-textHeadCard text-[13px] font-mainBold tracking-wider">
-            {props.productData.estate_status}
+            {pageData.productData.estate_status}
           </p>
         </div>
       </div>

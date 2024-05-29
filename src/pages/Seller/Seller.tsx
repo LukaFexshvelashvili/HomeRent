@@ -1,11 +1,11 @@
 import { memo, useLayoutEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosCall from "../../hooks/axiosCall";
 import { PhoneFIlledIcon, ReportIcon } from "../../assets/icons/Icons";
 import Card, { TProductCard } from "../../components/global/Card";
 
 type Tseller = {
-  user_data: { name: string; surname: string };
+  user_data: { name: string; surname: string; mobile: string };
   products: TProductCard[];
 };
 
@@ -13,20 +13,19 @@ function Seller() {
   const params = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState<null | Tseller>(null);
+  const [seeNumber, setSeeNumber] = useState<boolean>(false);
   const firstRender = useRef(true);
   useLayoutEffect(() => {
     if (params.id) {
       if (firstRender.current) {
         axiosCall.get("fetch/seller?id=" + params.id).then((res) => {
-          console.log(res.data);
-
           if (res.data.status == 100) {
             setData({
               user_data: res.data.user_data,
               products: res.data.products,
             });
           } else {
-            // navigate("/");
+            navigate("/");
           }
         });
 
@@ -53,10 +52,32 @@ function Seller() {
             <ReportIcon className="h-[16px] aspect-square [&>path]:fill-pinkI mr-3" />{" "}
             გასაჩივრება
           </div>
-          <button className="flex-1  text-buttonText flex justify-center items-center max-w-[280px]  rounded-xl h-[50px] px-5 bg-main relative text-Asmaller tracking-wide font-mainSemiBold transition-colors hover:bg-mainHover">
-            <PhoneFIlledIcon className="mobile:h-[21px] mobileSmall:h-[18px] h-[19px] aspect-square [&>path]:fill-text-buttonText mr-3 translate-y-[-1px]" />{" "}
-            511 22 ** ** ნომრის ჩვენება
-          </button>
+          {seeNumber ? (
+            <Link to={"tel:" + data?.user_data.mobile} className="w-auto">
+              <button className="flex-1  text-buttonText flex justify-center min-w-[300px] items-center h-full rounded-xl min-h-[48px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors hover:bg-mainHover">
+                <PhoneFIlledIcon className="mobile:h-[21px] mobileSmall:h-[18px] h-[19px] aspect-square [&>path]:fill-text-buttonText mr-3 translate-y-[-1px]" />{" "}
+                {data?.user_data.mobile.slice(0, 3) +
+                  " " +
+                  data?.user_data.mobile.slice(3, 5) +
+                  " " +
+                  data?.user_data.mobile.slice(5, 7) +
+                  " " +
+                  data?.user_data.mobile.slice(7, 9) +
+                  " დარეკვა"}
+              </button>
+            </Link>
+          ) : (
+            <button
+              onClick={() => setSeeNumber(true)}
+              className="flex-1  text-buttonText flex justify-center min-w-[300px] items-center h-full rounded-xl min-h-[48px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors hover:bg-mainHover"
+            >
+              <PhoneFIlledIcon className="mobile:h-[21px] mobileSmall:h-[18px] h-[19px] aspect-square [&>path]:fill-text-buttonText mr-3 translate-y-[-1px]" />{" "}
+              {data?.user_data.mobile.slice(0, 3) +
+                " " +
+                data?.user_data.mobile.slice(3, 5) +
+                " ** ** ნომრის ჩვენება"}
+            </button>
+          )}
         </div>
       </div>
       {data?.products ? (

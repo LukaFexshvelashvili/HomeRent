@@ -19,11 +19,16 @@ import { productViewPlus } from "../../hooks/serverProductFunctions";
 import { TProductCard } from "../../components/global/Card";
 import { AdBanner3 } from "../../components/global/AdComponents";
 
+export type TproductPage = {
+  productData: TProductData;
+  userData: { id: number; name: string; surname: string; mobile: string };
+};
+
 export default function Product() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [productData, setProductData] = useState<null | TProductData>(null);
+  const [pageData, setPageData] = useState<null | TproductPage>(null);
   const [sameProducts, setSameProducts] = useState<null | TProductCard[]>(null);
   const makeRefresh = useRef({ id: id, refresh: true });
   useEffect(() => {
@@ -34,13 +39,17 @@ export default function Product() {
       makeRefresh.current.id = id;
       makeRefresh.current.refresh = false;
       axiosCall.post("fetch/product", `product_id=${id}`).then((res) => {
-        if (res.data.product_data.length == 0) {
+        if (res.data.product_data == null) {
           navigate("/");
         } else {
           if (res.data.status === 100) {
-            setProductData(res.data.product_data[0]);
+            setPageData({
+              productData: res.data.product_data,
+              userData: res.data.user_data,
+            });
+
             let formData = new FormData();
-            formData.append("city", res.data.product_data[0].estate_city);
+            formData.append("city", res.data.product_data.estate_city);
             axiosCall
               .post("fetch/same_products", formData)
               .then((res) => setSameProducts(res.data));
@@ -57,13 +66,13 @@ export default function Product() {
 
   return (
     <main className="min-h-screen">
-      {productData === null || !productData.id ? (
+      {pageData === null || !pageData.productData.id ? (
         <ContentLoader />
       ) : (
         <>
           <section className="medium:flex-col flex gap-[36px] medium:gap-5 mobile:gap-3">
-            <ImageSlider productData={productData} />
-            <ProductSideBar productData={productData} />
+            <ImageSlider productData={pageData.productData} />
+            <ProductSideBar pageData={pageData} />
           </section>
           <section className="flex gap-[36px] mt-6  small:flex-col">
             <div className="flex-[2] flex flex-col gap-3">
@@ -72,17 +81,17 @@ export default function Product() {
                   აღწერა
                 </p>
                 <p className=" text-[14px] font-mainSemiBold text-textDescCard leading-[23px] mt-2 tracking-normal">
-                  {productData.estate_description &&
-                  productData.estate_description !== "null"
-                    ? productData.estate_description
+                  {pageData.productData.estate_description &&
+                  pageData.productData.estate_description !== "null"
+                    ? pageData.productData.estate_description
                     : "აღწერა არ არის დამატებული"}
                 </p>
-                {productData.estate_ipcode !== "null" && (
+                {pageData.productData.estate_ipcode !== "null" && (
                   <p className="text-[14px] font-mainSemiBold text-textDesc leading-[23px] mt-2 tracking-normal">
                     საკადასტრო კოდი:{" "}
                     <span className="text-main underline cursor-pointer">
                       {" "}
-                      {productData.estate_ipcode}
+                      {pageData.productData.estate_ipcode}
                     </span>
                   </p>
                 )}
@@ -92,16 +101,16 @@ export default function Product() {
                   დამატებითი ინფორმაცია
                 </p>
                 <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[150px] my-[25px] pl-5 medium:max-h-none medium:flex-row ">
-                  {JSON.parse(productData.estate_addons) !== null
-                    ? productData.estate_type == 3
+                  {JSON.parse(pageData.productData.estate_addons) !== null
+                    ? pageData.productData.estate_type == 3
                       ? productAddonsListForLand.map(
                           (item: TProductAddon, i: number) => (
                             <div
                               key={i}
                               className={`flex items-center ${
-                                JSON.parse(productData.estate_addons).includes(
-                                  i
-                                )
+                                JSON.parse(
+                                  pageData.productData.estate_addons
+                                ).includes(i)
                                   ? "opacity-100"
                                   : "opacity-20 line-through decoration-blackMain"
                               } `}
@@ -114,15 +123,15 @@ export default function Product() {
                             </div>
                           )
                         )
-                      : productData.estate_type == 4
+                      : pageData.productData.estate_type == 4
                       ? productAddonsListForHotel.map(
                           (item: TProductAddon, i: number) => (
                             <div
                               key={i}
                               className={`flex items-center ${
-                                JSON.parse(productData.estate_addons).includes(
-                                  i
-                                )
+                                JSON.parse(
+                                  pageData.productData.estate_addons
+                                ).includes(i)
                                   ? "opacity-100"
                                   : "opacity-20 line-through decoration-blackMain"
                               } `}
@@ -138,7 +147,7 @@ export default function Product() {
                       : productAddonsList.map(
                           (item: TProductAddon, i: number) => {
                             if (
-                              productData.estate_type !== 0 &&
+                              pageData.productData.estate_type !== 0 &&
                               item.name == "კანალიზაცია"
                             ) {
                               return null;
@@ -148,7 +157,7 @@ export default function Product() {
                                 key={i}
                                 className={`flex items-center ${
                                   JSON.parse(
-                                    productData.estate_addons
+                                    pageData.productData.estate_addons
                                   ).includes(i)
                                     ? "opacity-100"
                                     : "opacity-20 line-through decoration-blackMain"
@@ -174,11 +183,11 @@ export default function Product() {
                   ახლოს მდებარეობს
                 </p>
                 <div className="flex gap-3 flex-wrap mt-5 mobile:justify-center">
-                  {JSON.parse(productData.estate_close_places) !== null
+                  {JSON.parse(pageData.productData.estate_close_places) !== null
                     ? closePlacesList.map((item: TClosePlace, i: number) =>
-                        JSON.parse(productData.estate_close_places).includes(
-                          i
-                        ) ? (
+                        JSON.parse(
+                          pageData.productData.estate_close_places
+                        ).includes(i) ? (
                           <div
                             className="h-[35px] px-4 flex items-center rounded-md "
                             style={{ backgroundColor: item.bgColor }}
