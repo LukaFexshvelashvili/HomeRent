@@ -21,6 +21,7 @@ import { deleteParams, updateParams } from "../../hooks/routerHooks";
 import { useSearchParams } from "react-router-dom";
 function Search() {
   const [searched, setSearched] = useState<any>(null);
+  const [vipSearched, setVipSearched] = useState<any[] | null>(null);
   const [params, setParams] = useSearchParams();
   const [loader, setLoader] = useState<boolean>(false);
   const [pages, setPages] = useState<number>(1);
@@ -44,6 +45,11 @@ function Search() {
     axiosCall.get(`fetch/search${debouncedSearch}`).then((res) => {
       if (res.data.status == 100) {
         setSearched(res.data.products);
+        if (res.data.vipProducts && res.data.vipProducts.length > 5) {
+          setVipSearched(res.data.vipProducts.slice(0, 5));
+        } else if (res.data.vipProducts) {
+          setVipSearched(res.data.vipProducts);
+        }
         setPages(Math.floor(res.data.length / res.data.per_page_length));
         getFullCount.current = res.data.length;
         if (
@@ -157,11 +163,18 @@ function Search() {
           </p>
           <div className="flex flex-wrap relative min-h-[150px] gap-5 gap-y-7 large:justify-center large:gap-5">
             {!loader ? (
-              searched !== null && searched.length > 0 ? (
-                searched.map((product: TProductCard) => (
-                  <Card key={product.id} product={product} />
-                ))
-              ) : null
+              <>
+                {vipSearched !== null && vipSearched.length > 0
+                  ? vipSearched.map((product: TProductCard) => (
+                      <Card key={product.id} product={product} />
+                    ))
+                  : null}
+                {searched !== null && searched.length > 0
+                  ? searched.map((product: TProductCard) => (
+                      <Card key={product.id} product={product} />
+                    ))
+                  : null}
+              </>
             ) : (
               <ContentLoader />
             )}
