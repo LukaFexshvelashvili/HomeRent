@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { productViewPlus } from "../../hooks/serverProductFunctions";
 import { TProductCard } from "../../components/global/Card";
 import { AdBanner3 } from "../../components/global/AdComponents";
+import { setWebLoader } from "../../store/data/webUISlice";
 
 export type TproductPage = {
   productData: TProductData;
@@ -50,9 +51,11 @@ export default function Product() {
 
             let formData = new FormData();
             formData.append("city", res.data.product_data.estate_city);
-            axiosCall
-              .post("fetch/same_products", formData)
-              .then((res) => setSameProducts(res.data));
+            axiosCall.post("fetch/same_products", formData).then((res) => {
+              setSameProducts(res.data);
+
+              dispatch(setWebLoader(false));
+            });
           }
         }
       });
@@ -216,7 +219,12 @@ export default function Product() {
                   მსგავსი განცხადებები
                 </p>
 
-                <CardSlider uniqueId={1001} products={sameProducts} />
+                <CardSlider
+                  uniqueId={1001}
+                  products={sameProducts.filter(
+                    (item) => item.id !== pageData.productData.id
+                  )}
+                />
               </>
             )}
           </div>

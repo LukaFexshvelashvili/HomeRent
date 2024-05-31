@@ -19,8 +19,8 @@ export default function SharePopup() {
       >
         {" "}
       </div>
-      <div className=" w-[650px] rounded-section bg-whiteMain p-5 relative z-10  max-w-[90%]">
-        <div className="w-[550px] mx-auto">
+      <div className=" w-[90%] max-w-[650px]  rounded-section bg-whiteMain p-5 relative z-10">
+        <div className="w-[90%] max-w-[550px] mx-auto">
           <h2 className="text-main font-mainBold text-center text-[18px]  mb-4">
             გაზიარება
           </h2>

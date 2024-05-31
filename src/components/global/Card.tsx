@@ -14,6 +14,7 @@ import {
 } from "../../hooks/serverFunctions";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { setWebLoader } from "../../store/data/webUISlice";
 
 export type TProductCard = {
   id: number;
@@ -58,7 +59,11 @@ export default function Card(props: {
           props.autoWidth ? "w-full" : "w-[280px]"
         } bg-whiteMain border-2 border-cardBorder rounded-normal p-3 pb-14 relative`}
       >
-        <Link to={"/product/" + props.product.id} className=" rounded-2xl">
+        <Link
+          onClick={() => dispatch(setWebLoader(true))}
+          to={"/product/" + props.product.id}
+          className=" rounded-2xl"
+        >
           <div className="w-full h-[200px] rounded-normal bg-whiteLoad relative overflow-hidden">
             {props.product.estate_vip == 2 ? (
               <div className="absolute h-[25px] w-[60px] select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
@@ -101,7 +106,10 @@ export default function Card(props: {
               {props.product.estate_title}
             </h2>
           </Link>
-          <Link to={"/product/" + props.product.id}>
+          <Link
+            onClick={() => dispatch(setWebLoader(true))}
+            to={"/product/" + props.product.id}
+          >
             <p className="text-textDescCard text-[13px] font-mainRegular mt-[2px]  text-nowrap text-ellipsis w-full overflow-hidden">
               {props.product.estate_city},{" "}
               {props.product.estate_address && props.product.estate_address}
