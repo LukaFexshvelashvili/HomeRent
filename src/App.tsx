@@ -36,6 +36,7 @@ import Seller from "./pages/Seller/Seller";
 import { TPopups } from "./store/data/popupsSlice";
 import ProblemReport from "./components/popups/ProblemReport";
 import SharePopup from "./components/popups/SharePopup";
+import Contact from "./pages/Contact/Contact";
 
 function App() {
   const UISettings = useSelector((store: RootState) => store.webUI);
@@ -98,6 +99,7 @@ function App() {
             ) : null}
             <Route path="Search" element={<Search />} />
             <Route path="Product" element={<Product />} />
+            <Route path="Contact" element={<Contact />} />
             <Route path="Product/:id" element={<Product />} />
             <Route path="AddProduct" element={<AddProduct />} />
             <Route path="SuspendedAccount" element={<SuspendedAccount />} />

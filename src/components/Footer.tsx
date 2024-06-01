@@ -17,14 +17,14 @@ export default function Footer() {
           <div className="flex flex-col gap-2 [&>p]:text-Asmall text-Asmall [&>a]:text-textDesc [&>p]:cursor-pointer">
             <h3 className="mb-2  text-textHeadBlack">ნავიგაცია</h3>
             <Link to={"/"}>მთავარი</Link>
-            <Link to={"Search"}>მოძებნა</Link>
+            <Link to={"/Search"}>მოძებნა</Link>
             <Link to={"/"}>პროექტები</Link>
-            <Link to={"MaclerService"}>მაკლერის სერვისი</Link>
+            {/* <Link to={"MaclerService"}>მაკლერის სერვისი</Link> */}
           </div>
           <div className="flex flex-col gap-2 [&>p]:text-Asmall text-Asmall [&>a]:text-textDesc [&>p]:cursor-pointer">
             <h3 className="mb-2  text-textHeadBlack">დახმარება</h3>
-            <Link to="Contact">კონტაქტი</Link>
-            <Link to="AdsMake">რეკლამა</Link>
+            <Link to={"/Contact"}>კონტაქტი</Link>
+            <Link to={"/AdsMake"}>რეკლამა</Link>
             <Link to={"Policy"}>წესები</Link>
             <Link to={"call"}>00 00 0000 0000</Link>
             <Link to={"gmail"}>//////////@gmail.ge</Link>

@@ -103,10 +103,12 @@ export default function Navbar() {
           </OutsideClickClose> */}
         </div>
         <div className="mobile:hidden flex items-center gap-4">
-          <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-orangeClear text-orangeI rounded-[8px] text-[12px] transition-colors hover:bg-orangeHover">
-            <HelpIcon className="h-[16px] aspect-square" />
-            დახმარება
-          </button>
+          <Link to={"/Contact"}>
+            <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-orangeClear text-orangeI rounded-[8px] text-[12px] transition-colors hover:bg-orangeHover">
+              <HelpIcon className="h-[16px] aspect-square" />
+              დახმარება
+            </button>
+          </Link>
           {userData.isLogged ? (
             <Link to={"/AddProduct"}>
               <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-greenClear text-greenI rounded-[8px] text-[12px] transition-colors hover:bg-greenHover">
@@ -271,10 +273,12 @@ function ResponsiveNavbar({ userData }: { userData: Tuser }) {
                 )}
           </div>
           <div className=" flex items-center justify-center mt-8 gap-4">
-            <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-orangeClear text-orangeI rounded-[8px] text-[14px] transition-colors hover:bg-orangeHover">
-              <HelpIcon className="h-[18px] aspect-square" />
-              დახმარება
-            </button>
+            <Link to={"/Contact"}>
+              <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-orangeClear text-orangeI rounded-[8px] text-[14px] transition-colors hover:bg-orangeHover">
+                <HelpIcon className="h-[18px] aspect-square" />
+                დახმარება
+              </button>
+            </Link>
             {userData.isLogged ? (
               <Link to={"/AddProduct"}>
                 <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-greenClear text-greenI rounded-[8px] text-[14px] transition-colors hover:bg-greenHover">

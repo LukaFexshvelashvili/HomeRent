@@ -36,8 +36,6 @@ export default function ForgotPassword() {
           }
         )
         .then((res) => {
-          console.log(res.data);
-
           if (res.data.status == 100) {
             setCodeSubmit(true);
           } else if (res.data.status == 2) {
