@@ -32,23 +32,44 @@ export default function Footer() {
           <div className="flex flex-col gap-3 ">
             <h3 className="mb-2  text-textHeadBlack">იყიდება</h3>
             <div className="flex flex-wrap flex-col gap-2 gap-x-6 h-[160px] [&>p]:text-Asmall text-Asmall [&>p]:text-textDesc [&>p]:cursor-pointer">
-              <p>იყიდება 1 ოთახიანი ბინა</p>
-              <p>იყიდება 2 ოთახიანი ბინა</p>
-              <p>იყიდება 3 ოთახიანი ბინა</p>
-              <p>იყიდება 4 ოთახიანი ბინა</p>
-              <p>იყიდება ბინა თბილისში</p>
+              <Link to={"search?deal=0&estate_type=1&rooms=1"}>
+                <p>იყიდება 1 ოთახიანი ბინა</p>
+              </Link>
+              <Link to={"search?deal=0&estate_type=1&rooms=2"}>
+                <p>იყიდება 2 ოთახიანი ბინა</p>
+              </Link>
+              <Link to={"search?deal=0&estate_type=1&rooms=3"}>
+                <p>იყიდება 3 ოთახიანი ბინა</p>
+              </Link>
+              <Link to={"search?deal=0&estate_type=1&rooms=4"}>
+                <p>იყიდება 4 ოთახიანი ბინა</p>
+              </Link>
+              <Link to={"search?deal=0&estate_type=1&city=თბილისი"}>
+                <p>იყიდება ბინა თბილისში</p>
+              </Link>
 
-              <p>ქირავდება ბინები</p>
-              <p>ქირავდება კერძო სახლი</p>
-              <p>ქირავდება ფართი</p>
-              <p>იყიდება ბინა ბათუმში</p>
-              <p>იყიდება კერძო სახლი</p>
+              <Link to={"search?deal=1&estate_type=1"}>
+                <p>ქირავდება ბინები</p>
+              </Link>
+              <Link to={"search?deal=1&estate_type=0"}>
+                <p>ქირავდება კერძო სახლი</p>
+              </Link>
+              <Link to={"search?deal=1&estate_type=2"}>
+                <p>ქირავდება ფართი</p>
+              </Link>
+              <Link to={"search?deal=0&estate_type=0&city=ბათუმი"}>
+                <p>იყიდება ბინა ბათუმში</p>
+              </Link>
+              <Link to={"search?deal=0&estate_type=0"}>
+                <p>იყიდება კერძო სახლი</p>
+              </Link>
 
-              <p>ქირავდება დარბაზი</p>
-              <p>იყიდება ბინა ისანში</p>
-              <p>იყიდება ბინა გლდანში</p>
-              <p>იყიდება ბინა ქობულეთში</p>
-              <p>იყიდება ნაკვეთი</p>
+              <Link to={"search?deal=1&estate_type=2"}>
+                <p>ქირავდება დარბაზი</p>
+              </Link>
+              <Link to={"search?deal=0&estate_type=3"}>
+                <p>იყიდება ნაკვეთი</p>
+              </Link>
             </div>
           </div>
         </div>
@@ -89,23 +110,44 @@ export default function Footer() {
             title="იყიდება"
             content={
               <>
-                <p>იყიდება 1 ოთახიანი ბინა</p>
-                <p>იყიდება 2 ოთახიანი ბინა</p>
-                <p>იყიდება 3 ოთახიანი ბინა</p>
-                <p>იყიდება 4 ოთახიანი ბინა</p>
-                <p>იყიდება ბინა თბილისში</p>
+                <Link to={"search?deal=0&estate_type=1&rooms=1"}>
+                  <p>იყიდება 1 ოთახიანი ბინა</p>
+                </Link>
+                <Link to={"search?deal=0&estate_type=1&rooms=2"}>
+                  <p>იყიდება 2 ოთახიანი ბინა</p>
+                </Link>
+                <Link to={"search?deal=0&estate_type=1&rooms=3"}>
+                  <p>იყიდება 3 ოთახიანი ბინა</p>
+                </Link>
+                <Link to={"search?deal=0&estate_type=1&rooms=4"}>
+                  <p>იყიდება 4 ოთახიანი ბინა</p>
+                </Link>
+                <Link to={"search?deal=0&estate_type=1&city=თბილისი"}>
+                  <p>იყიდება ბინა თბილისში</p>
+                </Link>
 
-                <p>ქირავდება ბინები</p>
-                <p>ქირავდება კერძო სახლი</p>
-                <p>ქირავდება ფართი</p>
-                <p>იყიდება ბინა ბათუმში</p>
-                <p>იყიდება კერძო სახლი</p>
+                <Link to={"search?deal=1&estate_type=1"}>
+                  <p>ქირავდება ბინები</p>
+                </Link>
+                <Link to={"search?deal=1&estate_type=0"}>
+                  <p>ქირავდება კერძო სახლი</p>
+                </Link>
+                <Link to={"search?deal=1&estate_type=2"}>
+                  <p>ქირავდება ფართი</p>
+                </Link>
+                <Link to={"search?deal=0&estate_type=0&city=ბათუმი"}>
+                  <p>იყიდება ბინა ბათუმში</p>
+                </Link>
+                <Link to={"search?deal=0&estate_type=0"}>
+                  <p>იყიდება კერძო სახლი</p>
+                </Link>
 
-                <p>ქირავდება დარბაზი</p>
-                <p>იყიდება ბინა ისანში</p>
-                <p>იყიდება ბინა გლდანში</p>
-                <p>იყიდება ბინა ქობულეთში</p>
-                <p>იყიდება ნაკვეთი</p>
+                <Link to={"search?deal=1&estate_type=2"}>
+                  <p>ქირავდება დარბაზი</p>
+                </Link>
+                <Link to={"search?deal=0&estate_type=3"}>
+                  <p>იყიდება ნაკვეთი</p>
+                </Link>
               </>
             }
           />

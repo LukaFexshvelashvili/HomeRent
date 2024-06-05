@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import ReactSlider from "react-slider";
 import { RealEstateTypes } from "./FiltersArray";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
@@ -130,62 +129,46 @@ export function SelectType() {
 
 export function PriceSlider(props: { setData?: Function }) {
   const [params, setParams] = useSearchParams();
-  const startCounting = useRef<boolean>(false);
   const firstRender = useRef<boolean>(true);
-  const [PricesPercentages, setPricesPercentages] = useState<number[]>([
-    0, 100,
-  ]);
-  const [Prices, setPrices] = useState<number[]>([0, 0]);
+
+  const [Prices, setPrices] = useState<number[]>([-1, -1]);
   const [currency, setCurrency] = useState<number>(0);
-  const priceDistance = [0, 1000000];
-  const priceGap = 5000;
   useEffect(() => {
     const searchPrices = params.get("prices");
+
     if (searchPrices) {
       const getSearchPrices = JSON.parse(searchPrices);
       setPrices([getSearchPrices.start, getSearchPrices.end]);
-      setPricesPercentages([
-        getSearchPrices.start / (priceDistance[1] / 100),
-        getSearchPrices.end / (priceDistance[1] / 100),
-      ]);
     }
   }, []);
   useEffect(() => {
     const searchPrices = params.get("prices");
 
-    if (firstRender.current && searchPrices) {
+    if (searchPrices && firstRender.current) {
       const getSearchPrices = JSON.parse(searchPrices);
       changeCurrency(getSearchPrices.currency);
-      firstRender.current = false;
-    } else if (!searchPrices) {
-      startCounting.current = false;
-      setPricesPercentages([0, 100]);
-      setPrices([priceDistance[0], priceDistance[1]]);
     }
+    firstRender.current = false;
   }, [Prices[0] >= 0, params]);
 
   useEffect(() => {
-    if (startCounting.current) {
-      setPrices([
-        Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
-        Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
-      ]);
+    if (props.setData) {
+      props.setData([Prices[0], Prices[1]]);
+    }
+    if (Prices[1] !== -1) {
       updateParams(params, setParams, {
         prices: JSON.stringify({
-          start: Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
-          end: Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
+          start: Prices[0] == -1 ? 0 : Prices[0],
+          end: Prices[1] == -1 ? 0 : Prices[1],
           currency: currency,
         }),
       });
-
-      if (props.setData) {
-        props.setData([Prices[0], Prices[1]]);
-      }
     }
-  }, [PricesPercentages]);
+  }, [Prices[0], Prices[1]]);
+
   const changeCurrency = (newCurrency: number) => {
     setCurrency(newCurrency);
-    if (Prices[0] >= 0) {
+    if (Prices[0] >= 0 && Prices[1] >= 0) {
       setPrices([
         currencyConvertor(Prices[0], currency),
         currencyConvertor(Prices[1], currency),
@@ -221,58 +204,19 @@ export function PriceSlider(props: { setData?: Function }) {
           $
         </div>
       </div>
-      <ReactSlider
-        className="horizontal-slider w-full mt-6 flex items-center h-3"
-        thumbClassName="example-thumb thumbSlider"
-        trackClassName="example-track bg-whiteLoad h-[5px] rounded-md"
-        defaultValue={[PricesPercentages[0], PricesPercentages[1]]}
-        value={[PricesPercentages[0], PricesPercentages[1]]}
-        ariaLabel={["Lower thumb", "Upper thumb"]}
-        onChange={(state) => {
-          setPricesPercentages(state);
-          startCounting.current = true;
-        }}
-        ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
-        pearling
-        minDistance={10}
-      />
-      <div className="flex items-center gap-6 mt-4">
+      <div className="flex items-center gap-6 mt-4 mobileSmall:flex-col">
         <div className="flex items-center">
           <input
             type="number"
             className="h-[30px] w-[100px] rounded-md bg-LoginInput text-textHeadCard px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
-              if (
-                e.target.valueAsNumber <= priceDistance[1] &&
-                e.target.valueAsNumber >= priceDistance[0] &&
-                e.target.valueAsNumber - priceGap < Prices[1]
-              ) {
-                setPricesPercentages([
-                  e.target.valueAsNumber / (priceDistance[1] / 100),
-                  PricesPercentages[1],
-                ]);
-              }
-              setPrices([
-                e.target.value == ""
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber) < 0
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber),
-                Prices[1],
-              ]);
-            }}
-            onBlur={(e) => {
-              if (
-                e.target.valueAsNumber - priceGap > Prices[1] ||
-                e.target.valueAsNumber > priceDistance[1]
-              ) {
-                setPrices([
-                  (priceDistance[1] / 100) * PricesPercentages[0],
-                  (priceDistance[1] / 100) * PricesPercentages[1],
-                ]);
+              if (e.target.valueAsNumber >= 0) {
+                setPrices([e.target.valueAsNumber, Prices[1]]);
+              } else if (e.target.value == "") {
+                setPrices([-1, Prices[1]]);
               }
             }}
-            value={Prices[0]}
+            value={Prices[0] == -1 ? "" : Prices[0]}
           />
           <p className="text-Asmall ml-2 text-textDesc">
             {currency == 0 ? "$" : "₾"} -დან
@@ -283,38 +227,13 @@ export function PriceSlider(props: { setData?: Function }) {
             type="number"
             className="h-[30px] w-[100px] rounded-md bg-LoginInput text-textHeadCard px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
-              setPrices([
-                Prices[0],
-                e.target.value == ""
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber) < 0
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber),
-              ]);
-              if (
-                e.target.valueAsNumber <= priceDistance[1] &&
-                e.target.valueAsNumber >= priceDistance[0] &&
-                e.target.valueAsNumber - priceGap > Prices[0]
-              ) {
-                setPricesPercentages([
-                  PricesPercentages[0],
-
-                  e.target.valueAsNumber / (priceDistance[1] / 100),
-                ]);
+              if (e.target.valueAsNumber >= 0) {
+                setPrices([Prices[0], e.target.valueAsNumber]);
+              } else if (e.target.value == "") {
+                setPrices([Prices[0], -1]);
               }
             }}
-            onBlur={(e) => {
-              if (
-                e.target.valueAsNumber - priceGap < Prices[0] ||
-                e.target.valueAsNumber > priceDistance[1]
-              ) {
-                setPrices([
-                  (priceDistance[1] / 100) * PricesPercentages[0],
-                  (priceDistance[1] / 100) * PricesPercentages[1],
-                ]);
-              }
-            }}
-            value={Prices[1]}
+            value={Prices[1] == -1 ? "" : Prices[1]}
           />
           <p className="text-Asmall ml-2 text-textDesc">
             {currency == 0 ? "$" : "₾"} -მდე
@@ -327,106 +246,60 @@ export function PriceSlider(props: { setData?: Function }) {
 export function SizeSlider(props: { setData?: Function }) {
   const [params, setParams] = useSearchParams();
   const startCounting = useRef<boolean>(false);
+  const firstRender = useRef<boolean>(true);
 
-  const [PricesPercentages, setPricesPercentages] = useState<number[]>([
-    0, 100,
-  ]);
-  const [Prices, setPrices] = useState<number[]>([0, 0]);
-  const priceDistance = [0, 500];
-  const priceGap = 5;
+  const [Prices, setPrices] = useState<number[]>([-1, -1]);
 
   const searchSizes = params.get("sizes");
   useEffect(() => {
-    if (searchSizes && !startCounting.current) {
-      const getSearchSizes = JSON.parse(searchSizes);
-      setPrices([getSearchSizes[0], getSearchSizes[1]]);
-      setPricesPercentages([
-        getSearchSizes[0] / (priceDistance[1] / 100),
-        getSearchSizes[1] / (priceDistance[1] / 100),
-      ]);
-    } else if (!searchSizes) {
-      startCounting.current = false;
-      setPricesPercentages([0, 100]);
-      setPrices([priceDistance[0], priceDistance[1]]);
+    if (firstRender.current) {
+      if (searchSizes) {
+        const getSearchSizes = JSON.parse(searchSizes);
+        setPrices([getSearchSizes[0], getSearchSizes[1]]);
+      } else if (!searchSizes) {
+        setPrices([-1, -1]);
+      }
+      firstRender.current = false;
+    } else if (searchSizes == null) {
+      setPrices([-1, -1]);
     }
-  }, [searchSizes]);
+  }, [searchSizes, params]);
 
   useEffect(() => {
     if (startCounting.current) {
-      setPrices([
-        Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
-        Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
-      ]);
+      setPrices([-1, -1]);
 
       updateParams(params, setParams, {
-        sizes: JSON.stringify([
-          Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
-          Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
-        ]),
+        sizes: JSON.stringify([0, 0]),
       });
       if (props.setData) {
         props.setData([Prices[0], Prices[1]]);
       }
+    } else if (Prices[1] !== -1) {
+      updateParams(params, setParams, {
+        sizes: JSON.stringify([Prices[0] == -1 ? 0 : Prices[0], Prices[1]]),
+      });
     }
-  }, [PricesPercentages]);
+  }, [Prices[0], Prices[1]]);
   return (
     <div className="flex flex-col items-center relative w-10/12 mx-auto">
       <p className=" text-textHead tracking-wider font-mainBold ">
         კვადრატულობა
       </p>
 
-      <ReactSlider
-        className="horizontal-slider w-full mt-4 flex items-center h-3"
-        thumbClassName="example-thumb thumbSlider"
-        trackClassName="example-track bg-whiteLoad h-[5px] rounded-md"
-        defaultValue={[PricesPercentages[0], PricesPercentages[1]]}
-        value={[PricesPercentages[0], PricesPercentages[1]]}
-        ariaLabel={["Lower thumb", "Upper thumb"]}
-        onChange={(state) => {
-          setPricesPercentages(state);
-          startCounting.current = true;
-        }}
-        ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
-        pearling
-        minDistance={10}
-      />
-      <div className="flex items-center gap-6 mt-4">
+      <div className="flex items-center gap-6 mt-4 mobileSmall:flex-col">
         <div className="flex items-center">
           <input
             type="number"
             className="h-[30px] w-[100px] rounded-md bg-LoginInput text-textHeadCard px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
-              if (
-                e.target.valueAsNumber <= priceDistance[1] &&
-                e.target.valueAsNumber >= priceDistance[0] &&
-                e.target.valueAsNumber - priceGap < Prices[1]
-              ) {
-                setPricesPercentages([
-                  e.target.valueAsNumber / (priceDistance[1] / 100),
-                  PricesPercentages[1],
-                ]);
-              }
-              setPrices([
-                e.target.value == ""
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber) < 0
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber),
-                Prices[1],
-              ]);
-            }}
-            onBlur={(e) => {
-              if (
-                e.target.valueAsNumber - priceGap > Prices[1] ||
-                e.target.valueAsNumber > priceDistance[1]
-              ) {
-                setPrices([
-                  (priceDistance[1] / 100) * PricesPercentages[0],
-                  (priceDistance[1] / 100) * PricesPercentages[1],
-                ]);
+              if (e.target.valueAsNumber >= 0) {
+                setPrices([e.target.valueAsNumber, Prices[1]]);
+              } else if (e.target.value == "") {
+                setPrices([-1, Prices[1]]);
               }
             }}
-            value={Prices[0]}
+            value={Prices[0] == -1 ? "" : Prices[0]}
           />
           <p className="text-Asmall ml-2 text-textDesc">მ² -დან</p>
         </div>
@@ -435,38 +308,13 @@ export function SizeSlider(props: { setData?: Function }) {
             type="number"
             className="h-[30px] w-[100px] rounded-md bg-LoginInput  text-textHeadCard px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
-              setPrices([
-                Prices[0],
-                e.target.value == ""
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber) < 0
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber),
-              ]);
-              if (
-                e.target.valueAsNumber <= priceDistance[1] &&
-                e.target.valueAsNumber >= priceDistance[0] &&
-                e.target.valueAsNumber - priceGap > Prices[0]
-              ) {
-                setPricesPercentages([
-                  PricesPercentages[0],
-
-                  e.target.valueAsNumber / (priceDistance[1] / 100),
-                ]);
+              if (e.target.valueAsNumber >= 0) {
+                setPrices([Prices[0], e.target.valueAsNumber]);
+              } else if (e.target.value == "") {
+                setPrices([Prices[0], -1]);
               }
             }}
-            onBlur={(e) => {
-              if (
-                e.target.valueAsNumber - priceGap < Prices[0] ||
-                e.target.valueAsNumber > priceDistance[1]
-              ) {
-                setPrices([
-                  (priceDistance[1] / 100) * PricesPercentages[0],
-                  (priceDistance[1] / 100) * PricesPercentages[1],
-                ]);
-              }
-            }}
-            value={Prices[1]}
+            value={Prices[1] == -1 ? "" : Prices[1]}
           />
           <p className="text-Asmall ml-2 text-textDesc">მ² -მდე</p>
         </div>

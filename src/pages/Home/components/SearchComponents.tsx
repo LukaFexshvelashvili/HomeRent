@@ -1,26 +1,13 @@
 import { useEffect, useState } from "react";
-import ReactSlider from "react-slider";
 import { currencyConvertor } from "../../../components/convertors/convertors";
 import { projectDealTypes } from "../../../assets/lists/productAddons";
-import { RealEstateTypes } from "../../Search/components/FiltersArray";
 
 export function InputSizeSlider(props: {
   setData: Function;
   closeWindow: Function;
   toFull?: boolean;
 }) {
-  const [PricesPercentages, setPricesPercentages] = useState<number[]>([
-    0, 100,
-  ]);
   const [Prices, setPrices] = useState<number[]>([0, 0]);
-  const priceDistance = [10, 500000];
-  const priceGap = 5;
-  useEffect(() => {
-    setPrices([
-      Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
-      Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
-    ]);
-  }, [PricesPercentages]);
 
   return (
     <div
@@ -28,53 +15,13 @@ export function InputSizeSlider(props: {
         props.toFull ? "w-full max-w-[900px]" : "w-10/12"
       }`}
     >
-      <ReactSlider
-        className="horizontal-slider w-full mt-4 flex items-center h-3"
-        thumbClassName="example-thumb thumbSlider"
-        trackClassName="example-track bg-whiteLoad h-[5px] rounded-md"
-        defaultValue={[PricesPercentages[0], PricesPercentages[1]]}
-        value={[PricesPercentages[0], PricesPercentages[1]]}
-        ariaLabel={["Lower thumb", "Upper thumb"]}
-        onChange={(state) => setPricesPercentages(state)}
-        ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
-        pearling
-        minDistance={2}
-      />
       <div className="flex items-center gap-6 mt-4 mobile:flex-wrap">
         <div className="flex items-center">
           <input
             type="number"
             className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors text-textHeadCard focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
-              if (
-                e.target.valueAsNumber <= priceDistance[1] &&
-                e.target.valueAsNumber >= priceDistance[0] &&
-                e.target.valueAsNumber - priceGap < Prices[1]
-              ) {
-                setPricesPercentages([
-                  e.target.valueAsNumber / (priceDistance[1] / 100),
-                  PricesPercentages[1],
-                ]);
-              }
-              setPrices([
-                e.target.value == ""
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber) < 0
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber),
-                Prices[1],
-              ]);
-            }}
-            onBlur={(e) => {
-              if (
-                e.target.valueAsNumber - priceGap > Prices[1] ||
-                e.target.valueAsNumber > priceDistance[1]
-              ) {
-                setPrices([
-                  (priceDistance[1] / 100) * PricesPercentages[0],
-                  (priceDistance[1] / 100) * PricesPercentages[1],
-                ]);
-              }
+              setPrices([e.target.valueAsNumber, Prices[1]]);
             }}
             value={Prices[0]}
           />
@@ -85,36 +32,7 @@ export function InputSizeSlider(props: {
             type="number"
             className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none text-textHeadCard transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
-              setPrices([
-                Prices[0],
-                e.target.value == ""
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber) < 0
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber),
-              ]);
-              if (
-                e.target.valueAsNumber <= priceDistance[1] &&
-                e.target.valueAsNumber >= priceDistance[0] &&
-                e.target.valueAsNumber - priceGap > Prices[0]
-              ) {
-                setPricesPercentages([
-                  PricesPercentages[0],
-
-                  e.target.valueAsNumber / (priceDistance[1] / 100),
-                ]);
-              }
-            }}
-            onBlur={(e) => {
-              if (
-                e.target.valueAsNumber - priceGap < Prices[0] ||
-                e.target.valueAsNumber > priceDistance[1]
-              ) {
-                setPrices([
-                  (priceDistance[1] / 100) * PricesPercentages[0],
-                  (priceDistance[1] / 100) * PricesPercentages[1],
-                ]);
-              }
+              setPrices([Prices[0], e.target.valueAsNumber]);
             }}
             value={Prices[1]}
           />
@@ -138,19 +56,8 @@ export function InputPriceSlider(props: {
   closeWindow: Function;
   toFull?: boolean;
 }) {
-  const [PricesPercentages, setPricesPercentages] = useState<number[]>([
-    0, 100,
-  ]);
   const [Prices, setPrices] = useState<number[]>([0, 0]);
   const [currency, setCurrency] = useState<number>(0);
-  const priceDistance = [0, 1000000];
-  const priceGap = 5000;
-  useEffect(() => {
-    setPrices([
-      Math.floor((priceDistance[1] / 100) * PricesPercentages[0]),
-      Math.floor((priceDistance[1] / 100) * PricesPercentages[1]),
-    ]);
-  }, [PricesPercentages]);
 
   const changeCurrency = (newCurrency: number) => {
     setCurrency(newCurrency);
@@ -186,53 +93,13 @@ export function InputPriceSlider(props: {
           $
         </div>
       </div>
-      <ReactSlider
-        className="horizontal-slider w-full mt-[50px] flex items-center h-3"
-        thumbClassName="example-thumb thumbSlider"
-        trackClassName="example-track bg-whiteLoad h-[5px] rounded-md"
-        defaultValue={[PricesPercentages[0], PricesPercentages[1]]}
-        value={[PricesPercentages[0], PricesPercentages[1]]}
-        ariaLabel={["Lower thumb", "Upper thumb"]}
-        onChange={(state) => setPricesPercentages(state)}
-        ariaValuetext={(state) => `Thumb value ${state.valueNow}`}
-        pearling
-        minDistance={5}
-      />
       <div className="flex items-center gap-6 mt-4 mobileTab:flex-wrap ">
         <div className="flex items-center">
           <input
             type="number"
             className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors text-textHeadCard focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
-              if (
-                e.target.valueAsNumber <= priceDistance[1] &&
-                e.target.valueAsNumber >= priceDistance[0] &&
-                e.target.valueAsNumber - priceGap < Prices[1]
-              ) {
-                setPricesPercentages([
-                  e.target.valueAsNumber / (priceDistance[1] / 100),
-                  PricesPercentages[1],
-                ]);
-              }
-              setPrices([
-                e.target.value == ""
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber) < 0
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber),
-                Prices[1],
-              ]);
-            }}
-            onBlur={(e) => {
-              if (
-                e.target.valueAsNumber - priceGap > Prices[1] ||
-                e.target.valueAsNumber > priceDistance[1]
-              ) {
-                setPrices([
-                  (priceDistance[1] / 100) * PricesPercentages[0],
-                  (priceDistance[1] / 100) * PricesPercentages[1],
-                ]);
-              }
+              setPrices([e.target.valueAsNumber, Prices[1]]);
             }}
             value={Prices[0]}
           />
@@ -245,36 +112,7 @@ export function InputPriceSlider(props: {
             type="number"
             className="h-[30px] w-[100px] rounded-md bg-LoginInput px-3 outline-none transition-colors text-textHeadCard focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
-              setPrices([
-                Prices[0],
-                e.target.value == ""
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber) < 0
-                  ? 0
-                  : Math.floor(e.target.valueAsNumber),
-              ]);
-              if (
-                e.target.valueAsNumber <= priceDistance[1] &&
-                e.target.valueAsNumber >= priceDistance[0] &&
-                e.target.valueAsNumber - priceGap > Prices[0]
-              ) {
-                setPricesPercentages([
-                  PricesPercentages[0],
-
-                  e.target.valueAsNumber / (priceDistance[1] / 100),
-                ]);
-              }
-            }}
-            onBlur={(e) => {
-              if (
-                e.target.valueAsNumber - priceGap < Prices[0] ||
-                e.target.valueAsNumber > priceDistance[1]
-              ) {
-                setPrices([
-                  (priceDistance[1] / 100) * PricesPercentages[0],
-                  (priceDistance[1] / 100) * PricesPercentages[1],
-                ]);
-              }
+              setPrices([Prices[0], e.target.valueAsNumber]);
             }}
             value={Prices[1]}
           />
