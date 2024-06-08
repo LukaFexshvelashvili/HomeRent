@@ -10,7 +10,6 @@ function ImageSlider(props: { productData: any }) {
     () => JSON.parse(props.productData.estate_images),
     [props.productData]
   );
-  console.log(imageList);
 
   const sliderNext = () => {
     if (slider == imageList.length - 1) {

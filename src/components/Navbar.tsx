@@ -20,7 +20,6 @@ import { RealEstateTypes } from "../pages/Search/components/FiltersArray";
 import { toggleDarkMode } from "../store/data/webUISlice";
 
 import { NotificationBar, ProfileBar } from "./NavbarComponents";
-import { OutsideClickClose } from "./global/OutsideClickClose";
 import { Tuser } from "../store/data/userSlice";
 export default function Navbar() {
   const userData = useSelector((store: RootState) => store.user);
@@ -46,7 +45,11 @@ export default function Navbar() {
     <nav className="h-[60px] w-full sticky bg-navBg shadow-navbarShadow flex items-center top-0 z-20">
       <div className="content_container flex justify-between">
         <div className="flex items-center gap-3">
-          <Link to="/" className="flex items-center gap-3">
+          <Link
+            to="/"
+            onClick={() => window.scrollTo(0, 0)}
+            className="flex items-center gap-3"
+          >
             <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
             <div className=" mobile:hidden h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
           </Link>

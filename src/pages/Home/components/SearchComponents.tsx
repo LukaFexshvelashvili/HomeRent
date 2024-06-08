@@ -155,7 +155,7 @@ export function ProjectDealSelectorSearch(props: { setData: Function }) {
               setActive(i);
             }
           }}
-          className={`  p-2 px-4 rounded-xl transition-colors ${
+          className={`  p-2 px-4 rounded-xl transition-colors font-mainSemiBold ${
             active == i ? "bg-main" : "bg-mainClear"
           }`}
         >

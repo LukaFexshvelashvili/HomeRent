@@ -31,45 +31,37 @@ export default function Footer() {
           </div>
           <div className="flex flex-col gap-3 ">
             <h3 className="mb-2  text-textHeadBlack">იყიდება</h3>
-            <div className="flex flex-wrap flex-col gap-2 gap-x-6 h-[160px] [&>p]:text-Asmall text-Asmall [&>p]:text-textDesc [&>p]:cursor-pointer">
+            <div className="flex flex-wrap flex-col gap-2 gap-x-6 h-[160px] [&>a]:text-Asmall text-Asmall [&>a]:text-textDesc [&>a]:cursor-pointer">
               <Link to={"search?deal=0&estate_type=1&rooms=1"}>
-                <p>იყიდება 1 ოთახიანი ბინა</p>
+                იყიდება 1 ოთახიანი ბინა
               </Link>
               <Link to={"search?deal=0&estate_type=1&rooms=2"}>
-                <p>იყიდება 2 ოთახიანი ბინა</p>
+                იყიდება 2 ოთახიანი ბინა
               </Link>
               <Link to={"search?deal=0&estate_type=1&rooms=3"}>
-                <p>იყიდება 3 ოთახიანი ბინა</p>
+                იყიდება 3 ოთახიანი ბინა
               </Link>
               <Link to={"search?deal=0&estate_type=1&rooms=4"}>
-                <p>იყიდება 4 ოთახიანი ბინა</p>
+                იყიდება 4 ოთახიანი ბინა
               </Link>
               <Link to={"search?deal=0&estate_type=1&city=თბილისი"}>
-                <p>იყიდება ბინა თბილისში</p>
+                იყიდება ბინა თბილისში
               </Link>
 
-              <Link to={"search?deal=1&estate_type=1"}>
-                <p>ქირავდება ბინები</p>
-              </Link>
+              <Link to={"search?deal=1&estate_type=1"}>ქირავდება ბინები</Link>
               <Link to={"search?deal=1&estate_type=0"}>
-                <p>ქირავდება კერძო სახლი</p>
+                ქირავდება კერძო სახლი
               </Link>
-              <Link to={"search?deal=1&estate_type=2"}>
-                <p>ქირავდება ფართი</p>
-              </Link>
+              <Link to={"search?deal=1&estate_type=2"}>ქირავდება ფართი</Link>
               <Link to={"search?deal=0&estate_type=0&city=ბათუმი"}>
-                <p>იყიდება ბინა ბათუმში</p>
+                იყიდება ბინა ბათუმში
               </Link>
               <Link to={"search?deal=0&estate_type=0"}>
-                <p>იყიდება კერძო სახლი</p>
+                იყიდება კერძო სახლი
               </Link>
 
-              <Link to={"search?deal=1&estate_type=2"}>
-                <p>ქირავდება დარბაზი</p>
-              </Link>
-              <Link to={"search?deal=0&estate_type=3"}>
-                <p>იყიდება ნაკვეთი</p>
-              </Link>
+              <Link to={"search?deal=1&estate_type=2"}>ქირავდება დარბაზი</Link>
+              <Link to={"search?deal=0&estate_type=3"}>იყიდება ნაკვეთი</Link>
             </div>
           </div>
         </div>
@@ -100,7 +92,7 @@ export default function Footer() {
               <>
                 <Link to="Contact">კონტაქტი</Link>
                 <Link to="AdsMake">რეკლამა</Link>
-                <Link to={"Policy"}>წესები</Link>
+
                 <Link to={"call"}>00 00 0000 0000</Link>
                 <Link to={"gmail"}>//////////@gmail.ge</Link>
               </>
@@ -111,43 +103,37 @@ export default function Footer() {
             content={
               <>
                 <Link to={"search?deal=0&estate_type=1&rooms=1"}>
-                  <p>იყიდება 1 ოთახიანი ბინა</p>
+                  იყიდება 1 ოთახიანი ბინა
                 </Link>
                 <Link to={"search?deal=0&estate_type=1&rooms=2"}>
-                  <p>იყიდება 2 ოთახიანი ბინა</p>
+                  იყიდება 2 ოთახიანი ბინა
                 </Link>
                 <Link to={"search?deal=0&estate_type=1&rooms=3"}>
-                  <p>იყიდება 3 ოთახიანი ბინა</p>
+                  იყიდება 3 ოთახიანი ბინა
                 </Link>
                 <Link to={"search?deal=0&estate_type=1&rooms=4"}>
-                  <p>იყიდება 4 ოთახიანი ბინა</p>
+                  იყიდება 4 ოთახიანი ბინა
                 </Link>
                 <Link to={"search?deal=0&estate_type=1&city=თბილისი"}>
-                  <p>იყიდება ბინა თბილისში</p>
+                  იყიდება ბინა თბილისში
                 </Link>
 
-                <Link to={"search?deal=1&estate_type=1"}>
-                  <p>ქირავდება ბინები</p>
-                </Link>
+                <Link to={"search?deal=1&estate_type=1"}>ქირავდება ბინები</Link>
                 <Link to={"search?deal=1&estate_type=0"}>
-                  <p>ქირავდება კერძო სახლი</p>
+                  ქირავდება კერძო სახლი
                 </Link>
-                <Link to={"search?deal=1&estate_type=2"}>
-                  <p>ქირავდება ფართი</p>
-                </Link>
+                <Link to={"search?deal=1&estate_type=2"}>ქირავდება ფართი</Link>
                 <Link to={"search?deal=0&estate_type=0&city=ბათუმი"}>
-                  <p>იყიდება ბინა ბათუმში</p>
+                  იყიდება ბინა ბათუმში
                 </Link>
                 <Link to={"search?deal=0&estate_type=0"}>
-                  <p>იყიდება კერძო სახლი</p>
+                  იყიდება კერძო სახლი
                 </Link>
 
                 <Link to={"search?deal=1&estate_type=2"}>
-                  <p>ქირავდება დარბაზი</p>
+                  ქირავდება დარბაზი
                 </Link>
-                <Link to={"search?deal=0&estate_type=3"}>
-                  <p>იყიდება ნაკვეთი</p>
-                </Link>
+                <Link to={"search?deal=0&estate_type=3"}>იყიდება ნაკვეთი</Link>
               </>
             }
           />
@@ -156,11 +142,11 @@ export default function Footer() {
 
       <div className="h-[2px] w-full bg-lineBg mt-5"></div>
       <div className="content_container flex justify-between  [&>p]:text-Asmall text-Asmall [&>p]:text-textInfo [&>p]:cursor-pointer py-3">
-        <div className="flex gap-4  [&>p]:text-Asmall text-Asmall [&>p]:text-textInfo [&>p]:cursor-pointer flex-wrap">
-          <p> წესები და პირობები</p>
-          <p>კონფიდენციალურობა</p>
+        <div className="flex gap-4  text-Asmall [&>a]:text-Asmall [&>a]:text-textInfo  [&>a]:cursor-pointer flex-wrap">
+          <Link to={"PrivacyPolicy"}> წესები და პირობები</Link>
+          <Link to={"PrivacyPolicy"}> კონფიდენციალურობა </Link>
         </div>
-        <p>© 2024 ყველა უფლება დაცულია</p>
+        <p> © 2024 ყველა უფლება დაცულია</p>
       </div>
     </footer>
   );

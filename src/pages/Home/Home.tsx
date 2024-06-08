@@ -8,21 +8,38 @@ import {
 import CardSlider from "../../components/global/CardSlider";
 import ChooseSection from "./components/ChooseSection";
 import CreateOffer from "./components/CreateOffer";
-import MaclerCard from "./components/MaclerCard";
 import MainSlider from "./components/MainSlider";
 import SearchInput from "./components/SearchInput";
 import axiosCall from "../../hooks/axiosCall";
 import { TProductCard } from "../../components/global/Card";
 import { AdBanner1, AdBanner2 } from "../../components/global/AdComponents";
+import {
+  getCacheItem,
+  getLocalTime,
+  isDateLater,
+  setCacheItem,
+} from "../../components/cache/cacheFunctions";
 
 function Home() {
   const [products, setProducts] = useState<null | TProductCard[]>([]);
   const firstRender = useRef<boolean>(true);
   useLayoutEffect(() => {
     if (firstRender.current) {
-      axiosCall.get("fetch/products").then((res) => {
-        if (res.data.status == 100) {
-          setProducts(res.data.products);
+      getCacheItem("home_page_fetch").then((chache) => {
+        // ვამოწმებთ ქეშში არის თუარა ინფორმაცია ან 5 წუთზე მეტი ხანი თუა
+
+        if (chache == undefined || isDateLater(chache.date, 5)) {
+          axiosCall.get("fetch/products").then((res) => {
+            if (res.data.status == 100) {
+              setProducts(res.data.products);
+              setCacheItem("home_page_fetch", {
+                data: res.data.products,
+                date: getLocalTime(),
+              });
+            }
+          });
+        } else {
+          setProducts(chache.data);
         }
       });
       firstRender.current = false;

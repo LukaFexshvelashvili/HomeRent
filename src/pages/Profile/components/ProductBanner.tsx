@@ -163,7 +163,7 @@ export default function ProductBanner(props: {
                   },
                 })
               }
-              className="bg-mainClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueHover flex justify-center items-center"
+              className="bg-blueClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueHover flex justify-center items-center"
             >
               <LoginEyeCloseIcon className="h-full aspect-square [&>path]:stroke-blueI" />
             </button>

@@ -9,7 +9,7 @@ import {
 import CardSlider from "../../components/global/CardSlider";
 import ImageSlider from "./components/ImageSlider";
 import ProductSideBar from "./components/ProductSideBar";
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import axiosCall from "../../hooks/axiosCall";
 import ContentLoader from "../../components/global/ContentLoader";
 import { TProductData } from "../Profile/components/MyProducts";
@@ -19,9 +19,14 @@ import { productViewPlus } from "../../hooks/serverProductFunctions";
 import { TProductCard } from "../../components/global/Card";
 import { AdBanner3 } from "../../components/global/AdComponents";
 import { setWebLoader } from "../../store/data/webUISlice";
+import {
+  getProductCache,
+  setProductCache,
+} from "../../components/cache/cacheFunctions";
 
 export type TproductPage = {
   productData: TProductData;
+  sameProducts: TProductCard[];
   userData: { id: number; name: string; surname: string; mobile: string };
 };
 
@@ -30,33 +35,39 @@ export default function Product() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [pageData, setPageData] = useState<null | TproductPage>(null);
-  const [sameProducts, setSameProducts] = useState<null | TProductCard[]>(null);
+
   const makeRefresh = useRef({ id: id, refresh: true });
-  useEffect(() => {
+  useLayoutEffect(() => {
+    dispatch(setWebLoader(true));
     if (
-      (makeRefresh.current.id == id && makeRefresh.current.refresh == true) ||
-      makeRefresh.current.id !== id
+      ((makeRefresh.current.id == id && makeRefresh.current.refresh == true) ||
+        makeRefresh.current.id !== id) &&
+      id
     ) {
       makeRefresh.current.id = id;
       makeRefresh.current.refresh = false;
-      axiosCall.post("fetch/product", `product_id=${id}`).then((res) => {
-        if (res.data.product_data == null) {
-          navigate("/");
+
+      getProductCache(id).then((res) => {
+        if (res !== null) {
+          setPageData(res);
+          dispatch(setWebLoader(false));
         } else {
-          if (res.data.status === 100) {
-            setPageData({
-              productData: res.data.product_data,
-              userData: res.data.user_data,
-            });
-
-            let formData = new FormData();
-            formData.append("city", res.data.product_data.estate_city);
-            axiosCall.post("fetch/same_products", formData).then((res) => {
-              setSameProducts(res.data);
-
-              dispatch(setWebLoader(false));
-            });
-          }
+          axiosCall.post("fetch/product", `product_id=${id}`).then((res) => {
+            if (res.data.product_data == null) {
+              navigate("/");
+            } else {
+              if (res.data.status === 100) {
+                let saveData = {
+                  productData: res.data.product_data,
+                  userData: res.data.user_data,
+                  sameProducts: res.data.same_products,
+                };
+                setPageData(saveData);
+                setProductCache(id, saveData);
+              }
+            }
+            dispatch(setWebLoader(false));
+          });
         }
       });
 
@@ -213,18 +224,13 @@ export default function Product() {
             </div>
           </section>
           <div className="mt-5">
-            {sameProducts && (
+            {pageData.sameProducts && (
               <>
                 <p className="p-2 text-[16px] font-mainBold text-textHeadCard mb-1">
                   მსგავსი განცხადებები
                 </p>
 
-                <CardSlider
-                  uniqueId={1001}
-                  products={sameProducts.filter(
-                    (item) => item.id !== pageData.productData.id
-                  )}
-                />
+                <CardSlider uniqueId={1001} products={pageData.sameProducts} />
               </>
             )}
           </div>

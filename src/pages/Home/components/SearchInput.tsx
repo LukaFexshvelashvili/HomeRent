@@ -20,7 +20,7 @@ import {
 } from "./SearchComponents";
 import { useNavigate } from "react-router-dom";
 import { SelectNumbers } from "../../Search/components/Filters";
-import searchBg from "../../../assets/images/estates/searchBg.webp";
+import searchBg from "../../../assets/images/estates/searchBg.jpg";
 
 type TPriceGet = {
   start: number;
@@ -67,7 +67,7 @@ function SearchInput() {
           className="absolute w-full h-full object-cover top-0 left-0 z-0"
           alt="search_background"
         />
-        <div className="absolute w-full h-full object-cover top-0 left-0 bg-[#0000009a] backdrop-blur-md z-0"></div>
+        <div className="absolute w-full h-full object-cover top-0 left-0 bg-[#0000009a] backdrop-blur-[3px] z-0"></div>
         <div className="flex flex-wrap gap-2 justify-center small:flex-col  z-10">
           <ProjectDealSelectorSearch setData={setGetDeal} />
         </div>

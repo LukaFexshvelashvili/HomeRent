@@ -16,6 +16,7 @@ export default function Contact() {
   const [status, setStatus] = useState<number>(0);
   const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setStatus(1);
     setError("");
     if (message.length > 6) {
       axiosCall
@@ -59,7 +60,7 @@ export default function Contact() {
               </div>
             ) : (
               <form
-                onSubmit={(e) => sendMessage(e)}
+                onSubmit={(e) => (status !== 1 ? sendMessage(e) : null)}
                 className="flex flex-col gap-5"
               >
                 {error !== "" ? (
@@ -67,19 +68,34 @@ export default function Contact() {
                     {error}
                   </div>
                 ) : null}
-                <textarea
-                  className=" bg-whiteHover font-mainMedium text-[15px] tracking-wider rounded-md w-[90%] max-w-[600px] h-[100px] mx-auto block outline-none transition-colors focus:bg-whiteLoad mt-5"
-                  placeholder="შეტყობინება..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                ></textarea>
-                <button className="w-[90%] max-w-[300px] bg-main text-buttonText tracking-wider h-[40px] mx-auto block rounded-md transition-colors hover:bg-mainHover">
-                  გაგზავნა
-                </button>
+                {status == 1 ? (
+                  <textarea
+                    className=" opacity-80 pointer-events-none bg-whiteHover font-mainMedium text-textDesc text-[14px] tracking-wider rounded-md w-[90%] max-w-[600px] h-[100px] mx-auto block outline-none p-2 px-3 transition-colors focus:bg-whiteLoad mt-5"
+                    placeholder="შეტყობინება..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  ></textarea>
+                ) : (
+                  <textarea
+                    className=" bg-whiteHover font-mainMedium text-textDesc text-[14px] tracking-wider rounded-md w-[90%] max-w-[600px] h-[100px] mx-auto block outline-none p-2 px-3 transition-colors focus:bg-whiteLoad mt-5"
+                    placeholder="შეტყობინება..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  ></textarea>
+                )}
+                {status == 1 ? (
+                  <button className="opacity-80 w-[90%] max-w-[250px] bg-mainHover text-buttonText text-[14px] tracking-wider h-[38px] mx-auto block rounded-md transition-colors pointer-events-none cursor-progress">
+                    იგზავნება...
+                  </button>
+                ) : (
+                  <button className="w-[90%] max-w-[250px] bg-main text-buttonText text-[14px] tracking-wider h-[38px] mx-auto block rounded-md transition-colors hover:bg-mainHover">
+                    გაგზავნა
+                  </button>
+                )}
               </form>
             )}
 
-            <div className=" w-[90%] max-w-[600px] mx-auto h-auto p-3 rounded-lg bg-orangeClear text-orangeI border-2 border-orangeI  flex justify-center items-center text-center text-[14px] tracking-wider font-mainBold">
+            <div className=" w-[90%] max-w-[600px] mx-auto h-auto p-3 rounded-lg bg-orangeClear text-orangeI border-2 border-orangeI flex justify-center items-center text-center text-[14px] tracking-wider font-mainSemiBold mt-3">
               გაგზავნის შემდეგ ადმინისტრატორი რაც შეიძლება სწრაფად გადახედავს
               თქვენ შეტყობინებს და პასუხს ანგარიშის შეტყობინებებში გამოგიგზავნით
             </div>
@@ -121,16 +137,16 @@ export default function Contact() {
           ან
         </h1>
         <div className="flex items-center gap-5 flex-wrap justify-center">
-          <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[100%] max-w-[400px] rounded-lg border-2 border-greenI text-greenI transition-colors hover:border-greenHover hover:text-greenHover group ">
-            <PhoneIcon className="h-[21px] aspect-square [&>path]:stroke-greenI [&>path]:transition-colors mx-[20px] mobile:mx-[10px] group-hover:[&>path]:stroke-greenHover" />
+          <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[100%] max-w-[400px] rounded-lg border-2 border-greenI text-greenI  ">
+            <PhoneIcon className="h-[21px] aspect-square [&>path]:stroke-greenI [&>path]:transition-opacity mx-[20px] mobile:mx-[10px] " />
             დაგვიკავშირდით მობილურით
           </button>
-          <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[100%] max-w-[400px] rounded-lg border-2 border-blueI text-blueI transition-colors hover:border-blueHover hover:text-blueHover group ">
-            <FacebookIcon className="h-[21px] aspect-square [&>path]:fill-blueI [&>path]:transition-colors mx-[20px] mobile:mx-[10px] group-hover:[&>path]:fill-blueHover" />
+          <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[100%] max-w-[400px] rounded-lg border-2 border-blueI text-blueI  ">
+            <FacebookIcon className="h-[21px] aspect-square [&>path]:fill-blueI [&>path]:transition-opacity mx-[20px] mobile:mx-[10px] " />
             მოგვწერეთ Facebook - ზე
           </button>
-          <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[100%] max-w-[400px] rounded-lg border-2 border-pinkI text-pinkI transition-colors hover:border-pinkHover hover:text-pinkHover group ">
-            <InstagramIcon className="h-[21px] aspect-square [&>g]:stroke-pinkI [&>g]:transition-colors mx-[20px] mobile:mx-[10px] group-hover:[&>g]:stroke-pinkHover" />
+          <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[100%] max-w-[400px] rounded-lg border-2 border-pinkI text-pinkI ">
+            <InstagramIcon className="h-[21px] aspect-square [&>g]:stroke-pinkI [&>g]:transition-opacity mx-[20px] mobile:mx-[10px] " />
             მოგვწერეთ Instagram - ზე
           </button>
         </div>

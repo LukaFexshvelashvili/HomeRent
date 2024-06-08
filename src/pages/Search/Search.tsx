@@ -19,6 +19,12 @@ import {
 } from "../../assets/lists/productAddons";
 import { deleteParams, updateParams } from "../../hooks/routerHooks";
 import { useSearchParams } from "react-router-dom";
+import {
+  getLocalTime,
+  getSearchCache,
+  setCacheItem,
+  setSearchCache,
+} from "../../components/cache/cacheFunctions";
 function Search() {
   const [searched, setSearched] = useState<any>(null);
   const [vipSearched, setVipSearched] = useState<any[] | null>(null);
@@ -27,6 +33,7 @@ function Search() {
   const [pages, setPages] = useState<number>(1);
   const cachedFirst = useRef<any[]>([]);
   const getFullCount = useRef<number>(0);
+  const lastDebouncedSearch = useRef<string | null>(null);
   const [activePage, setActivePage] = useState<number>(() => {
     const page = params.get("page");
     return page !== null ? parseInt(page) : 1;
@@ -41,29 +48,53 @@ function Search() {
     () => cities.subLocs.map((item) => item.name.ka),
     []
   );
-  useEffect(() => {
-    axiosCall.get(`fetch/search${debouncedSearch}`).then((res) => {
-      if (res.data.status == 100) {
-        setSearched(res.data.products);
-        if (res.data.vipProducts && res.data.vipProducts.length > 5) {
-          setVipSearched(res.data.vipProducts.slice(0, 5));
-        } else if (res.data.vipProducts) {
-          setVipSearched(res.data.vipProducts);
-        }
-        setPages(Math.floor(res.data.length / res.data.per_page_length));
-        getFullCount.current = res.data.length;
-        if (
-          activePage < 1 ||
-          activePage > Math.floor(res.data.length / res.data.per_page_length)
-        ) {
-          deleteParams(params, setParams, "page");
-        }
-      }
-      setLoader(false);
-    });
-    if (activePage < 1) {
+
+  const afterSearchActions = (fetchedData: any) => {
+    setSearched(fetchedData.products);
+    if (fetchedData.vipProducts && fetchedData.vipProducts.length > 5) {
+      setVipSearched(fetchedData.vipProducts.slice(0, 5));
+    } else if (fetchedData.vipProducts) {
+      setVipSearched(fetchedData.vipProducts);
+    }
+    setPages(Math.floor(fetchedData.length / fetchedData.per_page_length));
+
+    getFullCount.current = fetchedData.length;
+    if (
+      (activePage < 1 ||
+        activePage >
+          Math.floor(fetchedData.length / fetchedData.per_page_length)) &&
+      params.get("page")
+    ) {
       deleteParams(params, setParams, "page");
-      setActivePage(1);
+    }
+  };
+
+  useEffect(() => {
+    setSearched(null);
+    setVipSearched(null);
+  }, [location.search]);
+
+  useEffect(() => {
+    if (debouncedSearch !== lastDebouncedSearch.current) {
+      getSearchCache(debouncedSearch).then((res: any) => {
+        if (res !== null) {
+          afterSearchActions(res);
+        } else {
+          axiosCall.get(`fetch/search${debouncedSearch}`).then((res) => {
+            if (res.data.status == 100) {
+              setSearchCache(debouncedSearch, res.data);
+
+              afterSearchActions(res.data);
+            }
+          });
+        }
+        setLoader(false);
+      });
+      if (activePage < 1) {
+        deleteParams(params, setParams, "page");
+        setActivePage(1);
+      }
+      lastDebouncedSearch.current = debouncedSearch;
     }
   }, [debouncedSearch]);
 
@@ -71,7 +102,9 @@ function Search() {
     if (searchTitle !== "") {
       updateParams(params, setParams, { title: searchTitle });
     } else {
-      deleteParams(params, setParams, "title");
+      if (params.get("title")) {
+        deleteParams(params, setParams, "title");
+      }
     }
   };
 
@@ -133,7 +166,9 @@ function Search() {
           </form>
           <div
             onClick={() => {
-              deleteParams(params, setParams, "title");
+              if (params.get("title")) {
+                deleteParams(params, setParams, "title");
+              }
 
               setSearchTitle("");
             }}
@@ -322,6 +357,7 @@ function FiltersSection(props: { citiesAPI: any; setSearchTitle: Function }) {
           <button
             onClick={() => {
               setParams({});
+
               props.setSearchTitle("");
             }}
             className="absolute top-3 right-3 text-buttonText px-3 py-1 rounded-md bg-main text-[12px] tracking-widest font-mainMedium cursor-pointer transition-colors hover:bg-mainHover"
