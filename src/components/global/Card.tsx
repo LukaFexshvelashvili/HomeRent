@@ -64,7 +64,7 @@ export default function Card(props: {
           to={"/product/" + props.product.id}
           className=" rounded-2xl"
         >
-          <div className="w-full h-[200px] rounded-normal bg-whiteLoad relative overflow-hidden">
+          <div className="w-full h-[200px] rounded-[8px] bg-whiteLoad relative overflow-hidden">
             {props.product.estate_vip == 2 ? (
               <div className="absolute h-[25px] w-[60px] select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
                 VIP+
@@ -88,13 +88,13 @@ export default function Card(props: {
               }}
               loading="lazy"
             />
-            <div className="absolute bottom-2 left-2 flex items center gap-2">
-              <div className="bg-cardInfoBg backdrop-blur-[2px] rounded-[3px] flex justify-center items-center px-2 py-[6px] text-WhiteFade font-mainSemiBold text-sm">
-                <RoomIcon className="h-[18px] mr-3 [&>path]:fill-WhiteFade" />{" "}
+            <div className="absolute bottom-1 left-1 flex items center gap-1">
+              <div className="bg-cardInfoBg backdrop-blur-[3px] rounded-[3px] flex justify-center items-center px-2 py-[5px] text-WhiteFade font-mainMedium tracking-wider text-[12px]">
+                <RoomIcon className="h-[15px] mr-3 [&>path]:fill-WhiteFade" />{" "}
                 {props.product.estate_rooms}
               </div>
-              <div className="bg-cardInfoBg backdrop-blur-[2px] rounded-[3px] flex justify-center items-center px-2 py-[6px] text-WhiteFade font-mainSemiBold text-sm">
-                <SquareFrameIcon className="h-[18px] mr-3 [&>path]:stroke-WhiteFade" />{" "}
+              <div className="bg-cardInfoBg backdrop-blur-[3px] rounded-[3px] flex justify-center items-center px-2 py-[5px] text-WhiteFade font-mainMedium tracking-wider text-[12px]">
+                <SquareFrameIcon className="h-[15px] mr-3 [&>path]:stroke-WhiteFade" />{" "}
                 {props.product.estate_size}მ²
               </div>
             </div>
@@ -199,7 +199,7 @@ export function SeeMoreCard(props: { autoWidth?: boolean; link: string }) {
         <div
           className={`h-[328px] cursor-pointer transition-colors hover:bg-whiteHover  ${
             props.autoWidth ? "w-full" : "w-[280px]"
-          } bg-whiteMain border-2 border-cardBorder  rounded-normal p-3 pb-14 relative text-blackMain flex justify-center flex-col gap-3 items-center text-[20px] tracking-wider`}
+          } bg-whiteMain border-2 border-cardBorder font-mainMedium  rounded-normal p-3 pb-14 relative text-blackMain flex justify-center flex-col gap-3 items-center text-[16px] tracking-wider`}
         >
           მეტის ნახვა
           <PlusIcon className="h-[20px] [&>path]:fill-blackMain " />

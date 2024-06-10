@@ -41,7 +41,7 @@ export default function Profile() {
     let forScroll: any = null;
 
     if (window.innerWidth <= 800) {
-      let forScroll = setTimeout(() => {
+      forScroll = setTimeout(() => {
         window.scrollTo(0, 400);
       }, 0);
     }
@@ -55,7 +55,7 @@ export default function Profile() {
     <main className="min-h-screen flex gap-4 mobile:flex-col">
       <section className="flex flex-col flex-[2] gap-4 ">
         {userData.isLogged ? (
-          <div className="h-[90px] rounded-section shadow-sectionShadow bg-whiteMain relative flex items-center px-7 py-5 ">
+          <div className="h-[100px] rounded-section shadow-sectionShadow bg-whiteMain relative flex flex-wrap items-center px-7 py-5 ">
             <p className="text-sm text-textDescCard absolute top-2 right-4 small:text-[10px]">
               ID - {userData.id}
             </p>
@@ -73,6 +73,16 @@ export default function Profile() {
                   {userData.surname}
                 </p>
               </div>
+            </div>
+            <div className="w-full">
+              <p className="text-[13px] text-textDesc mt-2 text-center px-4">
+                ბალანსი{": "}
+                <span className="text-main ml-1 font-mainSemiBold tracking-wider">
+                  {(userData.money / 100)
+                    .toFixed(2)
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "₾"}
+                </span>
+              </p>
             </div>
           </div>
         ) : null}

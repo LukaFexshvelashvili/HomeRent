@@ -87,7 +87,7 @@ export function SearchCityFilter(props: { setCity: Function }) {
           <div
             className={`absolute ${
               searchWindow ? "block" : "hidden"
-            } h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden`}
+            } h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[25px] overflow-hidden`}
           >
             <div className="flex flex-col h-full overflow-y-scroll">
               {fetchSearch()}
@@ -194,7 +194,7 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
           <div
             className={`absolute ${
               searchWindow ? "block" : "hidden"
-            } h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden`}
+            } h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[25px] overflow-hidden`}
           >
             <div className="flex flex-col h-full overflow-y-scroll">
               {fetchSearch()}

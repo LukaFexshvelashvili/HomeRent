@@ -33,6 +33,7 @@ img {
 textarea {
   @apply p-2 resize-none;
 }
+
 ::-webkit-scrollbar {
   width: 8px;
   background-color: rgba(244, 244, 244, 0.1);

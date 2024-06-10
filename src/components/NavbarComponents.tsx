@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Tuser, updateNotifications } from "../store/data/userSlice";
+import { Tuser } from "../store/data/userSlice";
 import {
   DocumentsIcon,
   LogoutIcon,
@@ -208,7 +208,7 @@ export function ProfileBar({
         </div>
         <p className="text-[12px] text-textDesc mt-3 text-center px-4">
           ბალანსი{": "}
-          <span className="text-main ml-1">
+          <span className="text-main ml-1 font-mainBold">
             {(userData.money / 100)
               .toFixed(2)
               .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "₾"}

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { useEffect, useState } from "react";
@@ -12,8 +12,8 @@ export default function CheckRoutes(props: {
   children: JSX.Element;
   user: Tuser;
 }) {
+  const location = useLocation();
   const [path, setPath] = useState(location.pathname);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,7 +27,9 @@ export default function CheckRoutes(props: {
     dispatch(clearAddProduct());
 
     setPath(location.pathname);
-  }, [navigate, props.user.banned]);
+  }, [navigate, props.user.banned, path]);
+  console.log(location.pathname);
+  console.log(location.pathname.includes("Login"));
 
   return (
     <>

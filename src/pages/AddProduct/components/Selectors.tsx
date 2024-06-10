@@ -51,7 +51,6 @@ import { RootState } from "../../../store/store";
 import axiosCall from "../../../hooks/axiosCall";
 import BubbleSelector from "../../../components/global/BubbleSelector";
 import { currencyConvertor } from "../../../components/convertors/convertors";
-import { TProductData } from "../../Profile/components/MyProducts";
 
 export const submitProduct = (
   productData: TproductInfoStart | any,
@@ -391,7 +390,7 @@ export function EstateImages(props: { error: boolean }) {
       {images.length == 0 && props.error && (
         <div className=" rounded-xl text-pinkI bg-pinkClear py-3 px-4 text-sm tracking-wider mt-4 text-center">
           {" "}
-          სავალდებულოა მინიმუმ ერთი ფოტო
+          სავალდებულოა მინიმუმ ერთი ფოტო (ფორმატით: png, jpg ან jpeg)
         </div>
       )}
       <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
@@ -614,7 +613,7 @@ export function EstateAddress(props: { error: boolean }) {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative z-10">
       <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
         მისამართი
       </p>
@@ -851,7 +850,7 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
           ) : null}
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col z-[4]">
         <>
           {size == null || size <= 0 ? (
             <div className=" rounded-xl text-orangeI bg-orangeClear py-3 px-4 text-sm tracking-wider  mb-4 text-center">

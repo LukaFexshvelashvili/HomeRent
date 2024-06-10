@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   BookmarkIcon,
   DocumentsIcon,
@@ -28,7 +28,7 @@ export default function Navbar() {
   );
 
   const [activePop, setActivePop] = useState<null | string>(null);
-  const [activeLang, setActiveLang] = useState<boolean>(false);
+  // const [activeLang, setActiveLang] = useState<boolean>(false);
   // const [langImg, setLangImg] = useState<string>(georgianFlag);
 
   let favNums = 0;

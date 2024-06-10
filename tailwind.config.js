@@ -52,6 +52,7 @@ export default {
         sectionFadeEnd: "var(--sectionFadeEnd)",
 
         WhiteFade: "var(--WhiteFade)",
+        WhiteFade2: "var(--WhiteFade2)",
 
         cardInfoBg: "var(--cardInfoBg)",
 

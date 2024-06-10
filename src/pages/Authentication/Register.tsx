@@ -64,7 +64,10 @@ export default function Register() {
     );
   }, [passwordInput]);
 
-  if (user.isLogged === null || user.isLogged == true) {
+  if (user.isLogged === null) {
+    if (user.isLogged === true) {
+      navigate("/");
+    }
     return null;
   }
 
@@ -196,7 +199,7 @@ export default function Register() {
                   </div>
                 </div>
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <MailIcon className="h-[22px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
+                  <MailIcon className="h-[22px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-blackMain z-[3] opacity-40" />
                   <input
                     type="email"
                     ref={mailRef}
@@ -206,7 +209,7 @@ export default function Register() {
                 </div>
 
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <PhoneIcon className="h-[22px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
+                  <PhoneIcon className="h-[22px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-blackMain z-[3] opacity-40" />
                   <input
                     ref={mobileRef}
                     type="text"
@@ -215,7 +218,7 @@ export default function Register() {
                   />
                 </div>
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <LockIcon className="w-[22px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
+                  <LockIcon className="w-[22px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-blackMain z-[3] opacity-40" />
                   <input
                     type="password"
                     placeholder="პაროლი"
@@ -226,7 +229,7 @@ export default function Register() {
                   />
                 </div>
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <LockIcon className="w-[22px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
+                  <LockIcon className="w-[22px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-blackMain z-[3] opacity-40" />
                   <input
                     ref={confirmPasswordRef}
                     type="password"
@@ -245,7 +248,7 @@ export default function Register() {
                     h-full rounded-md transition-all`}
                     ></div>
                   </div>
-                  <p className="text-textDesc text-Asmall font-mainBold tracking-wider opacity-70 mt-2 mobile:text-[12px]">
+                  <p className="text-textDesc text-Asmall font-mainBold tracking-wider opacity-40 mt-2 mobile:text-[12px]">
                     {passwordStatus == 0 && "პაროლი სუსტია"}
                     {passwordStatus == 1 && "პაროლი სუსტია"}
                     {passwordStatus == 2 && "საშუალო დონის პაროლია"}

@@ -150,6 +150,7 @@
   --sectionFadeStart: rgba(0, 0, 0, 0.75);
   --sectionFadeEnd: rgba(0, 0, 0, 0.1);
   --WhiteFade: rgba(255, 255, 255, 0.9);
+  --WhiteFade2: rgba(255, 255, 255, 0.9);
   --textBlack: #000000;
   --textHeadBlack: rgba(255, 255, 255, 1);
   --textHead: rgba(255, 255, 255, 0.8);

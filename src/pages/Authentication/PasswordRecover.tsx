@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Tuser } from "../../store/data/userSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosCall from "../../hooks/axiosCall";
 import RecoverContent from "./components/RecoverContent";
 import ContentLoader from "../../components/global/ContentLoader";
@@ -11,6 +11,7 @@ import NotFound from "../SuspendedAccount";
 export default function PasswordRecover() {
   const user: Tuser = useSelector((store: RootState) => store.user);
   const { url } = useParams();
+  const navigate = useNavigate();
   const [show, setShow] = useState<number>(0);
 
   useLayoutEffect(() => {
@@ -29,7 +30,10 @@ export default function PasswordRecover() {
       });
   }, []);
 
-  if (user.isLogged === null || user.isLogged == true) {
+  if (user.isLogged === null) {
+    if (user.isLogged === true) {
+      navigate("/");
+    }
     return null;
   }
   return (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { currencyConvertor } from "../../../components/convertors/convertors";
 import { projectDealTypes } from "../../../assets/lists/productAddons";
 

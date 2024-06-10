@@ -1,5 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { CheckIcon, LockIcon, MailIcon } from "../../assets/icons/Icons";
+import {
+  CheckIcon,
+  LockIcon,
+  LoginEyeCloseIcon,
+  LoginEyeIcon,
+  MailIcon,
+} from "../../assets/icons/Icons";
 import {
   Home3Decor,
   HomesbgDecor,
@@ -16,7 +22,8 @@ export default function Login() {
   const user: Tuser = useSelector((store: RootState) => store.user);
   const navigate = useNavigate();
   const [error, setError] = useState<string>("");
-  const [agreement, setAgreement] = useState<boolean>(false);
+  const [remember, setRemember] = useState<boolean>(false);
+  const [passwordShow, setPasswordShow] = useState<boolean>(false);
   const dispatch = useDispatch();
   const darkMode: boolean = useSelector(
     (store: RootState) => store.webUI.darkMode
@@ -25,7 +32,10 @@ export default function Login() {
   const mailRef = useRef<null | HTMLInputElement>(null);
   const passwordRef = useRef<null | HTMLInputElement>(null);
 
-  if (user.isLogged === null || user.isLogged == true) {
+  if (user.isLogged === null) {
+    if (user.isLogged === true) {
+      navigate("/");
+    }
     return null;
   }
 
@@ -40,6 +50,7 @@ export default function Login() {
 
       formData.append("mail", mail);
       formData.append("password", password);
+      formData.append("remember", JSON.stringify(remember));
 
       axiosCall
         .post("authentication/user_login", formData, { withCredentials: true })
@@ -102,7 +113,7 @@ export default function Login() {
                   </div>
                 )}
                 <div className="h-[40px] w-full rounded-normal flex items-center relative ">
-                  <MailIcon className="h-[24px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
+                  <MailIcon className=" h-[24px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-blackMain z-[3] opacity-40" />
                   <input
                     type="email"
                     placeholder="მეილი"
@@ -112,29 +123,40 @@ export default function Login() {
                   />
                 </div>
                 <div className="h-[40px] w-full rounded-normal flex items-center relative">
-                  <LockIcon className="h-[24px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-textDescCard" />
+                  <LockIcon className="z-[3] h-[24px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-blackMain opacity-40" />
                   <input
-                    type="password"
+                    type={passwordShow ? "text" : "password"}
                     placeholder="პაროლი"
                     name="password"
                     ref={passwordRef}
                     className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 mobile:pl-10 text-textDesc tracking-wider text-Asmall mobile:text-[12px] transition-colors focus:bg-LoginInputActive"
                   />
+                  <button
+                    onClick={() => setPasswordShow((state) => !state)}
+                    type="button"
+                    className="z-[4] absolute right-3"
+                  >
+                    {passwordShow ? (
+                      <LoginEyeCloseIcon className="h-[22px] aspect-square [&>path]:stroke-blackMain" />
+                    ) : (
+                      <LoginEyeIcon className="h-[22px] aspect-square [&>path]:fill-blackMain" />
+                    )}
+                  </button>
                 </div>
                 <div className="flex items-center w-full justify-between ">
                   <div className="flex items-center text-textDesc text-Asmall mobile:text-[12px] font-mainBold tracking-wider cursor-pointer">
                     <div
-                      onClick={() => setAgreement((state) => !state)}
+                      onClick={() => setRemember((state) => !state)}
                       className={` h-[16px] transition-colors aspect-square justify-center items-center flex border-[3px] rounded-md border-main mr-2 cursor-pointer mobile:mr-1 mobile:border-[2px] ${
-                        agreement ? "bg-main" : "bg-transparent"
+                        remember ? "bg-main" : "bg-transparent"
                       } `}
                     >
-                      {agreement && (
+                      {remember && (
                         <CheckIcon className="h-[8px]  aspect-square" />
                       )}
                     </div>
                     <p
-                      onClick={() => setAgreement((state) => !state)}
+                      onClick={() => setRemember((state) => !state)}
                       className="cursor-pointer "
                     >
                       დამახსოვრება
@@ -152,7 +174,17 @@ export default function Login() {
               <p className="mt-8  text-textDesc text-Asmall font-mainBold tracking-wider mobile:mt-6 mobile:text-[12px]">
                 არ გაქვს ანგარიში?{" "}
                 <span className="text-main cursor-pointer">
-                  <Link to="/Register">რეგისტრაცია</Link>
+                  <Link
+                    onClick={() => {
+                      if (passwordRef.current && mailRef.current) {
+                        passwordRef.current.value = "";
+                        mailRef.current.value = "";
+                      }
+                    }}
+                    to="/Register"
+                  >
+                    რეგისტრაცია
+                  </Link>
                 </span>
               </p>
               <p className="text-main hidden mobile:block text-Asmall font-mainBold mt-3 tracking-wider mobile:text-[12px] cursor-pointer">

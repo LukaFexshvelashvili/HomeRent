@@ -20,9 +20,7 @@ import {
 import { deleteParams, updateParams } from "../../hooks/routerHooks";
 import { useSearchParams } from "react-router-dom";
 import {
-  getLocalTime,
   getSearchCache,
-  setCacheItem,
   setSearchCache,
 } from "../../components/cache/cacheFunctions";
 function Search() {
@@ -108,14 +106,13 @@ function Search() {
     }
   };
 
-  const changePage = useMemo(() => {
+  useEffect(() => {
     if (activePage !== 1) {
       setSearched([]);
     } else {
       setSearched(cachedFirst.current);
     }
   }, [activePage]);
-
   const fetchPageButtons = () => {
     const buttons = []; // Create an array to hold the buttons
 

@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { LeftArrowIcon, PopupCloseIcon } from "../../../assets/icons/Icons";
 import { AdBannerProductSlider } from "../../../components/global/AdComponents";
 

@@ -34,6 +34,7 @@ export default function ProfileInfo() {
     navigate("/Login");
   }
   if (user.isLogged == null) {
+
     return null;
   }
   useEffect(() => {

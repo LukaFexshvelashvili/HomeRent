@@ -76,7 +76,7 @@ export function changeMainColor(newColor: string) {
       case "#C727FF":
         b.style.setProperty(`--main`, `${newColor}`);
         b.style.setProperty(`--mainClear`, `rgba(198, 47, 253, 0.1)`);
-        b.style.setProperty(`--mainClear2`, `rgba(198, 47, 253, 0.1)`);
+        b.style.setProperty(`--mainClear2`, `rgba(198, 47, 253, 0.7)`);
         b.style.setProperty(`--mainClearActive`, `rgba(198, 47, 253, 0.15)`);
         b.style.setProperty(`--mainHover`, `#cd44ff`);
 

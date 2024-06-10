@@ -1,7 +1,6 @@
 import {
   AcceptedIcon,
   BalconyIcon,
-  BathIcon,
   BoxesIcon,
   ConditionerIcon,
   ElevatorIcon,
@@ -237,31 +236,31 @@ export const productAddonsListForHotel = [
     name: "ტელევიზორი",
   },
   {
-    icon: (props: string) => <></>,
+    icon: () => <></>,
     name: "სპა",
   },
   {
-    icon: (props: string) => <></>,
+    icon: () => <></>,
     name: "სამრეცხაო",
   },
   {
-    icon: (props: string) => <></>,
+    icon: () => <></>,
     name: "გათბობა",
   },
   {
-    icon: (props: string) => <></>,
+    icon: () => <></>,
     name: "ბარი",
   },
   {
-    icon: (props: string) => <></>,
+    icon: () => <></>,
     name: "სპორტ დარბაზი",
   },
   {
-    icon: (props: string) => <></>,
+    icon: () => <></>,
     name: "მარანი",
   },
   {
-    icon: (props: string) => <></>,
+    icon: () => <></>,
     name: "სიგნალიზაცია",
   },
 ];

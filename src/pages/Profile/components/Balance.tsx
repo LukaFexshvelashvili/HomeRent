@@ -1,25 +1,50 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
 import masterCard from "../../../assets/images/logos/masterCard.jpg";
 import visa from "../../../assets/images/logos/visa.png";
+import { useState } from "react";
 export default function Balance() {
-  const userData = useSelector((store: RootState) => store.user);
+  const [amount, setAmount] = useState<number | null>(null);
+  const [error, setError] = useState<string>("");
+  const getPay = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    if (amount && amount >= 5) {
+    } else {
+      setError("მინიმალური შეტანის თანხა: 5 ლარი");
+    }
+  };
   return (
     <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex gap-6 flex-col  px-7 py-5 ">
       <h2 className="text-textHeadCard text-[15px] tracking-wider">
-        ბალანსი:{" "}
-        <span className=" ml-1 text-main">
-          {(userData.money / 100)
-            .toFixed(2)
-            .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "₾"}
-        </span>
+        შეავსეთ ბალანსი
       </h2>
 
-      <div className="flex justify-center items-center mt-10">
+      <div className="flex justify-center items-center mt-3">
         <div className="flex justify-center items-center text-start flex-col">
-          <button className="bg-main rounded-[5px] w-[200px] h-[40px] font-mainMedium text-buttonText text-[13px] tracking-wider transition-colors hover:bg-mainHover">
-            ბალანსის შევსება
-          </button>
+          {error !== "" && (
+            <div className="max-w-full w-full h-auto p-3 rounded-lg bg-pinkClear text-pinkI border-2 border-pinkI  flex justify-center items-center text-center text-[14px] tracking-wider font-mainSemiBold">
+              {error}
+            </div>
+          )}
+          <form
+            onSubmit={(e) => getPay(e)}
+            className="flex justify-center items-center text-start flex-col"
+          >
+            <div className="flex justify-center items-center h-[35px] w-[250px] relative overflow-hidden rounded-lg my-5">
+              <input
+                type="number"
+                placeholder="შეიყვანეთ თანხა"
+                className="h-full w-full absolute rounded-lg bg-bodyBg text-[14px] font-mainMedium px-2 text-blackMain outline-none text-center tracking-wider placeholder-textCardDesc"
+                onChange={(e) => setAmount(e.target.valueAsNumber)}
+                value={amount ? amount : ""}
+              />
+              <div className="absolute right-2 h-[20px] aspect-square text-main translate-y-[-2px]">
+                ₾
+              </div>
+            </div>
+            <button className="bg-main rounded-[5px] w-[200px] h-[40px] font-mainMedium text-buttonText text-[13px] tracking-wider transition-colors hover:bg-mainHover">
+              ბალანსის შევსება
+            </button>
+          </form>
           <p className="mt-5 text-textDesc text-[12px] tracking-wider">
             (მინიმალური შენატანი 5 ლარი)
           </p>
