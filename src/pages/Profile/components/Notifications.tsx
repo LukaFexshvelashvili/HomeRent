@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Tnotification } from "../../../assets/types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosCall from "../../../hooks/axiosCall";
 import { updateNotifications } from "../../../store/data/userSlice";
 
@@ -11,6 +11,7 @@ export default function Notifications() {
     (store: RootState) => store.user.notifications
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [activeMessage, setActiveMessage] = useState<number>(-1);
   const [notifications, setNotifications] = useState<Tnotification[]>([]);
   const params = useParams();
@@ -18,8 +19,17 @@ export default function Notifications() {
     setNotifications(userNotifications);
   }, [userNotifications]);
   useEffect(() => {
-    if (params.id) {
+    if (params.id !== undefined) {
       setActiveMessage(parseInt(params.id));
+
+      let data: Tnotification | undefined = userNotifications.filter(
+        (data) => data.id == parseInt(params.id ? params.id : "-5")
+      )[0];
+
+      if (data == undefined) {
+        navigate("/Profile/Notifications/");
+        setActiveMessage(-1);
+      }
     }
   }, [params]);
 

@@ -1,49 +1,61 @@
-import Home from "./pages/Home/Home";
-import Login from "./pages/Authentication/Login";
-import Product from "./pages/Product/Product";
-import Register from "./pages/Authentication/Register";
-import ForgotPassword from "./pages/Authentication/ForgotPassword";
-import Search from "./pages/Search/Search";
-import AddProduct from "./pages/AddProduct/AddProduct";
-import Profile from "./pages/Profile/Profile";
-import MaclerService from "./pages/MaclerService/MaclerService";
-import MaclerChoose from "./pages/MaclerService/MaclerChoose";
-import Maclerconditions from "./pages/MaclerService/Maclerconditions";
-
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  Suspense,
+  lazy,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { checkUIStorage } from "./hooks/UIFunctions";
 import { useDispatch, useSelector } from "react-redux";
-import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import axiosCall from "./hooks/axiosCall";
 import { loggedUser, makeUserSession } from "./hooks/serverFunctions";
 import { RootState } from "./store/store";
 import { Tuser, clearSession } from "./store/data/userSlice";
 import CheckRoutes from "./CheckRoutes";
 import Logout from "./pages/Logout";
-import MyProducts from "./pages/Profile/components/MyProducts";
-import SavedProducts from "./pages/Profile/components/SavedProducts";
-import LastSeenProducts from "./pages/Profile/components/LastSeenProducts";
-import Settings from "./pages/Profile/components/Settings";
-import ProfileInfo from "./pages/Profile/components/ProfileInfo";
-import Balance from "./pages/Profile/components/Balance";
-import NotFound from "./pages/NotFound";
-import SuspendedAccount from "./pages/SuspendedAccount";
-import Notifications from "./pages/Profile/components/Notifications";
-import PasswordRecover from "./pages/Authentication/PasswordRecover";
-import AdsMake from "./pages/AdsMake/AdsMake";
-import Seller from "./pages/Seller/Seller";
 import { TPopups } from "./store/data/popupsSlice";
 import ProblemReport from "./components/popups/ProblemReport";
 import SharePopup from "./components/popups/SharePopup";
-import Contact from "./pages/Contact/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
+import ServerError from "./pages/ServerError";
+import Home from "./pages/Home/Home";
+
+const NotFound = lazy(() => import("./pages/NotFound"));
+const SuspendedAccount = lazy(() => import("./pages/SuspendedAccount"));
+const Notifications = lazy(
+  () => import("./pages/Profile/components/Notifications")
+);
+const PasswordRecover = lazy(
+  () => import("./pages/Authentication/PasswordRecover")
+);
+const AdsMake = lazy(() => import("./pages/AdsMake/AdsMake"));
+const Contact = lazy(() => import("./pages/Contact/Contact"));
+
+const MaclerService = lazy(() => import("./pages/MaclerService/MaclerService"));
+const MaclerChoose = lazy(() => import("./pages/MaclerService/MaclerChoose"));
+const Maclerconditions = lazy(
+  () => import("./pages/MaclerService/Maclerconditions")
+);
+const AdminPanel = lazy(() => import("./pages/AdminPanel/AdminPanel"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
+const Product = lazy(() => import("./pages/Product/Product"));
+const Search = lazy(() => import("./pages/Search/Search"));
+const AddProduct = lazy(() => import("./pages/AddProduct/AddProduct"));
+const Login = lazy(() => import("./pages/Authentication/Login"));
+const Register = lazy(() => import("./pages/Authentication/Register"));
+const Seller = lazy(() => import("./pages/Seller/Seller"));
+const ForgotPassword = lazy(
+  () => import("./pages/Authentication/ForgotPassword")
+);
 
 function App() {
   const UISettings = useSelector((store: RootState) => store.webUI);
   const user: Tuser = useSelector((store: RootState) => store.user);
   const popups: TPopups = useSelector((store: RootState) => store.popups);
   const [loading, setLoading] = useState<boolean>(true);
+  const [lock, setLock] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const refresh = useRef<boolean>(true);
@@ -52,21 +64,29 @@ function App() {
     if (refresh.current) {
       refresh.current = false;
       axiosCall
-        .get("authentication/user_get", { withCredentials: true })
+        .get("authentication/user", { withCredentials: true })
         .then((res) => {
           setLoading(false);
-          if (res.data.status == 100) {
-            makeUserSession(dispatch, {
-              ...res.data.user,
-              favorites: JSON.parse(res.data.user.favorites),
-            });
+          if (res.status == 200) {
+            if (res.data.status == 100) {
+              makeUserSession(dispatch, {
+                ...res.data.user,
+                favorites: JSON.parse(res.data.user.favorites),
+              });
 
-            if (res.data.user.banned == 1) {
-              navigate("/SuspendedAccount");
+              if (res.data.user.banned == 1) {
+                navigate("/SuspendedAccount");
+              }
+            } else if (res.data.status == 0) {
+              dispatch(clearSession());
             }
-          } else if (res.data.status == 0) {
-            dispatch(clearSession());
+          } else {
+            setLock(true);
           }
+        })
+        .catch(() => {
+          setLoading(false);
+          setLock(true);
         });
     }
   }, []);
@@ -86,59 +106,55 @@ function App() {
       {UISettings.loader ? <MainLoader /> : null}
       {popups.reportProblem.show ? <ProblemReport /> : null}
       {popups.share.show ? <SharePopup /> : null}
-      <CheckRoutes user={user}>
-        <Routes>
-          <Route path="/">
-            <Route index element={<Home />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="Login" element={<Login />} />
-            <Route path="Register" element={<Register />} />
-            <Route path="ForgotPassword" element={<ForgotPassword />} />
-            <Route path="ForgotPassword/:url" element={<PasswordRecover />} />
-            {user.isLogged ? (
-              <Route path="Logout" element={<Logout />} />
-            ) : null}
-            <Route path="Search" element={<Search />} />
-            <Route path="Product" element={<Product />} />
-            <Route path="Contact" element={<Contact />} />
-            <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
-            <Route path="Product/:id" element={<Product />} />
-            <Route path="AddProduct" element={<AddProduct />} />
-            <Route path="SuspendedAccount" element={<SuspendedAccount />} />
-            <Route path="Profile/*" element={<Profile />}>
-              {user.isLogged ? <Route index element={<MyProducts />} /> : null}
-              {user.isLogged ? (
-                <Route path="MyProducts" element={<MyProducts />} />
-              ) : null}
-              {user.isLogged ? (
-                <Route path="Balance" element={<Balance />} />
-              ) : null}
-              <Route path="SavedProducts" element={<SavedProducts />} />
-              {user.isLogged ? (
-                <Route path="Notifications/" element={<Notifications />}>
-                  <Route path=":id" element={<Notifications />} />
+      {!lock ? (
+        <Suspense fallback={<MainLoader />}>
+          <CheckRoutes user={user}>
+            <Routes>
+              <Route path="/">
+                <Route index element={<Home />} />
+                <Route path="*" element={<NotFound />} />
+                <Route path="Login" element={<Login />} />
+                <Route path="Register" element={<Register />} />
+                <Route path="ForgotPassword" element={<ForgotPassword />} />
+                <Route
+                  path="ForgotPassword/:url"
+                  element={<PasswordRecover />}
+                />
+                {user.isLogged ? (
+                  <Route path="Logout" element={<Logout />} />
+                ) : null}
+                <Route path="Search" element={<Search />} />
+                <Route path="Product" element={<Product />} />
+                <Route path="Contact" element={<Contact />} />
+                <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
+                <Route path="Product/:id" element={<Product />} />
+                <Route path="AddProduct" element={<AddProduct />} />
+                <Route path="SuspendedAccount" element={<SuspendedAccount />} />
+                <Route path="Profile/*" element={<Profile />}>
+                  {user.isLogged ? (
+                    <Route path="Notifications/" element={<Notifications />}>
+                      <Route path=":id" element={<Notifications />} />
+                    </Route>
+                  ) : null}
                 </Route>
-              ) : null}
-              {user.isLogged ? (
-                <Route path="LastSeenProducts" element={<LastSeenProducts />} />
-              ) : null}
-              <Route path="Settings" element={<Settings />} />
-              {user.isLogged ? (
-                <Route path="ProfileInfo" element={<ProfileInfo />} />
-              ) : null}
-            </Route>
-            <Route path="MaclerService" element={<MaclerService />} />
-            <Route path="MaclerChoose" element={<MaclerChoose />} />
-            <Route path="AdsMake" element={<AdsMake />} />
-            <Route path="Maclerconditions" element={<Maclerconditions />} />
-            <Route path="Seller/:id" element={<Seller />} />
+                <Route path="MaclerService" element={<MaclerService />} />
+                <Route path="MaclerChoose" element={<MaclerChoose />} />
+                <Route path="AdsMake" element={<AdsMake />} />
+                <Route path="Maclerconditions" element={<Maclerconditions />} />
+                <Route path="Seller/:id" element={<Seller />} />
 
-            {user.isLogged ? (
-              <Route path="AdminPanel" element={<AdminPanel />} />
-            ) : null}
-          </Route>
+                {user.isLogged ? (
+                  <Route path="AdminPanel" element={<AdminPanel />} />
+                ) : null}
+              </Route>
+            </Routes>
+          </CheckRoutes>
+        </Suspense>
+      ) : (
+        <Routes>
+          <Route element={<ServerError />} path="/*" />
         </Routes>
-      </CheckRoutes>
+      )}
     </>
   );
 }

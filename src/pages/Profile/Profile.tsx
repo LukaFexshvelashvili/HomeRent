@@ -11,7 +11,14 @@ import {
 } from "../../assets/icons/Icons";
 import { useLayoutEffect, useState } from "react";
 
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import MyProducts from "./components/MyProducts";
+import Balance from "./components/Balance";
+import Notifications from "./components/Notifications";
+import SavedProducts from "./components/SavedProducts";
+import LastSeenProducts from "./components/LastSeenProducts";
+import Settings from "./components/Settings";
+import ProfileInfo from "./components/ProfileInfo";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -135,7 +142,32 @@ export default function Profile() {
         ) : null}
       </section>
       <section className="flex flex-col flex-[5] gap-4 ">
-        <Outlet />
+        <Routes>
+          <Route path="/">
+            {userData.isLogged ? (
+              <Route index element={<MyProducts />} />
+            ) : null}
+            {userData.isLogged ? (
+              <Route path="MyProducts" element={<MyProducts />} />
+            ) : null}
+            {userData.isLogged ? (
+              <Route path="Balance" element={<Balance />} />
+            ) : null}
+            <Route path="SavedProducts" element={<SavedProducts />} />
+            {userData.isLogged ? (
+              <Route path="Notifications/" element={<Notifications />}>
+                <Route path=":id" element={<Notifications />} />
+              </Route>
+            ) : null}
+            {userData.isLogged ? (
+              <Route path="LastSeenProducts" element={<LastSeenProducts />} />
+            ) : null}
+            <Route path="Settings" element={<Settings />} />
+            {userData.isLogged ? (
+              <Route path="ProfileInfo" element={<ProfileInfo />} />
+            ) : null}
+          </Route>
+        </Routes>
       </section>
     </main>
   );

@@ -1,5 +1,7 @@
+import { Dispatch } from "@reduxjs/toolkit";
 import { TPopupReport } from "../store/data/popupsSlice";
 import { Tuser } from "../store/data/userSlice";
+import { addLastProduct } from "./UIFunctions";
 import axiosCall from "./axiosCall";
 import { removeFavorite } from "./serverFunctions";
 
@@ -40,21 +42,21 @@ export async function hideProduct(
       .then((res) => console.log(res.data));
   }
 }
-export async function productViewPlus(productID: number) {
+export function productView(dispatch: Dispatch, productID: number) {
   if (localStorage.getItem("last_seen")) {
     let getListStorage: any = localStorage.getItem("last_seen");
     let getList: number[] = JSON.parse(getListStorage);
+
     if (!getList.includes(productID)) {
-      await axiosCall.post(
-        "actions/view_product",
-        { productID: productID },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
+      addLastProduct(dispatch, productID);
+      return true;
+    } else {
+      addLastProduct(dispatch, productID);
+      return false;
     }
+  } else {
+    addLastProduct(dispatch, productID);
+    return true;
   }
 }
 export async function FetchLastSeenProducts() {

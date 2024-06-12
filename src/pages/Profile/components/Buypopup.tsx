@@ -55,7 +55,7 @@ export default function Buypopup(props: {
           )
           .then((res) => {
             axiosCall
-              .get("authentication/user_get", { withCredentials: true })
+              .get("authentication/user", { withCredentials: true })
               .then((res) => {
                 if (res.data.status == 100) {
                   makeUserSession(dispatch, {

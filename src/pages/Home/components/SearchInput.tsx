@@ -20,7 +20,7 @@ import {
 } from "./SearchComponents";
 import { useNavigate } from "react-router-dom";
 import { SelectNumbers } from "../../Search/components/Filters";
-import searchBg from "../../../assets/images/estates/searchBg.jpg";
+import searchBg from "../../../assets/images/estates/searchBg.webp";
 
 type TPriceGet = {
   start: number;

@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /AdminPanel/            
+Disallow: /ForgotPassword/        
+Disallow: /PrivacyPolicy/          
+Disallow: /SuspendedAccount/         
+Disallow: /Seller/         
+Disallow: /Maclerconditions/        

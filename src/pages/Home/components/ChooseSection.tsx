@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import HomeImage from "../../../assets/images/estates/home.jpg";
-import ApartamentImage from "../../../assets/images/estates/apartament.jpg";
-import LandImage from "../../../assets/images/estates/land.jpg";
+import HomeImage from "../../../assets/images/estates/home.webp";
+import ApartamentImage from "../../../assets/images/estates/apartament.webp";
+import LandImage from "../../../assets/images/estates/land.webp";
 import ApartamentRentImage from "../../../assets/images/estates/apartamentRent.webp";
-import HotelImage from "../../../assets/images/estates/hotel.jpeg";
+import HotelImage from "../../../assets/images/estates/hotel.webp";
 
 export default function ChooseSection() {
   return (
@@ -13,7 +13,7 @@ export default function ChooseSection() {
           <div className="flex w-[calc(50%-10px)]  mobile:w-full  mobile:aspect-video bg-whiteLoad overflow-hidden cursor-pointer group relative">
             <Link to={"/Search?estate_type=0"}>
               <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-              <div className="absolute bottom-3 left-4 text-WhiteFade2 tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
+              <div className="absolute bottom-3 left-4 text-WhiteFade tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
                 იყიდება სახლები / აგარაკები
               </div>
               <img
@@ -26,7 +26,7 @@ export default function ChooseSection() {
           <div className="flex w-[calc(50%-8px)]  mobile:w-full  mobile:aspect-video bg-whiteLoad overflow-hidden cursor-pointer group relative">
             <Link to={"/Search?estate_type=3"}>
               <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-              <div className="absolute bottom-3 left-4 text-WhiteFade2 tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
+              <div className="absolute bottom-3 left-4 text-WhiteFade tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
                 მიწის ნაკვეთები
               </div>
               <img
@@ -39,7 +39,7 @@ export default function ChooseSection() {
           <div className="flex w-[calc(50%-8px)]  mobile:w-full  mobile:aspect-video bg-whiteLoad overflow-hidden cursor-pointer group relative">
             <Link to={"/Search?estate_type=1"}>
               <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-              <div className="absolute bottom-3 left-4 text-WhiteFade2 tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
+              <div className="absolute bottom-3 left-4 text-WhiteFade tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
                 იყიდება ბინები
               </div>
               <img
@@ -52,7 +52,7 @@ export default function ChooseSection() {
           <div className="flex w-[calc(50%-8px)]  mobile:w-full  mobile:aspect-video bg-whiteLoad overflow-hidden cursor-pointer group relative">
             <Link to={"/Search?estate_type=1&deal=1"}>
               <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-              <div className="absolute bottom-3 left-4 text-WhiteFade2 tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
+              <div className="absolute bottom-3 left-4 text-WhiteFade tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
                 ქირავდება ბინები
               </div>
               <img
@@ -67,7 +67,7 @@ export default function ChooseSection() {
           <Link to={"/Search?estate_type=4"}>
             {" "}
             <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-            <div className="absolute bottom-3 left-4 text-WhiteFade2 tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
+            <div className="absolute bottom-3 left-4 text-WhiteFade tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
               სასტუმროები
             </div>
             <img
@@ -80,7 +80,7 @@ export default function ChooseSection() {
       </div>
       <div className=" mobile:aspect-video w-full mt-4 mobile:mt-2 bg-whiteLoad overflow-hidden cursor-pointer group rounded-section relative">
         <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
-        <div className="absolute bottom-3 left-4 text-WhiteFade2 tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
+        <div className="absolute bottom-3 left-4 text-WhiteFade tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
           მიწის ნაკვეთები
         </div>
         <img

@@ -13,9 +13,8 @@ import { useLayoutEffect, useRef, useState } from "react";
 import axiosCall from "../../hooks/axiosCall";
 import ContentLoader from "../../components/global/ContentLoader";
 import { TProductData } from "../Profile/components/MyProducts";
-import { addLastProduct } from "../../hooks/UIFunctions";
 import { useDispatch } from "react-redux";
-import { productViewPlus } from "../../hooks/serverProductFunctions";
+import { productView } from "../../hooks/serverProductFunctions";
 import { TProductCard } from "../../components/global/Card";
 import { AdBanner3 } from "../../components/global/AdComponents";
 import { setWebLoader } from "../../store/data/webUISlice";
@@ -52,29 +51,37 @@ export default function Product() {
           setPageData(res);
           dispatch(setWebLoader(false));
         } else {
-          axiosCall.post("fetch/product", `product_id=${id}`).then((res) => {
-            if (res.data.product_data == null) {
-              navigate("/");
-            } else {
-              if (res.data.status === 100) {
-                let saveData = {
-                  productData: res.data.product_data,
-                  userData: res.data.user_data,
-                  sameProducts: res.data.same_products,
-                };
-                setPageData(saveData);
-                setProductCache(id, saveData);
+          axiosCall
+            .post(
+              "fetch/product",
+              {
+                product_id: id,
+                product_view: productView(dispatch, parseInt(id)),
+              },
+              {
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
               }
-            }
-            dispatch(setWebLoader(false));
-          });
+            )
+            .then((res) => {
+              if (res.data.product_data == null) {
+                navigate("/");
+              } else {
+                if (res.data.status === 100) {
+                  let saveData = {
+                    productData: res.data.product_data,
+                    userData: res.data.user_data,
+                    sameProducts: res.data.same_products,
+                  };
+                  setPageData(saveData);
+                  setProductCache(id, saveData);
+                }
+              }
+              dispatch(setWebLoader(false));
+            });
         }
       });
-
-      if (id) {
-        productViewPlus(parseInt(id));
-        addLastProduct(dispatch, parseInt(id));
-      }
     }
   }, [id]);
 

@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import { Autoplay, EffectFade, Pagination } from "swiper/modules";
-import Apartment from "../../../assets/images/estates/1.jpg";
+import Apartment from "../../../assets/images/estates/1.webp";
 
 export default function MainSlider() {
   return (

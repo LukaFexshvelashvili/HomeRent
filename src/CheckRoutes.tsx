@@ -28,8 +28,6 @@ export default function CheckRoutes(props: {
 
     setPath(location.pathname);
   }, [navigate, props.user.banned, path]);
-  console.log(location.pathname);
-  console.log(location.pathname.includes("Login"));
 
   return (
     <>
