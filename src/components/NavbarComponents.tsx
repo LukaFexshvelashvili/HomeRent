@@ -18,10 +18,12 @@ export function NotificationBar({
   userData,
   activePop,
   setActivePop,
+  mobile,
 }: {
   userData: Tuser;
   activePop: string | null;
   setActivePop: Function;
+  mobile?: boolean;
 }) {
   const popupBlock = useRef<null | HTMLDivElement>(null);
   useEffect(() => {

@@ -34,10 +34,10 @@ export default function Notifications() {
   }, [params]);
 
   return (
-    <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex overflow-hidden">
+    <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex overflow-hidden mobile:flex-col">
       {notifications.length > 0 ? (
         <>
-          <div className=" notificationList w-5/12 border-r-2 border-whiteHover h-[520px] max-h-[520px] overflow-x-hidden">
+          <div className=" notificationList w-5/12 border-r-2 border-whiteHover h-[520px] max-h-[520px] overflow-x-hidden mobile:w-full mobile:h-min mobile:min-h-[50px]">
             {notifications.map((e: Tnotification) => (
               <NotificationBlock
                 dispatch={dispatch}
@@ -73,7 +73,7 @@ function NotificationsData({
     (data) => data.id == activeMessage
   )[0];
   return (
-    <div className=" px-7 py-5 w-7/12 flex justify-center items-center text-textDesc min-h-[400px]">
+    <div className=" px-7 py-5 w-7/12 flex justify-center items-center text-textDesc min-h-[400px] mobile:min-h-[0px] mobile:w-full">
       {activeMessage == -1 ? (
         <>აირჩიეთ შეტყობინება</>
       ) : (

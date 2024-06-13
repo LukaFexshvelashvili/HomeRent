@@ -54,10 +54,12 @@ export default function Card(props: {
     <>
       <div
         className={`h-auto ${
-          loaded ? "" : "invisible max-w-0 overflow-hidden"
+          loaded
+            ? "p-3 pb-14"
+            : "invisible max-w-0 overflow-hidden max-h-0 p-0 m-0"
         }  ${
           props.autoWidth ? "w-full" : "w-[280px]"
-        } bg-whiteMain border-2 border-cardBorder rounded-normal p-3 pb-14 relative`}
+        } bg-whiteMain border-2 border-cardBorder rounded-normal  relative`}
       >
         <Link
           onClick={() => dispatch(setWebLoader(true))}

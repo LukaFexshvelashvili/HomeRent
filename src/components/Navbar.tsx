@@ -153,23 +153,52 @@ export default function Navbar() {
             darkmode={darkmode}
           />
         </div>
-        <div className="hidden mobile:block">
-          <ResponsiveNavbar userData={userData} />
+        <div className="hidden mobile:flex items-center">
+          <ResponsiveNavbar userData={userData} favNums={favNums} />
         </div>
       </div>
     </nav>
   );
 }
 
-function ResponsiveNavbar({ userData }: { userData: Tuser }) {
+function ResponsiveNavbar({
+  userData,
+  favNums,
+}: {
+  userData: Tuser;
+  favNums: number;
+}) {
   const darkmode: boolean = useSelector(
     (store: RootState) => store.webUI.darkMode
   );
 
   const dispatch = useDispatch();
   const [active, setActive] = useState<boolean>(false);
+  const [activePop, setActivePop] = useState<string | null>(null);
   return (
     <>
+      <div className="flex items-center mr-[6px] gap-[2px]">
+        <NotificationBar
+          userData={userData}
+          activePop={activePop}
+          setActivePop={setActivePop}
+          mobile={true}
+        />
+        <Link
+          to={"/profile/SavedProducts"}
+          className="flex justify-center items-center h-min"
+        >
+          <button className="relative h-[32px] aspect-square cursor-pointer flex items-center justify-center select-none">
+            {favNums > 0 ? (
+              <div className="absolute h-[14px] aspect-square top-[2px] right-[2px] z-20 text-[9px] flex justify-center items-center text-buttonText font-mainRegular rounded-circle bg-main">
+                {favNums}
+              </div>
+            ) : null}
+
+            <BookmarkIcon className="h-[20px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon p-[0.2px] translate-y-[0.6px]" />
+          </button>
+        </Link>{" "}
+      </div>
       <button
         onClick={() => setActive((state: boolean) => !state)}
         className={` h-[45px] translate relative aspect-square gap-[6px] justify-center p-[10px] flex flex-col z-[31] transition-colors rounded-lg ${
@@ -182,12 +211,12 @@ function ResponsiveNavbar({ userData }: { userData: Tuser }) {
           }  `}
         ></span>
         <span
-          className={`transition-transform  block h-[2px] rounded-md w-8/12 bg-blackMain ${
+          className={`transition-transform  block h-[2px] rounded-md w-full bg-blackMain ${
             active && " scale-x-0"
           }  `}
         ></span>
         <span
-          className={`transition-transform  block h-[2px] rounded-md w-4/12 bg-blackMain ${
+          className={`transition-transform  block h-[2px] rounded-md w-full bg-blackMain ${
             active && " -rotate-45 -translate-y-[8px] w-full"
           }  `}
         ></span>
