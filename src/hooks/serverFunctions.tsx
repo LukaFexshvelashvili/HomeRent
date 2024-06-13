@@ -87,11 +87,8 @@ export function addFavorite(dispatch: Function, id: number) {
     const formData = new FormData();
 
     formData.append("favorites", JSON.stringify(getFavorites));
-    console.log(getFavorites);
 
-    axiosCall
-      .post("user/favorites", formData, { withCredentials: true })
-      .then((res) => console.log(res.data));
+    axiosCall.post("user/favorites", formData, { withCredentials: true });
   }
 }
 export function removeFavorite(dispatch: Function, id: number) {

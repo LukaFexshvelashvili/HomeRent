@@ -139,7 +139,7 @@ function CardSlider(props: {
                       : Math.floor(Math.random() * 200)
                   }`}
                 >
-                  <SeeMoreCard autoWidth={true} link={props.link} />
+                  <SeeMoreCard autoWidth={false} link={props.link} />
                 </SwiperSlide>
               ) : null}
             </>

@@ -127,7 +127,7 @@ export default function Navbar() {
               </button>
             </Link>
           )}
-          <div className="flex mx-2 items-center justify-center gap-2">
+          <div className="flex mx-2 items-center justify-center gap-[6px]">
             <Link to={"/profile/SavedProducts"}>
               <button className="relative h-[34px] aspect-square cursor-pointer flex items-center justify-center select-none">
                 {favNums > 0 ? (
@@ -182,7 +182,6 @@ function ResponsiveNavbar({
           userData={userData}
           activePop={activePop}
           setActivePop={setActivePop}
-          mobile={true}
         />
         <Link
           to={"/profile/SavedProducts"}

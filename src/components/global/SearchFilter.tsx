@@ -1,14 +1,36 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { cities } from "../../assets/lists/cities";
 import { updateCity } from "../../store/data/addProductSlice";
+import axiosCall from "../../hooks/axiosCall";
+import { getCacheItem, setCacheItem } from "../cache/cacheFunctions";
 
-export default function SearchFilter() {
-  const citiesAPI = cities.subLocs.map((item) => item.name.ka);
+function SearchFilter() {
+  const [citiesAPI, setCitiesAPI] = useState([]);
+
   const [search, setSearch] = useState("");
   const [searchWindow, setSearchWindow] = useState(false);
   const [active, setActive] = useState("");
   const dispatch = useDispatch();
+  const firstRender = useRef<boolean>(true);
+
+  useLayoutEffect(() => {
+    getCacheItem("cities").then((cachedCities) => {
+      if (cachedCities == undefined && firstRender.current) {
+        firstRender.current = false;
+        axiosCall.get("locations/get_cities").then((res) => {
+          if (res.status == 200) {
+            setCitiesAPI(res.data.subLocs.map((item: any) => item.name.ka));
+            setCacheItem(
+              "cities",
+              res.data.subLocs.map((item: any) => item.name.ka)
+            );
+          }
+        });
+      } else {
+        setCitiesAPI(cachedCities);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (active !== "" && search !== active) {
@@ -24,7 +46,7 @@ export default function SearchFilter() {
   }, [active]);
 
   const fetchSearch = () => {
-    if (search == "") {
+    if (search == "" && citiesAPI !== undefined && citiesAPI.length > 1) {
       return citiesAPI.map((e: string, i: number) => (
         <button
           key={i}
@@ -36,7 +58,7 @@ export default function SearchFilter() {
           {e}
         </button>
       ));
-    } else {
+    } else if (citiesAPI !== undefined && citiesAPI.length > 1) {
       return citiesAPI
         .filter((item: string) => item.includes(search))
         .map((e: string, i: number) => (
@@ -73,7 +95,7 @@ export default function SearchFilter() {
     </div>
   );
 }
-
+export default memo(SearchFilter);
 // export default function SearchFilter() {
 //     const citiesAPI = cities.subLocs.map((item) => item.name.ka);
 //     const [search, setSearch] = useState("");

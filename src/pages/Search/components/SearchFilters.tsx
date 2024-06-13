@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { cities } from "../../../assets/lists/cities";
+
 import {
   updateAddress,
   updateCity,
@@ -9,16 +9,36 @@ import {
 
 import axiosCall from "../../../hooks/axiosCall";
 import { OutsideClickClose } from "../../../components/global/OutsideClickClose";
+import {
+  getCacheItem,
+  setCacheItem,
+} from "../../../components/cache/cacheFunctions";
 
-export function SearchCityFilter(props: { setCity: Function }) {
-  const citiesAPI = useMemo(
-    () => cities.subLocs.map((item) => item.name.ka),
-    []
-  );
+export const SearchCityFilter = memo((props: { setCity: Function }) => {
+  const [citiesAPI, setCitiesAPI] = useState([]);
   const [search, setSearch] = useState("");
   const [searchWindow, setSearchWindow] = useState(false);
   const [active, setActive] = useState("");
   const dispatch = useDispatch();
+  const firstRender = useRef<boolean>(true);
+  useLayoutEffect(() => {
+    getCacheItem("cities").then((cachedCities) => {
+      if (cachedCities == undefined && firstRender.current) {
+        firstRender.current = false;
+        axiosCall.get("locations/get_cities").then((res) => {
+          if (res.status == 200) {
+            setCitiesAPI(res.data.subLocs.map((item: any) => item.name.ka));
+            setCacheItem(
+              "cities",
+              res.data.subLocs.map((item: any) => item.name.ka)
+            );
+          }
+        });
+      } else {
+        setCitiesAPI(cachedCities);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (active !== "" && search !== active) {
@@ -38,9 +58,8 @@ export function SearchCityFilter(props: { setCity: Function }) {
       setSearch("");
     }
   }, [active]);
-
   const fetchSearch = () => {
-    if (search == "" && citiesAPI && citiesAPI.length !== 0) {
+    if (search == "" && citiesAPI !== undefined && citiesAPI.length !== 0) {
       return citiesAPI.map((e: string, i: number) => (
         <button
           key={i}
@@ -52,7 +71,7 @@ export function SearchCityFilter(props: { setCity: Function }) {
           {e}
         </button>
       ));
-    } else {
+    } else if (citiesAPI !== undefined && citiesAPI.length !== 0) {
       return citiesAPI
         .filter((item: string) => item.includes(search))
         .map((e: string, i: number) => (
@@ -87,7 +106,7 @@ export function SearchCityFilter(props: { setCity: Function }) {
           <div
             className={`absolute ${
               searchWindow ? "block" : "hidden"
-            } h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[25px] overflow-hidden`}
+            } h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden`}
           >
             <div className="flex flex-col h-full overflow-y-scroll">
               {fetchSearch()}
@@ -101,7 +120,7 @@ export function SearchCityFilter(props: { setCity: Function }) {
       <SearchExactAddressFilter />
     </>
   );
-}
+});
 
 export function SearchAddressFilter(props: { getActiveCity: string | null }) {
   const getInput = useRef<any>(null);
@@ -194,7 +213,7 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
           <div
             className={`absolute ${
               searchWindow ? "block" : "hidden"
-            } h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[25px] overflow-hidden`}
+            } h-[200px] w-full rounded-lg bg-whiteMain shadow-sectionShadow z-10 top-[45px] overflow-hidden`}
           >
             <div className="flex flex-col h-full overflow-y-scroll">
               {fetchSearch()}

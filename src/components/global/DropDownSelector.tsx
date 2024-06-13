@@ -18,12 +18,16 @@ export default function DropDownSelector(props: {
   const [search, setSearch] = useState<string>("");
 
   const items = useMemo(() => {
-    if (search !== "") {
-      return props.itemsList.filter((item) => item.includes(search));
+    if (props.itemsList !== undefined) {
+      if (search !== "") {
+        return props.itemsList.filter((item) => item.includes(search));
+      } else {
+        return props.itemsList;
+      }
     } else {
-      return props.itemsList;
+      return [];
     }
-  }, [search]);
+  }, [search, props.itemsList]);
   useEffect(() => {
     if (props.setData) {
       props.setData(activeItem);

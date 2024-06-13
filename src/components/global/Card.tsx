@@ -197,16 +197,18 @@ export function CardSkeleton(props: { autoWidth?: boolean }) {
 export function SeeMoreCard(props: { autoWidth?: boolean; link: string }) {
   return (
     <>
-      <Link to={"/Search?" + props.link}>
-        <div
-          className={`h-[328px] cursor-pointer transition-colors hover:bg-whiteHover  ${
-            props.autoWidth ? "w-full" : "w-[280px]"
-          } bg-whiteMain border-2 border-cardBorder font-mainMedium  rounded-normal p-3 pb-14 relative text-blackMain flex justify-center flex-col gap-3 items-center text-[16px] tracking-wider`}
-        >
-          მეტის ნახვა
-          <PlusIcon className="h-[20px] [&>path]:fill-blackMain " />
-        </div>
-      </Link>
+      <div
+        className={`h-[328px] cursor-pointer transition-colors hover:bg-whiteHover  ${
+          props.autoWidth ? "w-full" : "w-[280px]"
+        } bg-whiteMain border-2 border-cardBorder font-mainMedium  rounded-normal p-3 pb-14 relative text-blackMain flex justify-center flex-col gap-3 items-center text-[16px] tracking-wider`}
+      >
+        <Link
+          to={"/Search?" + props.link}
+          className="absolute w-full h-full top-0 left-0"
+        ></Link>
+        მეტის ნახვა
+        <PlusIcon className="h-[20px] [&>path]:fill-blackMain " />
+      </div>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { PopupCloseIcon, SearchIcon } from "../../assets/icons/Icons";
 import {
   PriceSlider,
@@ -11,7 +11,7 @@ import Card, { TProductCard } from "../../components/global/Card";
 import { useDebounce } from "../../hooks/serverFunctions";
 import ContentLoader from "../../components/global/ContentLoader";
 import DropDownSelector from "../../components/global/DropDownSelector";
-import { cities } from "../../assets/lists/cities";
+
 import {
   projectDealTypes,
   projectStatuses,
@@ -20,7 +20,9 @@ import {
 import { deleteParams, updateParams } from "../../hooks/routerHooks";
 import { useSearchParams } from "react-router-dom";
 import {
+  getCacheItem,
   getSearchCache,
+  setCacheItem,
   setSearchCache,
 } from "../../components/cache/cacheFunctions";
 function Search() {
@@ -42,10 +44,26 @@ function Search() {
     return title !== null ? title : "";
   });
   const debouncedSearch = useDebounce(location.search, 300, setLoader);
-  const citiesAPI: string[] = useMemo(
-    () => cities.subLocs.map((item) => item.name.ka),
-    []
-  );
+  const [citiesAPI, setCitiesAPI] = useState([]);
+  const firstRender = useRef<boolean>(true);
+  useLayoutEffect(() => {
+    getCacheItem("cities").then((cachedCities) => {
+      if (cachedCities == undefined && firstRender.current) {
+        firstRender.current = false;
+        axiosCall.get("locations/get_cities").then((res) => {
+          if (res.status == 200) {
+            setCitiesAPI(res.data.subLocs.map((item: any) => item.name.ka));
+            setCacheItem(
+              "cities",
+              res.data.subLocs.map((item: any) => item.name.ka)
+            );
+          }
+        });
+      } else {
+        setCitiesAPI(cachedCities);
+      }
+    });
+  }, []);
 
   const afterSearchActions = (fetchedData: any) => {
     setSearched(fetchedData.products);

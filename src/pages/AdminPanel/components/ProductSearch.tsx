@@ -26,8 +26,6 @@ export default function ProductSearch() {
       .then((res) => {
         setLoader(false);
         if (res.data.status === 100) {
-          console.log(res.data);
-
           setProducts(res.data.query);
         }
       });

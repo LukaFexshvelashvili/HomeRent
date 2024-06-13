@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cities } from "../../../assets/lists/cities";
+
 import { updateCity } from "../../../store/data/addProductSlice";
 import { subLocs } from "../../../assets/lists/subLocs";
 import { RootState } from "../../../store/store";
+import axiosCall from "../../../hooks/axiosCall";
 
 export function SearchAddressFilter() {
   const getInput = useRef<any>(null);
@@ -27,7 +28,6 @@ export function SearchAddressFilter() {
   useEffect(() => {
     if (getInput.current !== null) {
       getInput.current.focus();
-      console.log("a");
     }
   }, []);
   const getActiveCity: any = useSelector(
@@ -36,9 +36,22 @@ export function SearchAddressFilter() {
   if (getActiveCity == null) {
     return null;
   }
-  const activeCityCode: number = useMemo(() => {
-    return cities.subLocs.filter((item) => item.name.ka == getActiveCity)[0]
-      .osm_id;
+
+  const [activeCityCode, setActiveCityCode] = useState<number | null>(null);
+  const firstRender = useRef<boolean>(true);
+  useLayoutEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      axiosCall.get("locations/get_cities").then((res) => {
+        if (res.status == 200) {
+          setActiveCityCode(
+            res.data.subLocs.filter(
+              (item: any) => item.name.ka == getActiveCity
+            )[0].osm_id
+          );
+        }
+      });
+    }
   }, []);
   const citiesAPI = subLocs.subLocs.map((item) => {
     if (parseInt(item.parent_osm_id) == activeCityCode) return item.name.ka;

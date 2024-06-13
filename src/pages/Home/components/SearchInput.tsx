@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   FilterFrameIcon,
   FilterHomeIcon,
@@ -12,7 +12,7 @@ import {
   RealEstateTypes,
   TRealEstateTypes,
 } from "../../Search/components/FiltersArray";
-import { cities } from "../../../assets/lists/cities";
+
 import {
   InputPriceSlider,
   InputSizeSlider,
@@ -21,6 +21,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import { SelectNumbers } from "../../Search/components/Filters";
 import searchBg from "../../../assets/images/estates/searchBg.webp";
+import axiosCall from "../../../hooks/axiosCall";
+import {
+  getCacheItem,
+  setCacheItem,
+} from "../../../components/cache/cacheFunctions";
 
 type TPriceGet = {
   start: number;
@@ -289,14 +294,26 @@ function SearchInput() {
 export default memo(SearchInput);
 function SelectCity(props: { setData: Function; closeWindow: Function }) {
   const [search, setSearch] = useState("");
-
-  const citiesAPI = useMemo(
-    () =>
-      cities.subLocs
-        .map((item) => item.name.ka)
-        .filter((item: string) => item.includes(search)),
-    [search]
-  );
+  const firstRender = useRef<boolean>(true);
+  const [citiesAPI, setCitiesAPI] = useState([]);
+  useLayoutEffect(() => {
+    getCacheItem("cities").then((cachedCities) => {
+      if (cachedCities == undefined && firstRender.current) {
+        firstRender.current = false;
+        axiosCall.get("locations/get_cities").then((res) => {
+          if (res.status == 200) {
+            setCitiesAPI(res.data.subLocs.map((item: any) => item.name.ka));
+            setCacheItem(
+              "cities",
+              res.data.subLocs.map((item: any) => item.name.ka)
+            );
+          }
+        });
+      } else {
+        setCitiesAPI(cachedCities);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -308,7 +325,8 @@ function SelectCity(props: { setData: Function; closeWindow: Function }) {
         value={search}
       />
       <div className="flex flex-col   mobileTab:overflow-x-hidden mobileTab:overflow-y-scroll mobileTab:flex-nowrap  flex-wrap gap-x-10 h-[420px] overflow-x-scroll mt-6 gap-y-2">
-        {citiesAPI &&
+        {citiesAPI !== undefined &&
+          citiesAPI.length > 1 &&
           citiesAPI.map((e: string, i: number) => (
             <div
               onClick={() => {
