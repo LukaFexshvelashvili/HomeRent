@@ -15,6 +15,7 @@ import {
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setWebLoader } from "../../store/data/webUISlice";
+import HoverTitle from "./HoverTitle";
 
 export type TProductCard = {
   id: number;
@@ -139,7 +140,7 @@ export default function Card(props: {
               submitFavorite(!favorite);
               setFavorite((state) => !state);
             }}
-            className="p-[5px] rounded-md absolute right-3"
+            className=" p-[5px] rounded-md absolute right-3"
           >
             <BookmarkIcon
               className={`h-[20px]  transition-all   ${

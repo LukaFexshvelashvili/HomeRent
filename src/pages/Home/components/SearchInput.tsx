@@ -26,6 +26,7 @@ import {
   getCacheItem,
   setCacheItem,
 } from "../../../components/cache/cacheFunctions";
+import HoverTitle from "../../../components/global/HoverTitle";
 
 type TPriceGet = {
   start: number;
@@ -271,9 +272,10 @@ function SearchInput() {
         </div>
         <button
           onClick={handleSearch}
-          className={`small:hidden h-[45px] w-[60px] text-[14px] z-10 small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest transition-all hover:bg-mainHover`}
+          className={`relative group small:hidden h-[45px] w-[60px] text-[14px] z-10 small:w-full small:py-3 small:mt-2 small:rounded-normal font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest transition-all hover:bg-mainHover`}
         >
           <SearchIcon className="h-[16px] aspect-square " />
+          <HoverTitle title="მოძებნა" top />
         </button>
         <button
           onClick={handleSearch}

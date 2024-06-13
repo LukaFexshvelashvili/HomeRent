@@ -10,6 +10,7 @@ import axiosCall from "../../../hooks/axiosCall";
 import { LockIcon } from "../../../assets/icons/Icons";
 import { HomesbgDecor } from "../../../assets/images/decorations/svg/Decorations";
 import SideSection from "./SideSection";
+import AuthenticationHeader from "../AuthenticationHeader";
 
 export default function RecoverContent() {
   const { url } = useParams();
@@ -85,16 +86,7 @@ export default function RecoverContent() {
   return (
     <>
       <main className="m-0 p-0">
-        <div className="h-[70px] w-full absolute  bg-transparent flex items-center top-0 z-10">
-          <div className="login_container flex justify-between">
-            <Link to={"/"}>
-              <div className="flex items-center gap-3">
-                <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
-                <div className="h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
-              </div>
-            </Link>
-          </div>
-        </div>
+        <AuthenticationHeader />
         <div className="flex h-screen">
           {status === 0 ? (
             <section className="flex-1 relative flex justify-center items-center">

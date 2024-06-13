@@ -13,6 +13,7 @@ import {
 import { toggleDarkMode } from "../store/data/webUISlice";
 import { useDispatch } from "react-redux";
 import { useEffect, useRef } from "react";
+import HoverTitle from "./global/HoverTitle";
 
 export function NotificationBar({
   userData,
@@ -47,10 +48,14 @@ export function NotificationBar({
   return (
     <div
       ref={popupBlock}
-      className={`relative h-[34px] aspect-square cursor-default flex items-center justify-center transition-colors ${
+      className={`group relative h-[34px] aspect-square cursor-default flex items-center justify-center transition-colors ${
         activePop == "notifications" ? "bg-mainClear" : "bg-transparent"
       }   rounded-md `}
     >
+      {activePop !== "notifications" ? (
+        <HoverTitle title="შეტყობინებები" />
+      ) : null}
+
       {userData.notifications.length !== 0 &&
         userData.notifications.some((item) => item.seen == false) && (
           <div className="absolute h-[8px] aspect-square top-[6px] right-[6px] z-20 rounded-circle bg-main"></div>

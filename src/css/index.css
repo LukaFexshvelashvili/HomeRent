@@ -18,6 +18,11 @@
   font-family: mainRegular;
   src: url("../assets/fonts/NotoSansGeorgian-Regular.ttf");
 }
+@font-face {
+  font-family: logoBold;
+  src: url("../assets/fonts/AquireBold.otf");
+}
+
 img {
   -webkit-transform: translateZ(0);
 }

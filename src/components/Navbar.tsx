@@ -21,6 +21,8 @@ import { toggleDarkMode } from "../store/data/webUISlice";
 
 import { NotificationBar, ProfileBar } from "./NavbarComponents";
 import { Tuser } from "../store/data/userSlice";
+import HoverTitle from "./global/HoverTitle";
+import WebIcon from "../assets/icons/WebIcon";
 export default function Navbar() {
   const userData = useSelector((store: RootState) => store.user);
   const darkmode: boolean = useSelector(
@@ -50,8 +52,10 @@ export default function Navbar() {
             onClick={() => window.scrollTo(0, 0)}
             className="flex items-center gap-3"
           >
-            <div className="h-[36px] aspect-square rounded-[6px] bg-main cursor-pointer"></div>
-            <div className=" mobile:hidden h-[20px] w-[110px] rounded-[3px] bg-whiteLoad cursor-pointer"></div>
+            <WebIcon className="h-[34px] aspect-square" />
+            <div className=" mobile:hidden rounded-[3px] cursor-pointer text-blackMain font-logoBold text-[18px] tracking-[3px]">
+              <span className="text-main ">ON</span>HOME
+            </div>
           </Link>
           {/* <OutsideClickClose
             setActivePop={setActiveLang}
@@ -128,7 +132,7 @@ export default function Navbar() {
             </Link>
           )}
           <div className="flex mx-2 items-center justify-center gap-[6px]">
-            <Link to={"/profile/SavedProducts"}>
+            <Link to={"/profile/SavedProducts"} className="group relative">
               <button className="relative h-[34px] aspect-square cursor-pointer flex items-center justify-center select-none">
                 {favNums > 0 ? (
                   <div className="absolute h-[16px] aspect-square top-[2px] right-[2px] z-20 text-[9px] flex justify-center items-center text-buttonText font-mainRegular rounded-circle bg-main">
@@ -138,6 +142,7 @@ export default function Navbar() {
 
                 <BookmarkIcon className="h-[20px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon p-[0.2px]" />
               </button>
+              <HoverTitle title="ფავორიტები" />
             </Link>{" "}
             <NotificationBar
               userData={userData}

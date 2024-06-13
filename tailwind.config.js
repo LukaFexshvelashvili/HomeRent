@@ -144,6 +144,7 @@ export default {
         mainBold: "mainBold",
         mainMedium: "mainMedium",
         mainRegular: "mainRegular",
+        logoBold: "logoBold",
       },
       fontSize: {
         Asmallest: "11px",
