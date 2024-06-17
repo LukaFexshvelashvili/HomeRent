@@ -81,7 +81,7 @@ export default function Card(props: {
             )}
             <img
               src={
-                "http://localhost/HomeRentServer/" +
+                "http://localhost/ONHOMEServer/" +
                 props.product.estate_active_image
               }
               className="absolute h-full w-full object-cover top-0 left-0 select-none"

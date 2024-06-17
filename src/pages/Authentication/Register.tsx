@@ -21,6 +21,7 @@ import {
   hasUppercase,
 } from "../../hooks/AdditionalFunctions";
 import AuthenticationHeader from "./AuthenticationHeader";
+import { Helmet } from "react-helmet";
 
 export default function Register() {
   const user: Tuser = useSelector((store: RootState) => store.user);
@@ -151,6 +152,33 @@ export default function Register() {
 
   return (
     <>
+      <Helmet>
+        <title>რეგისტრაცია - ONHOME</title>
+        <meta name="description" lang="ka" content="რეგისტრაცია - ONHOME" />
+        <meta
+          name="keywords"
+          lang="ka"
+          content="ონჰოუმ რეგისტრაცია, რეგისტრაცია ონჰოუმ, onhome register, register onhome, onhome, onhome რეგისტრაცია, რეგისტრაცია onhome"
+        />
+        <meta
+          name="image"
+          lang="ka"
+          content="https://static.onhome.ge/onhome-logo.png"
+        ></meta>
+        <meta name="theme-color" content="#3a86ff" />
+        <link rel="canonical" href="https://onhome.ge/"></link>
+
+        {/* Open Graph tags */}
+        <meta property="og:title" lang="ka" content="რეგისტრაცია - onhome.ge" />
+        <meta
+          property="og:image"
+          lang="ka"
+          content="https://static.onhome.ge/onhome-logo.png"
+        />
+        <meta property="og:type" lang="ka" content="website" />
+        <meta property="og:url" lang="ka" content="https://onhome.ge" />
+        <meta property="og:site_name" content="ONHOME" />
+      </Helmet>
       <main className="m-0 p-0">
         <AuthenticationHeader />
         <div className="flex h-screen overflow-hidden min-h-[900px]">
@@ -266,11 +294,11 @@ export default function Register() {
                       ვეთანხმები
                     </p>
                     <span className="text-main cursor-pointer ml-2 mobile:text-[12px]">
-                      წესებს და პირობებს
+                      <Link to="/PrivacyPolicy">წესებს და პირობებს</Link>
                     </span>
                   </div>
                 </div>
-                <button className=" mt-4 mobile:mt-0 linearButton font-mainBold text-whiteMain h-[40px] w-[200px] mobile:text-[14px] mobile:h-[36px] rounded-normal tracking-wider transition-shadow hover:shadow-[0px_6px_15px_var(--mainClear)]">
+                <button className=" mt-4 mobile:mt-0 linearButton font-mainBold text-buttonText h-[40px] w-[200px] mobile:text-[14px] mobile:h-[36px] rounded-normal tracking-wider transition-shadow hover:shadow-[0px_6px_15px_var(--mainClear)]">
                   რეგისტრაცია
                 </button>
               </form>
@@ -278,7 +306,7 @@ export default function Register() {
               <p className="mt-8 mobile:mt-6 text-textDesc text-Asmall font-mainBold tracking-wider mobile:text-[12px]">
                 უკვე გაქვს ანგარიში?{" "}
                 <span className="text-main cursor-pointer">
-                  <Link to="/Login">ავტორიზაცია</Link>
+                  <Link to="/Login">რეგისტრაცია</Link>
                 </span>
               </p>
             </div>

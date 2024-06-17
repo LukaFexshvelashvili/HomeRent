@@ -18,6 +18,7 @@ import axiosCall from "../../hooks/axiosCall";
 import { Tuser } from "../../store/data/userSlice";
 import { makeUserSession, mergeFavorites } from "../../hooks/serverFunctions";
 import AuthenticationHeader from "./AuthenticationHeader";
+import { Helmet } from "react-helmet";
 
 export default function Login() {
   const user: Tuser = useSelector((store: RootState) => store.user);
@@ -82,6 +83,33 @@ export default function Login() {
 
   return (
     <>
+      <Helmet>
+        <title>ავტორიზაცია - ONHOME</title>
+        <meta name="description" lang="ka" content="ავტორიზაცია - ONHOME" />
+        <meta
+          name="keywords"
+          lang="ka"
+          content="ონჰოუმ ავტორიზაცია, ავტორიზაცია ონჰოუმ, onhome login, login onhome, onhome, onhome ავტორიზაცია, ავტორიზაცია onhome"
+        />
+        <meta
+          name="image"
+          lang="ka"
+          content="https://static.onhome.ge/onhome-logo.png"
+        ></meta>
+        <meta name="theme-color" content="#3a86ff" />
+        <link rel="canonical" href="https://onhome.ge/"></link>
+
+        {/* Open Graph tags */}
+        <meta property="og:title" lang="ka" content="ავტორიზაცია - onhome.ge" />
+        <meta
+          property="og:image"
+          lang="ka"
+          content="https://static.onhome.ge/onhome-logo.png"
+        />
+        <meta property="og:type" lang="ka" content="website" />
+        <meta property="og:url" lang="ka" content="https://onhome.ge" />
+        <meta property="og:site_name" content="ONHOME" />
+      </Helmet>
       <main className="m-0 p-0">
         <AuthenticationHeader />
         <div className="flex h-screen overflow-hidden min-h-[600px]">

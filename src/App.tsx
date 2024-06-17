@@ -21,6 +21,8 @@ import SharePopup from "./components/popups/SharePopup";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import ServerError from "./pages/ServerError";
 import Home from "./pages/Home/Home";
+import Product from "./pages/Product/Product";
+import { Helmet } from "react-helmet";
 
 const NotFound = lazy(() => import("./pages/NotFound"));
 const SuspendedAccount = lazy(() => import("./pages/SuspendedAccount"));
@@ -40,7 +42,6 @@ const Maclerconditions = lazy(
 );
 const AdminPanel = lazy(() => import("./pages/AdminPanel/AdminPanel"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
-const Product = lazy(() => import("./pages/Product/Product"));
 const Search = lazy(() => import("./pages/Search/Search"));
 const AddProduct = lazy(() => import("./pages/AddProduct/AddProduct"));
 const Login = lazy(() => import("./pages/Authentication/Login"));
@@ -102,6 +103,41 @@ function App() {
 
   return (
     <>
+      <Helmet>
+        <title>ONHOME</title>
+        <meta
+          name="description"
+          lang="ka"
+          content="ONHOME - სახლები, აგარაკები, ბინები, კომერციული ფართები, სასტუმროები, მიწის ნაკვეთები, მიწები, ყიდვა, გაყიდვა, გაქირავება. "
+        />
+        <meta
+          name="keywords"
+          lang="ka"
+          content="უძრავი ქონება, საქართელო, თბილისი, ბინა, სახლი, აგარაკი, მიწის ნაკვეთი, სასტუმრო, კომერციული ფართი, იყიდება, გირავდება, ქირავდება, ქირავდება დღიურად, ვიქირავებ, ვიგირავებ, ვიყიდი, სამშენებლო კომპანია, სააგენტო, ახალაშენებული, მშენებარე, შავი კარკასი, თეთრი კარკასი, მწვანე კარკასი"
+        />
+        <meta
+          name="image"
+          lang="ka"
+          content="https://static.onhome.ge/onhome-logo.png"
+        ></meta>
+        <meta name="theme-color" content="#3a86ff" />
+        <link rel="canonical" href="https://onhome.ge/"></link>
+
+        {/* Open Graph tags */}
+        <meta
+          property="og:title"
+          lang="ka"
+          content="უძრავი ქონების ყიდვა, გაყიდვა, გაქირავება - onhome.ge"
+        />
+        <meta
+          property="og:image"
+          lang="ka"
+          content="https://static.onhome.ge/onhome-logo.png"
+        />
+        <meta property="og:type" lang="ka" content="website" />
+        <meta property="og:url" lang="ka" content="https://onhome.ge" />
+        <meta property="og:site_name" content="ONHOME" />
+      </Helmet>
       {loading ? <MainLoader /> : null}
       {UISettings.loader ? <MainLoader /> : null}
       {popups.reportProblem.show ? <ProblemReport /> : null}

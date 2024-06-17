@@ -8,7 +8,6 @@ import { RootState } from "../../store/store";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axiosCall from "../../hooks/axiosCall";
-import HoverTitle from "../../components/global/HoverTitle";
 
 export default function Contact() {
   const user = useSelector((store: RootState) => store.user);
@@ -138,17 +137,16 @@ export default function Contact() {
           ან
         </h1>
         <div className="flex items-center gap-5 flex-wrap justify-center">
-          <button className="relative  group flex items-center justify-center h-[50px] aspect-square text-[15px] mobile:text-[14px] tracking-wider font-mainBold max-w-[400px] rounded-lg bg-greenI text-greenI  ">
-            <PhoneFIlledIcon className="h-[21px] aspect-square [&>path]:fill-buttonText [&>path]:transition-opacity  " />
-            <HoverTitle title="დარეკვა" />
+          <button className="flex items-center justify-center h-[50px] aspect-square text-[15px] mobile:text-[14px] tracking-wider font-mainBold max-w-[400px] rounded-lg border-2 border-greenI text-greenI  ">
+            <PhoneFIlledIcon className="h-[21px] aspect-square [&>path]:stroke-greenI [&>path]:transition-opacity  " />
           </button>
-          <button className="relative group  flex items-center justify-center h-[50px] aspect-square text-[15px] mobile:text-[14px] tracking-wider font-mainBold  rounded-lg bg-blueI text-blueI  ">
-            <FacebookIcon className="h-[23px] aspect-square [&>path]:fill-buttonText [&>path]:transition-opacity  " />
-            <HoverTitle title="facebook" />
+          <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[100%] max-w-[400px] rounded-lg border-2 border-blueI text-blueI  ">
+            <FacebookIcon className="h-[21px] aspect-square [&>path]:fill-blueI [&>path]:transition-opacity mx-[20px] mobile:mx-[10px] " />
+            მოგვწერეთ Facebook - ზე
           </button>
-          <button className="relative  group  bg-gradient-to-bl from-[#833ab4] via-[#fd1d1d] to-[#fcb045] flex items-center justify-center h-[50px] aspect-square text-[15px] mobile:text-[14px] tracking-wider font-mainBold  rounded-lg bg-pinkI text-pinkI ">
-            <InstagramIcon className="h-[23px] aspect-square [&>g]:stroke-buttonText [&>g]:transition-opacity " />
-            <HoverTitle title="instagram" />
+          <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[100%] max-w-[400px] rounded-lg border-2 border-pinkI text-pinkI ">
+            <InstagramIcon className="h-[21px] aspect-square [&>g]:stroke-pinkI [&>g]:transition-opacity mx-[20px] mobile:mx-[10px] " />
+            მოგვწერეთ Instagram - ზე
           </button>
         </div>
       </div>

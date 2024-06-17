@@ -1,4 +1,5 @@
-import { PhoneIcon } from "../assets/icons/Icons";
+import { PhoneFIlledIcon } from "../assets/icons/Icons";
+import HoverTitle from "../components/global/HoverTitle";
 import { FacebookIcon, InstagramIcon } from "../components/popups/SharePopup";
 
 export default function ServerError() {
@@ -17,17 +18,17 @@ export default function ServerError() {
         საკონტაქტო
       </p>
       <div className="flex items-center gap-5 flex-wrap justify-center">
-        <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[90%] max-w-[400px] rounded-lg border-2 border-greenI text-greenI  ">
-          <PhoneIcon className="h-[21px] aspect-square [&>path]:stroke-greenI [&>path]:transition-opacity mx-[20px] mobile:mx-[10px] " />
-          დაგვიკავშირდით მობილურით
+        <button className="relative  group flex items-center justify-center h-[50px] aspect-square text-[15px] mobile:text-[14px] tracking-wider font-mainBold max-w-[400px] rounded-lg bg-greenI text-greenI  ">
+          <PhoneFIlledIcon className="h-[21px] aspect-square [&>path]:fill-buttonText [&>path]:transition-opacity  " />
+          <HoverTitle title="დარეკვა" />
         </button>
-        <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[90%] max-w-[400px] rounded-lg border-2 border-blueI text-blueI  ">
-          <FacebookIcon className="h-[21px] aspect-square [&>path]:fill-blueI [&>path]:transition-opacity mx-[20px] mobile:mx-[10px] " />
-          მოგვწერეთ Facebook - ზე
+        <button className="relative group  flex items-center justify-center h-[50px] aspect-square text-[15px] mobile:text-[14px] tracking-wider font-mainBold  rounded-lg bg-blueI text-blueI  ">
+          <FacebookIcon className="h-[23px] aspect-square [&>path]:fill-buttonText [&>path]:transition-opacity  " />
+          <HoverTitle title="facebook" />
         </button>
-        <button className="flex items-center h-[50px] text-[15px] mobile:text-[14px] tracking-wider font-mainBold w-[90%] max-w-[400px] rounded-lg border-2 border-pinkI text-pinkI ">
-          <InstagramIcon className="h-[21px] aspect-square [&>g]:stroke-pinkI [&>g]:transition-opacity mx-[20px] mobile:mx-[10px] " />
-          მოგვწერეთ Instagram - ზე
+        <button className="relative  group  bg-gradient-to-bl from-[#833ab4] via-[#fd1d1d] to-[#fcb045] flex items-center justify-center h-[50px] aspect-square text-[15px] mobile:text-[14px] tracking-wider font-mainBold  rounded-lg bg-pinkI text-pinkI ">
+          <InstagramIcon className="h-[23px] aspect-square [&>g]:stroke-buttonText [&>g]:transition-opacity " />
+          <HoverTitle title="instagram" />
         </button>
       </div>
     </div>

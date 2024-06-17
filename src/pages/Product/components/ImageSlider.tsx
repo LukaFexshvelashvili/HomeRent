@@ -56,7 +56,7 @@ function ImageSlider(props: { productData: any }) {
               <div className="relative flex items-center justify-center gap-3  h-auto w-[90%] max-w-[1200px] mobile:w-full  aspect-video rounded-xl overflow-hidden">
                 {imageList[slider] !== "AD" ? (
                   <img
-                    src={"http://localhost/HomeRentServer/" + imageList[slider]}
+                    src={"http://localhost/ONHOMEServer/" + imageList[slider]}
                     className="h-full w-full top-0 left-0 object-cover"
                     alt="Product Image"
                   />
@@ -75,7 +75,7 @@ function ImageSlider(props: { productData: any }) {
                   >
                     {item !== "AD" ? (
                       <img
-                        src={"http://localhost/HomeRentServer/" + item}
+                        src={"http://localhost/ONHOMEServer/" + item}
                         className=" h-full w-full object-cover rounded-[5px]"
                         alt="Product Image"
                       />
@@ -104,7 +104,7 @@ function ImageSlider(props: { productData: any }) {
             >
               {item !== "AD" ? (
                 <img
-                  src={"http://localhost/HomeRentServer/" + item}
+                  src={"http://localhost/ONHOMEServer/" + item}
                   className=" h-full w-full object-cover rounded-[5px]"
                   alt="Product Image"
                 />
@@ -122,7 +122,7 @@ function ImageSlider(props: { productData: any }) {
         >
           {imageList[slider] !== "AD" ? (
             <img
-              src={"http://localhost/HomeRentServer/" + imageList[slider]}
+              src={"http://localhost/ONHOMEServer/" + imageList[slider]}
               className="absolute top-0 left-0 h-full w-full object-cover"
               alt="Product Image"
             />

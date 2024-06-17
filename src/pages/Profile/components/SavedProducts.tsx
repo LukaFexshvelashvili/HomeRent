@@ -97,8 +97,7 @@ function FavoriteBanner(props: { product: TProductData }) {
         <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2]"></div>
         <img
           src={
-            "http://localhost/HomeRentServer/" +
-            props.product.estate_active_image
+            "http://localhost/ONHOMEServer/" + props.product.estate_active_image
           }
           className="absolute h-full w-full object-cover  top-0 left-0"
         />

@@ -8,6 +8,7 @@ import { Tuser } from "../../store/data/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import axiosCall from "../../hooks/axiosCall";
 import AuthenticationHeader from "./AuthenticationHeader";
+import { Helmet } from "react-helmet";
 
 export default function ForgotPassword() {
   const user: Tuser = useSelector((store: RootState) => store.user);
@@ -79,6 +80,37 @@ export default function ForgotPassword() {
   }
   return (
     <>
+      <Helmet>
+        <title>პაროლის აღდგენა - ONHOME</title>
+        <meta name="description" lang="ka" content="პაროლის აღდგენა - ONHOME" />
+        <meta
+          name="keywords"
+          lang="ka"
+          content="ონჰოუმ პაროლის აღდგენა, პაროლის აღდგენა ონჰოუმ, onhome register, register onhome, onhome, onhome პაროლის აღდგენა, პაროლის აღდგენა onhome"
+        />
+        <meta
+          name="image"
+          lang="ka"
+          content="https://static.onhome.ge/onhome-logo.png"
+        ></meta>
+        <meta name="theme-color" content="#3a86ff" />
+        <link rel="canonical" href="https://onhome.ge/"></link>
+
+        {/* Open Graph tags */}
+        <meta
+          property="og:title"
+          lang="ka"
+          content="პაროლის აღდგენა - onhome.ge"
+        />
+        <meta
+          property="og:image"
+          lang="ka"
+          content="https://static.onhome.ge/onhome-logo.png"
+        />
+        <meta property="og:type" lang="ka" content="website" />
+        <meta property="og:url" lang="ka" content="https://onhome.ge" />
+        <meta property="og:site_name" content="ONHOME" />
+      </Helmet>
       <main className="m-0 p-0">
         <AuthenticationHeader />
         <div className="flex h-screen">
