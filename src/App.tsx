@@ -62,8 +62,11 @@ function App() {
   const refresh = useRef<boolean>(true);
 
   useEffect(() => {
+    console.log(document.cookie);
+
     if (refresh.current) {
       refresh.current = false;
+      console.log(document.cookie);
       axiosCall
         .get("authentication/user", { withCredentials: true })
         .then((res) => {
@@ -139,7 +142,11 @@ function App() {
         <meta property="og:site_name" content="ONHOME" />
       </Helmet>
       {loading ? <MainLoader /> : null}
-      {UISettings.loader ? <MainLoader /> : null}
+      {UISettings.loader.active ? (
+        <MainLoader
+          opacity={UISettings.loader.opacity ? UISettings.loader.active : false}
+        />
+      ) : null}
       {popups.reportProblem.show ? <ProblemReport /> : null}
       {popups.share.show ? <SharePopup /> : null}
       {!lock ? (
@@ -197,9 +204,13 @@ function App() {
 
 export default App;
 
-function MainLoader() {
+function MainLoader(props: { opacity?: boolean }) {
   return (
-    <div className="fixed top-0 bottom-0 h-full w-full bg-whiteMain z-[99] flex justify-center items-center">
+    <div
+      className={`${
+        props.opacity ? "opacity-70" : ""
+      } fixed top-0 bottom-0 h-full w-full bg-whiteMain z-[99] flex justify-center items-center`}
+    >
       <svg
         className="animwhole translate-y-[-30px]"
         width="102"

@@ -19,6 +19,7 @@ import { Tuser } from "../../store/data/userSlice";
 import { makeUserSession, mergeFavorites } from "../../hooks/serverFunctions";
 import AuthenticationHeader from "./AuthenticationHeader";
 import { Helmet } from "react-helmet";
+import { setWebLoader } from "../../store/data/webUISlice";
 
 export default function Login() {
   const user: Tuser = useSelector((store: RootState) => store.user);
@@ -46,6 +47,7 @@ export default function Login() {
 
     e.preventDefault();
     if (mailRef.current?.value && passwordRef.current?.value) {
+      dispatch(setWebLoader({ active: true, opacity: false }));
       var mail: string = mailRef.current.value;
       var password: string = passwordRef.current.value;
       const formData = new FormData();
@@ -57,6 +59,8 @@ export default function Login() {
       axiosCall
         .post("authentication/user_login", formData, { withCredentials: true })
         .then((res) => {
+          dispatch(setWebLoader({ active: false }));
+
           if (res.data.status === 3) {
             makeUserSession(dispatch, res.data.user_data);
             if (localStorage.getItem("favorites")) {
@@ -75,7 +79,8 @@ export default function Login() {
           if (res.data.status === -1) {
             setError("სერვერზე წარმოიშვა პრობლემა, სცადეთ მოგვიანებით");
           }
-        });
+        })
+        .catch((err) => console.log(err));
     } else {
       setError("შეავსეთ ყველა ველი");
     }

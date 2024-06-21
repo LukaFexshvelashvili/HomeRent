@@ -8,13 +8,13 @@ export type TWebUI = {
   darkMode: boolean;
   mainColor: string;
   colors: string[];
-  loader: boolean;
+  loader: { active: boolean; opacity: boolean };
 };
 const initialState: TWebUI = {
   darkMode: false,
   mainColor: "#3a86ff",
-  colors: ["#3A86FF", "#C727FF", "#A6E81B"],
-  loader: false,
+  colors: ["#3A86FF", "#C727FF", "#95d609"],
+  loader: { active: false, opacity: false },
 };
 
 const webUISlice = createSlice({
@@ -34,8 +34,14 @@ const webUISlice = createSlice({
       changeMainColor(action.payload);
       state.mainColor = action.payload;
     },
-    setWebLoader: (state, action: PayloadAction<boolean>) => {
-      state.loader = action.payload;
+    setWebLoader: (
+      state,
+      action: PayloadAction<{ active: boolean; opacity?: boolean }>
+    ) => {
+      state.loader = {
+        active: action.payload.active,
+        opacity: action.payload.opacity ? action.payload.opacity : false,
+      };
     },
   },
 });

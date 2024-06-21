@@ -80,9 +80,9 @@ export default function ProblemReport() {
                   </button>
                   <button
                     onClick={() => {
-                      dispatch(setWebLoader(true));
+                      dispatch(setWebLoader({ active: true }));
                       submitReport(reportData).then((status) => {
-                        dispatch(setWebLoader(false));
+                        dispatch(setWebLoader({ active: false }));
 
                         if (status == 100) {
                           setStatus(3);

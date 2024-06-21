@@ -22,6 +22,7 @@ import {
 } from "../../hooks/AdditionalFunctions";
 import AuthenticationHeader from "./AuthenticationHeader";
 import { Helmet } from "react-helmet";
+import { setWebLoader } from "../../store/data/webUISlice";
 
 export default function Register() {
   const user: Tuser = useSelector((store: RootState) => store.user);
@@ -110,12 +111,14 @@ export default function Register() {
               formData.append("favorites", userFavorites);
             }
             formData.append("password", formInputs.password);
-
+            dispatch(setWebLoader({ active: true, opacity: false }));
             axiosCall
               .post("authentication/user_register", formData, {
                 withCredentials: true,
               })
               .then((res) => {
+                dispatch(setWebLoader({ active: false }));
+
                 if (res.data.status === 3) {
                   let userData = {
                     id: res.data.user_id,
@@ -123,11 +126,13 @@ export default function Register() {
                     surname: formInputs.surname,
                     mail: formInputs.mail,
                     mobile: formInputs.mobile,
+                    money: 0,
+                    favorites: JSON.stringify([]),
+                    notifications: JSON.stringify([]),
                     verified: 0,
                     create_date: res.data.create_date,
                   };
                   makeUserSession(dispatch, userData);
-                  navigate("/");
                 }
                 if (res.data.status === 2) {
                   setError("მითითებულ მეილზე ანგარიში უკვე არსებობს");

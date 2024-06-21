@@ -15,7 +15,6 @@ import {
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setWebLoader } from "../../store/data/webUISlice";
-import HoverTitle from "./HoverTitle";
 
 export type TProductCard = {
   id: number;
@@ -63,7 +62,7 @@ export default function Card(props: {
         } bg-whiteMain border-2 border-cardBorder rounded-normal  relative`}
       >
         <Link
-          onClick={() => dispatch(setWebLoader(true))}
+          onClick={() => dispatch(setWebLoader({ active: true }))}
           to={"/product/" + props.product.id}
           className=" rounded-2xl"
         >
@@ -110,7 +109,7 @@ export default function Card(props: {
             </h2>
           </Link>
           <Link
-            onClick={() => dispatch(setWebLoader(true))}
+            onClick={() => dispatch(setWebLoader({ active: true }))}
             to={"/product/" + props.product.id}
           >
             <p className="text-textDescCard text-[13px] font-mainRegular mt-[2px]  text-nowrap text-ellipsis w-full overflow-hidden">

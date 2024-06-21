@@ -22,7 +22,7 @@ import { toggleDarkMode } from "../store/data/webUISlice";
 import { NotificationBar, ProfileBar } from "./NavbarComponents";
 import { Tuser } from "../store/data/userSlice";
 import HoverTitle from "./global/HoverTitle";
-import WebIcon from "../assets/icons/WebIcon";
+import WebIcon, { OHLOGO } from "../assets/icons/WebIcon";
 export default function Navbar() {
   const userData = useSelector((store: RootState) => store.user);
   const darkmode: boolean = useSelector(
@@ -52,9 +52,12 @@ export default function Navbar() {
             onClick={() => window.scrollTo(0, 0)}
             className="flex items-center gap-3"
           >
-            <WebIcon className="h-[34px] aspect-square" />
+            {/* <WebIcon className="h-[34px] aspect-square" />
             <div className=" mobile:hidden rounded-[3px] cursor-pointer text-blackMain font-logoBold text-[18px] tracking-[3px]">
               <span className="text-main ">ON</span>HOME
+            </div> */}
+            <div className=" h-[32px] w-[140px] flex justify-center items-center bg-gradient-to-tr from-main to-mainHover rounded-[10px] mobile:hidden  cursor-pointer text-buttonText font-logoBold text-[18px] tracking-[2.5px] [text-shadow:_2px_2px_10px_rgb(0_0_0_/_10%)] shadow-[6px_6px_0px_var(--mainClear)] transition-all hover:shadow-[0px_0px_0px_var(--mainClear)]">
+              ONHOME
             </div>
           </Link>
           {/* <OutsideClickClose

@@ -81,12 +81,12 @@ export function changeMainColor(newColor: string) {
         b.style.setProperty(`--mainHover`, `#cd44ff`);
 
         break;
-      case "#A6E81B":
+      case "#95d609":
         b.style.setProperty(`--main`, `${newColor}`);
-        b.style.setProperty(`--mainClear`, `rgba(177, 237, 48, 0.1)`);
-        b.style.setProperty(`--mainClear2`, `rgba(177, 237, 48, 0.7)`);
-        b.style.setProperty(`--mainClearActive`, `rgba(177, 237, 48, 0.15)`);
-        b.style.setProperty(`--mainHover`, `#b5ee3b`);
+        b.style.setProperty(`--mainClear`, `rgba(149, 214, 9, 0.1)`);
+        b.style.setProperty(`--mainClear2`, `rgba(149, 214, 9, 0.7)`);
+        b.style.setProperty(`--mainClearActive`, `rgba(149, 214, 9, 0.15)`);
+        b.style.setProperty(`--mainHover`, `#a0dd1e`);
 
         break;
     }

@@ -38,7 +38,7 @@ export default function Product() {
 
   const makeRefresh = useRef({ id: id, refresh: true });
   useLayoutEffect(() => {
-    dispatch(setWebLoader(true));
+    dispatch(setWebLoader({ active: true }));
     if (
       ((makeRefresh.current.id == id && makeRefresh.current.refresh == true) ||
         makeRefresh.current.id !== id) &&
@@ -50,7 +50,7 @@ export default function Product() {
       getProductCache(id).then((res) => {
         if (res !== null) {
           setPageData(res);
-          dispatch(setWebLoader(false));
+          dispatch(setWebLoader({ active: false }));
         } else {
           axiosCall
             .post(
@@ -79,7 +79,7 @@ export default function Product() {
                   setProductCache(id, saveData);
                 }
               }
-              dispatch(setWebLoader(false));
+              dispatch(setWebLoader({ active: false }));
             });
         }
       });
