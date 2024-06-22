@@ -91,61 +91,66 @@ export default function Register() {
         formInputs.surname &&
         formInputs.mail &&
         formInputs.password &&
+        formInputs.mobile &&
         formInputs.confirmPassword
       ) {
-        if (formInputs.password.length >= 8) {
-          if (formInputs.password === formInputs.confirmPassword) {
-            setError("");
-            const formData = new FormData();
+        if (formInputs.mobile && formInputs.mobile.length > 9) {
+          if (formInputs.password.length >= 8) {
+            if (formInputs.password === formInputs.confirmPassword) {
+              setError("");
+              const formData = new FormData();
 
-            formData.append("name", formInputs.name);
-            formData.append("surname", formInputs.surname);
-            formData.append("mail", formInputs.mail);
-            if (formInputs.mobile) {
-              formData.append("mobile", formInputs.mobile);
+              formData.append("name", formInputs.name);
+              formData.append("surname", formInputs.surname);
+              formData.append("mail", formInputs.mail);
+              if (formInputs.mobile) {
+                formData.append("mobile", formInputs.mobile);
+              } else {
+                formData.append("mobile", "");
+              }
+              if (localStorage.getItem("favorites")) {
+                const userFavorites: any = localStorage.getItem("favorites");
+                formData.append("favorites", userFavorites);
+              }
+              formData.append("password", formInputs.password);
+              dispatch(setWebLoader({ active: true, opacity: false }));
+              axiosCall
+                .post("authentication/user_register", formData, {
+                  withCredentials: true,
+                })
+                .then((res) => {
+                  dispatch(setWebLoader({ active: false }));
+
+                  if (res.data.status === 3) {
+                    let userData = {
+                      id: res.data.user_id,
+                      name: formInputs.name,
+                      surname: formInputs.surname,
+                      mail: formInputs.mail,
+                      mobile: formInputs.mobile,
+                      money: 0,
+                      favorites: JSON.stringify([]),
+                      notifications: JSON.stringify([]),
+                      verified: 0,
+                      create_date: res.data.create_date,
+                    };
+                    makeUserSession(dispatch, userData);
+                  }
+                  if (res.data.status === 2) {
+                    setError("მითითებულ მეილზე ანგარიში უკვე არსებობს");
+                  }
+                  if (res.data.status === -1) {
+                    setError("სერვერზე წარმოიშვა პრობლემა, სცადეთ მოგვიანებით");
+                  }
+                });
             } else {
-              formData.append("mobile", "");
+              setError("პაროლები არ ემთხვევა");
             }
-            if (localStorage.getItem("favorites")) {
-              const userFavorites: any = localStorage.getItem("favorites");
-              formData.append("favorites", userFavorites);
-            }
-            formData.append("password", formInputs.password);
-            dispatch(setWebLoader({ active: true, opacity: false }));
-            axiosCall
-              .post("authentication/user_register", formData, {
-                withCredentials: true,
-              })
-              .then((res) => {
-                dispatch(setWebLoader({ active: false }));
-
-                if (res.data.status === 3) {
-                  let userData = {
-                    id: res.data.user_id,
-                    name: formInputs.name,
-                    surname: formInputs.surname,
-                    mail: formInputs.mail,
-                    mobile: formInputs.mobile,
-                    money: 0,
-                    favorites: JSON.stringify([]),
-                    notifications: JSON.stringify([]),
-                    verified: 0,
-                    create_date: res.data.create_date,
-                  };
-                  makeUserSession(dispatch, userData);
-                }
-                if (res.data.status === 2) {
-                  setError("მითითებულ მეილზე ანგარიში უკვე არსებობს");
-                }
-                if (res.data.status === -1) {
-                  setError("სერვერზე წარმოიშვა პრობლემა, სცადეთ მოგვიანებით");
-                }
-              });
           } else {
-            setError("პაროლები არ ემთხვევა");
+            setError("პაროლი უნდა შეიცავდეს მინიმუმ 8 სიმბოლოს");
           }
         } else {
-          setError("პაროლი უნდა შეიცავდეს მინიმუმ 8 სიმბოლოს");
+          setError("შეიყვანეთ სწორი მობილურის ნომერი");
         }
       } else {
         setError("შეავსეთ ყველა სვალდებულო ველი");
@@ -238,7 +243,7 @@ export default function Register() {
                   <input
                     ref={mobileRef}
                     type="text"
-                    placeholder="ტელეფონის ნომერი (არჩევითი)"
+                    placeholder="ტელეფონის ნომერი"
                     className="h-full w-full rounded-normal mobile:text-[12px] bg-LoginInput outline-none px-3 pl-11 mobile:pl-10 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                   />
                 </div>

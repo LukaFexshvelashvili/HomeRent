@@ -26,8 +26,8 @@ export default function Footer() {
             <Link to={"/Contact"}>კონტაქტი</Link>
             <Link to={"/AdsMake"}>რეკლამა</Link>
             <Link to={"Policy"}>წესები</Link>
-            <Link to={"call"}>00 00 0000 0000</Link>
-            <Link to={"gmail"}>//////////@gmail.ge</Link>
+            <Link to={"tel:+995592605605"}>+995 592 60* **</Link>
+            <Link to={"mailto:onhomege@gmail.ge"}>onhomege@gmail.ge</Link>
           </div>
           <div className="flex flex-col gap-3 ">
             <h3 className="mb-2  text-textHeadBlack">იყიდება</h3>
@@ -92,9 +92,8 @@ export default function Footer() {
               <>
                 <Link to="Contact">კონტაქტი</Link>
                 <Link to="AdsMake">რეკლამა</Link>
-
-                <Link to={"call"}>00 00 0000 0000</Link>
-                <Link to={"gmail"}>//////////@gmail.ge</Link>
+                <Link to={"tel:+995592605605"}>+995 592 60* **</Link>
+                <Link to={"mailto:onhomege@gmail.ge"}>onhomege@gmail.ge</Link>
               </>
             }
           />

@@ -74,7 +74,7 @@ export default function Login() {
             navigate("/");
           }
           if (res.data.status === 0) {
-            setError("მომხმარებლის მეილი ან პაროლი არასწორია");
+            setError("მომხმარებლის მეილი/ნომერი ან პაროლი არასწორია");
           }
           if (res.data.status === -1) {
             setError("სერვერზე წარმოიშვა პრობლემა, სცადეთ მოგვიანებით");
@@ -140,8 +140,8 @@ export default function Login() {
                 <div className="h-[40px] w-full rounded-normal flex items-center relative ">
                   <MailIcon className=" h-[24px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-blackMain z-[3] opacity-40" />
                   <input
-                    type="email"
-                    placeholder="მეილი"
+                    type="text"
+                    placeholder="მეილი ან ნომერი"
                     name="email"
                     ref={mailRef}
                     className="h-full w-full rounded-normal bg-LoginInput outline-none px-3 pl-11 mobile:pl-10 text-textDesc tracking-wider text-Asmall mobile:text-[12px] transition-colors focus:bg-LoginInputActive"

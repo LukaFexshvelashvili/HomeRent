@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import masterCard from "../../../assets/images/logos/masterCard.jpg";
 import visa from "../../../assets/images/logos/visa.png";
 import { useState } from "react";
@@ -63,6 +64,12 @@ export default function Balance() {
               alt="visa_logo"
             />
           </div>
+          <Link
+            to={"/Profile/ProfileInfo"}
+            className="text-[14px] text-main mt-8 underline text-center"
+          >
+            გადახდების ისტორია იხილეთ ინფორმაციის გვერძე
+          </Link>
         </div>
       </div>
     </div>

@@ -34,7 +34,7 @@ export const ActiveOffers = [
 
     secondColor: "rgba(255, 153, 0, 0.1)",
     lineColor: "rgba(255, 153, 0, 0.3)",
-    price: 2.5,
+    price: 1.5,
   },
   {
     id: 2,
@@ -51,6 +51,6 @@ export const ActiveOffers = [
 
     secondColor: "rgba(255, 0, 60, 0.1)",
     lineColor: "rgba(255, 0, 60, 0.3)",
-    price: 4,
+    price: 3,
   },
 ];
