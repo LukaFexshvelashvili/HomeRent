@@ -145,3 +145,21 @@
     transform: translateX(-50%);
   }
 }
+
+.lineIndicator {
+  animation: lineIndicatorAnimation 10s 1 linear forwards;
+  position: absolute;
+  background-color: var(--main);
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  width: 0%;
+}
+@keyframes lineIndicatorAnimation {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}

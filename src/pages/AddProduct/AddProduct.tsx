@@ -60,6 +60,22 @@ export default function AddProduct() {
                   </Link>
                 </div>
               </>
+            ) : uploadStatus == 7 ? (
+              <>
+                <h2 className="text-pinkI text-center text-[20px] font-mainBold">
+                  სურათის ზომა აჭარბებს 10 მეგაბაიტს
+                </h2>
+                <p className="text-textDesc text-center text-[16px] font-mainBold my-3">
+                  გთხოვთ სცადოთ მოგვიანებით
+                </p>
+                <div className="flex items-center gap-5 justify-center mt-5">
+                  <Link to={"/"}>
+                    <button className="px-4 py-2 rounded-md text-buttonText bg-main tracking-wider text-[14px] transition-colors hover:bg-mainHover">
+                      მთავარ გვერდზე დაბრუნება
+                    </button>{" "}
+                  </Link>
+                </div>
+              </>
             ) : (
               uploadStatus === 0 && (
                 <>

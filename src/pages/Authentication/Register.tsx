@@ -113,7 +113,7 @@ export default function Register() {
                 formData.append("favorites", userFavorites);
               }
               formData.append("password", formInputs.password);
-              dispatch(setWebLoader({ active: true, opacity: false }));
+              dispatch(setWebLoader({ active: true, opacity: true }));
               axiosCall
                 .post("authentication/user_register", formData, {
                   withCredentials: true,

@@ -13,6 +13,9 @@
   --navIcon: #4b4b4b;
   --lineBg: #f4f4f4;
   --blackMain: rgba(0, 0, 0, 0.8);
+  --blackMainBlocked: rgb(11, 11, 11);
+  --blackMainHoverBlocked: rgb(16, 16, 16);
+
   --LoginInput: rgba(239, 239, 239, 0.5);
   --LoginInputActive: rgba(232, 232, 232, 0.5);
   --whiteLow: rgba(239, 239, 239, 0.6);

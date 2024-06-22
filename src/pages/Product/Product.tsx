@@ -67,7 +67,9 @@ export default function Product() {
             )
             .then((res) => {
               if (res.data.product_data == null) {
+                dispatch(setWebLoader({ active: false }));
                 navigate("/");
+                return;
               } else {
                 if (res.data.status === 100) {
                   let saveData = {
@@ -77,6 +79,11 @@ export default function Product() {
                   };
                   setPageData(saveData);
                   setProductCache(id, saveData);
+                } else {
+                  dispatch(setWebLoader({ active: false }));
+
+                  navigate("/");
+                  return;
                 }
               }
               dispatch(setWebLoader({ active: false }));

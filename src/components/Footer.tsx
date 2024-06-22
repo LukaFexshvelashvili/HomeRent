@@ -25,7 +25,7 @@ export default function Footer() {
             <h3 className="mb-2  text-textHeadBlack">დახმარება</h3>
             <Link to={"/Contact"}>კონტაქტი</Link>
             <Link to={"/AdsMake"}>რეკლამა</Link>
-            <Link to={"Policy"}>წესები</Link>
+            <Link to={"/PrivacyPolicy"}>წესები</Link>
             <Link to={"tel:+995592605605"}>+995 592 60* **</Link>
             <Link to={"mailto:onhomege@gmail.ge"}>onhomege@gmail.ge</Link>
           </div>

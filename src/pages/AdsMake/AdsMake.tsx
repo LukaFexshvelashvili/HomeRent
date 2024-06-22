@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   HomePageAd1,
   HomePageAd2,
@@ -55,8 +56,18 @@ export default function AdsMake() {
         რეკლამის შეკვეთა
       </p>
       <div className="flex gap-3 justify-center mt-5">
-        <button className="DefButton">დაგვირეკე</button>
-        <button className="DefButton">მოგვწერე</button>
+        <Link
+          to={"tel:+995592605605"}
+          className="DefButton flex justify-center items-center"
+        >
+          დაგვირეკე
+        </Link>
+        <Link
+          to={"mailto:onhomege@gmail.com"}
+          className="DefButton flex justify-center items-center"
+        >
+          მოგვწერე
+        </Link>
       </div>
     </main>
   );

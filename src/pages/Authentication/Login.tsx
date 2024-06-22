@@ -47,7 +47,7 @@ export default function Login() {
 
     e.preventDefault();
     if (mailRef.current?.value && passwordRef.current?.value) {
-      dispatch(setWebLoader({ active: true, opacity: false }));
+      dispatch(setWebLoader({ active: true, opacity: true }));
       var mail: string = mailRef.current.value;
       var password: string = passwordRef.current.value;
       const formData = new FormData();
@@ -55,32 +55,37 @@ export default function Login() {
       formData.append("mail", mail);
       formData.append("password", password);
       formData.append("remember", JSON.stringify(remember));
+      if (mail.length > 2 && password.length > 7) {
+        axiosCall
+          .post("authentication/user_login", formData, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            dispatch(setWebLoader({ active: false }));
 
-      axiosCall
-        .post("authentication/user_login", formData, { withCredentials: true })
-        .then((res) => {
-          dispatch(setWebLoader({ active: false }));
-
-          if (res.data.status === 3) {
-            makeUserSession(dispatch, res.data.user_data);
-            if (localStorage.getItem("favorites")) {
-              const currentFavorites: any = localStorage.getItem("favorites");
-              mergeFavorites(
-                dispatch,
-                JSON.parse(res.data.user_data.favorites),
-                JSON.parse(currentFavorites)
-              );
+            if (res.data.status === 3) {
+              makeUserSession(dispatch, res.data.user_data);
+              if (localStorage.getItem("favorites")) {
+                const currentFavorites: any = localStorage.getItem("favorites");
+                mergeFavorites(
+                  dispatch,
+                  JSON.parse(res.data.user_data.favorites),
+                  JSON.parse(currentFavorites)
+                );
+              }
+              navigate("/");
             }
-            navigate("/");
-          }
-          if (res.data.status === 0) {
-            setError("მომხმარებლის მეილი/ნომერი ან პაროლი არასწორია");
-          }
-          if (res.data.status === -1) {
-            setError("სერვერზე წარმოიშვა პრობლემა, სცადეთ მოგვიანებით");
-          }
-        })
-        .catch((err) => console.log(err));
+            if (res.data.status === 0) {
+              setError("მომხმარებლის მეილი/ნომერი ან პაროლი არასწორია");
+            }
+            if (res.data.status === -1) {
+              setError("სერვერზე წარმოიშვა პრობლემა, სცადეთ მოგვიანებით");
+            }
+          })
+          .catch((err) => console.log(err));
+      } else {
+        setError("შეავსეთ ყველა ველი");
+      }
     } else {
       setError("შეავსეთ ყველა ველი");
     }

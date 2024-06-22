@@ -23,6 +23,7 @@ import ServerError from "./pages/ServerError";
 import Home from "./pages/Home/Home";
 import Product from "./pages/Product/Product";
 import { Helmet } from "react-helmet";
+import CookieAgreement from "./pages/Profile/components/CookieAgreement";
 
 const NotFound = lazy(() => import("./pages/NotFound"));
 const SuspendedAccount = lazy(() => import("./pages/SuspendedAccount"));
@@ -57,16 +58,26 @@ function App() {
   const popups: TPopups = useSelector((store: RootState) => store.popups);
   const [loading, setLoading] = useState<boolean>(true);
   const [lock, setLock] = useState<boolean>(false);
+  const [cookiesAgreement, setCookieAgreement] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const refresh = useRef<boolean>(true);
 
-  useEffect(() => {
-    console.log(document.cookie);
+  useLayoutEffect(() => {
+    checkUIStorage(dispatch, UISettings);
+    if (
+      localStorage.getItem("cookiesAgreement") &&
+      localStorage.getItem("cookiesAgreement") == "1"
+    ) {
+    } else {
+      setCookieAgreement(true);
+      localStorage.getItem("cookieAgreement");
+    }
+  }, []);
 
+  useEffect(() => {
     if (refresh.current) {
       refresh.current = false;
-      console.log(document.cookie);
       axiosCall
         .get("authentication/user", { withCredentials: true })
         .then((res) => {
@@ -99,10 +110,6 @@ function App() {
     window.scrollTo(0, 0);
     loggedUser(navigate, user.isLogged);
   }, [navigate, user.isLogged, location.pathname]);
-
-  useLayoutEffect(() => {
-    checkUIStorage(dispatch, UISettings);
-  }, []);
 
   return (
     <>
@@ -142,9 +149,14 @@ function App() {
         <meta property="og:site_name" content="ONHOME" />
       </Helmet>
       {loading ? <MainLoader /> : null}
+      {cookiesAgreement ? (
+        <CookieAgreement close={() => setCookieAgreement(false)} />
+      ) : null}
       {UISettings.loader.active ? (
         <MainLoader
-          opacity={UISettings.loader.opacity ? UISettings.loader.active : false}
+          opacity={
+            UISettings.loader.opacity ? UISettings.loader.opacity : false
+          }
         />
       ) : null}
       {popups.reportProblem.show ? <ProblemReport /> : null}

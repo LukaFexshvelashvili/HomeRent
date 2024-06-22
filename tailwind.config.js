@@ -20,6 +20,9 @@ export default {
         lineBg: "var(--lineBg)",
         blackMain: "var(--blackMain)",
 
+        blackMainBlocked: "var(--blackMainBlocked)",
+        blackMainHoverBlocked: "var(--blackMainHoverBlocked)",
+
         LoginInput: "var(--LoginInput)",
         LoginInputActive: "var(--LoginInputActive)",
 

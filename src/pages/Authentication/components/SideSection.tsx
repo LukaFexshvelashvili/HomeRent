@@ -13,7 +13,7 @@ export default function SideSection() {
         <Line2Decor className="h-[450px] aspect-square absolute right-0 top-[-50px] " />
         <Line3Decor className="h-[200px] aspect-square absolute right-0" />
       </div>
-      <div className="h-[70%] w-9/12 loginSectionBlock rounded-[20px] border-[3px] border-[#ffffff3f] relative z-10"></div>
+      <div className="hidden h-[70%] w-9/12 loginSectionBlock rounded-[20px] border-[3px] border-[#ffffff3f] relative z-10"></div>
       <div className="absolute bottom-0 z-0 pointer-events-none w-full">
         <HomesbgDecor className="w-full opacity-30 z-0" />
       </div>
