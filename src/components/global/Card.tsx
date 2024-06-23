@@ -74,10 +74,7 @@ export default function Card(props: {
               props.product.estate_vip == 0 && <></>
             )}
             <img
-              src={
-                "http://localhost/ONHOMEServer/" +
-                props.product.estate_active_image
-              }
+              src={"http://api.onhome.ge/" + props.product.estate_active_image}
               className="absolute h-full w-full object-cover top-0 left-0 select-none"
               alt="estate-photo"
               onLoad={() => {
@@ -253,7 +250,7 @@ export function SeeMoreCard(props: { autoWidth?: boolean; link: string }) {
 //             )}
 //             <img
 //               src={
-//                 "http://localhost/ONHOMEServer/" +
+//                 "http://api.onhome.ge/" +
 //                 props.product.estate_active_image
 //               }
 //               className="absolute h-full w-full object-cover top-0 left-0 select-none"

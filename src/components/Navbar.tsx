@@ -55,7 +55,7 @@ export default function Navbar() {
             <div className=" mobile:hidden rounded-[3px] cursor-pointer text-blackMain font-logoBold text-[18px] tracking-[3px]">
               <span className="text-main ">ON</span>HOME
             </div> */}
-            <div className=" h-[32px] w-[140px] flex justify-center items-center bg-gradient-to-tr from-main to-mainHover rounded-[5px] mobile:hidden  cursor-pointer text-buttonText font-logoBold text-[18px] font-thin  tracking-[2.5px] [text-shadow:_2px_2px_10px_rgb(0_0_0_/_10%)] ">
+            <div className=" h-[32px] w-[140px] flex justify-center items-center bg-gradient-to-tr from-main to-mainHover rounded-[5px] mobile:h-[30px] mobile:w-[130px]  cursor-pointer text-buttonText font-logoBold text-[18px] font-thin  tracking-[2.5px] [text-shadow:_2px_2px_10px_rgb(0_0_0_/_10%)] ">
               ONHOME
             </div>
           </Link>
@@ -311,21 +311,21 @@ function ResponsiveNavbar({
                 )}
           </div>
           <div className=" flex items-center justify-center mt-8 gap-4">
-            <Link to={"/Contact"}>
+            <Link onClick={() => setActive(false)} to={"/Contact"}>
               <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-orangeClear text-orangeI rounded-[8px] text-[14px] transition-colors hover:bg-orangeHover">
                 <HelpIcon className="h-[18px] aspect-square" />
                 დახმარება
               </button>
             </Link>
             {userData.isLogged ? (
-              <Link to={"/AddProduct"}>
+              <Link onClick={() => setActive(false)} to={"/AddProduct"}>
                 <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-greenClear text-greenI rounded-[8px] text-[14px] transition-colors hover:bg-greenHover">
                   <PlusIcon className="h-[16px] aspect-square" />
                   დამატება
                 </button>
               </Link>
             ) : (
-              <Link to={"/Login"}>
+              <Link onClick={() => setActive(false)} to={"/Login"}>
                 <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-greenClear text-greenI rounded-[8px] text-[14px] transition-colors hover:bg-greenHover">
                   <PlusIcon className="h-[16px] aspect-square" />
                   დამატება
@@ -341,18 +341,24 @@ function ResponsiveNavbar({
           <div className="flex gap-3 flex-wrap justify-center mt-5">
             {RealEstateTypes.map(
               (
-                e: { icon: (props: any) => JSX.Element; name: string },
+                e: {
+                  icon: (props: any) => JSX.Element;
+                  name: string;
+                  link: string;
+                },
                 i: number
               ) => (
-                <button
+                <Link
                   key={i}
+                  onClick={() => setActive(false)}
+                  to={e.link}
                   className={`  p-2 px-4 rounded-xl transition-colors bg-mainClear`}
                 >
                   <e.icon className={` h-[24px] aspect-square  `} />
                   <p className={`text-Asmall ml-7 tracking-wide text-main`}>
                     {e.name}
                   </p>
-                </button>
+                </Link>
               )
             )}
           </div>

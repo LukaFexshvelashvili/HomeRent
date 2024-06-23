@@ -100,18 +100,14 @@ export default function Product() {
         <meta
           name="description"
           lang="ka"
-          content="ONHOME - სახლები, აგარაკები, ბინები, კომერციული ფართები, სასტუმროები, მიწის ნაკვეთები, მიწები, ყიდვა, გაყიდვა, გაქირავება. "
+          content="OnHome - სახლები, აგარაკები, ბინები, კომერციული ფართები, სასტუმროები, მიწის ნაკვეთები, მიწები, ყიდვა, გაყიდვა, გაქირავება. "
         />
         <meta
           name="keywords"
           lang="ka"
           content="უძრავი ქონება, საქართელო, თბილისი, ბინა, სახლი, აგარაკი, მიწის ნაკვეთი, სასტუმრო, კომერციული ფართი, იყიდება, გირავდება, ქირავდება, ქირავდება დღიურად, ვიქირავებ, ვიგირავებ, ვიყიდი, სამშენებლო კომპანია, სააგენტო, ახალაშენებული, მშენებარე, შავი კარკასი, თეთრი კარკასი, მწვანე კარკასი"
         />
-        <meta
-          name="image"
-          lang="ka"
-          content="https://static.onhome.ge/onhome-logo.png"
-        ></meta>
+
         <meta name="theme-color" content="#3a86ff" />
         <link rel="canonical" href="https://onhome.ge/"></link>
 
@@ -121,14 +117,10 @@ export default function Product() {
           lang="ka"
           content="უძრავი ქონების ყიდვა, გაყიდვა, გაქირავება - onhome.ge"
         />
-        <meta
-          property="og:image"
-          lang="ka"
-          content="https://static.onhome.ge/onhome-logo.png"
-        />
+
         <meta property="og:type" lang="ka" content="website" />
         <meta property="og:url" lang="ka" content="https://onhome.ge" />
-        <meta property="og:site_name" content="ONHOME" />
+        <meta property="og:site_name" content="OnHome" />
       </Helmet>
       <main className="min-h-screen">
         {pageData === null || !pageData.productData.id ? (

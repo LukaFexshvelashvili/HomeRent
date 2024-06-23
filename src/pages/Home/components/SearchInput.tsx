@@ -279,7 +279,7 @@ function SearchInput() {
         </button>
         <button
           onClick={handleSearch}
-          className={`hidden h-full  text-[14px] w-full py-3 mt-2 rounded-normal font-mainMedium  rounded-r-[6px] text-buttonText bg-main small:flex items-center justify-center tracking-widest  transition-all hover:bg-mainHover  `}
+          className={`hidden h-full z-[1] text-[14px] w-full py-3 mt-2 rounded-normal font-mainMedium  rounded-r-[6px] text-buttonText bg-main small:flex items-center justify-center tracking-widest  transition-all hover:bg-mainHover  `}
         >
           <SearchIcon className="h-[16px] aspect-square mr-2" /> მოძებნა
         </button>

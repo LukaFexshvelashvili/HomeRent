@@ -31,6 +31,8 @@ function Search() {
   const [params, setParams] = useSearchParams();
   const [loader, setLoader] = useState<boolean>(false);
   const [pages, setPages] = useState<number>(1);
+  const [openFilters, setOpenFilters] = useState<boolean>(false);
+
   const cachedFirst = useRef<any[]>([]);
   const getFullCount = useRef<number>(0);
   const lastDebouncedSearch = useRef<string | null>(null);
@@ -160,7 +162,7 @@ function Search() {
 
   return (
     <main className="flex gap-4 flex-col">
-      <div className="flex gap-3">
+      <div className="flex gap-2">
         <div className="w-full flex items-center border-2 border-whiteLoad rounded-normal overflow-hidden relative h-[45px]">
           <form
             className="w-full h-full"
@@ -179,6 +181,7 @@ function Search() {
               value={searchTitle}
             />
           </form>
+
           <div
             onClick={() => {
               if (params.get("title")) {
@@ -197,6 +200,16 @@ function Search() {
           </div>
         </div>
         <button
+          onClick={() => setOpenFilters((state) => !state)}
+          className="h-[45px] w-[60px] text-[14px]   bg-main rounded-[5px] text-buttonText tracking-wider font-mainMedium relative flex items-center justify-center"
+        >
+          <div className="flex flex-col h-[25px] aspect-square justify-center items-center gap-1 absolute">
+            <span className="h-[2px] rounded-md w-10/12 bg-buttonText block"></span>
+            <span className="h-[2px] rounded-md w-8/12 bg-buttonText block"></span>
+            <span className="h-[2px] rounded-md w-4/12 bg-buttonText block"></span>
+          </div>
+        </button>
+        <button
           onClick={titleSubmit}
           className=" h-[45px] w-[60px] text-[14px]   font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
         >
@@ -206,7 +219,11 @@ function Search() {
 
       <div className="flex  gap-5 mediumSmallXl:flex-col">
         <FiltersSection citiesAPI={citiesAPI} setSearchTitle={setSearchTitle} />
-        <ResponsiveFiltersSection citiesAPI={citiesAPI} />
+        <ResponsiveFiltersSection
+          openFilters={openFilters}
+          setOpenFilters={setOpenFilters}
+          citiesAPI={citiesAPI}
+        />
         <section className="flex-[3]  rounded-normal">
           <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
             {searched !== null ? `ნაპოვნია ${getFullCount.current} შედეგი` : ""}
@@ -239,35 +256,27 @@ function Search() {
 }
 export default memo(Search);
 
-function ResponsiveFiltersSection(props: { citiesAPI: any }) {
-  const [openFilters, setOpenFilters] = useState<boolean>(false);
+function ResponsiveFiltersSection(props: {
+  citiesAPI: any;
+  openFilters: boolean;
+  setOpenFilters: Function;
+}) {
   return (
     <section className="hidden mobile:block shadow-none ">
       <div className={`overflow-hidden`}>
-        <button
-          onClick={() => setOpenFilters((state) => !state)}
-          className="h-[40px] w-[220px] text-[14px]  bg-main rounded-[5px] text-buttonText tracking-wider font-mainMedium relative flex items-center justify-center"
-        >
-          <div className="flex flex-col h-[25px] aspect-square justify-center items-center gap-1 absolute left-4">
-            <span className="h-[2px] rounded-md w-10/12 bg-buttonText block"></span>
-            <span className="h-[2px] rounded-md w-8/12 bg-buttonText block"></span>
-            <span className="h-[2px] rounded-md w-4/12 bg-buttonText block"></span>
-          </div>
-          ფილტრები
-        </button>
         <div
-          onClick={() => setOpenFilters(false)}
+          onClick={() => props.setOpenFilters(false)}
           className={`fixed h-full w-full top-0 left-0 bg-blackFade z-10 transition-[opacity,visibility] duration-500  ${
-            openFilters ? "opacity-100 visible" : "opacity-0 invisible"
+            props.openFilters ? "opacity-100 visible" : "opacity-0 invisible"
           } `}
         ></div>
         <div
           className={`responsiveFilters  mobile  pb-[30px] rounded-[20px] h-3/4  top-1/4 shadow-sectionShadow fixed z-[11] bg-whiteMain left-0  w-full overflow-y-scroll transition-transform duration-300 ${
-            openFilters ? "translate-y-0" : "translate-y-full"
+            props.openFilters ? "translate-y-0" : "translate-y-full"
           } `}
         >
           <div
-            onClick={() => setOpenFilters(false)}
+            onClick={() => props.setOpenFilters(false)}
             className="flex sticky top-0 items-center justify-center py-3 h-[50px] translate-y-[-2px] bg-whiteMain z-20"
           >
             <div className=" h-[6px] w-[100px] rounded-md  bg-lineBg mx-auto "></div>

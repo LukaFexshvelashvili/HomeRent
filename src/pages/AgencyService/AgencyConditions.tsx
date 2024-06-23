@@ -1,18 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Maclerconditions() {
+export default function Agencyconditions() {
   const navigate = useNavigate();
-  const conditions = [
-    "უძრავი ქონებას არ ადევს გადამეტებული ფასი",
-    "უძრავი ქონებას არ ადევს გადამეტებული ფასი",
-    "უძრავი ქონებას არ ადევს გადამეტებული ფასი",
-    "უძრავი ქონებას არ ადევს გადამეტებული ფასი",
-    "უძრავი ქონებას არ ადევს გადამეტებული ფასი",
-    "უძრავი ქონებას არ ადევს გადამეტებული ფასი",
-    "უძრავი ქონებას არ ადევს გადამეტებული ფასი",
-    "უძრავი ქონებას არ ადევს გადამეტებული ფასი",
-    "უძრავი ქონებას არ ადევს გადამეტებული ფასი",
-  ];
+  const conditions = ["უძრავი ქონებას არ ადევს გადამეტებული ფასი"];
   return (
     <main className="min-h-screen mt-[30px]">
       <div className="bg-whiteMain rounded-section shadow-sectionShadow p-7 px-[50px] relative">
@@ -23,7 +13,7 @@ export default function Maclerconditions() {
           <BackIcon /> უკან
         </button>
         <h1 className="text-[18px] text-maclerMain text-center  font-mainBold">
-          მაკლერის სერვისის კრიტერიუმები
+          სააგენტოს სერვისის კრიტერიუმები
         </h1>
         <div className="flex items-start mt-[30px]">
           <div className="flex-1">

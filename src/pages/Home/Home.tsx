@@ -20,6 +20,7 @@ import {
   setCacheItem,
 } from "../../components/cache/cacheFunctions";
 import { Helmet } from "react-helmet";
+import MaclerCard from "./components/MaclerCard";
 
 function Home() {
   const [products, setProducts] = useState<null | TProductCard[]>([]);
@@ -83,22 +84,18 @@ function Home() {
   return (
     <>
       <Helmet>
-        <title>ONHOME</title>
+        <title>OnHome</title>
         <meta
           name="description"
           lang="ka"
-          content="ONHOME - სახლები, აგარაკები, ბინები, კომერციული ფართები, სასტუმროები, მიწის ნაკვეთები, მიწები, ყიდვა, გაყიდვა, გაქირავება. "
+          content="OnHome - სახლები, აგარაკები, ბინები, კომერციული ფართები, სასტუმროები, მიწის ნაკვეთები, მიწები, ყიდვა, გაყიდვა, გაქირავება. "
         />
         <meta
           name="keywords"
           lang="ka"
           content="უძრავი ქონება, საქართელო, თბილისი, ბინა, სახლი, აგარაკი, მიწის ნაკვეთი, სასტუმრო, კომერციული ფართი, იყიდება, გირავდება, ქირავდება, ქირავდება დღიურად, ვიქირავებ, ვიგირავებ, ვიყიდი, სამშენებლო კომპანია, სააგენტო, ახალაშენებული, მშენებარე, შავი კარკასი, თეთრი კარკასი, მწვანე კარკასი"
         />
-        <meta
-          name="image"
-          lang="ka"
-          content="https://static.onhome.ge/onhome-logo.png"
-        ></meta>
+
         <meta name="theme-color" content="#3a86ff" />
         <link rel="canonical" href="https://onhome.ge/"></link>
 
@@ -108,11 +105,7 @@ function Home() {
           lang="ka"
           content="უძრავი ქონების ყიდვა, გაყიდვა, გაქირავება - onhome.ge"
         />
-        <meta
-          property="og:image"
-          lang="ka"
-          content="https://static.onhome.ge/onhome-logo.png"
-        />
+
         <meta property="og:type" lang="ka" content="website" />
         <meta property="og:url" lang="ka" content="https://onhome.ge" />
         <meta property="og:site_name" content="ONHOME" />
@@ -150,7 +143,7 @@ function Home() {
           ახალი
         </div>
         <CardSlider link="new=1" uniqueId={2} products={lastProducts()} />
-        {/* <MaclerCard /> */}
+        <MaclerCard />
         <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4 mt-[50px]">
           <StarIcon className=" h-[32px] mobileSmall:h-[30px] mobileSmall:mr-1 [&>path]:fill-pinkI mr-2 translate-y-[-1px]" />{" "}
           პოპულარული

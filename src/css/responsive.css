@@ -50,8 +50,8 @@
 @media (max-width: 600px) {
   .content_container {
     width: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 }
 

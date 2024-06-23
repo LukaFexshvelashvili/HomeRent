@@ -5,3 +5,4 @@ const axiosCall = axios.create({
 });
 
 export default axiosCall;
+// baseURL: "https://api.onhome.ge/v1/", // Set your default base URL here

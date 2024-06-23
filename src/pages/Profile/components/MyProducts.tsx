@@ -127,7 +127,7 @@ function MyProducts() {
           ).length
         : ""
     })`,
-    `მაკლერის მოთხოვნები (${
+    `სააგენტოს მოთხოვნები (${
       saveProducts.current
         ? saveProducts.current.filter(
             (item: TProductData) => item.macler_status !== 0
@@ -261,7 +261,7 @@ function MyProducts() {
               ) : (
                 <div>
                   <p className="px-4 text-[15px] text-textDesc my-2 text-center">
-                    მაკლერის მოთხოვნები ვერ მოიძებნა
+                    სააგენტოს მოთხოვნები ვერ მოიძებნა
                   </p>
                   <div className="flex justify-center my-3 mt-5">
                     <Link to={"/maclerChoose"} className=" rounded-lg">

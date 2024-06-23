@@ -381,19 +381,21 @@ export function EstateImages(props: { error: boolean }) {
   };
   return (
     <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-        ფოტოები{" "}
-        <span className="text-Asmall text-textDescCard">
+      <div className="flex items-center mobile:flex-col">
+        <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+          ფოტოები{" "}
+        </p>
+        <p className="text-Asmall text-textDescCard ml-2 mobile:ml-0">
           (მაქსიმუმ 12 ფოტო, სურათის მოცულობა: 10MB)
-        </span>{" "}
-      </p>
+        </p>{" "}
+      </div>
       {images.length == 0 && props.error && (
         <div className=" rounded-xl text-pinkI bg-pinkClear py-3 px-4 text-sm tracking-wider mt-4 text-center">
           {" "}
           სავალდებულოა მინიმუმ ერთი ფოტო (ფორმატით: png, jpg ან jpeg)
         </div>
       )}
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         <div className=" h-[120px] aspect-video bg-whiteLow rounded-xl cursor-pointer transition-colors hover:bg-whiteHover flex justify-center items-center relative">
           <PlusIcon className=" h-[32px] aspect-square [&>path]:fill-whiteCont" />
           <input
@@ -473,17 +475,17 @@ export function EstateType() {
       <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
         უძრავი ქონების ტიპი
       </p>
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         {RealEstateTypes.map((e, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}
-            className={`  p-2 px-4 rounded-xl transition-colors ${
+            className={`mobile:w-full mobile:flex mobile:py-[15px] mobile:items-center mobile:justify-start   p-2 px-4 rounded-xl transition-colors ${
               active == i ? "bg-main" : "bg-mainClear"
             }`}
           >
             <e.icon
-              className={` h-[24px] aspect-square ${
+              className={`mobile:ml-5 h-[24px] aspect-square ${
                 active == i && "[&>path]:fill-buttonText"
               } `}
             />
@@ -514,7 +516,7 @@ export function DealType() {
       <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
         გარიგების ტიპი
       </p>
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         {projectDealTypes.map((e: string, i: number) => (
           <button
             key={i}
@@ -585,7 +587,7 @@ export function EstateStatus({ productData }: { productData: any }) {
       <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
         სტატუსი
       </p>
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         {DealTypes.map((e, i) => (
           <button
             key={i}
@@ -623,7 +625,7 @@ export function EstateAddress(props: { error: boolean }) {
           სავალდებულოა შეავსოთ ქალაქის ველი
         </div>
       )}
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         <SearchCityFilter setCity={setCity} />
         <input
           type="text"
@@ -648,7 +650,7 @@ export function EstateTitle(props: { error: boolean }) {
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mobile:flex-col">
         <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
           განცხადების სათაური
         </p>{" "}
@@ -662,7 +664,7 @@ export function EstateTitle(props: { error: boolean }) {
           სავალდებულოა შეავსოთ სათაურის ველი
         </div>
       )}
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center ">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         <input
           type="text"
           className="AddProductInputTitle"
@@ -687,7 +689,7 @@ export function EstateDescription() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mobile:flex-col">
         <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
           განცხადების აღწერა
         </p>{" "}
@@ -696,7 +698,7 @@ export function EstateDescription() {
         </span>
       </div>
 
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center">
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         <textarea
           className="AddProductInputTitle textareaInput"
           placeholder="ბინის აღწერა"
@@ -754,7 +756,7 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
             სავალდებულოა შეავსოთ ფართი, ფასი
           </div>
         )}
-        <div className="flex gap-7 flex-col pl-3 mt-4">
+        <div className="flex gap-7 flex-col pl-3 mt-4 mobile:pl-0">
           <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
             <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
               ფართი (მ²)
@@ -772,12 +774,96 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
               />{" "}
             </div>
           </div>
+          <div className="flex flex-col z-[4]">
+            <>
+              {size == null || size <= 0 ? (
+                <div className=" rounded-xl text-orangeI bg-orangeClear py-3 px-4 text-sm tracking-wider  mb-4 text-center">
+                  {" "}
+                  ფასის შევსებამდე შეიყვანეთ ფართი
+                </div>
+              ) : null}
+              <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+                ფასი
+              </p>
+              <div
+                className={`flex gap-4 flex-wrap items-center  pl-3 mt-4 transition-opacity  mobile:w-full ${
+                  size == null || size <= 0
+                    ? "pointer-events-none opacity-40"
+                    : ""
+                } `}
+              >
+                <div className="relative mobile:w-full">
+                  <button
+                    onClick={() => setOpenDeal((state) => !state)}
+                    className="bg-main mobile:w-full flex items-center w-[150px] justify-center py-[8px] rounded-lg text-buttonText tracking-widest font-mainMedium text-Asmall"
+                  >
+                    {currency == 0 ? "$ დოლარი" : "₾ ლარი"}
+                    <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
+                  </button>
+                  <div
+                    className={` w-[150px] absolute shadow-cardShadow bg-whiteMain rounded-lg top-[45px] overflow-hidden transition-all  ${
+                      openDeal ? "opacity-100 visible" : "invisible opacity-0"
+                    }`}
+                  >
+                    <button
+                      onClick={() => {
+                        setOpenDeal(false);
+                        setCurrency(1);
+                      }}
+                      className={`h-[40px]  w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
+                        currency == 0 && "bg-whiteHover"
+                      }`}
+                    >
+                      ₾ ლარი
+                    </button>
+                    <button
+                      onClick={() => {
+                        setOpenDeal(false);
+                        setCurrency(0);
+                      }}
+                      className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
+                        currency == 0 && "bg-whiteHover"
+                      }`}
+                    >
+                      $ დოლარი
+                    </button>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 mobile:w-full mobile:justify-center">
+                  <input
+                    type="number"
+                    className="AddProductInput mobile:w-[100%_!important]"
+                    placeholder="სრული ფასი"
+                    onChange={(e) => {
+                      setFullPrice(e.target.valueAsNumber);
+                      calculateSizePrice(e.target.valueAsNumber);
+                    }}
+                    value={fullPrice ? fullPrice : ""}
+                  />{" "}
+                  <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>{" "}
+                </div>
+                <div className="flex items-center gap-2 mobile:w-full mobile:justify-center">
+                  <input
+                    type="number"
+                    className="AddProductInput mobile:w-[100%_!important]"
+                    placeholder="მ² ფასი"
+                    onChange={(e) => {
+                      setSizePrice(e.target.valueAsNumber);
+                      calculateFullPrice(e.target.valueAsNumber);
+                    }}
+                    value={sizePrice ? sizePrice : ""}
+                  />{" "}
+                  <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>
+                </div>
+              </div>
+            </>
+          </div>
           {props.productData.estateType !== 3 ? (
             <>
               {props.productData.estateType !== 2 ? (
                 <>
-                  <div className="flex items-start mobileSmall:flex-col h-auto   mobileSmall:items-stretch">
-                    <p className="text-textDesc font-mainMedium w-[200px] min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
+                  <div className="flex items-start mobileTab:flex-col h-auto   mobileTab:items-stretch">
+                    <p className="text-textDesc font-mainMedium w-[200px] min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileTab:mb-3 mobileTab:text-center mobileTab:w-full mobileTab:mt-3">
                       პროექტის ტიპი
                     </p>
                     <BubbleSelector
@@ -787,8 +873,8 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                   </div>
                 </>
               ) : null}
-              <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch ">
-                <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
+              <div className="flex items-center mobileTab:flex-col   mobileTab:items-stretch ">
+                <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileTab:mb-3 mobileTab:text-center mobileTab:w-full mobileTab:mt-3">
                   მდგომარეობა
                 </p>
 
@@ -798,11 +884,11 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                 />
               </div>
 
-              <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
-                <p className="text-textDesc font-mainMedium min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
+              <div className="flex items-center mobileTab:flex-col  mobileTab:items-stretch">
+                <p className="text-textDesc font-mainMedium min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileTab:mb-3 mobileTab:text-center mobileTab:w-full mobileTab:mt-3">
                   სართული
                 </p>
-                <div className="flex gap-4 flex-wrap mobileTab:justify-end mobileSmall:justify-center w-full justify-end">
+                <div className="flex gap-4 flex-wrap  mobileTab:justify-center w-full justify-end">
                   <input
                     type="number"
                     className="AddProductInput"
@@ -826,7 +912,7 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                 <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
                   ოთახები
                 </p>
-                <div className="w-full flex justify-end">
+                <div className="w-full flex justify-end mobileTab:justify-center">
                   <SelectNumbers setDataDispatch={updateRooms} name="" />
                 </div>
               </div>
@@ -834,7 +920,7 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                 <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
                   საძინებელი
                 </p>{" "}
-                <div className="w-full flex justify-end">
+                <div className="w-full flex justify-end mobileTab:justify-center">
                   <SelectNumbers setDataDispatch={updateBedrooms} name="" />{" "}
                 </div>
               </div>
@@ -842,95 +928,13 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                 <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
                   სველი წერტილი
                 </p>{" "}
-                <div className="w-full flex justify-end">
+                <div className="w-full flex justify-end mobileTab:justify-center">
                   <SelectNumbers setDataDispatch={updateBathrooms} name="" />{" "}
                 </div>
               </div>
             </>
           ) : null}
         </div>
-      </div>
-      <div className="flex flex-col z-[4]">
-        <>
-          {size == null || size <= 0 ? (
-            <div className=" rounded-xl text-orangeI bg-orangeClear py-3 px-4 text-sm tracking-wider  mb-4 text-center">
-              {" "}
-              ფასის შევსებამდე შეიყვანეთ ფართი
-            </div>
-          ) : null}
-          <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-            ფასი
-          </p>
-          <div
-            className={`flex gap-4 items-center  pl-3 mt-4 transition-opacity ${
-              size == null || size <= 0 ? "pointer-events-none opacity-40" : ""
-            } `}
-          >
-            <div className="relative">
-              <button
-                onClick={() => setOpenDeal((state) => !state)}
-                className="bg-main flex items-center w-[150px] justify-center py-[8px] rounded-lg text-buttonText tracking-widest font-mainMedium text-Asmall"
-              >
-                {currency == 0 ? "$ დოლარი" : "₾ ლარი"}
-                <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-              </button>
-              <div
-                className={` w-[150px] absolute shadow-cardShadow bg-whiteMain rounded-lg top-[45px] overflow-hidden transition-all  ${
-                  openDeal ? "opacity-100 visible" : "invisible opacity-0"
-                }`}
-              >
-                <button
-                  onClick={() => {
-                    setOpenDeal(false);
-                    setCurrency(1);
-                  }}
-                  className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
-                    currency == 0 && "bg-whiteHover"
-                  }`}
-                >
-                  ₾ ლარი
-                </button>
-                <button
-                  onClick={() => {
-                    setOpenDeal(false);
-                    setCurrency(0);
-                  }}
-                  className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
-                    currency == 0 && "bg-whiteHover"
-                  }`}
-                >
-                  $ დოლარი
-                </button>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                className="AddProductInput"
-                placeholder="სრული ფასი"
-                onChange={(e) => {
-                  setFullPrice(e.target.valueAsNumber);
-                  calculateSizePrice(e.target.valueAsNumber);
-                }}
-                value={fullPrice ? fullPrice : ""}
-              />{" "}
-              <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>{" "}
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                className="AddProductInput"
-                placeholder="მ² ფასი"
-                onChange={(e) => {
-                  setSizePrice(e.target.valueAsNumber);
-                  calculateFullPrice(e.target.valueAsNumber);
-                }}
-                value={sizePrice ? sizePrice : ""}
-              />{" "}
-              <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>
-            </div>
-          </div>
-        </>
       </div>
     </>
   );

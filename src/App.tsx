@@ -24,8 +24,8 @@ import Home from "./pages/Home/Home";
 import Product from "./pages/Product/Product";
 import { Helmet } from "react-helmet";
 import CookieAgreement from "./pages/Profile/components/CookieAgreement";
+import NotFound from "./pages/NotFound";
 
-const NotFound = lazy(() => import("./pages/NotFound"));
 const SuspendedAccount = lazy(() => import("./pages/SuspendedAccount"));
 const Notifications = lazy(
   () => import("./pages/Profile/components/Notifications")
@@ -36,10 +36,10 @@ const PasswordRecover = lazy(
 const AdsMake = lazy(() => import("./pages/AdsMake/AdsMake"));
 const Contact = lazy(() => import("./pages/Contact/Contact"));
 
-const MaclerService = lazy(() => import("./pages/MaclerService/MaclerService"));
-const MaclerChoose = lazy(() => import("./pages/MaclerService/MaclerChoose"));
-const Maclerconditions = lazy(
-  () => import("./pages/MaclerService/Maclerconditions")
+const AgencyService = lazy(() => import("./pages/AgencyService/AgencyService"));
+const AgencyChoose = lazy(() => import("./pages/AgencyService/AgencyChoose"));
+const Agencyconditions = lazy(
+  () => import("./pages/AgencyService/AgencyConditions")
 );
 const AdminPanel = lazy(() => import("./pages/AdminPanel/AdminPanel"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
@@ -114,11 +114,11 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>ONHOME</title>
+        <title>OnHome</title>
         <meta
           name="description"
           lang="ka"
-          content="ONHOME - სახლები, აგარაკები, ბინები, კომერციული ფართები, სასტუმროები, მიწის ნაკვეთები, მიწები, ყიდვა, გაყიდვა, გაქირავება. "
+          content="OnHome - სახლები, აგარაკები, ბინები, კომერციული ფართები, სასტუმროები, მიწის ნაკვეთები, მიწები, ყიდვა, გაყიდვა, გაქირავება. "
         />
         <meta
           name="keywords"
@@ -128,7 +128,7 @@ function App() {
         <meta
           name="image"
           lang="ka"
-          content="https://static.onhome.ge/onhome-logo.png"
+          content="https://static.onhome.ge/onhome-thumbnail.webp"
         ></meta>
         <meta name="theme-color" content="#3a86ff" />
         <link rel="canonical" href="https://onhome.ge/"></link>
@@ -139,14 +139,10 @@ function App() {
           lang="ka"
           content="უძრავი ქონების ყიდვა, გაყიდვა, გაქირავება - onhome.ge"
         />
-        <meta
-          property="og:image"
-          lang="ka"
-          content="https://static.onhome.ge/onhome-logo.png"
-        />
+
         <meta property="og:type" lang="ka" content="website" />
         <meta property="og:url" lang="ka" content="https://onhome.ge" />
-        <meta property="og:site_name" content="ONHOME" />
+        <meta property="og:site_name" content="OnHome" />
       </Helmet>
       {loading ? <MainLoader /> : null}
       {cookiesAgreement ? (
@@ -167,7 +163,8 @@ function App() {
             <Routes>
               <Route path="/">
                 <Route index element={<Home />} />
-                <Route path="*" element={<NotFound />} />
+                <Route path="/NotFound" element={<NotFound />} />
+
                 <Route path="Login" element={<Login />} />
                 <Route path="Register" element={<Register />} />
                 <Route path="ForgotPassword" element={<ForgotPassword />} />
@@ -192,10 +189,10 @@ function App() {
                     </Route>
                   ) : null}
                 </Route>
-                <Route path="MaclerService" element={<MaclerService />} />
-                <Route path="MaclerChoose" element={<MaclerChoose />} />
+                <Route path="AgencyService" element={<AgencyService />} />
+                <Route path="AgencyChoose" element={<AgencyChoose />} />
                 <Route path="AdsMake" element={<AdsMake />} />
-                <Route path="Maclerconditions" element={<Maclerconditions />} />
+                <Route path="Agencyconditions" element={<Agencyconditions />} />
                 <Route path="Seller/:id" element={<Seller />} />
 
                 {user.isLogged ? (

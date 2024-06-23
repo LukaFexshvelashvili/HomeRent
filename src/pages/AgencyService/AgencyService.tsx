@@ -15,7 +15,7 @@ type Tservice = {
   title: string;
   color: string;
 };
-export default function MaclerService() {
+export default function AgencyService() {
   const services: Tservice[] = [
     {
       icon: <ClientContact className="h-[30px] mobileTab:h-[22px]" />,
@@ -47,7 +47,7 @@ export default function MaclerService() {
       <section className="flex items-center small:flex-col-reverse small:gap-y-20">
         <div className="">
           <h2 className="text-[28px] font-mainBold text-maclerMain mb-3 small:text-center mobileTab:text-[24px]">
-            მაკლერის სერვისი
+            სააგენტოს სერვისი
           </h2>
           <p className=" text-textDesc text-[16px] tracking-wider max-w-[600px] small:text-center mobileTab:text-[16px] mobileTab:px-[5%] ">
             სერვისში გთავაზობთ დახმარებას თქვენი უძრავი ქონების
@@ -64,7 +64,7 @@ export default function MaclerService() {
             </div>
             <div className="flex items-center text-textDesc gap-3">
               <div className="h-[14px] aspect-square rounded-circle border-2 border-maclerMain"></div>{" "}
-              კლიენტებთან მოლაპარაკება
+              მომხმარებლებთან მოლაპარაკება
             </div>
             <div className="flex items-center text-textDesc gap-3">
               <div className="h-[14px] aspect-square rounded-circle border-2 border-maclerMain"></div>{" "}

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import BlueHouseDecoration from "../../../assets/images/decorations/bluehouse.png";
 
-export default function MaclerCard() {
+export default function AgencyCard() {
   return (
     <section className="my-[60px] mb-[80px] w-full h-[500px] maclerLinear rounded-[20px] flex items-center p-8 shadow-[12px_12px_0px] shadow-mainClear small:flex-col small:h-auto small:gap-10 ">
       <div className="flex-1 flex items-center justify-center">
@@ -13,7 +13,7 @@ export default function MaclerCard() {
       </div>
       <div className="flex-1  pl-[80px] small:w-full small:pl-0 small:flex small:flex-col small:items-center">
         <h2 className="small:text-center text-[24px] mobileSmall:text-[22px] font-mainBold text-main mb-5">
-          მაკლერის სერვისი
+          სააგენტოს სერვისი
         </h2>
         <p className="small:text-center text-textDesc text-[15px] mobileSmall:text-[15px] tracking-wider max-w-[600px]">
           სერვისში გთავაზობთ დახმარებას თქვენი უძრავი ქონების გაყიდვა/გაქირავება
@@ -30,14 +30,14 @@ export default function MaclerCard() {
           </div>
           <div className="flex items-center text-textDesc text-[15px] gap-3 small:justify-center mobileSmall:text-[15px]">
             <div className="h-[14px] aspect-square rounded-circle border-2  border-main"></div>{" "}
-            კლიენტებთან მოლაპარაკება
+            მომხმარებლებთან მოლაპარაკება
           </div>
           <div className="flex items-center text-textDesc text-[15px] gap-3 small:justify-center mobileSmall:text-[15px]">
             <div className="h-[14px] aspect-square rounded-circle border-2  border-main"></div>{" "}
             სწრაფი მომსახურება
           </div>
         </div>
-        <Link to={"/MaclerService"} className="block small:mx-auto mt-3 w-min">
+        <Link to={"/AgencyService"} className="block small:mx-auto mt-3 w-min">
           <button className=" block bg-main rounded-[5px] w-[190px] h-[40px] mobileSmall:h-[36px] mobileSmall:w-[160px] mobileSmall:text-[14px] text-buttonText text-[14px] tracking-widest transition-colors hover:bg-mainHover">
             სრულად
           </button>

@@ -94,7 +94,7 @@ export default function Register() {
         formInputs.mobile &&
         formInputs.confirmPassword
       ) {
-        if (formInputs.mobile && formInputs.mobile.length > 9) {
+        if (formInputs.mobile && formInputs.mobile.length > 8) {
           if (formInputs.password.length >= 8) {
             if (formInputs.password === formInputs.confirmPassword) {
               setError("");
@@ -163,31 +163,23 @@ export default function Register() {
   return (
     <>
       <Helmet>
-        <title>რეგისტრაცია - ONHOME</title>
-        <meta name="description" lang="ka" content="რეგისტრაცია - ONHOME" />
+        <title>რეგისტრაცია - OnHome</title>
+        <meta name="description" lang="ka" content="რეგისტრაცია - OnHome" />
         <meta
           name="keywords"
           lang="ka"
           content="ონჰოუმ რეგისტრაცია, რეგისტრაცია ონჰოუმ, onhome register, register onhome, onhome, onhome რეგისტრაცია, რეგისტრაცია onhome"
         />
-        <meta
-          name="image"
-          lang="ka"
-          content="https://static.onhome.ge/onhome-logo.png"
-        ></meta>
+
         <meta name="theme-color" content="#3a86ff" />
         <link rel="canonical" href="https://onhome.ge/"></link>
 
         {/* Open Graph tags */}
         <meta property="og:title" lang="ka" content="რეგისტრაცია - onhome.ge" />
-        <meta
-          property="og:image"
-          lang="ka"
-          content="https://static.onhome.ge/onhome-logo.png"
-        />
+
         <meta property="og:type" lang="ka" content="website" />
         <meta property="og:url" lang="ka" content="https://onhome.ge" />
-        <meta property="og:site_name" content="ONHOME" />
+        <meta property="og:site_name" content="OnHome" />
       </Helmet>
       <main className="m-0 p-0">
         <AuthenticationHeader />
@@ -242,7 +234,7 @@ export default function Register() {
                   <PhoneIcon className="h-[22px] mobile:h-[20px] aspect-square absolute left-3 [&>path]:stroke-blackMain z-[3] opacity-40" />
                   <input
                     ref={mobileRef}
-                    type="text"
+                    type="tel"
                     placeholder="ტელეფონის ნომერი"
                     className="h-full w-full rounded-normal mobile:text-[12px] bg-LoginInput outline-none px-3 pl-11 mobile:pl-10 text-textDesc tracking-wider text-Asmall transition-colors focus:bg-LoginInputActive"
                   />
@@ -316,7 +308,7 @@ export default function Register() {
               <p className="mt-8 mobile:mt-6 text-textDesc text-Asmall font-mainBold tracking-wider mobile:text-[12px]">
                 უკვე გაქვს ანგარიში?{" "}
                 <span className="text-main cursor-pointer">
-                  <Link to="/Login">რეგისტრაცია</Link>
+                  <Link to="/Login">ავტორიზაცია</Link>
                 </span>
               </p>
             </div>

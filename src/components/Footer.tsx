@@ -11,7 +11,7 @@ export default function Footer() {
             <h3 className="mb-2 text-textHeadBlack">ჩვენს შესახებ</h3>
             <p className="max-w-[300px]">
               უძრავი ქონების გაყიდვის/გაქირავების სერვისი - გეხმარებით
-              განათავსოთ თქვენი უძრავი ქონება კლიენტების მოსაზიდად
+              განათავსოთ თქვენი უძრავი ქონება მომხმარებლების მოსაზიდად
             </p>
           </div>
           <div className="flex flex-col gap-2 [&>p]:text-Asmall text-Asmall [&>a]:text-textDesc [&>p]:cursor-pointer">
@@ -19,7 +19,7 @@ export default function Footer() {
             <Link to={"/"}>მთავარი</Link>
             <Link to={"/Search"}>მოძებნა</Link>
             <Link to={"/"}>პროექტები</Link>
-            {/* <Link to={"MaclerService"}>მაკლერის სერვისი</Link> */}
+            <Link to={"MaclerService"}>სააგენტოს სერვისი</Link>
           </div>
           <div className="flex flex-col gap-2 [&>p]:text-Asmall text-Asmall [&>a]:text-textDesc [&>p]:cursor-pointer">
             <h3 className="mb-2  text-textHeadBlack">დახმარება</h3>
@@ -71,7 +71,7 @@ export default function Footer() {
             content={
               <p className="max-w-[500px]">
                 უძრავი ქონების გაყიდვის/გაქირავების სერვისი - გეხმარებით
-                განათავსოთ თქვენი უძრავი ქონება კლიენტების მოსაზიდად
+                განათავსოთ თქვენი უძრავი ქონება მომხმარებლების მოსაზიდად
               </p>
             }
           />
@@ -82,7 +82,7 @@ export default function Footer() {
                 <Link to={"/"}>მთავარი</Link>
                 <Link to={"Search"}>მოძებნა</Link>
                 <Link to={"/"}>პროექტები</Link>
-                <Link to={"MaclerService"}>მაკლერის სერვისი</Link>
+                <Link to={"MaclerService"}>სააგენტოს სერვისი</Link>
               </>
             }
           />

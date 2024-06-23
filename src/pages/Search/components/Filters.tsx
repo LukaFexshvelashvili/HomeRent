@@ -104,17 +104,17 @@ export function SelectType() {
                 updateParams(params, setParams, { estate_type: i });
               }
             }}
-            className={`  p-2 px-4 rounded-xl transition-colors ${
+            className={`mobile:w-full mobile:flex mobile:py-[15px] mobile:items-center mobile:justify-center  p-2 px-4 rounded-xl transition-colors ${
               active == i ? "bg-main" : "bg-mainClear"
             }`}
           >
             <e.icon
-              className={` h-[24px] aspect-square ${
+              className={` h-[24px]  aspect-square ${
                 active == i && "[&>path]:fill-buttonText"
               } `}
             />
             <p
-              className={`text-Asmall ml-7 tracking-wide ${
+              className={`text-Asmall ml-7 mobile:ml-5 tracking-wide ${
                 active == i ? "text-buttonText" : "text-main"
               }`}
             >

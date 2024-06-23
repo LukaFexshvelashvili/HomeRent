@@ -47,8 +47,7 @@ function BasicBanner(props: { productData: TProductData }) {
           <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2]"></div>
           <img
             src={
-              "http://localhost/ONHOMEServer/" +
-              props.productData.estate_active_image
+              "http://api.onhome.ge/" + props.productData.estate_active_image
             }
             className="absolute h-full w-full object-cover  top-0 left-0"
           />

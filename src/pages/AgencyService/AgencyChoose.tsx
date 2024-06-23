@@ -49,7 +49,7 @@ export default function MaclerChoose() {
                   მოთხოვნა წარმატებით გაიგზავნა
                 </h2>
                 <p className="text-textDesc  text-center text-[14px] mt-2">
-                  მაკლერის სერვისის მოთხოვნა განცხადებაზე #{productId}
+                  სააგენტოს სერვისის მოთხოვნა განცხადებაზე #{productId}
                 </p>
                 <p className="text-textDesc  text-center text-[14px] ">
                   სერვისის დადასტურების შემთხვევაში დაგიკავშირდებით თქვენი
@@ -91,7 +91,7 @@ export default function MaclerChoose() {
           <>
             <div className="p-4">
               <h1 className="text-[18px] text-maclerMain  font-mainBold">
-                მაკლერის სერვისი - აირჩიეთ განცხადება{" "}
+                სააგენტოს სერვისი - აირჩიეთ განცხადება{" "}
               </h1>
               <p className="text-[15px] text-textDesc mt-4 ">
                 თქვენი განცხადებები
@@ -111,7 +111,7 @@ export default function MaclerChoose() {
           <>
             <div className="p-4">
               <h1 className="text-[18px] text-maclerMain  font-mainBold">
-                მაკლერის სერვისი - შეთანხმება
+                სააგენტოს სერვისი - შეთანხმება
               </h1>
               <div className="bg-maclerMainClear rounded-xl [&>div]:border-none mt-[30px]">
                 <ProductBannerMacler
@@ -195,10 +195,7 @@ function ProductBannerMacler(props: {
       <div className="w-[170px] h-[100px] rounded-lg bg-whiteLoad relative overflow-hidden mobile:w-[100%] mobile:aspect-video mobile:h-auto">
         <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2]"></div>
         <img
-          src={
-            "http://localhost/ONHOMEServer/" +
-            props.productData.estate_active_image
-          }
+          src={"http://api.onhome.ge/" + props.productData.estate_active_image}
           className="absolute h-full w-full object-cover  top-0 left-0"
         />
       </div>

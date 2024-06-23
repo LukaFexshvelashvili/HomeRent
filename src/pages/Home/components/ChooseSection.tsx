@@ -9,7 +9,7 @@ export default function ChooseSection() {
   return (
     <section className="my-[40px] mobile:my-[50px]">
       <div className="flex gap-4 mobile:gap-2 w-full [&>div]:rounded-section [&>div>div]:rounded-section  mobile:flex-col mobile:items-stretch">
-        <div className="flex flex-[2] flex-wrap w-full gap-4 mobile:gap-1 [&>div]:h-[200px] mobile:flex-col mobile:items-stretch">
+        <div className="flex flex-[2] flex-wrap w-full gap-4 mobile:gap-3 [&>div]:h-[200px] mobile:flex-col mobile:items-stretch">
           <div className="flex w-[calc(50%-10px)]  mobile:w-full  mobile:aspect-video bg-whiteLoad overflow-hidden cursor-pointer group relative">
             <Link to={"/Search?estate_type=0"}>
               <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
@@ -18,7 +18,7 @@ export default function ChooseSection() {
               </div>
               <img
                 src={HomeImage}
-                className="absolute h-full w-full object-cover transition-[filter] duration-300 group-hover:brightness-110 rounded-section"
+                className="absolute h-full w-full object-cover max-w-[450px] max-h-[200px] transition-[filter] duration-300 group-hover:brightness-110 rounded-section"
                 alt="Real estate image"
               />
             </Link>
@@ -31,7 +31,7 @@ export default function ChooseSection() {
               </div>
               <img
                 src={LandImage}
-                className="absolute h-full w-full object-cover transition-[filter] duration-300 group-hover:brightness-110 rounded-section"
+                className="absolute h-full w-full object-cover max-w-[450px] max-h-[200px] transition-[filter] duration-300 group-hover:brightness-110 rounded-section"
                 alt="Real estate image"
               />{" "}
             </Link>
@@ -44,7 +44,7 @@ export default function ChooseSection() {
               </div>
               <img
                 src={ApartamentImage}
-                className="absolute h-full w-full object-cover transition-[filter] duration-300 group-hover:brightness-110 rounded-section"
+                className="absolute h-full w-full object-cover max-w-[450px] max-h-[200px] transition-[filter] duration-300 group-hover:brightness-110 rounded-section"
                 alt="Real estate image"
               />{" "}
             </Link>
@@ -57,7 +57,7 @@ export default function ChooseSection() {
               </div>
               <img
                 src={ApartamentRentImage}
-                className="absolute h-full w-full object-cover transition-[filter] duration-300 group-hover:brightness-110 rounded-section"
+                className="absolute h-full w-full object-cover max-w-[450px] max-h-[200px] transition-[filter] duration-300 group-hover:brightness-110 rounded-section"
                 alt="Real estate image"
               />
             </Link>
@@ -72,7 +72,7 @@ export default function ChooseSection() {
             </div>
             <img
               src={HotelImage}
-              className="absolute h-full w-full object-cover transition-[filter] duration-300 group-hover:brightness-110 rounded-section"
+              className="absolute h-full w-full object-cover max-w-[460px] max-h-[420px] transition-[filter] duration-300 group-hover:brightness-110 rounded-section"
               alt="Real estate image"
             />{" "}
           </Link>

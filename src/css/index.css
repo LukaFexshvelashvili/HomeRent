@@ -4,23 +4,28 @@
 
 @font-face {
   font-family: mainSemiBold;
-  src: url("../assets/fonts/NotoSansGeorgian-SemiBold.ttf");
+  src: url("/fonts/NotoSansGeorgian-SemiBold.woff2") format("woff2");
+  font-display: swap;
 }
 @font-face {
   font-family: mainBold;
-  src: url("../assets/fonts/NotoSansGeorgian-Bold.ttf");
+  src: url("/fonts/NotoSansGeorgian-Bold.woff2") format("woff2");
+  font-display: swap;
 }
 @font-face {
   font-family: mainMedium;
-  src: url("../assets/fonts/NotoSansGeorgian-Medium.ttf");
+  src: url("/fonts/NotoSansGeorgian-Medium.woff2") format("woff2");
+  font-display: swap;
 }
 @font-face {
   font-family: mainRegular;
-  src: url("../assets/fonts/NotoSansGeorgian-Regular.ttf");
+  src: url("/fonts/NotoSansGeorgian-Regular.woff2") format("woff2");
+  font-display: swap;
 }
 @font-face {
   font-family: logoBold;
-  src: url("../assets/fonts/junegull.ttf");
+  src: url("/fonts/junegull.woff2") format("woff2");
+  font-display: swap;
 }
 
 img {
