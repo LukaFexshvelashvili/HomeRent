@@ -2,103 +2,110 @@ export default function PrivacyPolicy() {
   return (
     <main>
       <div className="text-Asmall text-textInfo">
-        <h1>Privacy Policy for onhome.ge LLC</h1>
+        <h1>კონფიდენციალურობის პოლიტიკა onhome.ge LLC-ისთვის</h1>
         <p>
-          At onhome.ge, accessible from https://onhome.ge/, one of our main
-          priorities is the privacy of our visitors. This Privacy Policy
-          document contains types of information that is collected and recorded
-          by onhome.ge and how we use it.
+          onhome.ge-ზე, ხელმისაწვდომია https://onhome.ge/-დან, ჩვენი ერთ-ერთი
+          მთავარი პრიორიტეტი არის ჩვენი ვიზიტორების კონფიდენციალურობა. ეს
+          კონფიდენციალურობის პოლიტიკის დოკუმენტი შეიცავს ინფორმაციას, რომელიც
+          გროვდება და იწერება onhome.ge-ის მიერ და როგორ ვიყენებთ მას.
         </p>
         <p>
-          If you have additional questions or require more information about our
-          Privacy Policy, do not hesitate to contact us.
+          თუ გაქვთ დამატებითი კითხვები ან გჭირდებათ მეტი ინფორმაცია ჩვენი
+          კონფიდენციალურობის პოლიტიკის შესახებ, ნუ მოგერიდებათ დაგვიკავშირდეთ.
         </p>
         <p>
-          This Privacy Policy applies only to our online activities and is valid
-          for visitors to our website with regards to the information that they
-          shared and/or collect in onhome.ge. This policy is not applicable to
-          any information collected offline or via channels other than this
-          website.
+          ეს კონფიდენციალურობის პოლიტიკა ვრცელდება მხოლოდ ჩვენს ონლაინ
+          აქტივობებზე და ძალაშია ჩვენი ვებგვერდის ვიზიტორებისთვის იმ ინფორმაციის
+          მიმართ, რომელიც მათ გააზიარეს და/ან შეაგროვეს onhome.ge-ზე. ეს
+          პოლიტიკა არ ვრცელდება ნებისმიერ ინფორმაციაზე, რომელიც შეგროვდა
+          ხაზგარეშე ან სხვა არხების მეშვეობით ამ ვებგვერდის გარდა.
         </p>
-        <h2>Consent</h2>
+        <h2>თანხმობა</h2>
         <p>
-          By using our website, you hereby consent to our Privacy Policy and
-          agree to its terms.
+          ჩვენი ვებგვერდის გამოყენებით, თქვენ თანხმობთ ჩვენს კონფიდენციალურობის
+          პოლიტიკაზე და ეთანხმებით მის პირობებს.
         </p>
-        <h2>Information we collect</h2>
+        <h2>ინფორმაცია, რომელსაც ვაგროვებთ</h2>
         <p>
-          The personal information that you are asked to provide, and the
-          reasons why you are asked to provide it, will be made clear to you at
-          the point we ask you to provide your personal information.
-        </p>
-        <p>
-          If you contact us directly, we may receive additional information
-          about you such as your name, email address, phone number, the contents
-          of the message and/or attachments you may send us, and any other
-          information you may choose to provide.
+          პერსონალური ინფორმაცია, რომელსაც გთხოვთ მოგვაწოდოთ, და მიზეზები, რის
+          გამოც გთხოვთ მისი მიწოდებას, იქნება ნათელი თქვენთვის იმ მომენტში,
+          როდესაც გთხოვთ მოგვაწოდოთ თქვენი პირადი ინფორმაცია.
         </p>
         <p>
-          When you register for an Account, we may ask for your contact
-          information, including items such as name, company name, address,
-          email address, and telephone number.
+          თუ დაგვიკავშირდებით პირდაპირ, ჩვენ შეიძლება მივიღოთ დამატებითი
+          ინფორმაცია თქვენ შესახებ, როგორიცაა თქვენი სახელი, ელფოსტის მისამართი,
+          ტელეფონის ნომერი, შეტყობინების შინაარსი და/ან დანართები, რომლებიც
+          გამოგვიგზავნით და ნებისმიერი სხვა ინფორმაცია, რომელიც შეიძლება
+          გადაწყვიტოთ მოგვაწოდოთ.
         </p>
-        <h2>How we use your information</h2>
-        <p>We use the information we collect in various ways, including to:</p>
+        <p>
+          როდესაც დარეგისტრირდებით ანგარიშისთვის, ჩვენ შეიძლება გთხოვოთ
+          საკონტაქტო ინფორმაცია, მათ შორის სახელი, კომპანიის სახელი, მისამართი,
+          ელფოსტის მისამართი და ტელეფონის ნომერი.
+        </p>
+        <h2>როგორ ვიყენებთ თქვენს ინფორმაციას</h2>
+        <p>ჩვენ ვიყენებთ შეგროვებულ ინფორმაციას სხვადასხვა გზით, მათ შორის:</p>
         <ul>
-          <li>Provide, operate, and maintain our website</li>
-          <li>Improve, personalize, and expand our website</li>
-          <li>Understand and analyze how you use our website</li>
-          <li>Develop new products, services, features, and functionality</li>
+          <li>ჩვენი ვებგვერდის უზრუნველყოფა, ოპერაცია და შენარჩუნება</li>
+          <li>ჩვენი ვებგვერდის გაუმჯობესება, პერსონალიზაცია და გაფართოება</li>
+          <li>გავიგოთ და გავაანალიზოთ როგორ იყენებთ ჩვენს ვებგვერდს</li>
           <li>
-            Communicate with you, either directly or through one of our
-            partners, including for customer service, to provide you with
-            updates and other information relating to the website, and for
-            marketing and promotional purposes
+            ახალი პროდუქტების, სერვისების, ფუნქციებისა და ფუნქციონალების
+            განვითარება
           </li>
-          <li>Send you emails</li>
-          <li>Find and prevent fraud</li>
+          <li>
+            კომუნიკაცია თქვენთან, პირდაპირ ან ჩვენი პარტნიორების მეშვეობით, მათ
+            შორის მომხმარებელთა მომსახურებისთვის, რათა მოგაწოდოთ განახლებები და
+            სხვა ინფორმაცია ვებგვერდთან დაკავშირებით და მარკეტინგული და
+            სარეკლამო მიზნებისთვის
+          </li>
+          <li>ელფოსტის გაგზავნა</li>
+          <li>მოძებნა და თაღლითობის პრევენცია</li>
         </ul>
-        <h2>Log Files</h2>
+        <h2>ლოგ ფაილები</h2>
         <p>
-          onhome.ge follows a standard procedure of using log files. These files
-          log visitors when they visit websites. All hosting companies do this
-          and a part of hosting services' analytics. The information collected
-          by log files include internet protocol (IP) addresses, browser type,
-          Internet Service Provider (ISP), date and time stamp, referring/exit
-          pages, and possibly the number of clicks. These are not linked to any
-          information that is personally identifiable. The purpose of the
-          information is for analyzing trends, administering the site, tracking
-          users' movement on the website, and gathering demographic information.
+          onhome.ge იცავს სტანდარტულ პროცედურას ლოგ ფაილების გამოყენებაში. ეს
+          ფაილები მოიცავს ვიზიტორებს, როდესაც ისინი ვებგვერდებს ეწვევიან. ყველა
+          ჰოსტინგის კომპანია აკეთებს ამას და ეს არის ჰოსტინგის სერვისების
+          ანალიტიკის ნაწილი. ლოგ ფაილებით შეგროვებული ინფორმაცია მოიცავს
+          ინტერნეტ პროტოკოლის (IP) მისამართებს, ბრაუზერის ტიპს, ინტერნეტ
+          სერვისის პროვაიდერს (ISP), თარიღისა და დროის ბეჭედს,
+          გამომდინარე/გასვლის გვერდებს და შესაძლოა დაწკაპუნებების რაოდენობას. ეს
+          არ არის დაკავშირებული პირადობის იდენტიფიცირებად ინფორმაციასთან.
+          ინფორმაციის მიზანი არის ტენდენციების ანალიზი, საიტის ადმინისტრირება,
+          მომხმარებლების მოძრაობის თვალყურის დევნება ვებგვერდზე და დემოგრაფიული
+          ინფორმაციის შეგროვება.
         </p>
-        <h2>Cookies and Web Beacons</h2>
+        <h2>ქუქი-ფაილები და ვებ ბიკონები</h2>
         <p>
-          Like any other website, onhome.ge uses 'cookies'. These cookies are
-          used to store information including visitors' preferences, and the
-          pages on the website that the visitor accessed or visited. The
-          information is used to optimize the users' experience by customizing
-          our web page content based on visitors' browser type and/or other
-          information.
+          როგორც ნებისმიერი სხვა ვებგვერდი, onhome.ge იყენებს 'ქუქი-ფაილებს'. ეს
+          ქუქი-ფაილები გამოიყენება ინფორმაციის შესანახად, მათ შორის ვიზიტორების
+          პრეფერენციებისა და ვებგვერდის გვერდების, რომლებიც ვიზიტორმა მოინახულა
+          ან ეწვია. ინფორმაცია გამოიყენება მომხმარებელთა გამოცდილების
+          ოპტიმიზაციისთვის ჩვენი ვებ გვერდის შინაარსის მორგებით ვიზიტორების
+          ბრაუზერის ტიპისა და/ან სხვა ინფორმაციის საფუძველზე.
         </p>
-
         <h2>Google DoubleClick DART Cookie</h2>
         <p>
-          Google is one of a third-party vendor on our site. It also uses
-          cookies, known as DART cookies, to serve ads to our site visitors
-          based upon their visit to www.website.com and other sites on the
-          internet. However, visitors may choose to decline the use of DART
-          cookies by visiting the Google ad and content network Privacy Policy
-          at the following URL –{" "}
+          Google არის ჩვენი საიტის ერთ-ერთი მესამე მხარის გამყიდველი. ის ასევე
+          იყენებს ქუქი-ფაილებს, რომლებიც ცნობილია როგორც DART ქუქი-ფაილები, რომ
+          მოემსახუროს რეკლამებს ჩვენს საიტზე ვიზიტორებისათვის მათი ვიზიტების
+          საფუძველზე www.website.com-ზე და სხვა საიტებზე ინტერნეტში. თუმცა,
+          ვიზიტორებს შეუძლიათ უარი თქვან DART ქუქი-ფაილების გამოყენებაზე Google
+          რეკლამებისა და კონტენტ ქსელის კონფიდენციალურობის პოლიტიკის URL-ზე -
           <a href="https://policies.google.com/technologies/ads">
             https://policies.google.com/technologies/ads
           </a>
         </p>
 
-        <h2>Our Advertising Partners</h2>
+        <h2>ჩვენი სარეკლამო პარტნიორები</h2>
         <p>
-          Some of advertisers on our site may use cookies and web beacons. Our
-          advertising partners are listed below. Each of our advertising
-          partners has their own Privacy Policy for their policies on user data.
-          For easier access, we hyperlinked to their Privacy Policies below.
+          ზოგიერთი რეკლამირების პარტნიორი ჩვენს საიტზე შეიძლება იყენებდეს
+          ქუქი-ფაილებს და ვებ ბიკონებს. ჩვენი სარეკლამო პარტნიორები ჩამოთვლილია
+          ქვემოთ. თითოეული ჩვენი სარეკლამო პარტნიორი აქვს საკუთარი
+          კონფიდენციალურობის პოლიტიკა მათი მომხმარებელთა მონაცემებზე პოლიტიკის
+          შესახებ. ადვილი წვდომისთვის, ჩვენ დავურთეთ მათი კონფიდენციალურობის
+          პოლიტიკის ლინკები ქვემოთ.
         </p>
         <ul>
           <li>
@@ -110,116 +117,119 @@ export default function PrivacyPolicy() {
             </p>
           </li>
         </ul>
-        <h2>Advertising Partners Privacy Policies</h2>
+        <h2>რეკლამის პარტნიორების კონფიდენციალურობის პოლიტიკა</h2>
         <p>
-          You may consult this list to find the Privacy Policy for each of the
-          advertising partners of onhome.ge.
+          შეგიძლიათ გაიაროთ კონსულტაცია ამ სიას, რათა იპოვოთ onhome.ge-ის
+          სარეკლამო პარტნიორების კონფიდენციალურობის პოლიტიკა.
         </p>
         <p>
-          Third-party ad servers or ad networks uses technologies like cookies,
-          JavaScript, or Web Beacons that are used in their respective
-          advertisements and links that appear on onhome.ge, which are sent
-          directly to users' browser. They automatically receive your IP address
-          when this occurs. These technologies are used to measure the
-          effectiveness of their advertising campaigns and/or to personalize the
-          advertising content that you see on websites that you visit.
+          მესამე მხარის რეკლამების სერვერები ან რეკლამის ქსელები იყენებენ
+          ტექნოლოგიებს, როგორიცაა ქუქი-ფაილები, JavaScript, ან ვებ ბიკონები,
+          რომლებიც გამოიყენება მათ რეკლამებსა და ლინკებში, რომლებიც გამოჩნდება
+          onhome.ge-ზე, რომლებიც პირდაპირ იგზავნება მომხმარებლების ბრაუზერში.
+          ისინი ავტომატურად იღებენ თქვენს IP მისამართს, როდესაც ეს ხდება. ეს
+          ტექნოლოგიები გამოიყენება მათი სარეკლამო კამპანიების ეფექტიანობის
+          გასაზომად და/ან იმისთვის, რომ პერსონალიზებული სარეკლამო შინაარსი,
+          რომელიც თქვენ ხედავთ ვებგვერდებზე, რომელთაც სტუმრობთ.
         </p>
         <p>
-          Note that onhome.ge has no access to or control over these cookies
-          that are used by third-party advertisers.
+          გთხოვთ გაითვალისწინოთ, რომ onhome.ge-ს არ აქვს წვდომა ან კონტროლი ამ
+          ქუქი-ფაილებზე, რომლებიც გამოიყენება მესამე მხარის რეკლამის მყიდველების
+          მიერ.
         </p>
-        <h2>Third Party Privacy Policies</h2>
+        <h2>მესამე მხარის კონფიდენციალურობის პოლიტიკა</h2>
         <p>
-          onhome.ge's Privacy Policy does not apply to other advertisers or
-          websites. Thus, we are advising you to consult the respective Privacy
-          Policies of these third-party ad servers for more detailed
-          information. It may include their practices and instructions about how
-          to opt-out of certain options.{" "}
-        </p>
-        <p>
-          You can choose to disable cookies through your individual browser
-          options. To know more detailed information about cookie management
-          with specific web browsers, it can be found at the browsers'
-          respective websites.
-        </p>
-        <h2>CCPA Privacy Rights (Do Not Sell My Personal Information)</h2>
-        <p>
-          Under the CCPA, among other rights, California consumers have the
-          right to:
+          onhome.ge-ს კონფიდენციალურობის პოლიტიკა არ ვრცელდება სხვა რეკლამების
+          გამყიდველებზე ან ვებგვერდებზე. ამიტომ, გირჩევთ გაიაროთ კონსულტაცია ამ
+          მესამე მხარის რეკლამების სერვერების შესაბამისი კონფიდენციალურობის
+          პოლიტიკაზე მეტი ინფორმაციისთვის. ეს შეიძლება შეიცავდეს მათ პრაქტიკებს
+          და ინსტრუქციებს ზოგიერთი ვარიანტისგან opt-out-ის შესახებ.{" "}
         </p>
         <p>
-          Request that a business that collects a consumer's personal data
-          disclose the categories and specific pieces of personal data that a
-          business has collected about consumers.
+          შეგიძლიათ აირჩიოთ ქუქი-ფაილების გამორთვა თქვენი ინდივიდუალური
+          ბრაუზერის პარამეტრების მეშვეობით. უფრო დეტალური ინფორმაციისთვის
+          ქუქი-ფაილების მართვის შესახებ კონკრეტულ ვებ ბრაუზერებში, შეგიძლიათ
+          მოიძიოთ ბრაუზერების შესაბამის ვებგვერდებზე.
+        </p>
+        <h2>
+          CCPA კონფიდენციალურობის უფლებები (არ გაყიდოთ ჩემი პირადი ინფორმაცია)
+        </h2>
+        <p>
+          CCPA-ის შესაბამისად, სხვა უფლებებთან ერთად, კალიფორნიის მომხმარებლებს
+          აქვთ უფლება:
         </p>
         <p>
-          Request that a business delete any personal data about the consumer
-          that a business has collected.
+          მოითხოვონ ბიზნესის მიერ შეგროვებული მომხმარებლის პირადი მონაცემების
+          კატეგორიებისა და კონკრეტული ნაწილების გამჟღავნება.
         </p>
         <p>
-          Request that a business that sells a consumer's personal data, not
-          sell the consumer's personal data.
+          მოითხოვონ ბიზნესის მიერ მომხმარებლის შესახებ შეგროვებული ნებისმიერი
+          პირადი მონაცემების წაშლა.
         </p>
         <p>
-          If you make a request, we have one month to respond to you. If you
-          would like to exercise any of these rights, please contact us.
-        </p>
-        <h2>GDPR Data Protection Rights</h2>
-        <p>
-          We would like to make sure you are fully aware of all of your data
-          protection rights. Every user is entitled to the following:
+          მოითხოვონ ბიზნესის მიერ მომხმარებლის პირადი მონაცემების გაყიდვის
+          შეწყვეტა.
         </p>
         <p>
-          The right to access – You have the right to request copies of your
-          personal data. We may charge you a small fee for this service.
+          თუ განაცხადს გააკეთებთ, ჩვენ გვაქვს ერთი თვე თქვენი მოთხოვნის
+          საპასუხოდ. თუ გსურთ გამოიყენოთ ეს უფლებები, გთხოვთ დაგვიკავშირდეთ.
+        </p>
+        <h2>GDPR მონაცემთა დაცვის უფლებები</h2>
+        <p>
+          ჩვენ გვინდა, რომ დარწმუნებული იყოთ ყველა თქვენი მონაცემთა დაცვის
+          უფლებებში. ყოველ მომხმარებელს ეკუთვნის შემდეგი უფლებები:
         </p>
         <p>
-          The right to rectification – You have the right to request that we
-          correct any information you believe is inaccurate. You also have the
-          right to request that we complete the information you believe is
-          incomplete.
+          წვდომის უფლება – თქვენ გაქვთ უფლება მოითხოვოთ თქვენი პირადი
+          მონაცემების ასლები. შეიძლება ვეღირსოთ მცირე საფასური ამ სერვისისთვის.
         </p>
         <p>
-          The right to erasure – You have the right to request that we erase
-          your personal data, under certain conditions.
+          გასწორების უფლება – თქვენ გაქვთ უფლება მოითხოვოთ, რომ გავასწოროთ
+          ნებისმიერი ინფორმაცია, რომელიც მიგაჩნიათ არაზუსტად. ასევე გაქვთ უფლება
+          მოითხოვოთ, რომ შევავსოთ ინფორმაცია, რომელიც მიგაჩნიათ არასრულად.
         </p>
         <p>
-          The right to restrict processing – You have the right to request that
-          we restrict the processing of your personal data, under certain
-          conditions.
+          წაშლის უფლება – თქვენ გაქვთ უფლება მოითხოვოთ, რომ წავშალოთ თქვენი
+          პირადი მონაცემები, გარკვეული პირობების შესაბამისად.
         </p>
         <p>
-          The right to object to processing – You have the right to object to
-          our processing of your personal data, under certain conditions.
+          დამუშავების შეზღუდვის უფლება – თქვენ გაქვთ უფლება მოითხოვოთ, რომ
+          შევზღუდოთ თქვენი პირადი მონაცემების დამუშავება, გარკვეული პირობების
+          შესაბამისად.
         </p>
         <p>
-          The right to data portability – You have the right to request that we
-          transfer the data that we have collected to another organization, or
-          directly to you, under certain conditions.
+          დამუშავების საწინააღმდეგო უფლება – თქვენ გაქვთ უფლება დააეწინააღმდეგოთ
+          თქვენი პირადი მონაცემების დამუშავებას, გარკვეული პირობების
+          შესაბამისად.
         </p>
         <p>
-          If you make a request, we have one month to respond to you. If you
-          would like to exercise any of these rights, please contact us.
-        </p>
-        <h2>Children's Information</h2>
-        <p>
-          Another part of our priority is adding protection for children while
-          using the internet. We encourage parents and guardians to observe,
-          participate in, and/or monitor and guide their online activity.
+          მონაცემების პორტაბელურობის უფლება – თქვენ გაქვთ უფლება მოითხოვოთ, რომ
+          გადავცეთ შეგროვებული მონაცემები სხვა ორგანიზაციას, ან პირდაპირ თქვენ,
+          გარკვეული პირობების შესაბამისად.
         </p>
         <p>
-          onhome.ge does not knowingly collect any Personal Identifiable
-          Information from children under the age of 13. If you think that your
-          child provided this kind of information on our website, we strongly
-          encourage you to contact us immediately and we will do our best
-          efforts to promptly remove such information from our records.
+          თუ განაცხადს გააკეთებთ, ჩვენ გვაქვს ერთი თვე თქვენი მოთხოვნის
+          საპასუხოდ. თუ გსურთ გამოიყენოთ ეს უფლებები, გთხოვთ დაგვიკავშირდეთ.
+        </p>
+        <h2>ბავშვების ინფორმაცია</h2>
+        <p>
+          ჩვენი პრიორიტეტია ბავშვების დაცვა ინტერნეტის გამოყენებისას. ვურჩევთ
+          მშობლებს და მეურვეებს, დააკვირდნენ, მიიღონ მონაწილეობა, და/ან
+          აკონტროლონ და მართონ მათი ონლაინ აქტივობა.
+        </p>
+        <p>
+          onhome.ge არ შეგროვებს ბავშვების პირად ცნობად ინფორმაციას 13 წლის
+          ქვემოთ ასაკის ბავშვებიდან. თუ ფიქრობთ, რომ თქვენსმა შვილმა მოგვაწოდა
+          ასეთი სახის ინფორმაცია ჩვენს ვებგვერდზე, გთხოვთ დაუყოვნებლივ
+          დაგვიკავშირდეთ და ჩვენ მაქსიმალურად ვეცდებით სწრაფად წავშალოთ ასეთი
+          ინფორმაცია ჩვენი ჩანაწერებიდან.
         </p>
 
-        <h2>Deletion of tha data</h2>
+        <h2>მონაცემების წაშლა</h2>
         <p>
-          If a user wants to delete personal data, one can leave a message at a
-          chat, and our operator will delete user’s data from the system, in 30
-          days period.
+          თუ მომხმარებელს სურს წაშალოს პირადი მონაცემები, შეგიძლიათ დატოვოთ
+          შეტყობინება ჩატში და ჩვენი ოპერატორი წაშლის მომხმარებლის მონაცემებს
+          სისტემიდან 30 დღიან პერიოდში.
         </p>
       </div>
     </main>

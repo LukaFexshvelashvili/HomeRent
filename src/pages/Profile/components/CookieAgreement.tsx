@@ -4,7 +4,7 @@ import cookie from "../../../assets/images/logos/cookie.webp";
 export default function CookieAgreement(props: { close: Function }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
-      //   localStorage.setItem("cookiesAgreement", "1");
+      localStorage.setItem("cookiesAgreement", "1");
       props.close();
     }, 10000);
 

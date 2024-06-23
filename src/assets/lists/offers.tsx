@@ -6,6 +6,7 @@ export type TOffer = {
   mainColor: string;
   secondColor: string;
   lineColor: string;
+  sale: number;
   price: number;
 };
 
@@ -19,6 +20,7 @@ export const ActiveOffers = [
 
     secondColor: "var(--mainClear)",
     lineColor: "var(--mainClearActive)",
+    sale: 0,
     price: 0,
   },
   {
@@ -34,6 +36,8 @@ export const ActiveOffers = [
 
     secondColor: "rgba(255, 153, 0, 0.1)",
     lineColor: "rgba(255, 153, 0, 0.3)",
+    sale: 0.45,
+
     price: 1.5,
   },
   {
@@ -51,6 +55,7 @@ export const ActiveOffers = [
 
     secondColor: "rgba(255, 0, 60, 0.1)",
     lineColor: "rgba(255, 0, 60, 0.3)",
+    sale: 0.75,
     price: 3,
   },
 ];

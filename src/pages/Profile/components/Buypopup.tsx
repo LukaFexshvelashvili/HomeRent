@@ -221,7 +221,19 @@ export default function Buypopup(props: {
                     <p className=" text-textDesc font-mainMedium">ფასი</p>
 
                     <p className=" text-main">
-                      {(offerData.price * selectedDays).toFixed(2)}₾
+                      {offerData.sale !== 0 ? (
+                        <>
+                          {offerData.price * selectedDays -
+                            offerData.sale * selectedDays +
+                            "₾"}{" "}
+                          <span className=" line-through opacity-30 ">
+                            {" "}
+                            {offerData.price * selectedDays}₾
+                          </span>
+                        </>
+                      ) : (
+                        <>{offerData.price * selectedDays}₾</>
+                      )}
                     </p>
                   </div>
                 </>

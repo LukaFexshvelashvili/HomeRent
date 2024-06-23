@@ -7,6 +7,7 @@ import SuspendedAccount from "./pages/SuspendedAccount";
 import Logout from "./pages/Logout";
 import { useDispatch } from "react-redux";
 import { clearAddProduct } from "./store/data/addProductSlice";
+import { setWebLoader } from "./store/data/webUISlice";
 
 export default function CheckRoutes(props: {
   children: JSX.Element;

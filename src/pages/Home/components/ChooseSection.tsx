@@ -14,7 +14,7 @@ export default function ChooseSection() {
             <Link to={"/Search?estate_type=0"}>
               <div className="absolute h-full w-full top-0 left-0 bg-gradient-to-t from-sectionFadeStart to-sectionFadeEnd z-[2]"></div>
               <div className="absolute bottom-3 left-4 text-WhiteFade tracking-wider font-mainRegular text-[14px] mobile:text-[14px] z-[3] ">
-                იყიდება სახლები / აგარაკები
+                სახლები / აგარაკები
               </div>
               <img
                 src={HomeImage}

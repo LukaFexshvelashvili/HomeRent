@@ -22,7 +22,17 @@ export default function DaysDropdown({
       >
         <p className="text-Asmall " style={{ color: offerData.mainColor }}>
           {" "}
-          1 დღე - {offerData.price.toFixed(2)}₾
+          1 დღე -{" "}
+          {offerData.sale !== 0 ? (
+            <>
+              {offerData.price - offerData.sale + "₾"}{" "}
+              <span className=" line-through opacity-30 ">
+                {offerData.price}₾
+              </span>
+            </>
+          ) : (
+            offerData.price.toFixed(2) + "₾"
+          )}
         </p>
         <div className="relative">
           <button

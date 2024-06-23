@@ -16,7 +16,10 @@ import {
 } from "../../../store/data/addProductSlice";
 import DaysDropdown from "./DaysDropdown";
 import { submitProduct } from "./Selectors";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axiosCall from "../../../hooks/axiosCall";
+import { makeUserSession } from "../../../hooks/serverFunctions";
+import { clearSession } from "../../../store/data/userSlice";
 
 export default function EstateConfirm(props: {
   setShowError: Function;
@@ -29,6 +32,7 @@ export default function EstateConfirm(props: {
   const vipStatus = useSelector(
     (store: RootState) => store.addProduct.estateVip
   );
+  const navigate = useNavigate();
   const [activeOffer, setActiveOffer] = useState<number>(vipStatus);
   const [selectedDays, setSelectedDays] = useState<number>(1);
   const [error, setError] = useState<string>("");
@@ -119,7 +123,21 @@ export default function EstateConfirm(props: {
             <div className="flex items-center justify-between font-mainBold rounded-lg mt-1">
               <p className=" text-textDesc font-mainMedium">ფასი</p>
 
-              <p className=" text-main">{offerData.price * selectedDays}₾</p>
+              <p className=" text-main">
+                {offerData.sale !== 0 ? (
+                  <>
+                    {offerData.price * selectedDays -
+                      offerData.sale * selectedDays +
+                      "₾"}{" "}
+                    <span className=" line-through opacity-30 ">
+                      {" "}
+                      {offerData.price * selectedDays}₾
+                    </span>
+                  </>
+                ) : (
+                  <>{offerData.price * selectedDays}₾</>
+                )}
+              </p>
             </div>
           </>
         )}
@@ -132,7 +150,11 @@ export default function EstateConfirm(props: {
           onClick={() => {
             setError("");
 
-            if (offerData.price * selectedDays * 100 > user.money) {
+            if (
+              (offerData.price * selectedDays - offerData.sale * selectedDays) *
+                100 >
+              user.money
+            ) {
               setError("საკმარის თანხა არარის ბალანსზე");
             } else {
               submitProduct(
@@ -143,6 +165,22 @@ export default function EstateConfirm(props: {
                 setError,
                 () => {
                   dispatch(clearAddProduct());
+                  axiosCall
+                    .get("authentication/user", { withCredentials: true })
+                    .then((res) => {
+                      if (res.data.status == 100) {
+                        makeUserSession(dispatch, {
+                          ...res.data.user,
+                          favorites: JSON.parse(res.data.user.favorites),
+                        });
+
+                        if (res.data.user.banned == 1) {
+                          navigate("/SuspendedAccount");
+                        }
+                      } else if (res.data.status == 0) {
+                        dispatch(clearSession());
+                      }
+                    });
                 }
               );
             }
