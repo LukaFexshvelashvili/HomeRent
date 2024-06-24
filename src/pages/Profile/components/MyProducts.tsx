@@ -70,7 +70,9 @@ function MyProducts() {
   const refresh = useRef<boolean>(true);
   const fetchProducts = useCallback(() => {
     axiosCall
-      .get("fetch/my_products", { withCredentials: true })
+      .get("fetch/my_products?user_id=" + userData.id, {
+        withCredentials: true,
+      })
       .then((res) => {
         res.data &&
           setMyProducts(

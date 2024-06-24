@@ -111,8 +111,10 @@ function Home() {
         <meta property="og:site_name" content="ONHOME" />
       </Helmet>
       <main>
-        <MainSlider />
-        <SearchInput />
+        <div className="relative flex flex-col w-full mobileTab:flex-col-reverse">
+          <MainSlider />
+          <SearchInput />
+        </div>
         <AdBanner1 />
         <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4 mt-10">
           <CrownIcon className=" h-[18px] mobileSmall:h-[17px] [&>path]:fill-redI mr-3 mobileSmall:mr-2 translate-y-[-1px] " />{" "}

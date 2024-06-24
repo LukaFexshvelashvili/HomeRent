@@ -14,6 +14,8 @@ import { Tuser } from "../../../store/data/userSlice";
 import { TProductData } from "./MyProducts";
 import { Link } from "react-router-dom";
 import { ActiveOffers } from "../../../assets/lists/offers";
+import HoverTitle from "../../../components/global/HoverTitle";
+import { setWebLoader } from "../../../store/data/webUISlice";
 
 export default function ProductBanner(props: {
   setPopbuy: Function;
@@ -118,9 +120,10 @@ export default function ProductBanner(props: {
             props.productData.estate_vip == 0 ? (
               <button
                 onClick={() => props.setPopbuy({ id: props.productData.id })}
-                className="bg-purpleClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-purpleHover flex justify-center items-center"
+                className="group relative bg-purpleClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-purpleHover flex justify-center items-center"
               >
                 <LightningIcon className="h-full aspect-square [&>path]:fill-purpleI" />
+                <HoverTitle title="გაძლიერება" />
               </button>
             ) : (
               <button
@@ -161,9 +164,10 @@ export default function ProductBanner(props: {
                   },
                 })
               }
-              className="bg-blueClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueHover flex justify-center items-center"
+              className="group relative bg-blueClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueHover flex justify-center items-center"
             >
               <LoginEyeCloseIcon className="h-full aspect-square [&>path]:stroke-blueI" />
+              <HoverTitle title="დამალვა" />
             </button>
           ) : (
             <button
@@ -189,20 +193,23 @@ export default function ProductBanner(props: {
                   },
                 })
               }
-              className="bg-blueI text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueLightI flex justify-center items-center"
+              className="group relative bg-blueI text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-blueLightI flex justify-center items-center"
             >
               <LoginEyeIcon className="h-full aspect-square [&>path]:fill-buttonText" />
+              <HoverTitle title="გამოჩენა" />
             </button>
           )
         ) : null}
         <button
-          onClick={() =>
+          onClick={() => {
             props.setPopAlert({
               open: true,
               headText: "განცხადების წაშლა",
               descText:
                 "ნამდვილად გსურთ განცხადების წაშლა? ( ქმედება უკან ვეღარ დაბრუნდება )",
               nextFunction: () => {
+                dispatch(setWebLoader({ active: true, opacity: true }));
+
                 deleteProduct(
                   dispatch,
                   props.userData,
@@ -215,13 +222,15 @@ export default function ProductBanner(props: {
                     nextFunction: () => {},
                   });
                   props.fetchProducts();
+                  dispatch(setWebLoader({ active: false }));
                 });
               },
-            })
-          }
-          className="bg-redClear text-redI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-redHover flex justify-center items-center"
+            });
+          }}
+          className="group relative bg-redClear text-redI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-redHover flex justify-center items-center"
         >
           <TrashIcon className="h-full aspect-square" />
+          <HoverTitle title="წაშლა" />
         </button>
       </div>
     </div>

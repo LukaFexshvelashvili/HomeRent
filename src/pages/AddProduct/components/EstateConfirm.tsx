@@ -52,6 +52,7 @@ export default function EstateConfirm(props: {
       <div className="p-4">
         <div className=" flex flex-col items-center justify-center">
           <CardExample
+            title={data.estateTitle}
             rooms={data.estateRooms}
             image={data.estateActiveImage}
             price={data.estatePrice}
@@ -196,6 +197,7 @@ export default function EstateConfirm(props: {
 export function CardExample(props: {
   autoWidth?: boolean;
   image?: string | null;
+  title?: string | null;
   price?: number | null;
   size?: number | null;
   rooms?: number | null;
@@ -251,11 +253,14 @@ export function CardExample(props: {
       </div>
 
       <div className="flex flex-col py-1">
-        <h2 className="text-textHeadCard font-mainBold">ვაკე რეზიდენსი</h2>
+        <h2 className="text-textHeadCard font-mainMedium w-[80%] overflow-hidden text-nowrap text-ellipsis">
+          {props.title ? props.title : "სათაური"}
+        </h2>
         <p className="text-textDescCard text-Asmall font-mainRegular">
-          {props.address.city &&
-            props.address.city +
-              `${props.address.address ? ", " + props.address.address : ""}`}
+          {props.address.city
+            ? props.address.city +
+              `${props.address.address ? ", " + props.address.address : ""}`
+            : "ქალაქი"}
         </p>
       </div>
       <div className="flex items-center mt-2 bottom-3 w-full absolute left-0 px-3">

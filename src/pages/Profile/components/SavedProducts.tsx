@@ -9,6 +9,7 @@ import { TProductData } from "./MyProducts";
 import { getFavorites, removeFavorite } from "../../../hooks/serverFunctions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import HoverTitle from "../../../components/global/HoverTitle";
 
 function SavedProducts() {
   const userFavorites = useSelector((store: RootState) => store.user.favorites);
@@ -137,9 +138,10 @@ function FavoriteBanner(props: { product: TProductData }) {
       <div className="flex items-center gap-3 ml-auto small:justify-start small:w-full small:mt-5">
         <button
           onClick={() => removeFavorite(dispatch, props.product.id)}
-          className="bg-orangeClear  h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-orangeHover flex justify-center items-center"
+          className="group relative bg-orangeClear  h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-orangeHover flex justify-center items-center"
         >
           <BookmarkIcon className="h-full aspect-square [&>path]:fill-orangeI [&>path]:stroke-orangeI" />
+          <HoverTitle title="ფავორიტებიდან ამოღება" />
         </button>
       </div>
     </div>

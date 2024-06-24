@@ -48,7 +48,7 @@ export function NotificationBar({
   return (
     <div
       ref={popupBlock}
-      className={`group relative h-[34px] aspect-square cursor-default flex items-center justify-center transition-colors ${
+      className={`group relative h-[34px] mobileTab:h-[32px] aspect-square cursor-default flex items-center justify-center transition-colors ${
         activePop == "notifications" ? "bg-mainClear" : "bg-transparent"
       }   rounded-md `}
     >
@@ -66,7 +66,7 @@ export function NotificationBar({
             state !== "notifications" ? "notifications" : null
           );
         }}
-        className={`h-[20px] aspect-square  cursor-pointer translate-y-[1px]  select-none ${
+        className={`h-[20px] mobileTab:h-[18px] aspect-square  cursor-pointer translate-y-[1px]  select-none ${
           activePop == "notifications"
             ? " [&>path]:fill-main"
             : " [&>path]:fill-navIcon"

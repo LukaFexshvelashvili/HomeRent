@@ -17,6 +17,7 @@ export default function MainSlider() {
       pagination={{ clickable: true }}
       rewind
       autoplay={{ delay: 6000 }}
+      className="w-full"
     >
       <SwiperSlide>
         <MainSliderCard

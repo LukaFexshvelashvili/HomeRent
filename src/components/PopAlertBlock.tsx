@@ -13,8 +13,8 @@ export default function PopAlertBlock(props: {
         >
           {" "}
         </div>
-        <div className=" w-[650px] rounded-section bg-whiteMain p-5 relative z-10  max-w-[90%]">
-          <div className="w-[550px] mx-auto">
+        <div className=" max-w-[650px] w-[95%] rounded-section bg-whiteMain p-5 relative z-10 ">
+          <div className="max-w-[550px] w-[95%] mx-auto">
             <h2 className="text-main font-mainBold text-center text-[18px]  mb-4">
               {props.headText}
             </h2>

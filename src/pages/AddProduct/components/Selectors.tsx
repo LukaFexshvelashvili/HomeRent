@@ -720,7 +720,7 @@ export function EstateDescription() {
 export function EstateInformation(props: { error: boolean; productData: any }) {
   const [size, setSize] = useState<null | number>(null);
   const [openDeal, setOpenDeal] = useState(false);
-  const [currency, setCurrency] = useState(1);
+  const [currency, setCurrency] = useState(0);
   const [fullPrice, setFullPrice] = useState(0);
   const [sizePrice, setSizePrice] = useState(0);
   const dispatch = useDispatch();
@@ -782,78 +782,87 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                   ფასის შევსებამდე შეიყვანეთ ფართი
                 </div>
               ) : null}
-              <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+              <div className="flex items-center justify-between mediumSmall:flex-col mediumSmall:justify-center mediumSmall:gap-3">
+                <p className="text-textDesc font-mainMedium w-[60px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
+                  ფასი
+                </p>{" "}
+                {/* <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
                 ფასი
-              </p>
-              <div
-                className={`flex gap-4 flex-wrap items-center  pl-3 mt-4 transition-opacity  mobile:w-full ${
-                  size == null || size <= 0
-                    ? "pointer-events-none opacity-40"
-                    : ""
-                } `}
-              >
-                <div className="relative mobile:w-full">
-                  <button
-                    onClick={() => setOpenDeal((state) => !state)}
-                    className="bg-main mobile:w-full flex items-center w-[150px] justify-center py-[8px] rounded-lg text-buttonText tracking-widest font-mainMedium text-Asmall"
-                  >
-                    {currency == 0 ? "$ დოლარი" : "₾ ლარი"}
-                    <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
-                  </button>
-                  <div
-                    className={` w-[150px] absolute shadow-cardShadow bg-whiteMain rounded-lg top-[45px] overflow-hidden transition-all  ${
-                      openDeal ? "opacity-100 visible" : "invisible opacity-0"
-                    }`}
-                  >
+                </p> */}
+                <div
+                  className={`flex gap-4 flex-wrap items-center  transition-opacity  mobile:w-full ${
+                    size == null || size <= 0
+                      ? "pointer-events-none opacity-40"
+                      : ""
+                  } `}
+                >
+                  <div className="relative mobile:w-full">
                     <button
-                      onClick={() => {
-                        setOpenDeal(false);
-                        setCurrency(1);
-                      }}
-                      className={`h-[40px]  w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
-                        currency == 0 && "bg-whiteHover"
+                      onClick={() => setOpenDeal((state) => !state)}
+                      className="bg-main mobile:w-full flex items-center w-[150px] justify-center py-[8px] rounded-lg text-buttonText tracking-widest font-mainMedium text-Asmall"
+                    >
+                      {currency == 0 ? "$ დოლარი" : "₾ ლარი"}
+                      <DropDownIcon className="h-[16px] aspect-square flex items-center justify-center ml-4 translate-y-[1px] [&>path]:fill-WhiteFade" />
+                    </button>
+                    <div
+                      className={` w-[150px] absolute shadow-cardShadow bg-whiteMain rounded-lg top-[45px] overflow-hidden transition-all  ${
+                        openDeal ? "opacity-100 visible" : "invisible opacity-0"
                       }`}
                     >
-                      ₾ ლარი
-                    </button>
-                    <button
-                      onClick={() => {
-                        setOpenDeal(false);
-                        setCurrency(0);
-                      }}
-                      className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
-                        currency == 0 && "bg-whiteHover"
-                      }`}
-                    >
-                      $ დოლარი
-                    </button>
+                      <button
+                        onClick={() => {
+                          setOpenDeal(false);
+                          setCurrency(1);
+                        }}
+                        className={`h-[40px]  w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
+                          currency == 0 && "bg-whiteHover"
+                        }`}
+                      >
+                        ₾ ლარი
+                      </button>
+                      <button
+                        onClick={() => {
+                          setOpenDeal(false);
+                          setCurrency(0);
+                        }}
+                        className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
+                          currency == 0 && "bg-whiteHover"
+                        }`}
+                      >
+                        $ დოლარი
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-2 mobile:w-full mobile:justify-center">
-                  <input
-                    type="number"
-                    className="AddProductInput mobile:w-[100%_!important]"
-                    placeholder="სრული ფასი"
-                    onChange={(e) => {
-                      setFullPrice(e.target.valueAsNumber);
-                      calculateSizePrice(e.target.valueAsNumber);
-                    }}
-                    value={fullPrice ? fullPrice : ""}
-                  />{" "}
-                  <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>{" "}
-                </div>
-                <div className="flex items-center gap-2 mobile:w-full mobile:justify-center">
-                  <input
-                    type="number"
-                    className="AddProductInput mobile:w-[100%_!important]"
-                    placeholder="მ² ფასი"
-                    onChange={(e) => {
-                      setSizePrice(e.target.valueAsNumber);
-                      calculateFullPrice(e.target.valueAsNumber);
-                    }}
-                    value={sizePrice ? sizePrice : ""}
-                  />{" "}
-                  <p className=" text-textDesc">{currency == 0 ? "$" : "₾"}</p>
+                  <div className="flex items-center gap-2 mobile:w-full mobile:justify-center">
+                    <input
+                      type="number"
+                      className="AddProductInput mobile:w-[100%_!important]"
+                      placeholder="სრული ფასი"
+                      onChange={(e) => {
+                        setFullPrice(e.target.valueAsNumber);
+                        calculateSizePrice(e.target.valueAsNumber);
+                      }}
+                      value={fullPrice ? fullPrice : ""}
+                    />{" "}
+                    <p className=" text-textDesc">
+                      {currency == 0 ? "$" : "₾"}
+                    </p>{" "}
+                  </div>
+                  <div className="flex items-center gap-2 mobile:w-full mobile:justify-center">
+                    <input
+                      type="number"
+                      className="AddProductInput mobile:w-[100%_!important]"
+                      placeholder="მ² ფასი"
+                      onChange={(e) => {
+                        setSizePrice(e.target.valueAsNumber);
+                        calculateFullPrice(e.target.valueAsNumber);
+                      }}
+                      value={sizePrice ? sizePrice : ""}
+                    />{" "}
+                    <p className=" text-textDesc">
+                      {currency == 0 ? "$" : "₾"}
+                    </p>
+                  </div>
                 </div>
               </div>
             </>

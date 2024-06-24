@@ -94,7 +94,7 @@ export function SearchAddressFilter() {
         onFocus={() => setSearchWindow(true)}
         type="text"
         className="AddProductInput"
-        placeholder="ქუჩა"
+        placeholder="რაიონი"
         ref={getInput}
       />
 

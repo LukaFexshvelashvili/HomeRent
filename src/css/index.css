@@ -68,6 +68,9 @@ body {
   font-family: mainSemiBold;
   letter-spacing: 0.5px;
 }
+body.no-scroll {
+  overflow: hidden;
+}
 .animwhole {
   animation: 3s animwhole infinite linear;
 }
@@ -173,7 +176,7 @@ body {
   background: linear-gradient(29deg, var(--maclerStart), var(--maclerEnd));
 }
 main {
-  @apply py-8;
+  @apply py-8 mobileTab:py-4;
 }
 .slider-shade {
   background: rgb(0, 0, 0);

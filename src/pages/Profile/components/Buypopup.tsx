@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
 import DaysDropdown from "../../AddProduct/components/DaysDropdown";
 import { PopupCloseIcon } from "../../../assets/icons/Icons";
@@ -84,17 +84,26 @@ export default function Buypopup(props: {
       }
     }
   };
-
+  useEffect(() => {
+    if (props.popbuy) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [props.popbuy]);
   return (
-    <div className="fixed w-full h-full top-0 left-0 z-30 flex justify-center items-center">
+    <div className="fixed w-full h-full top-0 left-0 z-30 flex justify-center items-center pointer-events-all">
       <div
         onClick={() => props.setPopbuy({ id: null })}
-        className="absolute top-0 left-0 w-full h-full  bg-[rgba(0,0,0,0.4)]  z-[5]"
+        className="absolute top-0 left-0 w-full h-full  bg-[rgba(0,0,0,0.4)]  z-[5] "
       >
         {" "}
       </div>
       <div
-        className={` w-[650px] ${
+        className={`noScrollBar relative max-w-[650px] w-[96%]  max-h-[90%] overflow-auto ${
           request.pending == 1 ? "min-h-[300px]" : null
         } rounded-section bg-whiteMain p-5 relative z-10`}
       >
@@ -106,14 +115,14 @@ export default function Buypopup(props: {
             >
               <PopupCloseIcon className="h-[16px] [&>path]:fill-mainBlack" />
             </button>
-            <div className="w-[550px] mx-auto">
+            <div className=" max-w-[550px] w-[96%] mx-auto">
               <h2 className="text-main font-mainBold text-center text-[18px] ">
                 VIP ყიდვა
               </h2>
               <p className="text-textDesc  text-center text-[14px] mt-2">
                 სტატუსის გაძლიერება განცხადებაზე #{props.popbuy.id}
               </p>
-              <div className="flex items-center justify-between gap-5 mt-8">
+              <div className="flex items-center justify-between gap-5 mt-8 mobileTab:flex-col mobileTab:justify-center">
                 {ActiveOffers.map(
                   (e: TOffer, i: number) =>
                     e.status !== 0 && (

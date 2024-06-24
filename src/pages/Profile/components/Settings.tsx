@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from "react";
-import { InfoIcon } from "../../../assets/icons/Icons";
+// import { InfoIcon } from "../../../assets/icons/Icons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { setDarkMode, setMainColor } from "../../../store/data/webUISlice";
@@ -7,10 +7,10 @@ import { setDarkMode, setMainColor } from "../../../store/data/webUISlice";
 export default function Settings() {
   const dispatch = useDispatch();
   const UISettings = useSelector((store: RootState) => store.webUI);
-  const user = useSelector((store: RootState) => store.user);
+  // const user = useSelector((store: RootState) => store.user);
   const [activeColor, setActiveColor] = useState<number>(0);
   const [webDarkMode, setWebDarkMode] = useState<boolean>(false);
-  const [security, setSecurity] = useState<boolean>(false);
+  // const [security, setSecurity] = useState<boolean>(false);
   const colors = UISettings.colors;
   useLayoutEffect(() => {
     if (colors.indexOf(UISettings.mainColor) !== -1) {
@@ -69,7 +69,7 @@ export default function Settings() {
           ))}
         </div>
       </div>
-      {user.isLogged ? (
+      {/* {user.isLogged ? (
         <>
           <h2 className="text-textHeadCard mb-2 font-mainBold mt-6">
             უსაფრთხოება
@@ -106,7 +106,7 @@ export default function Settings() {
             </p>
           </div>
         </>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }

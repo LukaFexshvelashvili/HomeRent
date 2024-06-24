@@ -30,7 +30,7 @@ function Search() {
   const [vipSearched, setVipSearched] = useState<any[] | null>(null);
   const [params, setParams] = useSearchParams();
   const [loader, setLoader] = useState<boolean>(false);
-  const [pages, setPages] = useState<number>(1);
+  const [pages, setPages] = useState<number>(0);
   const [openFilters, setOpenFilters] = useState<boolean>(false);
 
   const cachedFirst = useRef<any[]>([]);
@@ -38,7 +38,7 @@ function Search() {
   const lastDebouncedSearch = useRef<string | null>(null);
   const [activePage, setActivePage] = useState<number>(() => {
     const page = params.get("page");
-    return page !== null ? parseInt(page) : 1;
+    return page !== null ? parseInt(page) : 0;
   });
 
   const [searchTitle, setSearchTitle] = useState<string>(() => {
@@ -97,6 +97,7 @@ function Search() {
       getSearchCache(debouncedSearch).then((res: any) => {
         if (res !== null) {
           afterSearchActions(res);
+          setLoader(false);
         } else {
           axiosCall.get(`fetch/search${debouncedSearch}`).then((res) => {
             if (res.data.status == 100) {
@@ -104,9 +105,9 @@ function Search() {
 
               afterSearchActions(res.data);
             }
+            setLoader(false);
           });
         }
-        setLoader(false);
       });
       if (activePage < 1) {
         deleteParams(params, setParams, "page");
@@ -201,9 +202,9 @@ function Search() {
         </div>
         <button
           onClick={() => setOpenFilters((state) => !state)}
-          className="h-[45px] w-[60px] text-[14px]   bg-main rounded-[5px] text-buttonText tracking-wider font-mainMedium relative flex items-center justify-center"
+          className="h-[45px] w-[60px] text-[14px]   bg-main rounded-[5px] text-buttonText tracking-wider font-mainMedium relative hidden mediumSmallXl:flex items-center justify-center"
         >
-          <div className="flex flex-col h-[25px] aspect-square justify-center items-center gap-1 absolute">
+          <div className=" flex flex-col h-[25px] aspect-square justify-center items-center gap-1 absolute">
             <span className="h-[2px] rounded-md w-10/12 bg-buttonText block"></span>
             <span className="h-[2px] rounded-md w-8/12 bg-buttonText block"></span>
             <span className="h-[2px] rounded-md w-4/12 bg-buttonText block"></span>
@@ -226,7 +227,9 @@ function Search() {
         />
         <section className="flex-[3]  rounded-normal">
           <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
-            {searched !== null ? `ნაპოვნია ${getFullCount.current} შედეგი` : ""}
+            {!loader && searched !== null
+              ? `ნაპოვნია ${getFullCount.current} შედეგი`
+              : ""}
           </p>
           <div className="flex flex-wrap relative min-h-[150px] gap-5 gap-y-7 large:justify-center large:gap-5">
             {!loader ? (
@@ -261,8 +264,18 @@ function ResponsiveFiltersSection(props: {
   openFilters: boolean;
   setOpenFilters: Function;
 }) {
+  useEffect(() => {
+    if (props.openFilters) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [props.openFilters]);
   return (
-    <section className="hidden mobile:block shadow-none ">
+    <section className="hidden mediumSmallXl:block shadow-none ">
       <div className={`overflow-hidden`}>
         <div
           onClick={() => props.setOpenFilters(false)}
@@ -355,28 +368,11 @@ function ResponsiveFiltersSection(props: {
 function FiltersSection(props: { citiesAPI: any; setSearchTitle: Function }) {
   const [params, setParams] = useSearchParams();
 
-  const [openFilters, setOpenFilters] = useState<boolean>(false);
-
   return (
-    <section className=" mobile:hidden relative flex-[1.5] large:flex-[2] bg-whiteMain mediumSmallXl:rounded-[10px] rounded-[18px] shadow-sectionShadow mediumSmallXl:shadow-none">
+    <section className=" mediumSmallXl:hidden relative flex-[1.5] large:flex-[2] bg-whiteMain mediumSmallXl:rounded-[10px] rounded-[18px] shadow-sectionShadow mediumSmallXl:shadow-none">
       <div
-        className={` px-4 py-3 pb-12 mediumSmallXl:p-0 mediumSmallXl:pb-8 overflow-hidden ${
-          openFilters ? "mediumSmallXl:max-h-min" : "mediumSmallXl:max-h-[55px]"
-        }`}
+        className={` px-4 py-3 pb-12 mediumSmallXl:p-0 mediumSmallXl:pb-8 overflow-hidden mediumSmallXl:max-h-[55px]`}
       >
-        <button
-          onClick={() => {
-            setOpenFilters((state) => !state);
-          }}
-          className="h-[55px] min-h-[55px] hidden mediumSmallXl:flex w-full bg-main rounded-[10px] text-buttonText tracking-wider font-mainMedium relative items-center justify-center"
-        >
-          <div className="flex  flex-col h-[30px] aspect-square justify-center items-center gap-1 absolute left-5">
-            <span className="h-[2px] rounded-md w-10/12 bg-buttonText block"></span>
-            <span className="h-[2px] rounded-md w-8/12 bg-buttonText block"></span>
-            <span className="h-[2px] rounded-md w-4/12 bg-buttonText block"></span>
-          </div>
-          ფილტრები
-        </button>
         {params.size > 0 ? (
           <button
             onClick={() => {

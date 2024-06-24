@@ -128,6 +128,7 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
   const [search, setSearch] = useState("");
   const [searchWindow, setSearchWindow] = useState(false);
   const [active, setActive] = useState("");
+  const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
   useEffect(() => {
     if (active !== "" && search !== active) {
@@ -150,9 +151,10 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
     const formData = new FormData();
     if (props.getActiveCity) {
       formData.append("city", props.getActiveCity);
-      axiosCall
-        .post("locations/get_location", formData)
-        .then((res) => setCitiesAPI(res.data.subLocs));
+      axiosCall.post("locations/get_location", formData).then((res) => {
+        setLoading(false);
+        setCitiesAPI(res.data.subLocs);
+      });
     }
   }, []);
 
@@ -161,6 +163,9 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
   }
 
   const fetchSearch = () => {
+    if (loading) {
+      return <p className="text-center text-textHead  mt-2">იტვირთება...</p>;
+    }
     if (search == "" && citiesAPI && citiesAPI.length !== 0) {
       return citiesAPI.map((e: any, i: number) => (
         <button
@@ -202,7 +207,7 @@ export function SearchAddressFilter(props: { getActiveCity: string | null }) {
           onFocus={() => setSearchWindow(true)}
           type="text"
           className="AddProductInput"
-          placeholder="ქუჩა"
+          placeholder="რაიონი"
           ref={getInput}
         />
 

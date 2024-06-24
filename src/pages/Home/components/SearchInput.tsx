@@ -297,6 +297,7 @@ export default memo(SearchInput);
 function SelectCity(props: { setData: Function; closeWindow: Function }) {
   const [search, setSearch] = useState("");
   const firstRender = useRef<boolean>(true);
+
   const [citiesAPI, setCitiesAPI] = useState([]);
   useLayoutEffect(() => {
     getCacheItem("cities").then((cachedCities) => {
@@ -322,25 +323,31 @@ function SelectCity(props: { setData: Function; closeWindow: Function }) {
       <input
         type="text"
         placeholder="მოძებნა"
-        className="mt-6 text-[14px] h-[40px] w-full bg-LoginInput outline-none rounded-lg px-4 transition-colors focus:bg-LoginInputActive my-3"
+        className="text-blackMain mt-6 text-[14px] h-[40px] w-full bg-LoginInput outline-none rounded-lg px-4 transition-colors focus:bg-LoginInputActive my-3"
         onChange={(e) => setSearch(e.target.value)}
         value={search}
       />
       <div className="flex flex-col   mobileTab:overflow-x-hidden mobileTab:overflow-y-scroll mobileTab:flex-nowrap  flex-wrap gap-x-10 h-[420px] overflow-x-scroll mt-6 gap-y-2">
         {citiesAPI !== undefined &&
-          citiesAPI.length > 1 &&
-          citiesAPI.map((e: string, i: number) => (
-            <div
-              onClick={() => {
-                props.setData(e);
-                props.closeWindow(null);
-              }}
-              className=" h-[26px] mobileTab:h-auto min-h-[30px] cursor-pointer transition-colors px-2 min-w-[150px] rounded-md hover:bg-whiteHover text-textHeadBlack"
-              key={i}
-            >
-              {e}
-            </div>
-          ))}
+        citiesAPI.length > 1 &&
+        citiesAPI.filter((name: string) => name.includes(search)).length > 0 ? (
+          citiesAPI
+            .filter((name: string) => name.includes(search))
+            .map((e: string, i: number) => (
+              <div
+                onClick={() => {
+                  props.setData(e);
+                  props.closeWindow(null);
+                }}
+                className=" h-[26px] mobileTab:h-auto min-h-[30px] cursor-pointer transition-colors px-2 min-w-[150px] rounded-md hover:bg-whiteHover text-textHeadBlack"
+                key={i}
+              >
+                {e}
+              </div>
+            ))
+        ) : (
+          <p className="text-textHead text-center">შედეგი ვერ მოიძებნა...</p>
+        )}
       </div>
     </>
   );

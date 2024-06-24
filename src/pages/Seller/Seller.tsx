@@ -2,9 +2,10 @@ import { memo, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosCall from "../../hooks/axiosCall";
 import { PhoneFIlledIcon, ReportIcon } from "../../assets/icons/Icons";
-import Card, { TProductCard } from "../../components/global/Card";
+import Card, { CardSkeleton, TProductCard } from "../../components/global/Card";
 import { useDispatch } from "react-redux";
 import { setReportProblem } from "../../store/data/popupsSlice";
+import { setWebLoader } from "../../store/data/webUISlice";
 
 type Tseller = {
   user_data: { name: string; surname: string; mobile: string };
@@ -19,6 +20,7 @@ function Seller() {
   const [seeNumber, setSeeNumber] = useState<boolean>(false);
   const firstRender = useRef(true);
   useLayoutEffect(() => {
+    dispatch(setWebLoader({ active: true, opacity: true }));
     if (params.id) {
       if (firstRender.current) {
         axiosCall.get("fetch/seller?id=" + params.id).then((res) => {
@@ -30,6 +32,7 @@ function Seller() {
           } else {
             navigate("/");
           }
+          dispatch(setWebLoader({ active: false }));
         });
 
         firstRender.current = false;
@@ -66,7 +69,7 @@ function Seller() {
             <ReportIcon className="h-[16px] aspect-square [&>path]:fill-pinkI mr-3" />{" "}
             გასაჩივრება
           </div>
-          {seeNumber ? (
+          {seeNumber && data !== null ? (
             <Link to={"tel:" + data?.user_data.mobile} className="w-auto">
               <button className="flex-1  text-buttonText flex justify-center min-w-[300px] items-center h-full rounded-md min-h-[45px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors small:text-[12px] small:min-h-[45px] small:min-w-[95%] small:max-w-[300px] small:rounded-md hover:bg-mainHover">
                 <PhoneFIlledIcon className="mobile:h-[21px] mobileSmall:h-[18px] h-[19px] aspect-square [&>path]:fill-text-buttonText mr-3 translate-y-[-1px]" />{" "}
@@ -80,7 +83,7 @@ function Seller() {
                   " დარეკვა"}
               </button>
             </Link>
-          ) : (
+          ) : data !== null ? (
             <button
               onClick={() => setSeeNumber(true)}
               className="flex-1  text-buttonText flex justify-center min-w-[300px] items-center h-full rounded-md min-h-[45px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors small:text-[12px] small:min-h-[45px] small:min-w-[95%] small:max-w-[300px] small:rounded-md hover:bg-mainHover"
@@ -91,7 +94,7 @@ function Seller() {
                 data?.user_data.mobile.slice(3, 5) +
                 " ** ** ნომრის ჩვენება"}
             </button>
-          )}
+          ) : null}
         </div>
       </div>
       {data?.products ? (
@@ -106,6 +109,14 @@ function Seller() {
             ))}
           </div>
         </>
+      ) : null}
+      {data == null ? (
+        <div className="flex items-center justify-center gap-5 w-full flex-wrap mt-5">
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
       ) : null}
     </>
   );

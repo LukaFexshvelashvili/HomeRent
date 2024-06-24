@@ -121,14 +121,14 @@ export default function Navbar() {
           {userData.isLogged ? (
             <Link to={"/AddProduct"}>
               <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-greenClear text-greenI rounded-[8px] text-[12px] transition-colors hover:bg-greenHover">
-                <PlusIcon className="h-[13px] aspect-square" />
+                <PlusIcon className="h-[13px] aspect-square  [&>path]:fill-greenI" />
                 დამატება
               </button>
             </Link>
           ) : (
             <Link to={"/Login"}>
               <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest w-[140px] h-[34px] bg-greenClear text-greenI rounded-[8px] text-[12px] transition-colors hover:bg-greenHover">
-                <PlusIcon className="h-[13px] aspect-square" />
+                <PlusIcon className="h-[13px] aspect-square  [&>path]:fill-greenI" />
                 დამატება
               </button>
             </Link>
@@ -184,7 +184,20 @@ function ResponsiveNavbar({
   const [activePop, setActivePop] = useState<string | null>(null);
   return (
     <>
-      <div className="flex items-center mr-[6px] gap-[2px]">
+      <div className="flex items-center mr-[6px] gap-[3px]">
+        {userData.isLogged ? (
+          <Link to={"/AddProduct"}>
+            <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest h-[32px] aspect-square bg-greenClear text-greenI rounded-[8px] text-[12px] transition-colors hover:bg-greenHover">
+              <PlusIcon className="h-[13px] aspect-square  [&>path]:fill-greenI" />
+            </button>
+          </Link>
+        ) : (
+          <Link to={"/Login"}>
+            <button className=" font-mainSemiBold flex items-center justify-center gap-3 tracking-widest h-[32px] aspect-square bg-greenClear text-greenI rounded-[8px] text-[12px] transition-colors hover:bg-greenHover">
+              <PlusIcon className="h-[13px] aspect-square  [&>path]:fill-greenI" />
+            </button>
+          </Link>
+        )}
         <NotificationBar
           userData={userData}
           activePop={activePop}
@@ -194,26 +207,26 @@ function ResponsiveNavbar({
           to={"/profile/SavedProducts"}
           className="flex justify-center items-center h-min"
         >
-          <button className="relative h-[32px] aspect-square cursor-pointer flex items-center justify-center select-none">
+          <button className="relative h-[30px] aspect-square cursor-pointer flex items-center justify-center select-none">
             {favNums > 0 ? (
               <div className="absolute h-[14px] aspect-square top-[2px] right-[2px] z-20 text-[9px] flex justify-center items-center text-buttonText font-mainRegular rounded-circle bg-main">
                 {favNums}
               </div>
             ) : null}
 
-            <BookmarkIcon className="h-[20px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon p-[0.2px] translate-y-[0.6px]" />
+            <BookmarkIcon className="h-[18px] aspect-square stroke-navIcon cursor-pointer [&>path]:stroke-navIcon p-[0.2px] translate-y-[0.6px]" />
           </button>
         </Link>{" "}
       </div>
       <button
         onClick={() => setActive((state: boolean) => !state)}
-        className={` h-[45px] translate relative aspect-square gap-[6px] justify-center p-[10px] flex flex-col z-[31] transition-colors rounded-lg ${
+        className={` h-[40px] translate relative aspect-square gap-[5px] justify-center p-[10px] flex flex-col z-[31] transition-colors rounded-lg ${
           active ? " bg-whiteBgLow" : "bg-transparent"
         } `}
       >
         <span
           className={`transition-transform block h-[2px] rounded-md w-full bg-blackMain ${
-            active && " rotate-45 translate-y-[8px]"
+            active && " rotate-45 translate-y-[7px]"
           }  `}
         ></span>
         <span
@@ -223,7 +236,7 @@ function ResponsiveNavbar({
         ></span>
         <span
           className={`transition-transform  block h-[2px] rounded-md w-full bg-blackMain ${
-            active && " -rotate-45 -translate-y-[8px] w-full"
+            active && " -rotate-45 -translate-y-[7px] w-full"
           }  `}
         ></span>
       </button>
@@ -320,14 +333,14 @@ function ResponsiveNavbar({
             {userData.isLogged ? (
               <Link onClick={() => setActive(false)} to={"/AddProduct"}>
                 <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-greenClear text-greenI rounded-[8px] text-[14px] transition-colors hover:bg-greenHover">
-                  <PlusIcon className="h-[16px] aspect-square" />
+                  <PlusIcon className="h-[16px] aspect-square [&>path]:fill-greenI" />
                   დამატება
                 </button>
               </Link>
             ) : (
               <Link onClick={() => setActive(false)} to={"/Login"}>
                 <button className=" font-mainSemiBold flex items-center justify-center gap-2 tracking-widest w-[160px] h-[40px] bg-greenClear text-greenI rounded-[8px] text-[14px] transition-colors hover:bg-greenHover">
-                  <PlusIcon className="h-[16px] aspect-square" />
+                  <PlusIcon className="h-[16px] aspect-square [&>path]:fill-greenI" />
                   დამატება
                 </button>
               </Link>

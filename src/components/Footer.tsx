@@ -19,7 +19,7 @@ export default function Footer() {
             <Link to={"/"}>მთავარი</Link>
             <Link to={"/Search"}>მოძებნა</Link>
             <Link to={"/"}>პროექტები</Link>
-            <Link to={"MaclerService"}>სააგენტოს სერვისი</Link>
+            <Link to={"AgencyService"}>სააგენტოს სერვისი</Link>
           </div>
           <div className="flex flex-col gap-2 [&>p]:text-Asmall text-Asmall [&>a]:text-textDesc [&>p]:cursor-pointer">
             <h3 className="mb-2  text-textHeadBlack">დახმარება</h3>
@@ -82,7 +82,7 @@ export default function Footer() {
                 <Link to={"/"}>მთავარი</Link>
                 <Link to={"Search"}>მოძებნა</Link>
                 <Link to={"/"}>პროექტები</Link>
-                <Link to={"MaclerService"}>სააგენტოს სერვისი</Link>
+                <Link to={"AgencyService"}>სააგენტოს სერვისი</Link>
               </>
             }
           />
@@ -168,7 +168,7 @@ function ResponsiveFooterLi(props: { title: string; content: JSX.Element }) {
           }`}
         />
       </button>
-      <div className="flex flex-col [&>p]:text-[16px] [&>p]:text-textDesc gap-1 mobile:[&>p]:text-[12px]">
+      <div className="flex flex-col [&>p]:text-[16px] [&>a]:text-textDesc [&>p]:text-textDesc  gap-1 mobile:[&>p]:text-[12px]">
         {props.content}
       </div>
     </div>

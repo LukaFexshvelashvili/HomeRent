@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Agencyconditions() {
+export default function AgencyConditions() {
   const navigate = useNavigate();
   const conditions = ["უძრავი ქონებას არ ადევს გადამეტებული ფასი"];
   return (

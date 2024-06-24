@@ -135,9 +135,6 @@ export const useDebounce = (
       setLoader(true);
     }
     const timeout = setTimeout(() => {
-      if (setLoader) {
-        setLoader(false);
-      }
       setDebouncedValue(value);
     }, delay);
 

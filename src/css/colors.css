@@ -86,9 +86,9 @@
   --purpleI: #bd00ff;
   --purpleClear: rgba(187, 0, 255, 0.1);
   --purpleHover: rgba(187, 0, 255, 0.15);
-  --greenI: #00cd08;
-  --greenClear: rgba(0, 205, 7, 0.1);
-  --greenHover: rgba(0, 205, 7, 0.15);
+  --greenI: #03c988;
+  --greenClear: rgba(3, 201, 135, 0.1);
+  --greenHover: rgba(3, 201, 135, 0.15);
   --yellowI: #ffc700;
   --yellowClear: rgba(255, 200, 0, 0.1);
   --yellowHover: rgba(255, 200, 0, 0.15);
@@ -192,9 +192,7 @@
   --purpleI: #bd00ff;
   --purpleClear: rgba(187, 0, 255, 0.1);
   --purpleHover: rgba(187, 0, 255, 0.15);
-  --greenI: #00cd08;
-  --greenClear: rgba(0, 205, 7, 0.1);
-  --greenHover: rgba(0, 205, 7, 0.15);
+
   --yellowI: #ffc700;
   --yellowClear: rgba(255, 200, 0, 0.1);
   --yellowHover: rgba(255, 200, 0, 0.15);

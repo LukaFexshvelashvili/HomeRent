@@ -38,7 +38,7 @@ const Contact = lazy(() => import("./pages/Contact/Contact"));
 
 const AgencyService = lazy(() => import("./pages/AgencyService/AgencyService"));
 const AgencyChoose = lazy(() => import("./pages/AgencyService/AgencyChoose"));
-const Agencyconditions = lazy(
+const AgencyConditions = lazy(
   () => import("./pages/AgencyService/AgencyConditions")
 );
 const AdminPanel = lazy(() => import("./pages/AdminPanel/AdminPanel"));
@@ -125,11 +125,6 @@ function App() {
           lang="ka"
           content="უძრავი ქონება, საქართელო, თბილისი, ბინა, სახლი, აგარაკი, მიწის ნაკვეთი, სასტუმრო, კომერციული ფართი, იყიდება, გირავდება, ქირავდება, ქირავდება დღიურად, ვიქირავებ, ვიგირავებ, ვიყიდი, სამშენებლო კომპანია, სააგენტო, ახალაშენებული, მშენებარე, შავი კარკასი, თეთრი კარკასი, მწვანე კარკასი"
         />
-        <meta
-          name="image"
-          lang="ka"
-          content="https://static.onhome.ge/onhome-thumbnail.webp"
-        ></meta>
         <meta name="theme-color" content="#3a86ff" />
         <link rel="canonical" href="https://onhome.ge/"></link>
 
@@ -192,7 +187,7 @@ function App() {
                 <Route path="AgencyService" element={<AgencyService />} />
                 <Route path="AgencyChoose" element={<AgencyChoose />} />
                 <Route path="AdsMake" element={<AdsMake />} />
-                <Route path="Agencyconditions" element={<Agencyconditions />} />
+                <Route path="AgencyConditions" element={<AgencyConditions />} />
                 <Route path="Seller/:id" element={<Seller />} />
 
                 {user.isLogged ? (
