@@ -7,9 +7,9 @@ import banner1 from "../../../assets/images/estates/banner1.webp";
 import banner2 from "../../../assets/images/estates/banner2.webp";
 import banner3 from "../../../assets/images/estates/banner3.webp";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { memo, useState } from "react";
 
-export default function MainSlider() {
+function MainSlider() {
   return (
     <Swiper
       modules={[EffectFade, Pagination, Autoplay]}
@@ -144,3 +144,5 @@ function MainSliderCard(props: TMainSliderCard) {
     </div>
   );
 }
+
+export default memo(MainSlider);

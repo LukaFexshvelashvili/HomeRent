@@ -274,10 +274,7 @@ export default function Product() {
                     მსგავსი განცხადებები
                   </p>
 
-                  <CardSlider
-                    uniqueId={1001}
-                    products={pageData.sameProducts}
-                  />
+                  <CardSlider products={pageData.sameProducts} />
                 </>
               )}
             </div>

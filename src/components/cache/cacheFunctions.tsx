@@ -23,15 +23,30 @@ export const deleteCacheItem = async (key: string) => {
 
 export const getLocalTime = () => {
   const now = new Date();
-  return now.toLocaleString();
+  return now.toLocaleString("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "Asia/Tbilisi",
+  });
 };
 
-export function isDateLater(givenDateString: string, minutes: number) {
-  const givenDate: any = new Date(givenDateString);
-  const now: any = new Date();
+export function isDateLater(givenDateString: string, minutes: number): boolean {
+  // Parse the given date string
+  const givenDate = new Date(givenDateString);
+  if (isNaN(givenDate.getTime())) {
+    // Invalid date string
+    return true;
+  }
+
+  // Get the current date
+  const now = new Date();
 
   // Calculate the difference in milliseconds
-  const difference = now - givenDate;
+  const difference = now.getTime() - givenDate.getTime();
 
   // Convert minutes to milliseconds
   const minutesInMilliseconds = minutes * 60 * 1000;

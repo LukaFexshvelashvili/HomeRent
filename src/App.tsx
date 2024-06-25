@@ -25,6 +25,7 @@ import Product from "./pages/Product/Product";
 import { Helmet } from "react-helmet";
 import CookieAgreement from "./pages/Profile/components/CookieAgreement";
 import NotFound from "./pages/NotFound";
+import AddProduct from "./pages/AddProduct/AddProduct";
 
 const SuspendedAccount = lazy(() => import("./pages/SuspendedAccount"));
 const Notifications = lazy(
@@ -44,7 +45,6 @@ const AgencyConditions = lazy(
 const AdminPanel = lazy(() => import("./pages/AdminPanel/AdminPanel"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 const Search = lazy(() => import("./pages/Search/Search"));
-const AddProduct = lazy(() => import("./pages/AddProduct/AddProduct"));
 const Login = lazy(() => import("./pages/Authentication/Login"));
 const Register = lazy(() => import("./pages/Authentication/Register"));
 const Seller = lazy(() => import("./pages/Seller/Seller"));
