@@ -62,20 +62,22 @@ export default function EstateConfirm(props: {
           />
           <p className=" text-Asmall text-textDesc mt-3">ბარათის ვიზუალი</p>
         </div>
-        <p className="text-Asmall text-textDesc mt-3 flex justify-between">
-          ბალანსი{": "}
-          <span className="text-main ml-1">
-            {(user.money / 100)
-              .toFixed(2)
-              .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "₾"}
-          </span>
+        <div className="text-Asmall text-textDesc mt-3 flex justify-center flex-col ">
+          <p className="">
+            ბალანსი{": "}
+            <span className="text-main ml-1">
+              {(user.money / 100)
+                .toFixed(2)
+                .replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "₾"}
+            </span>
+          </p>
           <Link
-            className="text-main underline ml-auto  w-min text-nowrap"
+            className="text-main underline  w-min text-nowrap"
             to={"/Profile/Balance"}
           >
             ბალანსის შევსება
           </Link>
-        </p>
+        </div>
         <div className="flex gap-2 items-center mt-5">
           {ActiveOffers.map((e: TOffer, i: number) => (
             <div
@@ -163,7 +165,6 @@ export default function EstateConfirm(props: {
                 props.setShowError,
                 props.setUploadStatus,
                 props.setAlertBlock,
-                setError,
                 () => {
                   dispatch(clearAddProduct());
                   axiosCall

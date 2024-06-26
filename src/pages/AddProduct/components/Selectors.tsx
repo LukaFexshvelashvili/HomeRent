@@ -32,7 +32,6 @@ import {
   updateCondition,
   updateCurrency,
   updateDeal,
-  updateDescription,
   updateFloor,
   updateFloors,
   updateFullPrice,
@@ -42,7 +41,6 @@ import {
   updateRooms,
   updateSize,
   updateStatus,
-  updateTitle,
   updateType,
   updateVip,
 } from "../../../store/data/addProductSlice";
@@ -57,7 +55,6 @@ export const submitProduct = (
   setShowError: Function,
   setUploadStatus: Function,
   setAlertBlock: Function,
-  setError: Function,
   clearAddProduct: Function
 ) => {
   let error: boolean = false;
@@ -124,10 +121,8 @@ export const submitProduct = (
         },
       })
       .then((res) => {
-        if (res.data.status === 12) {
-          setError("ანგარიშზე არ არის საკმარისი თანხა");
-        } else {
-          setUploadStatus(res.data.status);
+        setUploadStatus(res.data.status);
+        if (res.data.status === 100) {
           clearAddProduct();
         }
       });
@@ -348,6 +343,7 @@ function AddonBlock(props: {
 
 export function EstateImages(props: { error: boolean }) {
   const dispatch = useDispatch();
+  const productData = useSelector((store: RootState) => store.addProduct);
   const [images, setImages] = useState<any>([]);
   useEffect(() => {
     if (images.length > 0) {
@@ -376,7 +372,14 @@ export function EstateImages(props: { error: boolean }) {
       dispatch(updateActiveImage(null));
       dispatch(updateImages(null));
     }
-  }, [images]);
+    if (
+      productData.estateActiveImage == null &&
+      productData.estateImages == null &&
+      images.length > 0
+    ) {
+      setImages([]);
+    }
+  }, [images, productData.estateActiveImage]);
 
   const removeImage = (index: number) => {
     images.splice(index, 1);
@@ -402,7 +405,7 @@ export function EstateImages(props: { error: boolean }) {
           ფოტოები{" "}
         </p>
         <p className="text-Asmall text-textDescCard ml-2 mobile:ml-0">
-          (მაქსიმუმ 12 ფოტო, სურათის მოცულობა: 10MB)
+          (მაქსიმუმ 12 ფოტო, სურათის მოცულობა: 15MB)
         </p>{" "}
       </div>
       {images.length == 0 && props.error && (
@@ -634,7 +637,7 @@ export function EstateAddress(props: { error: boolean }) {
   const [city, setCity] = useState("");
   const getInput = useRef<any>(null);
   const dispatch = useDispatch();
-
+  const [ipAddress, setIpAddress] = useState<string>("");
   return (
     <div className="flex flex-col relative z-10">
       <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
@@ -654,85 +657,16 @@ export function EstateAddress(props: { error: boolean }) {
           className="AddProductInput "
           placeholder="საკადასტრო კოდი"
           onChange={(e) => {
-            if (e.target.value == "") {
+            let filteredValue = e.target.value.replace(/[^0-9.]/g, "");
+            if (filteredValue == "") {
               dispatch(updateIpcode(null));
             } else {
-              dispatch(updateIpcode(e.target.value));
+              setIpAddress(filteredValue);
+              dispatch(updateIpcode(filteredValue));
             }
           }}
+          value={ipAddress}
         />
-      </div>
-    </div>
-  );
-}
-export function EstateTitle(props: { error: boolean }) {
-  const [title, setTitle] = useState("");
-  const dispatch = useDispatch();
-
-  return (
-    <div className="flex flex-col">
-      <div className="flex items-center gap-2 mobile:flex-col">
-        <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-          განცხადების სათაური
-        </p>{" "}
-        <span className="text-Asmall text-textDescCard ">
-          (მაქსიმალური სიგრძე: 30)
-        </span>
-      </div>
-      {title == "" && props.error && (
-        <div className=" rounded-xl text-pinkI bg-pinkClear py-3 px-4 text-sm tracking-wider mt-2 text-center">
-          {" "}
-          სავალდებულოა შეავსოთ სათაურის ველი
-        </div>
-      )}
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
-        <input
-          type="text"
-          className="AddProductInputTitle"
-          placeholder="მაგ: იყიდება ბინა ზღვასთან"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-            if (e.target.value == "") {
-              dispatch(updateTitle(null));
-            } else {
-              dispatch(updateTitle(e.target.value));
-            }
-          }}
-        />
-      </div>
-    </div>
-  );
-}
-export function EstateDescription() {
-  const [description, setDescription] = useState("");
-  const dispatch = useDispatch();
-
-  return (
-    <div className="flex flex-col">
-      <div className="flex items-center gap-2 mobile:flex-col">
-        <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-          განცხადების აღწერა
-        </p>{" "}
-        <span className="text-Asmall text-textDescCard ">
-          (მაქსიმალური სიგრძე: 600)
-        </span>
-      </div>
-
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
-        <textarea
-          className="AddProductInputTitle textareaInput"
-          placeholder="განცხადების აღწერა"
-          value={description}
-          onChange={(e) => {
-            setDescription(e.target.value);
-            if (e.target.value == "") {
-              dispatch(updateDescription(null));
-            } else {
-              dispatch(updateDescription(e.target.value));
-            }
-          }}
-        ></textarea>
       </div>
     </div>
   );
@@ -774,19 +708,22 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
         {(size == null || fullPrice == 0) && props.error && (
           <div className=" rounded-xl text-pinkI bg-pinkClear py-3 px-4 text-sm tracking-wider mt-4 text-center">
             {" "}
-            სავალდებულოა შეავსოთ ფართი, ფასი
+            სავალდებულოა შეავსოთ{" "}
+            {props.productData.estateType == 3 ? "ჰექტარი" : "ფართი"}, ფასი
           </div>
         )}
         <div className="flex gap-7 flex-col pl-3 mt-4 mobile:pl-0">
           <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
             <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
-              ფართი (მ²)
+              {props.productData.estateType == 3 ? "ჰექტარი" : "ფართი (მ²)"}
             </p>{" "}
             <div className="w-full flex justify-end">
               <input
                 type="number"
                 className="AddProductInput mobileSmall:mx-auto "
-                placeholder="ფართი"
+                placeholder={
+                  props.productData.estateType == 3 ? "ჰექტარი" : "ფართი"
+                }
                 onChange={(e) => {
                   setSize(e.target.valueAsNumber);
                   dispatch(updateSize(e.target.valueAsNumber));

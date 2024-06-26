@@ -73,14 +73,14 @@ export default function ProductSideBar({
             <span>ID - {pageData.productData.id}</span>
           </div>
           <div className="flex items-center mt-2 justify-between mobile:flex-col-reverse mobile:mt-3 mobile:gap-3 mobile:items-stretch">
-            <h2 className="text-[20px] text-textHeadCard tracking-wide font-mainBold mobile:text-[18px] mobileSmall:text-[16px] max-w-[300px] overflow-hidden text-nowrap text-ellipsis">
-              {pageData.productData.estate_title}
+            <h2 className="text-[18px] text-textHeadCard tracking-wide font-mainBold mobile:text-[18px] mobileSmall:text-[16px] max-w-[360px] overflow-hidden text-nowrap ">
+              {pageData.productData.estate_title.slice(0, 30)}
             </h2>
-            <div className=" flex justify-center items-center bg-mainClear text-main h-[32px] w-[120px] font-mainBold tracking-wider rounded-lg text-Asmall mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
+            <div className=" flex justify-center items-center bg-mainClear text-main h-[30px] px-3 font-mainSemiBold tracking-wider rounded-md text-[13px] mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
               {getDealType(pageData.productData.estate_deal)}
             </div>{" "}
           </div>
-          <div className=" flex text-textHead items-center h-[30px] font-mainSemiBold tracking-wider rounded-lg text-Asmall mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
+          <div className=" flex text-textHead items-center h-[30px] font-mainSemiBold tracking-wider rounded-lg text-[13px] mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
             ტიპი:{" "}
             <span className="ml-2 text-main ">
               {getType(pageData.productData.estate_type)}
@@ -181,10 +181,11 @@ export default function ProductSideBar({
           <SquareFrameIcon className=" h-[25px] aspect-square [&>path]:stroke-textHeadCard" />
           <div className="flex flex-col ml-3">
             <p className=" text-textDesc text-Asmaller font-mainBold tracking-wider">
-              ფართი
+              {pageData.productData.estate_type == 3 ? "ჰექტარი" : "ფართი"}
             </p>
             <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
-              {pageData.productData.estate_size} მ²
+              {pageData.productData.estate_size}{" "}
+              {pageData.productData.estate_type == 3 ? "" : "მ²"}
             </p>
           </div>
         </div>

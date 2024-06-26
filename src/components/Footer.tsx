@@ -32,6 +32,8 @@ export default function Footer() {
           <div className="flex flex-col gap-3 ">
             <h3 className="mb-2  text-textHeadBlack">იყიდება</h3>
             <div className="flex flex-wrap flex-col gap-2 gap-x-6 h-[160px] [&>a]:text-Asmall text-Asmall [&>a]:text-textDesc [&>a]:cursor-pointer">
+              <Link to={"search?deal=2"}>ქირავდება დღიურად</Link>
+
               <Link to={"search?deal=0&estate_type=1&rooms=1"}>
                 იყიდება 1 ოთახიანი ბინა
               </Link>

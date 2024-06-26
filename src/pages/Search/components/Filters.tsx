@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { RealEstateTypes } from "./FiltersArray";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
@@ -247,40 +247,48 @@ export function SizeSlider(props: { setData?: Function }) {
   const [params, setParams] = useSearchParams();
   const startCounting = useRef<boolean>(false);
   const firstRender = useRef<boolean>(true);
+  const isHectar = useRef<boolean>(false);
 
-  const [Prices, setPrices] = useState<number[]>([-1, -1]);
+  const [Sizes, setSizes] = useState<number[]>([-1, -1]);
 
   const searchSizes = params.get("sizes");
+  useLayoutEffect(() => {
+    if (params.get("estate_type") && params.get("estate_type") == "3") {
+      isHectar.current = true;
+    } else {
+      isHectar.current = false;
+    }
+  }, [params]);
   useEffect(() => {
     if (firstRender.current) {
       if (searchSizes) {
         const getSearchSizes = JSON.parse(searchSizes);
-        setPrices([getSearchSizes[0], getSearchSizes[1]]);
+        setSizes([getSearchSizes[0], getSearchSizes[1]]);
       } else if (!searchSizes) {
-        setPrices([-1, -1]);
+        setSizes([-1, -1]);
       }
       firstRender.current = false;
     } else if (searchSizes == null) {
-      setPrices([-1, -1]);
+      setSizes([-1, -1]);
     }
   }, [searchSizes, params]);
 
   useEffect(() => {
     if (startCounting.current) {
-      setPrices([-1, -1]);
+      setSizes([-1, -1]);
 
       updateParams(params, setParams, {
         sizes: JSON.stringify([0, 0]),
       });
       if (props.setData) {
-        props.setData([Prices[0], Prices[1]]);
+        props.setData([Sizes[0], Sizes[1]]);
       }
-    } else if (Prices[1] !== -1) {
+    } else if (Sizes[1] !== -1) {
       updateParams(params, setParams, {
-        sizes: JSON.stringify([Prices[0] == -1 ? 0 : Prices[0], Prices[1]]),
+        sizes: JSON.stringify([Sizes[0] == -1 ? 0 : Sizes[0], Sizes[1]]),
       });
     }
-  }, [Prices[0], Prices[1]]);
+  }, [Sizes[0], Sizes[1]]);
   return (
     <div className="flex flex-col items-center relative w-10/12 mx-auto">
       <p className=" text-textHead tracking-wider font-mainBold ">
@@ -294,12 +302,12 @@ export function SizeSlider(props: { setData?: Function }) {
             className="h-[30px] w-[100px] rounded-md bg-LoginInput text-textHeadCard px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               if (e.target.valueAsNumber >= 0) {
-                setPrices([e.target.valueAsNumber, Prices[1]]);
+                setSizes([e.target.valueAsNumber, Sizes[1]]);
               } else if (e.target.value == "") {
-                setPrices([-1, Prices[1]]);
+                setSizes([-1, Sizes[1]]);
               }
             }}
-            value={Prices[0] == -1 ? "" : Prices[0]}
+            value={Sizes[0] == -1 ? "" : Sizes[0]}
           />
           <p className="text-Asmall ml-2 text-textDesc">მ² -დან</p>
         </div>
@@ -309,12 +317,12 @@ export function SizeSlider(props: { setData?: Function }) {
             className="h-[30px] w-[100px] rounded-md bg-LoginInput  text-textHeadCard px-3 outline-none transition-colors focus:bg-LoginInputActive text-[15px]"
             onChange={(e) => {
               if (e.target.valueAsNumber >= 0) {
-                setPrices([Prices[0], e.target.valueAsNumber]);
+                setSizes([Sizes[0], e.target.valueAsNumber]);
               } else if (e.target.value == "") {
-                setPrices([Prices[0], -1]);
+                setSizes([Sizes[0], -1]);
               }
             }}
-            value={Prices[1] == -1 ? "" : Prices[1]}
+            value={Sizes[1] == -1 ? "" : Sizes[1]}
           />
           <p className="text-Asmall ml-2 text-textDesc">მ² -მდე</p>
         </div>

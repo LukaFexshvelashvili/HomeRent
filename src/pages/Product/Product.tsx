@@ -140,7 +140,7 @@ export default function Product() {
                   <p className=" text-[14px] font-mainSemiBold text-textDescCard leading-[23px] mt-2 tracking-normal">
                     {pageData.productData.estate_description &&
                     pageData.productData.estate_description !== "null"
-                      ? pageData.productData.estate_description
+                      ? pageData.productData.estate_description.slice(0, 600)
                       : "აღწერა არ არის დამატებული"}
                   </p>
                   {pageData.productData.estate_ipcode !== "null" && (

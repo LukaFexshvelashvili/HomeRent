@@ -5,19 +5,19 @@ import {
   EstateAddons,
   EstateAddress,
   EstateClosePlaces,
-  EstateDescription,
   EstateImages,
   EstateInformation,
   EstateOption,
   EstateStatus,
-  EstateTitle,
   EstateType,
 } from "./components/Selectors";
 import { RootState } from "../../store/store";
 import { useEffect, useLayoutEffect, useState } from "react";
 import ContentLoader from "../../components/global/ContentLoader";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { updateStatus } from "../../store/data/addProductSlice";
+import { EstateDescription, EstateTitle } from "./components/SelectorsOpt";
+import UploadStatusBlock from "./components/UploadStatusBlock";
 
 export default function AddProduct() {
   const productData = useSelector((store: RootState) => store.addProduct);
@@ -43,64 +43,14 @@ export default function AddProduct() {
       {alertBlock && (
         <div className="fixed w-full h-full top-0 left-0 z-50 flex justify-center items-center bg-blackFade">
           <div className=" w-[650px] h-auto min-h-[150px] rounded-section bg-whiteMain p-5 relative z-10">
-            {uploadStatus === null && <ContentLoader />}
-
-            {uploadStatus === 100 ? (
-              <>
-                <h2 className="text-greenI text-center text-[20px] font-mainBold">
-                  განცხადება წარმატებით დამატდა
-                </h2>
-                <p className="text-textDesc text-center text-[16px] font-mainBold my-3">
-                  განცხადება წარმატებით დამატდა მონაცემთა ბაზაში, მის გამოჩენას
-                  შესაძლოა დაჭირდეს რამოდენიმე წუთი
-                </p>
-                <div className="flex items-center gap-5 justify-center mt-5">
-                  <Link to={"/Profile/MyProducts"}>
-                    <button className="px-4 py-2 rounded-md text-buttonText bg-main tracking-wider text-[14px] transition-colors hover:bg-mainHover">
-                      განცხადებების ნახვა
-                    </button>
-                  </Link>{" "}
-                  <Link to={"/"}>
-                    <button className="px-4 py-2 rounded-md text-buttonText bg-main tracking-wider text-[14px] transition-colors hover:bg-mainHover">
-                      მთავარ გვერდზე დაბრუნება
-                    </button>{" "}
-                  </Link>
-                </div>
-              </>
-            ) : uploadStatus == 7 ? (
-              <>
-                <h2 className="text-pinkI text-center text-[20px] font-mainBold">
-                  სურათის ზომა აჭარბებს 10 მეგაბაიტს
-                </h2>
-                <p className="text-textDesc text-center text-[16px] font-mainBold my-3">
-                  გთხოვთ სცადოთ მოგვიანებით
-                </p>
-                <div className="flex items-center gap-5 justify-center mt-5">
-                  <Link to={"/"}>
-                    <button className="px-4 py-2 rounded-md text-buttonText bg-main tracking-wider text-[14px] transition-colors hover:bg-mainHover">
-                      მთავარ გვერდზე დაბრუნება
-                    </button>{" "}
-                  </Link>
-                </div>
-              </>
+            {uploadStatus === null ? (
+              <ContentLoader />
             ) : (
-              uploadStatus === 0 && (
-                <>
-                  <h2 className="text-pinkI text-center text-[20px] font-mainBold">
-                    განცხადების დამატებისას წარმოიშვა პრობლემა
-                  </h2>
-                  <p className="text-textDesc text-center text-[16px] font-mainBold my-3">
-                    გთხოვთ სცადოთ მოგვიანებით
-                  </p>
-                  <div className="flex items-center gap-5 justify-center mt-5">
-                    <Link to={"/"}>
-                      <button className="px-4 py-2 rounded-md text-buttonText bg-main tracking-wider text-[14px] transition-colors hover:bg-mainHover">
-                        მთავარ გვერდზე დაბრუნება
-                      </button>{" "}
-                    </Link>
-                  </div>
-                </>
-              )
+              <UploadStatusBlock
+                status={uploadStatus}
+                setStatus={setUploadStatus}
+                setAlertBlock={setAlertBlock}
+              />
             )}
           </div>
         </div>
