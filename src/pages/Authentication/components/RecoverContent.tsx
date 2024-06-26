@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   hasNumbersAndLetters,
   hasUppercase,
@@ -11,6 +11,7 @@ import { LockIcon } from "../../../assets/icons/Icons";
 import { HomesbgDecor } from "../../../assets/images/decorations/svg/Decorations";
 import SideSection from "./SideSection";
 import AuthenticationHeader from "../AuthenticationHeader";
+import { setWebLoader } from "../../../store/data/webUISlice";
 
 export default function RecoverContent() {
   const { url } = useParams();
@@ -19,6 +20,7 @@ export default function RecoverContent() {
   const [status, setStatus] = useState<number>(0);
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [passwordStatus, setPasswordStatus] = useState<number>(0);
+  const dispatch = useDispatch();
   const [error, setError] = useState<{ status: boolean; data: null | string }>({
     status: false,
     data: null,
@@ -53,6 +55,8 @@ export default function RecoverContent() {
     setError({ status: false, data: null });
     if (password.length >= 8) {
       if (password == confirmPassword) {
+        dispatch(setWebLoader({ active: true, opacity: true }));
+
         axiosCall
           .post(
             "user/reset_password.php",
@@ -64,6 +68,8 @@ export default function RecoverContent() {
             }
           )
           .then((res) => {
+            dispatch(setWebLoader({ active: false }));
+
             if (res.data.status === 100) {
               setStatus(100);
             } else {

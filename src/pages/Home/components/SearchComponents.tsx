@@ -12,7 +12,7 @@ export function InputSizeSlider(props: {
   return (
     <div
       className={`flex flex-col items-center relative  mx-auto ${
-        props.toFull ? "w-full max-w-[900px]" : "w-10/12"
+        props.toFull ? "w-full max-w-[900px]" : "w-[10/12]"
       }`}
     >
       <div className="flex items-center gap-6 mt-4 mobile:flex-wrap">

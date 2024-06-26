@@ -2,16 +2,18 @@ import { useState } from "react";
 import { MailIcon } from "../../assets/icons/Icons";
 import { HomesbgDecor } from "../../assets/images/decorations/svg/Decorations";
 import SideSection from "./components/SideSection";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Tuser } from "../../store/data/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import axiosCall from "../../hooks/axiosCall";
 import AuthenticationHeader from "./AuthenticationHeader";
 import { Helmet } from "react-helmet";
+import { setWebLoader } from "../../store/data/webUISlice";
 
 export default function ForgotPassword() {
   const user: Tuser = useSelector((store: RootState) => store.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [code, setCode] = useState<string>("");
@@ -25,6 +27,7 @@ export default function ForgotPassword() {
   );
   const submitEmail = () => {
     if (email.length > 2) {
+      dispatch(setWebLoader({ active: true, opacity: true }));
       setError({ status: false, data: null });
 
       axiosCall
@@ -38,6 +41,8 @@ export default function ForgotPassword() {
           }
         )
         .then((res) => {
+          dispatch(setWebLoader({ active: false }));
+
           if (res.data.status == 100) {
             setCodeSubmit(true);
           } else if (res.data.status == 2) {
@@ -55,6 +60,7 @@ export default function ForgotPassword() {
   };
   const submitCode = () => {
     setError({ status: false, data: null });
+    dispatch(setWebLoader({ active: true, opacity: true }));
 
     axiosCall
       .post(
@@ -67,6 +73,8 @@ export default function ForgotPassword() {
         }
       )
       .then((res) => {
+        dispatch(setWebLoader({ active: false }));
+
         if (res.data.status == 0) {
           setError({ status: true, data: "კოდი არასწორია" });
         } else if (res.data.status == 100) {

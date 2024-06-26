@@ -130,8 +130,11 @@ export default function ProductSideBar({
           </div>
           <div className="outline outline-2 -outline-offset-2 outline-borderCol1 mobile:flex-col mobile:h-auto  rounded-xl  w-full h-[48px] mt-4 flex items-center">
             {seeNumber ? (
-              <Link to={"tel:" + pageData.userData.mobile} className="w-auto">
-                <button className="flex-1  text-buttonText flex justify-center min-w-[300px] items-center h-full rounded-xl min-h-[48px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors hover:bg-mainHover">
+              <Link
+                to={"tel:" + pageData.userData.mobile}
+                className="w-auto mobile:w-full"
+              >
+                <button className="flex-1 text-buttonText flex justify-center min-w-[300px] items-center h-full rounded-xl min-h-[48px] mobile:min-h-[54px] mobileSmall:text-[13px] px-5 mobile:w-full bg-main relative text-Asmaller mobile:text-[14px] tracking-wide font-mainSemiBold transition-colors hover:bg-mainHover">
                   <PhoneFIlledIcon className="mobile:h-[21px] mobileSmall:h-[18px] h-[19px] aspect-square [&>path]:fill-text-buttonText mr-3 translate-y-[-1px]" />{" "}
                   {pageData.userData.mobile.slice(0, 3) +
                     " " +
@@ -340,6 +343,7 @@ function getType(typeID: number) {
 
 function getProject(projectID: number) {
   const projectTypes: string[] = [
+    "არასტანდარტული",
     "ლენინგრადის",
     "ლვოვის",
     "კიევი",
@@ -352,7 +356,6 @@ function getProject(projectID: number) {
     "ვეძისი",
     "იუგოსლავიის",
     "მეტრომშენის",
-    "არასტანდარტული",
     "ყავლაშვილის",
   ];
 

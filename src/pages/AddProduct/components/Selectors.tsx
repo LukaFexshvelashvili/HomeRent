@@ -352,13 +352,25 @@ export function EstateImages(props: { error: boolean }) {
   useEffect(() => {
     if (images.length > 0) {
       let covers = images.filter(
-        (item: { url: string; cover: boolean }) => item.cover === true
+        (item: { image: any; url: string; cover: boolean }) =>
+          item.cover === true
       );
+
       if (covers.length === 0) {
-        images[0].cover = true;
+        let newImages = images.map(
+          (item: { image: any; url: string; cover: boolean }) => ({
+            image: item.image,
+            url: item.url,
+            cover: false,
+          })
+        );
+        newImages[0].cover = true;
         dispatch(updateActiveImage(images[0].url));
-        dispatch(updateImages(images));
-        setImages([...images]);
+        dispatch(updateImages(newImages));
+        setImages([...newImages]);
+      } else {
+        dispatch(updateActiveImage(covers[0].url));
+        dispatch(updateImages([...images]));
       }
     } else if (images.length === 0) {
       dispatch(updateActiveImage(null));
@@ -371,11 +383,15 @@ export function EstateImages(props: { error: boolean }) {
     setImages([...images]);
   };
   const makeMainImage = (index: number) => {
-    let newImages = images.map((item: { url: string; cover: boolean }) => ({
-      url: item.url,
-      cover: false,
-    }));
+    let newImages = images.map(
+      (item: { image: any; url: string; cover: boolean }) => ({
+        image: item.image,
+        url: item.url,
+        cover: false,
+      })
+    );
     newImages[index].cover = true;
+
     dispatch(updateActiveImage(images[index].url));
     setImages([...newImages]);
   };
@@ -413,8 +429,13 @@ export function EstateImages(props: { error: boolean }) {
                     };
                   }
                 );
-                let allImages = [...images, ...selectedImages];
-                if (allImages.length > 12) allImages = allImages.slice(-12);
+                event.target.value = "";
+                let allImages = [...selectedImages];
+
+                if (images && images.length > 0) {
+                  allImages = [...images, ...selectedImages];
+                }
+                if (allImages.length > 15) allImages = allImages.slice(-15);
 
                 setImages(() => [...allImages]);
               }
@@ -701,7 +722,7 @@ export function EstateDescription() {
       <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         <textarea
           className="AddProductInputTitle textareaInput"
-          placeholder="ბინის აღწერა"
+          placeholder="განცხადების აღწერა"
           value={description}
           onChange={(e) => {
             setDescription(e.target.value);

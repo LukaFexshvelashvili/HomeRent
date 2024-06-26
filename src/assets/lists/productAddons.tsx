@@ -27,6 +27,8 @@ export const projectDealTypes = [
   "გირავდება",
 ];
 export const projectTypes = [
+  "არასტანდარტული",
+
   "ლენინგრადის",
   "ლვოვის",
   "კიევი",
@@ -39,7 +41,6 @@ export const projectTypes = [
   "ვეძისი",
   "იუგოსლავიის",
   "მეტრომშენის",
-  "არასტანდარტული",
   "ყავლაშვილის",
 ];
 

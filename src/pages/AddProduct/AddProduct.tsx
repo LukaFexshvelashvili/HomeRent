@@ -14,17 +14,24 @@ import {
   EstateType,
 } from "./components/Selectors";
 import { RootState } from "../../store/store";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import ContentLoader from "../../components/global/ContentLoader";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { updateStatus } from "../../store/data/addProductSlice";
 
 export default function AddProduct() {
   const productData = useSelector((store: RootState) => store.addProduct);
+  const userData = useSelector((store: RootState) => store.user);
   const [showError, setShowError] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<number | null>(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [alertBlock, setAlertBlock] = useState<boolean>(false);
+  useLayoutEffect(() => {
+    if (userData.isLogged !== null && userData.isLogged === false) {
+      navigate("/Login");
+    }
+  }, []);
   useEffect(() => {
     if (productData.estateType == 3) {
       dispatch(updateStatus(null));

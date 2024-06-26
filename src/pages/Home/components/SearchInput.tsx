@@ -207,7 +207,7 @@ function SearchInput() {
           </div>
 
           {inputSelect && (
-            <div className="fixed left-2/4 -translate-x-2/4 -translate-y-2/4 top-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4 w-[80%] mx-auto z-[21] small:top-2/4 small:-translate-y-2/4">
+            <div className="fixed left-2/4 -translate-x-2/4 -translate-y-2/4 top-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4 max-w-[800px] w-[90%] mx-auto z-[21] small:top-2/4 small:-translate-y-2/4">
               <button
                 onClick={() => setInputSelect(null)}
                 className="h-[26px] aspect-square  absolute top-3 right-3 flex justify-center items-center p-1"
@@ -216,7 +216,7 @@ function SearchInput() {
               </button>
               {inputSelect == 1 ? (
                 <>
-                  <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                  <p className="text-textHead text-[14px] w-full text-center small:text-center small:w-full small:mt-6 small:mb-2">
                     აირჩიეთ უძრავი ქონების ტიპი
                   </p>
                   <SelectType
@@ -226,7 +226,7 @@ function SearchInput() {
                 </>
               ) : inputSelect == 2 ? (
                 <>
-                  <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                  <p className="text-textHead text-[14px] w-full text-center small:text-center small:w-full small:mt-6 small:mb-2">
                     აირჩიეთ ქალაქი
                   </p>
                   <SelectCity
@@ -236,7 +236,7 @@ function SearchInput() {
                 </>
               ) : inputSelect == 3 ? (
                 <>
-                  <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                  <p className="text-textHead text-[14px] w-wull text-center small:text-center small:w-full small:mt-6 small:mb-2">
                     აირჩიეთ ფართის ზომა
                   </p>
                   <InputSizeSlider
@@ -247,7 +247,7 @@ function SearchInput() {
                 </>
               ) : inputSelect == 4 ? (
                 <>
-                  <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                  <p className="text-textHead text-[14px] w-full text-center small:text-center small:w-full small:mt-6 small:mb-2">
                     აირჩიეთ ფასის ინტერვალი
                   </p>
                   <InputPriceSlider
@@ -258,7 +258,7 @@ function SearchInput() {
                 </>
               ) : inputSelect == 5 ? (
                 <>
-                  <p className="text-textHead text-[14px] w-[calc(100%-50px)] small:text-center small:w-full small:mt-6 small:mb-2">
+                  <p className="text-textHead text-[14px] w-full text-center small:text-center small:w-full small:mt-6 small:mb-2">
                     აირჩიეთ ოთახების რაოდენობა
                   </p>
                   <SelectRooms

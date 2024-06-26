@@ -153,7 +153,7 @@ function App() {
       {popups.reportProblem.show ? <ProblemReport /> : null}
       {popups.share.show ? <SharePopup /> : null}
       {!lock ? (
-        <Suspense fallback={<MainLoader />}>
+        <Suspense fallback={<MainLoader opacity />}>
           <CheckRoutes user={user}>
             <Routes>
               <Route path="/">

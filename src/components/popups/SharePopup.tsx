@@ -42,6 +42,7 @@ export default function SharePopup() {
               to={
                 "https://www.facebook.com/sharer/sharer.php?u=" + shareData.link
               }
+              target="_blank"
             >
               <button
                 onClick={() => {
@@ -52,7 +53,10 @@ export default function SharePopup() {
                 <FacebookIcon className=" h-[18px] aspect-square" />
               </button>
             </Link>
-            <Link to={"http://twitter.com/share?url=" + shareData.link}>
+            <Link
+              to={"http://twitter.com/share?url=" + shareData.link}
+              target="_blank"
+            >
               <button
                 onClick={() => {
                   setMessage("");
