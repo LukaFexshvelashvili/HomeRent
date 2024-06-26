@@ -134,7 +134,7 @@ function ProductBanner(props: { product: TProductData; rerender: Function }) {
           </span>
         </p>
         <p className="text-[13px] text-textDesc">
-          {props.product.estate_type == 3 ? "ჰექტარი" : "ფართი"}:{" "}
+          ფართი{" "}
           <span className="text-[13px] text-textHeadBlack">
             {props.product.estate_size} მ²
           </span>

@@ -20,6 +20,7 @@ import { projectStatuses } from "../../../assets/lists/productAddons";
 import { TproductPage } from "../Product";
 import { Link } from "react-router-dom";
 import { setReportProblem, setShare } from "../../../store/data/popupsSlice";
+import numeral from "numeral";
 export default function ProductSideBar({
   pageData,
 }: {
@@ -35,10 +36,17 @@ export default function ProductSideBar({
   const [seeNumber, setSeeNumber] = useState<boolean>(false);
   const [price, setPrice] = useState<{ full: number; perSize: number }>({
     full: Math.floor(pageData.productData.estate_price),
-    perSize: Math.floor(
-      pageData.productData.estate_price / pageData.productData.estate_size
-    ),
+    perSize: pageData.productData.estate_land_size
+      ? Math.floor(
+          pageData.productData.estate_price /
+            (pageData.productData.estate_size +
+              pageData.productData.estate_land_size)
+        )
+      : Math.floor(
+          pageData.productData.estate_price / pageData.productData.estate_size
+        ),
   });
+
   const changeFavorite = () => {
     if (favorited) {
       removeFavorite(dispatch, pageData.productData.id);
@@ -86,6 +94,14 @@ export default function ProductSideBar({
               {getType(pageData.productData.estate_type)}
             </span>
           </div>{" "}
+          {pageData.productData.estate_land_size ? (
+            <div className=" flex text-textHead items-center h-[30px] font-mainSemiBold tracking-wider rounded-lg text-[13px] mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
+              ეზოს ფართი:{" "}
+              <span className="ml-2 text-textDesc ">
+                {pageData.productData.estate_land_size}
+              </span>
+            </div>
+          ) : null}
           {pageData.productData.estate_condition ? (
             <div className=" flex text-textHead items-center h-[30px] font-mainSemiBold tracking-wider rounded-lg text-Asmall mobile:mx-auto mobileSmall:text-[12px] mobileSmall:h-[28px]">
               მდგომარეობა:{" "}
@@ -97,10 +113,11 @@ export default function ProductSideBar({
           <div className="flex items-center mt-5 justify-between px-3 mobile:px-0">
             <div className="flex items-center gap-4 mobileSmall:gap-2">
               <p className="text-[20px] font-mainBold text-textHeadCard mobile:text-[18px] mobileSmall:text-[16px]">
-                {price.full} {currency == 0 ? "$" : currency == 1 ? "₾" : ""}
+                {numeral(price.full).format("0,0").replace(/,/g, " ")}{" "}
+                {currency == 0 ? "$" : currency == 1 ? "₾" : ""}
               </p>
               <p className="text-[16px] font-mainBold text-textDescCard mobile:text-[14px] mobileSmall:text-[12px]">
-                1 მ² - {price.perSize}{" "}
+                1 მ² - {numeral(price.perSize).format("0,0").replace(/,/g, " ")}{" "}
                 {currency == 0 ? "$" : currency == 1 ? "₾" : ""}
               </p>
             </div>
@@ -181,7 +198,7 @@ export default function ProductSideBar({
           <SquareFrameIcon className=" h-[25px] aspect-square [&>path]:stroke-textHeadCard" />
           <div className="flex flex-col ml-3">
             <p className=" text-textDesc text-Asmaller font-mainBold tracking-wider">
-              {pageData.productData.estate_type == 3 ? "ჰექტარი" : "ფართი"}
+              ფართი
             </p>
             <p className="text-textHeadCard text-Asmall font-mainBold ml-1 tracking-wider">
               {pageData.productData.estate_size}{" "}

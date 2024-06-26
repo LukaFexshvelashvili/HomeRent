@@ -118,8 +118,8 @@ function Home() {
         </div>
         <AdBanner1 />
         <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4 mt-10">
-          <CrownIcon className=" h-[18px] mobileSmall:h-[17px] [&>path]:fill-redI mr-3 mobileSmall:mr-2 translate-y-[-1px] " />{" "}
-          <span className="text-redI mr-2">VIP+</span> განცხადებები
+          <CrownIcon className=" h-[18px] mobileSmall:h-[17px] [&>path]:fill-vipPlusI mr-3 mobileSmall:mr-2 translate-y-[-1px] " />{" "}
+          <span className="text-vipPlusI mr-2">VIP+</span> განცხადებები
         </div>
 
         <CardSlider

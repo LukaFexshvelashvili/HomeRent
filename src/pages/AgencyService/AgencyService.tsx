@@ -34,12 +34,12 @@ export default function AgencyService() {
     },
     {
       icon: (
-        <div className="h-[28px] mobileTab:h-[26px] mobileTab:text-[13px] mobileTab:w-[60px]  w-[80px] text-[14px] rounded-md bg-redI text-buttonText flex justify-center items-center">
+        <div className="h-[28px] mobileTab:h-[26px] mobileTab:text-[13px] mobileTab:w-[60px]  w-[80px] text-[14px] rounded-md bg-vipPlusI text-buttonText flex justify-center items-center">
           VIP+
         </div>
       ),
       title: "VIP+ სტატუსი",
-      color: "#FF003D",
+      color: "#ff005c",
     },
   ];
   return (

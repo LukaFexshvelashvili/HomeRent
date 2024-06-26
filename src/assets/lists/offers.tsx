@@ -51,7 +51,7 @@ export const ActiveOffers = [
       "ბარათის ფერის გამორჩევა",
       "განცხადებების დეტალურ გვერდებზე გამოჩენა",
     ],
-    mainColor: "#FF003D",
+    mainColor: "#ff005c",
 
     secondColor: "rgba(255, 0, 60, 0.1)",
     lineColor: "rgba(255, 0, 60, 0.3)",

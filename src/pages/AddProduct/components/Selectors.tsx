@@ -37,6 +37,7 @@ import {
   updateFullPrice,
   updateImages,
   updateIpcode,
+  updateLandSize,
   updateProject,
   updateRooms,
   updateSize,
@@ -83,6 +84,7 @@ export const submitProduct = (
     formData.append("estateExactAddress", productData.estateExactAddress);
     formData.append("estateIpcode", productData.estateIpcode);
     formData.append("estateSize", productData.estateSize);
+    formData.append("estateLandSize", productData.estateLandSize);
     formData.append("estateProject", productData.estateProject);
     formData.append("estateCondition", productData.estateCondition);
     formData.append("estateFloor", productData.estateFloor);
@@ -674,6 +676,7 @@ export function EstateAddress(props: { error: boolean }) {
 
 export function EstateInformation(props: { error: boolean; productData: any }) {
   const [size, setSize] = useState<null | number>(null);
+  const [landSize, setLandSize] = useState<null | number>(null);
   const [openDeal, setOpenDeal] = useState(false);
   const [currency, setCurrency] = useState(0);
   const [fullPrice, setFullPrice] = useState(0);
@@ -690,12 +693,20 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
   }, [currency]);
   const calculateSizePrice = (price: number) => {
     if (size && size > 0) {
-      setSizePrice(Math.floor(price / size));
+      if (landSize && landSize > 0) {
+        setSizePrice(Math.floor(price / (size + landSize)));
+      } else {
+        setSizePrice(Math.floor(price / size));
+      }
     }
   };
   const calculateFullPrice = (price: number) => {
     if (size && size > 0) {
-      setFullPrice(Math.floor(price * size));
+      if (landSize && landSize > 0) {
+        setFullPrice(Math.floor(price * (size + landSize)));
+      } else {
+        setFullPrice(Math.floor(price * size));
+      }
     }
   };
 
@@ -708,22 +719,19 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
         {(size == null || fullPrice == 0) && props.error && (
           <div className=" rounded-xl text-pinkI bg-pinkClear py-3 px-4 text-sm tracking-wider mt-4 text-center">
             {" "}
-            სავალდებულოა შეავსოთ{" "}
-            {props.productData.estateType == 3 ? "ჰექტარი" : "ფართი"}, ფასი
+            სავალდებულოა შეავსოთ ფართი, ფასი
           </div>
         )}
-        <div className="flex gap-7 flex-col pl-3 mt-4 mobile:pl-0">
+        <div className="flex gap-6 flex-col pl-3 mt-4 mobile:pl-0">
           <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
             <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
-              {props.productData.estateType == 3 ? "ჰექტარი" : "ფართი (მ²)"}
+              ფართი (მ²)
             </p>{" "}
             <div className="w-full flex justify-end">
               <input
                 type="number"
                 className="AddProductInput mobileSmall:mx-auto "
-                placeholder={
-                  props.productData.estateType == 3 ? "ჰექტარი" : "ფართი"
-                }
+                placeholder={"ფართი"}
                 onChange={(e) => {
                   setSize(e.target.valueAsNumber);
                   dispatch(updateSize(e.target.valueAsNumber));
@@ -732,6 +740,25 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
               />{" "}
             </div>
           </div>
+          {props.productData.estateType === 0 ? (
+            <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
+              <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
+                ეზოს ფართი (მ²)
+              </p>{" "}
+              <div className="w-full flex justify-end">
+                <input
+                  type="number"
+                  className="AddProductInput mobileSmall:mx-auto "
+                  placeholder={"ეზოს ფართი"}
+                  onChange={(e) => {
+                    setLandSize(e.target.valueAsNumber);
+                    dispatch(updateLandSize(e.target.valueAsNumber));
+                  }}
+                  value={landSize ? landSize : ""}
+                />{" "}
+              </div>
+            </div>
+          ) : null}
           <div className="flex flex-col z-[4]">
             <>
               {size == null || size <= 0 ? (

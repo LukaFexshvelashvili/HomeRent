@@ -23,6 +23,7 @@ export type TProductCard = {
   estate_address: string;
   estate_exact_address: string;
   estate_size: number;
+  estate_land_size: number | null;
   estate_price: number;
   estate_currency: number;
   estate_rooms: number;
@@ -56,14 +57,16 @@ export default function Card(props: {
           loaded
             ? "p-0 pb-14"
             : "invisible max-w-0 overflow-hidden max-h-0 p-0 m-0"
-        }  ${
-          props.autoWidth ? "w-full" : "w-[280px]"
-        } bg-whiteMain border-2 border-cardBorder rounded-[17px]  relative`}
+        }  ${props.autoWidth ? "w-full" : "w-[280px]"}  ${
+          props.product.estate_vip == 2
+            ? "bg-gradient-to-t from-vipPlusClear from-5% to-25% to-whiteMain border-none shadow-[inset_0px_0px_0px_1.5px_var(--vipPlusHover)]"
+            : "bg-whiteMain shadow-[inset_0px_0px_0px_1.5px_var(--cardBorder)]"
+        } border-none  rounded-[10px]  relative`}
       >
         <Link to={"/product/" + props.product.id} className=" rounded-2xl">
           <div className="w-full h-[200px] rounded-[15px] bg-whiteLoad relative overflow-hidden">
             {props.product.estate_vip == 2 ? (
-              <div className="absolute h-[25px] w-[60px] select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
+              <div className="absolute h-[25px] w-[60px] select-none bg-vipPlusI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
                 VIP+
               </div>
             ) : props.product.estate_vip == 1 ? (
@@ -108,7 +111,13 @@ export default function Card(props: {
           </Link>
         </div>
         <div className="flex items-center mt-2 bottom-3 w-full absolute left-0 px-3">
-          <div className="bg-mainClear text-main w-[120px] h-[30px] flex justify-center items-center rounded-md">
+          <div
+            className={`${
+              props.product.estate_vip == 2
+                ? "bg-vipPlusClear text-vipPlusI"
+                : "bg-mainClear text-main"
+            }  w-[120px] h-[30px] flex justify-center items-center rounded-[5px] `}
+          >
             {numeral(Math.floor(props.product.estate_price))
               .format("0,0")
               .replace(/,/g, " ")}
@@ -116,11 +125,29 @@ export default function Card(props: {
           </div>
           <p className="text-textDescCard font-mainRegular tracking-wide text-[13px] max-w-[90px] mx-3 text-nowrap text-ellipsis w-full overflow-hidden">
             მ² -{" "}
-            {numeral(
-              Math.floor(props.product.estate_price / props.product.estate_size)
-            )
-              .format("0,0")
-              .replace(/,/g, " ")}
+            {props.product.estate_land_size ? (
+              <>
+                {numeral(
+                  Math.floor(
+                    props.product.estate_price /
+                      (props.product.estate_size +
+                        props.product.estate_land_size)
+                  )
+                )
+                  .format("0,0")
+                  .replace(/,/g, " ")}
+              </>
+            ) : (
+              <>
+                {numeral(
+                  Math.floor(
+                    props.product.estate_price / props.product.estate_size
+                  )
+                )
+                  .format("0,0")
+                  .replace(/,/g, " ")}
+              </>
+            )}
             {getCurrency(props.product.estate_currency)}
           </p>
           <button
@@ -132,7 +159,11 @@ export default function Card(props: {
           >
             <BookmarkIcon
               className={`h-[20px]  transition-all   ${
-                favorite
+                props.product.estate_vip == 2
+                  ? favorite
+                    ? "fill-vipPlusI [&>path]:stroke-vipPlusI"
+                    : "fill-transparent [&>path]:stroke-vipPlusI"
+                  : favorite
                   ? "fill-orangeI [&>path]:stroke-orangeI"
                   : "fill-transparent [&>path]:stroke-navIcon"
               }`}

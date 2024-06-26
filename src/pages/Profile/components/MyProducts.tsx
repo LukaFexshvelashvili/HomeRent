@@ -22,6 +22,8 @@ export type TProductData = {
   estate_exact_address: string;
   estate_ipcode: string;
   estate_size: number;
+  estate_land_size: number;
+
   estate_project: number;
   estate_condition: number;
   estate_floor: number;

@@ -80,6 +80,10 @@
   --redClear: rgba(255, 0, 0, 0.1);
   --redHover: rgba(255, 0, 0, 0.15);
   --redCloseI: #e20036;
+  --vipPlusI: #ff005c;
+  --vipPlusClear: rgba(255, 0, 93, 0.1);
+  --vipPlusHover: rgba(255, 0, 93, 0.15);
+
   --pinkI: #ff03a9;
   --pinkClear: rgba(255, 3, 171, 0.1);
   --pinkHover: rgba(255, 3, 171, 0.15);

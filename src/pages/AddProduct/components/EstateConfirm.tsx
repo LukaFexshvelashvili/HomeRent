@@ -57,6 +57,8 @@ export default function EstateConfirm(props: {
             image={data.estateActiveImage}
             price={data.estatePrice}
             size={data.estateSize}
+            vip={data.estateVip}
+            landSize={data.estateLandSize}
             currency={data.estateCurrency}
             address={sendAddress}
           />
@@ -200,7 +202,9 @@ export function CardExample(props: {
   image?: string | null;
   title?: string | null;
   price?: number | null;
+  vip?: number | null;
   size?: number | null;
+  landSize?: number | null;
   rooms?: number | null;
   currency: number;
   address: {
@@ -211,22 +215,39 @@ export function CardExample(props: {
 }) {
   const getSizePrice = () => {
     if (props.size && props.size > 0 && props.price && props.price > 0) {
-      let calc = props.size > 0 && props.price > 0 && props.price / props.size;
-      return calc && Math.floor(calc);
+      if (props.landSize && props.landSize > 0) {
+        let calc = props.price / (props.size + props.landSize);
+        return calc && Math.floor(calc);
+      } else {
+        let calc = props.price / props.size;
+        return calc && Math.floor(calc);
+      }
     } else {
       return 0;
     }
   };
   return (
     <div
-      className={`h-auto   ${
-        props.autoWidth ? "w-full" : "w-[290px]"
-      } bg-whiteMain border-2 border-cardBorder rounded-normal p-3 pb-14 relative medium:w-[260px]`}
+      className={`h-auto p-0 pb-14 ${
+        props.autoWidth ? "w-full" : "w-[280px]"
+      }  ${
+        props.vip == 2
+          ? "bg-gradient-to-t from-vipPlusClear from-5% to-25% to-whiteMain border-none shadow-[inset_0px_0px_0px_1.5px_var(--vipPlusHover)]"
+          : "bg-whiteMain shadow-[inset_0px_0px_0px_1.5px_var(--cardBorder)]"
+      } border-none  rounded-[10px]  relative`}
     >
-      <div className="w-full h-[240px] medium:h-[200px] rounded-normal bg-whiteLoad relative overflow-hidden flex justify-center items-center">
-        <div className="absolute h-[25px] w-[60px]  select-none bg-redI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
-          VIP+
-        </div>
+      <div className="w-full h-[200px] rounded-[12px] bg-whiteLoad relative overflow-hidden flex justify-center items-center">
+        {props.vip == 2 ? (
+          <div className="absolute h-[25px] w-[60px] select-none bg-vipPlusI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
+            VIP+
+          </div>
+        ) : props.vip == 1 ? (
+          <div className="absolute h-[25px] w-[60px] select-none bg-orangeI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
+            VIP
+          </div>
+        ) : (
+          props.vip == 0 && <></>
+        )}
         {props.image ? (
           <img
             src={props.image}
@@ -253,11 +274,11 @@ export function CardExample(props: {
         </div>
       </div>
 
-      <div className="flex flex-col py-1">
-        <h2 className="text-textHeadCard font-mainMedium w-[80%] overflow-hidden text-nowrap text-ellipsis">
+      <div className="flex flex-col  py-1 pt-2 px-3">
+        <h2 className="text-textHeadCard font-mainMedium w-[80%] text-[15px] overflow-hidden text-nowrap text-ellipsis">
           {props.title ? props.title : "სათაური"}
         </h2>
-        <p className="text-textDescCard text-Asmall font-mainRegular">
+        <p className="text-textDescCard  font-mainRegular text-[13px]">
           {props.address.city
             ? props.address.city +
               `${props.address.address ? ", " + props.address.address : ""}`
@@ -265,7 +286,13 @@ export function CardExample(props: {
         </p>
       </div>
       <div className="flex items-center mt-2 bottom-3 w-full absolute left-0 px-3">
-        <div className="bg-mainClear text-main w-[120px] h-[30px] flex justify-center items-center rounded-lg">
+        <div
+          className={` ${
+            props.vip == 2
+              ? "bg-vipPlusClear text-vipPlusI"
+              : "bg-mainClear text-main"
+          }  w-[120px] h-[30px] flex justify-center items-center rounded-[5px]`}
+        >
           {props.price &&
             numeral(Math.floor(props.price)).format("0,0").replace(/,/g, " ")}
           {props.currency == 0 ? "$" : props.currency == 1 && "₾"}
@@ -276,7 +303,11 @@ export function CardExample(props: {
         </p>
         <button className="p-[5px] rounded-md absolute right-3">
           <BookmarkIcon
-            className={`h-[20px]  transition-all [&>path]:stroke-navIcon`}
+            className={`h-[20px]  transition-all   ${
+              props.vip == 2
+                ? "fill-transparent [&>path]:stroke-vipPlusI"
+                : "fill-transparent [&>path]:stroke-navIcon"
+            }`}
           />
         </button>
       </div>

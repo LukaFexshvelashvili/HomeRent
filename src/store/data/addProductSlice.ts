@@ -13,6 +13,7 @@ export type TproductInfoStart = {
   estateActiveImage: null | string;
   estateImages: any;
   estateSize: null | number;
+  estateLandSize: null | number;
   estateProject: null | string;
   estateCondition: null | string;
   estateFloor: null | number;
@@ -41,6 +42,7 @@ const initialState: TproductInfoStart = {
   estateActiveImage: null,
   estateImages: null,
   estateSize: null,
+  estateLandSize: null,
   estateProject: null,
   estateCondition: null,
   estateFloor: null,
@@ -97,6 +99,9 @@ const addProductSlice = createSlice({
     },
     updateSize: (state, action: PayloadAction<number | null>) => {
       state.estateSize = action.payload;
+    },
+    updateLandSize: (state, action: PayloadAction<number | null>) => {
+      state.estateLandSize = action.payload;
     },
 
     updateProject: (state, action: PayloadAction<string | null>) => {
@@ -157,6 +162,7 @@ export const {
   updateActiveImage,
   updateImages,
   updateSize,
+  updateLandSize,
   updateProject,
   updateCondition,
   updateFloor,

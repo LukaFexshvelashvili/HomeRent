@@ -15,7 +15,7 @@ import { RootState } from "../../store/store";
 import { useEffect, useLayoutEffect, useState } from "react";
 import ContentLoader from "../../components/global/ContentLoader";
 import { useNavigate } from "react-router-dom";
-import { updateStatus } from "../../store/data/addProductSlice";
+import { updateLandSize, updateStatus } from "../../store/data/addProductSlice";
 import { EstateDescription, EstateTitle } from "./components/SelectorsOpt";
 import UploadStatusBlock from "./components/UploadStatusBlock";
 
@@ -35,6 +35,7 @@ export default function AddProduct() {
   useEffect(() => {
     if (productData.estateType == 3) {
       dispatch(updateStatus(null));
+      dispatch(updateLandSize(null));
     }
   }, [productData.estateType]);
 
