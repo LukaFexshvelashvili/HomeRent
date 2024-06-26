@@ -1,37 +1,46 @@
+import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 
 export default function AgencyConditions() {
   const navigate = useNavigate();
   const conditions = ["უძრავი ქონებას არ ადევს გადამეტებული ფასი"];
   return (
-    <main className="min-h-screen mt-[30px]">
-      <div className="bg-whiteMain rounded-section shadow-sectionShadow p-7 px-[50px] relative">
-        <button
-          onClick={() => navigate(-1)}
-          className="bg-maclerMainClear flex items-center py-2 px-5 text-[14px] gap-4 text-maclerMain rounded-lg tracking-wider font-mainBold"
-        >
-          <BackIcon /> უკან
-        </button>
-        <h1 className="text-[18px] text-maclerMain text-center  font-mainBold">
-          სააგენტოს სერვისის კრიტერიუმები
-        </h1>
-        <div className="flex items-start mt-[30px]">
-          <div className="flex-1">
-            <div className="flex flex-col gap-4 my-5  text-[14px]">
-              {conditions.map((e: string, i: number) => (
-                <div key={i} className="flex items-center text-textDesc gap-3">
-                  <div className="h-[14px] aspect-square rounded-circle border-2 border-maclerMain"></div>{" "}
-                  {e}
-                </div>
-              ))}
+    <>
+      <Helmet>
+        <title>სააგენტო პირობები - OnHome</title>
+      </Helmet>
+      <main className="min-h-screen mt-[30px]">
+        <div className="bg-whiteMain rounded-section shadow-sectionShadow p-7 px-[50px] relative">
+          <button
+            onClick={() => navigate(-1)}
+            className="bg-maclerMainClear flex items-center py-2 px-5 text-[14px] gap-4 text-maclerMain rounded-lg tracking-wider font-mainBold"
+          >
+            <BackIcon /> უკან
+          </button>
+          <h1 className="text-[18px] text-maclerMain text-center  font-mainBold">
+            სააგენტოს სერვისის კრიტერიუმები
+          </h1>
+          <div className="flex items-start mt-[30px]">
+            <div className="flex-1">
+              <div className="flex flex-col gap-4 my-5  text-[14px]">
+                {conditions.map((e: string, i: number) => (
+                  <div
+                    key={i}
+                    className="flex items-center text-textDesc gap-3"
+                  >
+                    <div className="h-[14px] aspect-square rounded-circle border-2 border-maclerMain"></div>{" "}
+                    {e}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex-1 flex justify-center items-center">
+              <InfoIcon />
             </div>
           </div>
-          <div className="flex-1 flex justify-center items-center">
-            <InfoIcon />
-          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 const BackIcon = () => (

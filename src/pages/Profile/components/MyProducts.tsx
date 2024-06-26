@@ -8,6 +8,7 @@ import PopAlertBlock from "../../../components/PopAlertBlock";
 import { Tuser } from "../../../store/data/userSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import { Helmet } from "react-helmet";
 
 export type TProductData = {
   id: number;
@@ -142,6 +143,9 @@ function MyProducts() {
 
   return (
     <>
+      <Helmet>
+        <title>ჩემი განცხადებები - OnHome</title>
+      </Helmet>
       {popAlert.open ? (
         <PopAlertBlock
           close={() =>

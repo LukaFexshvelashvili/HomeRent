@@ -5,6 +5,7 @@ import { RootState } from "../../../store/store";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosCall from "../../../hooks/axiosCall";
 import { updateNotifications } from "../../../store/data/userSlice";
+import { Helmet } from "react-helmet";
 
 export default function Notifications() {
   const userNotifications = useSelector(
@@ -34,31 +35,36 @@ export default function Notifications() {
   }, [params]);
 
   return (
-    <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex overflow-hidden mobile:flex-col">
-      {notifications.length > 0 ? (
-        <>
-          <div className=" notificationList w-5/12 border-r-2 border-whiteHover h-[520px] max-h-[520px] overflow-x-hidden mobile:w-full mobile:h-min mobile:min-h-[50px]">
-            {notifications.map((e: Tnotification) => (
-              <NotificationBlock
-                dispatch={dispatch}
-                key={e.id}
-                data={e}
-                activeMessage={activeMessage}
-                setActiveMessage={setActiveMessage}
-              />
-            ))}
+    <>
+      <Helmet>
+        <title>შეტყობინებები - OnHome</title>
+      </Helmet>
+      <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex overflow-hidden mobile:flex-col">
+        {notifications.length > 0 ? (
+          <>
+            <div className=" notificationList w-5/12 border-r-2 border-whiteHover h-[520px] max-h-[520px] overflow-x-hidden mobile:w-full mobile:h-min mobile:min-h-[50px]">
+              {notifications.map((e: Tnotification) => (
+                <NotificationBlock
+                  dispatch={dispatch}
+                  key={e.id}
+                  data={e}
+                  activeMessage={activeMessage}
+                  setActiveMessage={setActiveMessage}
+                />
+              ))}
+            </div>
+            <NotificationsData
+              notifications={notifications}
+              activeMessage={activeMessage}
+            />
+          </>
+        ) : (
+          <div className="flex justify-center items-center w-full text-textDesc px-3 py-7">
+            შეტყობინებები ცარიელია
           </div>
-          <NotificationsData
-            notifications={notifications}
-            activeMessage={activeMessage}
-          />
-        </>
-      ) : (
-        <div className="flex justify-center items-center w-full text-textDesc px-3 py-7">
-          შეტყობინებები ცარიელია
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 

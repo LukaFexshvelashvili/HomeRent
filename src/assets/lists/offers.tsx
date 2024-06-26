@@ -28,7 +28,7 @@ export const ActiveOffers = [
     status: 1,
     name: "VIP",
     benefits: [
-      "ავტომატური განახლება",
+      "მარკინგი",
       "სპეციალურ ადგილებზე გამოჩენა",
       "ძებნისას მაღალი რანკი",
     ],
@@ -45,7 +45,7 @@ export const ActiveOffers = [
     status: 2,
     name: "VIP+",
     benefits: [
-      "ავტომატური განახლება",
+      "მარკინგი",
       "სპეციალურ ადგილებზე გამოჩენა",
       "ძებნისას მაღალი რანკი",
       "ბარათის ფერის გამორჩევა",
@@ -57,5 +57,17 @@ export const ActiveOffers = [
     lineColor: "rgba(255, 0, 60, 0.3)",
     sale: 0.75,
     price: 3,
+  },
+  {
+    id: 3,
+    status: 3,
+    name: "AUTO",
+    benefits: ["ავტომატური განახლება"],
+    mainColor: "#00ff80",
+
+    secondColor: "rgba(0, 255, 128, 0.1) ",
+    lineColor: "rgba(0, 255, 128, 0.3) ",
+    sale: 0.1,
+    price: 0.3,
   },
 ];

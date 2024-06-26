@@ -131,16 +131,17 @@ export default function EstateConfirm(props: {
               <p className=" text-main">
                 {offerData.sale !== 0 ? (
                   <>
-                    {offerData.price * selectedDays -
-                      offerData.sale * selectedDays +
-                      "₾"}{" "}
+                    {(
+                      offerData.price * selectedDays -
+                      offerData.sale * selectedDays
+                    ).toFixed(2) + "₾"}{" "}
                     <span className=" line-through opacity-30 ">
                       {" "}
-                      {offerData.price * selectedDays}₾
+                      {(offerData.price * selectedDays).toFixed(2)}₾
                     </span>
                   </>
                 ) : (
-                  <>{offerData.price * selectedDays}₾</>
+                  <>{(offerData.price * selectedDays).toFixed(2)}₾</>
                 )}
               </p>
             </div>
@@ -260,7 +261,7 @@ export function CardExample(props: {
         <div className="absolute bottom-2 left-2 flex items center gap-2">
           <div className="bg-cardInfoBg backdrop-blur-[2px] rounded-[3px] flex justify-center items-center px-2 py-[6px] text-WhiteFade font-mainSemiBold text-sm">
             <RoomIcon className="h-[18px] mr-3 [&>path]:fill-WhiteFade" />{" "}
-            {props.rooms && props.rooms}
+            {props.rooms ? props.rooms : 0}
           </div>
           <div className="bg-cardInfoBg backdrop-blur-[2px] rounded-[3px] flex justify-center items-center px-2 py-[6px] text-WhiteFade font-mainSemiBold text-sm">
             <SquareFrameIcon className="h-[18px] mr-3 [&>path]:stroke-WhiteFade" />{" "}

@@ -4,6 +4,7 @@ import { DateIcon, LoginEyeIcon } from "../../../assets/icons/Icons";
 import { TProductData } from "./MyProducts";
 import { FetchLastSeenProducts } from "../../../hooks/serverProductFunctions";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function LastSeenProducts() {
   const [products, setProducts] = useState<TProductData[]>([]);
@@ -18,7 +19,9 @@ export default function LastSeenProducts() {
 
   return (
     <>
-      {" "}
+      <Helmet>
+        <title>ბოლოს ნანახი - OnHome</title>
+      </Helmet>{" "}
       <div className=" rounded-section shadow-sectionShadow bg-whiteMain relative flex  py-2 flex-col gap-3">
         <p className="px-4 text-[13px] text-textDesc my-1">
           სულ {products.length} განცხადება

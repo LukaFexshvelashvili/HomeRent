@@ -25,9 +25,9 @@ export default function DaysDropdown({
           1 დღე -{" "}
           {offerData.sale !== 0 ? (
             <>
-              {offerData.price - offerData.sale + "₾"}{" "}
+              {(offerData.price - offerData.sale).toFixed(2) + "₾"}{" "}
               <span className=" line-through opacity-30 ">
-                {offerData.price}₾
+                {offerData.price.toFixed(2)}₾
               </span>
             </>
           ) : (

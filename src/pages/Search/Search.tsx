@@ -25,6 +25,7 @@ import {
   setCacheItem,
   setSearchCache,
 } from "../../components/cache/cacheFunctions";
+import { Helmet } from "react-helmet";
 function Search() {
   const [searched, setSearched] = useState<any>(null);
   const [vipSearched, setVipSearched] = useState<any[] | null>(null);
@@ -162,99 +163,114 @@ function Search() {
   };
 
   return (
-    <main className="flex gap-4 flex-col">
-      <div className="flex gap-2">
-        <div className="w-full flex items-center border-2 border-whiteLoad rounded-normal overflow-hidden relative h-[45px]">
-          <form
-            className="w-full h-full"
-            onSubmit={(e) => {
-              e.preventDefault();
-              titleSubmit();
-            }}
-          >
-            <input
-              type="text"
-              placeholder="სიტყვით ძებნა..."
-              className="w-full h-full px-4 bg-bodyBg outline-none text-blackMain tracking-wider text-[14px] transition-colors focus:bg-whiteLoad"
-              onChange={(e) => {
-                setSearchTitle(e.target.value);
+    <>
+      {searchTitle ? (
+        <Helmet>
+          <title>ძებნა - {searchTitle}</title>
+        </Helmet>
+      ) : (
+        <Helmet>
+          <title>ძებნა - OnHome</title>
+        </Helmet>
+      )}
+
+      <main className="flex gap-4 flex-col">
+        <div className="flex gap-2">
+          <div className="w-full flex items-center border-2 border-whiteLoad rounded-normal overflow-hidden relative h-[45px]">
+            <form
+              className="w-full h-full"
+              onSubmit={(e) => {
+                e.preventDefault();
+                titleSubmit();
               }}
-              value={searchTitle}
-            />
-          </form>
+            >
+              <input
+                type="text"
+                placeholder="სიტყვით ძებნა..."
+                className="w-full h-full px-4 bg-bodyBg outline-none text-blackMain tracking-wider text-[14px] transition-colors focus:bg-whiteLoad"
+                onChange={(e) => {
+                  setSearchTitle(e.target.value);
+                }}
+                value={searchTitle}
+              />
+            </form>
 
-          <div
-            onClick={() => {
-              if (params.get("title")) {
-                deleteParams(params, setParams, "title");
-              }
+            <div
+              onClick={() => {
+                if (params.get("title")) {
+                  deleteParams(params, setParams, "title");
+                }
 
-              setSearchTitle("");
-            }}
-            className={`absolute h-[28px] aspect-square rounded-md bg-whiteHoverDark  flex items-center justify-center right-2  transition-all ${
-              searchTitle == ""
-                ? " pointer-events-none cursor-default invisible opacity-0"
-                : "cursor-pointer visible opacity-100"
-            } hover:bg-whiteCont`}
+                setSearchTitle("");
+              }}
+              className={`absolute h-[28px] aspect-square rounded-md bg-whiteHoverDark  flex items-center justify-center right-2  transition-all ${
+                searchTitle == ""
+                  ? " pointer-events-none cursor-default invisible opacity-0"
+                  : "cursor-pointer visible opacity-100"
+              } hover:bg-whiteCont`}
+            >
+              <PopupCloseIcon className="h-[10px] aspect-square [&>path]:fill-blackMain" />
+            </div>
+          </div>
+          <button
+            onClick={() => setOpenFilters((state) => !state)}
+            className="h-[45px] w-[60px] text-[14px]   bg-main rounded-[5px] text-buttonText tracking-wider font-mainMedium relative hidden mediumSmallXl:flex items-center justify-center"
           >
-            <PopupCloseIcon className="h-[10px] aspect-square [&>path]:fill-blackMain" />
-          </div>
+            <div className=" flex flex-col h-[25px] aspect-square justify-center items-center gap-1 absolute">
+              <span className="h-[2px] rounded-md w-10/12 bg-buttonText block"></span>
+              <span className="h-[2px] rounded-md w-8/12 bg-buttonText block"></span>
+              <span className="h-[2px] rounded-md w-4/12 bg-buttonText block"></span>
+            </div>
+          </button>
+          <button
+            onClick={titleSubmit}
+            className=" h-[45px] w-[60px] text-[14px]   font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
+          >
+            <SearchIcon className="h-[16px] aspect-square " />
+          </button>
         </div>
-        <button
-          onClick={() => setOpenFilters((state) => !state)}
-          className="h-[45px] w-[60px] text-[14px]   bg-main rounded-[5px] text-buttonText tracking-wider font-mainMedium relative hidden mediumSmallXl:flex items-center justify-center"
-        >
-          <div className=" flex flex-col h-[25px] aspect-square justify-center items-center gap-1 absolute">
-            <span className="h-[2px] rounded-md w-10/12 bg-buttonText block"></span>
-            <span className="h-[2px] rounded-md w-8/12 bg-buttonText block"></span>
-            <span className="h-[2px] rounded-md w-4/12 bg-buttonText block"></span>
-          </div>
-        </button>
-        <button
-          onClick={titleSubmit}
-          className=" h-[45px] w-[60px] text-[14px]   font-mainMedium rounded-[6px] text-buttonText bg-main flex items-center justify-center tracking-widest  transition-colors hover:bg-mainHover"
-        >
-          <SearchIcon className="h-[16px] aspect-square " />
-        </button>
-      </div>
 
-      <div className="flex  gap-5 mediumSmallXl:flex-col">
-        <FiltersSection citiesAPI={citiesAPI} setSearchTitle={setSearchTitle} />
-        <ResponsiveFiltersSection
-          openFilters={openFilters}
-          setOpenFilters={setOpenFilters}
-          citiesAPI={citiesAPI}
-        />
-        <section className="flex-[3]  rounded-normal">
-          <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
-            {!loader && searched !== null
-              ? `ნაპოვნია ${getFullCount.current} შედეგი`
-              : ""}
-          </p>
-          <div className="flex flex-wrap relative min-h-[150px] gap-5 gap-y-7 large:justify-center large:gap-5">
-            {!loader ? (
-              <>
-                {vipSearched !== null && vipSearched.length > 0
-                  ? vipSearched.map((product: TProductCard) => (
-                      <Card key={product.id} product={product} />
-                    ))
-                  : null}
-                {searched !== null && searched.length > 0
-                  ? searched.map((product: TProductCard) => (
-                      <Card key={product.id} product={product} />
-                    ))
-                  : null}
-              </>
-            ) : (
-              <ContentLoader />
-            )}
-          </div>
-          <div className="flex items-center  justify-center gap-4 mt-5">
-            {fetchPageButtons()}
-          </div>
-        </section>
-      </div>
-    </main>
+        <div className="flex  gap-5 mediumSmallXl:flex-col">
+          <FiltersSection
+            citiesAPI={citiesAPI}
+            setSearchTitle={setSearchTitle}
+          />
+          <ResponsiveFiltersSection
+            openFilters={openFilters}
+            setOpenFilters={setOpenFilters}
+            citiesAPI={citiesAPI}
+          />
+          <section className="flex-[3]  rounded-normal">
+            <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
+              {!loader && searched !== null
+                ? `ნაპოვნია ${getFullCount.current} შედეგი`
+                : ""}
+            </p>
+            <div className="flex flex-wrap relative min-h-[150px] gap-5 gap-y-7 large:justify-center large:gap-5">
+              {!loader ? (
+                <>
+                  {vipSearched !== null && vipSearched.length > 0
+                    ? vipSearched.map((product: TProductCard) => (
+                        <Card key={product.id} product={product} />
+                      ))
+                    : null}
+                  {searched !== null && searched.length > 0
+                    ? searched.map((product: TProductCard) => (
+                        <Card key={product.id} product={product} />
+                      ))
+                    : null}
+                </>
+              ) : (
+                <ContentLoader />
+              )}
+            </div>
+            <div className="flex items-center  justify-center gap-4 mt-5">
+              {fetchPageButtons()}
+            </div>
+          </section>
+        </div>
+      </main>
+    </>
   );
 }
 export default memo(Search);

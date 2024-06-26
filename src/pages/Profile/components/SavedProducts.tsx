@@ -10,6 +10,7 @@ import { getFavorites, removeFavorite } from "../../../hooks/serverFunctions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import HoverTitle from "../../../components/global/HoverTitle";
+import { Helmet } from "react-helmet";
 
 function SavedProducts() {
   const userFavorites = useSelector((store: RootState) => store.user.favorites);
@@ -21,7 +22,9 @@ function SavedProducts() {
 
   return (
     <>
-      {" "}
+      <Helmet>
+        <title>ფავორიტები - OnHome</title>
+      </Helmet>{" "}
       <div className=" rounded-section text-textHead shadow-sectionShadow bg-whiteMain relative flex px-7 py-5 flex-col gap-3  mobile:px-3">
         <h1 className="mobileSmall:text-[14px] mobile:text-center">
           შენახული განცხადებები

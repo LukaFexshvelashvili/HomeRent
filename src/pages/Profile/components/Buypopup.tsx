@@ -103,7 +103,7 @@ export default function Buypopup(props: {
         {" "}
       </div>
       <div
-        className={`noScrollBar relative max-w-[650px] w-[96%]  max-h-[90%] overflow-auto ${
+        className={`noScrollBar relative max-w-[1000px] w-[96%]  max-h-[90%] overflow-auto ${
           request.pending == 1 ? "min-h-[300px]" : null
         } rounded-section bg-whiteMain p-5 relative z-10`}
       >
@@ -115,14 +115,14 @@ export default function Buypopup(props: {
             >
               <PopupCloseIcon className="h-[16px] [&>path]:fill-mainBlack" />
             </button>
-            <div className=" max-w-[550px] w-[96%] mx-auto">
+            <div className=" max-w-[850px] w-[96%] mx-auto ">
               <h2 className="text-main font-mainBold text-center text-[18px] ">
                 VIP ყიდვა
               </h2>
               <p className="text-textDesc  text-center text-[14px] mt-2">
                 სტატუსის გაძლიერება განცხადებაზე #{props.popbuy.id}
               </p>
-              <div className="flex items-center justify-between gap-5 mt-8 mobileTab:flex-col mobileTab:justify-center">
+              <div className="flex items-center justify-center gap-5 mt-8 mobileTab:flex-col mobileTab:justify-center py-5 flex-wrap overflow-y-auto max-h-[400px]">
                 {ActiveOffers.map(
                   (e: TOffer, i: number) =>
                     e.status !== 0 && (
@@ -137,10 +137,7 @@ export default function Buypopup(props: {
                         >
                           {e.name}
                         </div>
-                        <div
-                          className="flex flex-col mt-7
-            "
-                        >
+                        <div className="flex flex-col mt-7">
                           {e.benefits.map((item: string, index: number) => (
                             <div key={index} className="flex flex-col">
                               <p className="text-[13px] tracking-normal font-mainBold text-textDesc text-center">
@@ -193,7 +190,7 @@ export default function Buypopup(props: {
                   {error}
                 </div>
               )}{" "}
-              <div className="flex justify-between mt-4">
+              <div className="flex justify-between mt-4 ">
                 <p className="text-Asmall text-textDesc font-mainSemiBold ">
                   ბალანსი:{" "}
                   <span className="text-main">
@@ -232,16 +229,17 @@ export default function Buypopup(props: {
                     <p className=" text-main">
                       {offerData.sale !== 0 ? (
                         <>
-                          {offerData.price * selectedDays -
-                            offerData.sale * selectedDays +
-                            "₾"}{" "}
+                          {(
+                            offerData.price * selectedDays -
+                            offerData.sale * selectedDays
+                          ).toFixed(2) + "₾"}{" "}
                           <span className=" line-through opacity-30 ">
                             {" "}
-                            {offerData.price * selectedDays}₾
+                            {(offerData.price * selectedDays).toFixed(2)}₾
                           </span>
                         </>
                       ) : (
-                        <>{offerData.price * selectedDays}₾</>
+                        <>{(offerData.price * selectedDays).toFixed(2)}₾</>
                       )}
                     </p>
                   </div>

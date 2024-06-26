@@ -7,7 +7,6 @@ import {
   EstateClosePlaces,
   EstateImages,
   EstateInformation,
-  EstateOption,
   EstateStatus,
   EstateType,
 } from "./components/Selectors";
@@ -16,7 +15,11 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import ContentLoader from "../../components/global/ContentLoader";
 import { useNavigate } from "react-router-dom";
 import { updateLandSize, updateStatus } from "../../store/data/addProductSlice";
-import { EstateDescription, EstateTitle } from "./components/SelectorsOpt";
+import {
+  EstateDescription,
+  EstateOption,
+  EstateTitle,
+} from "./components/SelectorsOpt";
 import UploadStatusBlock from "./components/UploadStatusBlock";
 
 export default function AddProduct() {
