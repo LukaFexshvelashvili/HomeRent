@@ -193,17 +193,17 @@ function SearchInput() {
             >
               <RoomIcon className=" h-[18px] translate-y-[1px] [&>path]:fill-white" />{" "}
               <p className="max-w-[150px] text-[14px] font-mainRegular text-[#ffffffd3]">
-                {getRooms ? `${getRooms} ოთახი` : "ოთახები"}
+                {getRooms !== null ? `${getRooms} ოთახი` : "ოთახები"}
               </p>
             </div>
-            {getRooms && (
+            {getRooms !== null ? (
               <button
                 onClick={() => setGetRooms(null)}
                 className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
               >
                 <PopupCloseIcon className=" [&>path]:fill-white" />
               </button>
-            )}
+            ) : null}
           </div>
 
           {inputSelect && (

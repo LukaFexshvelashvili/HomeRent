@@ -12,4 +12,7 @@ export default defineConfig({
       deleteOriginFile: false, // delete original files after compression
     }),
   ],
+  server: {
+    port: 1026,
+  },
 });

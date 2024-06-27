@@ -65,11 +65,10 @@ function Home() {
 
       // Sort the products based on views in descending order
 
-      // Sort the top viewed products by created_time in descending order
+      // Sort the top viewed products by update_time in descending order
       productsList.sort(
         (a, b) =>
-          new Date(b.created_time).getTime() -
-          new Date(a.created_time).getTime()
+          new Date(b.update_time).getTime() - new Date(a.update_time).getTime()
       );
 
       // Select the top 5 items
@@ -124,9 +123,13 @@ function Home() {
 
         <CardSlider
           link="vip=2"
-          products={products?.filter(
-            (product: TProductCard) => product.estate_vip == 2
-          )}
+          products={products
+            ?.filter((product: TProductCard) => product.estate_vip == 2)
+            .sort(
+              (a, b) =>
+                new Date(b.update_time).getTime() -
+                new Date(a.update_time).getTime()
+            )}
         />
 
         <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4 mt-[50px]">
@@ -135,9 +138,13 @@ function Home() {
         </div>
         <CardSlider
           link="vip=1"
-          products={products?.filter(
-            (product: TProductCard) => product.estate_vip == 1
-          )}
+          products={products
+            ?.filter((product: TProductCard) => product.estate_vip == 1)
+            .sort(
+              (a, b) =>
+                new Date(b.update_time).getTime() -
+                new Date(a.update_time).getTime()
+            )}
         />
         <ChooseSection />
         <div className="flex items-center text-textHead font-mainBold text-[17px] mobileSmall:text-[15px] my-4">

@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateDescription,
   updateTitle,
-  updateVip,
 } from "../../../store/data/addProductSlice";
 import { useEffect, useState } from "react";
 import { RootState } from "../../../store/store";
 import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
+import OfferCard from "../../../components/global/OfferCard";
 
 export function EstateTitle(props: { error: boolean }) {
   const [title, setTitle] = useState("");
@@ -102,8 +102,6 @@ export function EstateOption() {
   );
   const [status, setStatus] = useState<number>(vipStatus);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     setStatus(vipStatus);
   }, [vipStatus]);
@@ -114,61 +112,7 @@ export function EstateOption() {
       </p>
       <div className="flex items-center justify-center gap-5 mt-8 flex-wrap">
         {ActiveOffers.map((e: TOffer, i: number) => (
-          <div
-            key={i}
-            className=" h-[350px] w-[260px] rounded-section flex justify-between p-3 relative items-center flex-col"
-            style={{ backgroundColor: e.secondColor }}
-          >
-            <div
-              className="absolute h-[30px] w-[120px] rounded-normal font-mainBold text-buttonText flex items-center justify-center text-Asmall tracking-wider top-0 -translate-y-1/4"
-              style={{ backgroundColor: e.mainColor }}
-            >
-              {e.name}
-            </div>
-            <div
-              className="flex flex-col mt-7
-            "
-            >
-              {e.benefits.map((item: string, index: number) => (
-                <div key={index} className="flex flex-col">
-                  <p className="text-[13px] tracking-normal font-mainBold text-textDesc text-center">
-                    {item}
-                  </p>
-                  <div
-                    className="h-[2px] w-[30px] rounded-md  mx-auto my-2"
-                    style={{ backgroundColor: e.lineColor }}
-                  ></div>
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col gap-3 w-full">
-              <p
-                className="text-Asmall font-mainBold text-center"
-                style={{ color: e.mainColor }}
-              >
-                {e.price !== 0
-                  ? `1 დღე - ${
-                      e.sale ? (e.price - e.sale).toFixed(2) : e.price
-                    }₾`
-                  : "უფასო"}
-                {e.sale ? (
-                  <span className="  line-through opacity-30 ml-2">
-                    {e.price.toFixed(2)}₾
-                  </span>
-                ) : null}
-              </p>
-              <button
-                className="h-[36px] w-full rounded-md text-Asmall font-mainBold tracking-wider transition-colors"
-                style={{
-                  backgroundColor: status == e.status ? "#FFFFFF" : e.mainColor,
-                  color: status == e.status ? e.mainColor : "#FFFFFF",
-                }}
-                onClick={() => dispatch(updateVip(e.status))}
-              >
-                {status == e.status ? "არჩეული" : "არჩევა"}
-              </button>
-            </div>
-          </div>
+          <OfferCard offerData={e} activeStatus={status} key={i} />
         ))}
       </div>
     </div>

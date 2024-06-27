@@ -9,6 +9,7 @@ import ContentLoader from "../../../components/global/ContentLoader";
 import axiosCall from "../../../hooks/axiosCall";
 import { makeUserSession } from "../../../hooks/serverFunctions";
 import { clearSession } from "../../../store/data/userSlice";
+import OfferCard from "../../../components/global/OfferCard";
 
 type Trequest = {
   pending: number;
@@ -126,55 +127,12 @@ export default function Buypopup(props: {
                 {ActiveOffers.map(
                   (e: TOffer, i: number) =>
                     e.status !== 0 && (
-                      <div
+                      <OfferCard
+                        offerData={e}
+                        activeStatus={status}
+                        setActiveStatus={setStatus}
                         key={i}
-                        className=" h-[350px] w-[260px] rounded-section flex justify-between p-3 relative items-center flex-col"
-                        style={{ backgroundColor: e.secondColor }}
-                      >
-                        <div
-                          className="absolute h-[30px] w-[120px] rounded-normal font-mainBold text-buttonText flex items-center justify-center text-Asmall tracking-wider top-0 -translate-y-1/4"
-                          style={{ backgroundColor: e.mainColor }}
-                        >
-                          {e.name}
-                        </div>
-                        <div className="flex flex-col mt-7">
-                          {e.benefits.map((item: string, index: number) => (
-                            <div key={index} className="flex flex-col">
-                              <p className="text-[13px] tracking-normal font-mainBold text-textDesc text-center">
-                                {item}
-                              </p>
-                              <div
-                                className="h-[2px] w-[30px] rounded-md  mx-auto my-2"
-                                style={{ backgroundColor: e.lineColor }}
-                              ></div>
-                            </div>
-                          ))}
-                        </div>
-                        <div className="flex flex-col gap-3 w-full">
-                          <p
-                            className="text-Asmall font-mainBold text-center"
-                            style={{ color: e.mainColor }}
-                          >
-                            {e.price !== 0 ? `1 დღე - ${e.price}₾` : "უფასო"}
-                          </p>
-                          <button
-                            className="h-[32px] w-full rounded-md text-Asmall font-mainBold tracking-wider transition-colors "
-                            style={{
-                              backgroundColor:
-                                status == e.status ? "#FFFFFF" : e.mainColor,
-                              color:
-                                status == e.status ? e.mainColor : "#FFFFFF",
-                            }}
-                            onClick={() =>
-                              e.status !== status
-                                ? setStatus(e.status)
-                                : setStatus(0)
-                            }
-                          >
-                            {status == e.status ? "არჩეული" : "არჩევა"}
-                          </button>
-                        </div>
-                      </div>
+                      />
                     )
                 )}
               </div>

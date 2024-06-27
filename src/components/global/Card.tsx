@@ -30,6 +30,7 @@ export type TProductCard = {
   estate_vip: number;
   views: number;
   created_time: Date;
+  update_time: Date;
 };
 
 export default function Card(props: {
@@ -59,14 +60,14 @@ export default function Card(props: {
             : "invisible max-w-0 overflow-hidden max-h-0 p-0 m-0"
         }  ${props.autoWidth ? "w-full" : "w-[280px]"}  ${
           props.product.estate_vip == 2
-            ? "bg-gradient-to-t from-orangeClear from-5% to-25% to-whiteMain border-none shadow-[inset_0px_0px_0px_1.5px_var(--orangeHover)]"
+            ? "bg-gradient-to-t from-vipPlusClear from-5% to-25% to-whiteMain border-none shadow-[inset_0px_0px_0px_1.5px_var(--vipPlusHover)]"
             : "bg-whiteMain shadow-[inset_0px_0px_0px_1.5px_var(--cardBorder)]"
         } border-none  rounded-[10px]  relative`}
       >
         <Link to={"/product/" + props.product.id} className=" rounded-2xl">
           <div className="w-full h-[200px] rounded-[15px] bg-whiteLoad relative overflow-hidden">
             {props.product.estate_vip == 2 ? (
-              <div className="absolute h-[25px] w-[60px] select-none bg-orangeI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
+              <div className="absolute h-[25px] w-[60px] select-none bg-vipPlusI rounded-md flex items-center justify-center text-Asmaller font-mainBold text-buttonText tracking-wider cursor-default top-2 right-2 z-[3]">
                 VIP+
               </div>
             ) : props.product.estate_vip == 1 ? (
@@ -114,7 +115,7 @@ export default function Card(props: {
           <div
             className={`${
               props.product.estate_vip == 2
-                ? "bg-orangeClear text-orangeI"
+                ? "bg-vipPlusClear text-vipPlusI"
                 : "bg-mainClear text-main"
             }  w-[120px] h-[30px] flex justify-center items-center rounded-[5px] `}
           >
@@ -161,8 +162,8 @@ export default function Card(props: {
               className={`h-[20px]  transition-all   ${
                 props.product.estate_vip == 2
                   ? favorite
-                    ? "fill-orangeI [&>path]:stroke-orangeI"
-                    : "fill-transparent [&>path]:stroke-orangeI"
+                    ? "fill-vipPlusI [&>path]:stroke-vipPlusI"
+                    : "fill-transparent [&>path]:stroke-vipPlusI"
                   : favorite
                   ? "fill-orangeI [&>path]:stroke-orangeI"
                   : "fill-transparent [&>path]:stroke-navIcon"

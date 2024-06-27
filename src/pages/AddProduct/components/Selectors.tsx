@@ -42,7 +42,6 @@ import {
   updateSize,
   updateStatus,
   updateType,
-  updateVip,
 } from "../../../store/data/addProductSlice";
 import { SearchCityFilter } from "../../Search/components/SearchFilters";
 import { RootState } from "../../../store/store";

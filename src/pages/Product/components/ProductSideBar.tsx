@@ -76,7 +76,7 @@ export default function ProductSideBar({
             </span>
             <span className="flex items-center">
               <DateIcon className=" h-[18px] aspect-square [&>path]:fill-textDesc mr-3 mobile:mr-2 translate-y-[-1px]" />{" "}
-              {pageData.productData.created_time.slice(0, 10)}
+              {pageData.productData.update_time.slice(0, 10)}
             </span>
             <span>ID - {pageData.productData.id}</span>
           </div>

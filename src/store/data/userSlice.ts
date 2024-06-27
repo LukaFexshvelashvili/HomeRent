@@ -68,6 +68,14 @@ const userSlice = createSlice({
     updateMoney: (state, action: PayloadAction<number>) => {
       state.money = action.payload;
     },
+    updateUserInfo: (
+      state,
+      action: PayloadAction<{ name: string; surname: string; mobile: string }>
+    ) => {
+      state.name = action.payload.name;
+      state.surname = action.payload.surname;
+      state.mobile = action.payload.mobile;
+    },
     clearSession: () => {
       return sessionState;
     },
@@ -82,6 +90,7 @@ export const {
   updateLast_seen,
   updateNotifications,
   updateMoney,
+  updateUserInfo,
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -60,10 +60,12 @@ export default function ProductBanner(props: {
             : props.productData.estate_title}
         </h3>
         <p className="text-[13px] text-textDesc">
-          ვადა:{" "}
+          განახლდა:{" "}
           <span className="text-[13px] text-textHeadBlack">
             {" "}
-            {props.productData.expire_time.slice(0, 10)}
+            {props.productData.update_time
+              ? props.productData.update_time.slice(0, 10)
+              : ""}
           </span>
         </p>{" "}
         <p className="text-[13px] text-textDesc">

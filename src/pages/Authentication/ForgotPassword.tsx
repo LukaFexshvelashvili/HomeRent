@@ -124,10 +124,12 @@ export default function ForgotPassword() {
               <h1 className=" text-[32px] mobile:text-[24px] text-textHead font-mainBold mb-2">
                 პაროლის აღდგენა
               </h1>
-              <p className="mb-6 text-textDesc text-Asmall font-mainBold tracking-wider mobile:text-[14px]">
+              <p className="mb-6 text-textDesc text-Asmall font-mainBold tracking-wider mobile:text-[14px] text-center">
                 {codeSubmit
                   ? "კოდი გაგზავნილია მეილზე: " + email
                   : "შეიყვანეთ თქვენი ელფოსტა"}
+                <br />
+                (შეამოწმეთ სპამის გვერდიც)
               </p>
               {error.status ? (
                 <div className="w-[380px] mb-5 h-auto p-3 rounded-lg bg-pinkClear text-pinkI border-2 border-pinkI  flex justify-center items-center text-center text-[14px] tracking-wider font-mainSemiBold">

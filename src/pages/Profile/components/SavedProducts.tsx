@@ -132,8 +132,8 @@ function FavoriteBanner(props: { product: TProductData }) {
             {props.product.views}
           </p>
           <p className="flex items-center text-[13px] text-textDesc gap-1">
-            <DateIcon className="h-4 aspect-square [&>path]:fill-textDesc" /> 2
-            {props.product.created_time.split(" ")[0]}
+            <DateIcon className="h-4 aspect-square [&>path]:fill-textDesc" />
+            {props.product.update_time.split(" ")[0]}
           </p>
           <p className="text-[13px] text-textDesc">ID - {props.product.id}</p>
         </div>
