@@ -13,8 +13,6 @@ function CardSlider({
   products: TProductCard[] | any;
   link?: string;
 }) {
-  // console.log(products);
-
   const swiperRef = useRef<any>(null);
   return (
     <div className="relative flex items-center">

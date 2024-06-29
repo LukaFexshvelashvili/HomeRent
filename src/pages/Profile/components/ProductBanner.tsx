@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import {
   DateIcon,
+  EditIcon,
   LightningIcon,
   LoginEyeCloseIcon,
   LoginEyeIcon,
@@ -23,6 +24,7 @@ export default function ProductBanner(props: {
   setPopAlert: Function;
   userData: Tuser;
   fetchProducts: Function;
+  setEditBlock: Function;
 }) {
   const dispatch = useDispatch();
   const vipOffer = ActiveOffers.filter(
@@ -140,6 +142,18 @@ export default function ProductBanner(props: {
             )
           ) : null
         ) : null}
+        <button
+          onClick={() =>
+            props.setEditBlock({
+              id: props.productData.id,
+              productData: props.productData,
+            })
+          }
+          className="group relative bg-orangeClear text-blueI h-[35px] aspect-square rounded-md  transition-colors p-2 hover:bg-orangeHover flex justify-center items-center"
+        >
+          <EditIcon className="h-full aspect-square [&>path]:fill-orangeI" />
+          <HoverTitle title="რედაქტირება" />
+        </button>
         {props.productData.product_status !== 2 ? (
           props.productData.product_status !== 1 ? (
             <button

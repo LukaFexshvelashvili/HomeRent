@@ -48,6 +48,7 @@ import { RootState } from "../../../store/store";
 import axiosCall from "../../../hooks/axiosCall";
 import BubbleSelector from "../../../components/global/BubbleSelector";
 import { currencyConvertor } from "../../../components/convertors/convertors";
+import { TinfoDefData } from "../../Profile/components/components/PopEditBlock";
 
 export const submitProduct = (
   productData: TproductInfoStart | any,
@@ -129,14 +130,27 @@ export const submitProduct = (
   }
 };
 
-export function EstateClosePlaces() {
-  const [selectedAddons, setSelectedAddons] = useState<number[]>([]);
+export function EstateClosePlaces(props: {
+  setData?: Function;
+  defData?: number[] | null;
+}) {
+  const [selectedAddons, setSelectedAddons] = useState<number[]>(
+    props.defData ? props.defData : []
+  );
   const dispatch = useDispatch();
   useEffect(() => {
-    if (selectedAddons.length === 0) {
-      dispatch(updateClosePlaces(null));
+    if (!props.setData) {
+      if (selectedAddons.length === 0) {
+        dispatch(updateClosePlaces(null));
+      } else {
+        dispatch(updateClosePlaces(selectedAddons));
+      }
     } else {
-      dispatch(updateClosePlaces(selectedAddons));
+      if (selectedAddons.length === 0) {
+        props.setData(null);
+      } else {
+        props.setData(selectedAddons);
+      }
     }
   }, [selectedAddons]);
   const addAddon = (index: number) => {
@@ -156,7 +170,13 @@ export function EstateClosePlaces() {
       </p>
       <div className="flex items-start justify-center gap-3 flex-col flex-wrap max-h-[200px] my-[25px] pl-5 mobileTab:pl-0 mobileSmall:pl-5 mobileSmall:max-h-fit">
         {closePlacesList.map((e: TClosePlace, i: number) => (
-          <ClosePlaceBlock key={i} i={i} e={e} addAddon={addAddon} />
+          <ClosePlaceBlock
+            key={i}
+            i={i}
+            e={e}
+            addAddon={addAddon}
+            selectedAddons={selectedAddons}
+          />
         ))}
       </div>
     </div>
@@ -166,8 +186,9 @@ function ClosePlaceBlock(props: {
   i: number;
   e: TClosePlace;
   addAddon: Function;
+  selectedAddons: number[];
 }) {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(props.selectedAddons.includes(props.i));
   return (
     <div
       key={props.i}
@@ -195,26 +216,47 @@ function ClosePlaceBlock(props: {
     </div>
   );
 }
-export function EstateAddons({ productData }: { productData: any }) {
-  const [selectedAddons, setSelectedAddons] = useState<number[]>([]);
+export function EstateAddons({
+  productData,
+  estateType,
+  defData,
+  setData,
+}: {
+  productData: any;
+  estateType?: number;
+  defData?: number[] | null;
+  setData?: Function;
+}) {
+  const [selectedAddons, setSelectedAddons] = useState<number[]>(
+    defData ? defData : []
+  );
+
   const [addonList, setAddonList] = useState<any[]>(productAddonsList);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (selectedAddons.length === 0) {
-      dispatch(updateAddons(null));
+    if (!setData) {
+      if (selectedAddons.length === 0) {
+        dispatch(updateAddons(null));
+      } else {
+        dispatch(updateAddons(selectedAddons));
+      }
     } else {
-      dispatch(updateAddons(selectedAddons));
+      if (selectedAddons.length === 0) {
+        setData(null);
+      } else {
+        setData(selectedAddons);
+      }
     }
   }, [selectedAddons]);
   useEffect(() => {
-    if (productData.estateType == 3) {
+    if (productData.estateType == 3 || (estateType && estateType == 3)) {
       setAddonList(productAddonsListForLand);
-    } else if (productData.estateType == 4) {
+    } else if (productData.estateType == 4 || (estateType && estateType == 4)) {
       setAddonList(productAddonsListForHotel);
     } else {
       setAddonList(productAddonsList);
     }
-  }, [productData.estateType]);
+  }, [productData.estateType, estateType]);
   const addAddon = (index: number) => {
     if (selectedAddons.includes(index)) {
       let newAddons = selectedAddons.filter((item) => item !== index);
@@ -235,7 +277,15 @@ export function EstateAddons({ productData }: { productData: any }) {
           if (productData.estateType !== 0 && e.name == "კანალიზაცია") {
             return null;
           }
-          return <AddonBlock key={i} i={i} e={e} addAddon={addAddon} />;
+          return (
+            <AddonBlock
+              key={i}
+              i={i}
+              e={e}
+              addAddon={addAddon}
+              selectedAddons={selectedAddons}
+            />
+          );
         })}
       </div>
     </div>
@@ -245,8 +295,9 @@ function AddonBlock(props: {
   i: number;
   e: TProductAddon;
   addAddon: Function;
+  selectedAddons: number[];
 }) {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(props.selectedAddons.includes(props.i));
   return (
     <div
       key={props.i}
@@ -415,19 +466,31 @@ export function EstateImages(props: { error: boolean }) {
   );
 }
 
-export function EstateType() {
-  const [active, setActive] = useState<null | number>(null);
+export function EstateType(props: { setData?: Function; defData?: number }) {
+  const productType = useSelector(
+    (store: RootState) => store.addProduct.estateType
+  );
+  const [active, setActive] = useState<null | number>(
+    props.defData !== undefined ? props.defData : null
+  );
   const dispatch = useDispatch();
   useEffect(() => {
-    if (active !== null) {
+    if (!props.setData) {
       dispatch(updateType(active));
+    } else {
+      props.setData(active);
     }
   }, [active]);
+  useEffect(() => {
+    if (productType == null && props.defData == undefined) {
+      setActive(null);
+    }
+  }, [productType]);
 
   return (
     <div className="flex flex-col">
       <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-        უძრავი ქონების ტიპი
+        უძრავი ქონების ტიპი *
       </p>
       <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         {RealEstateTypes.map((e, i) => (
@@ -457,31 +520,38 @@ export function EstateType() {
   );
 }
 
-export function DealType() {
-  const [active, setActive] = useState<null | string>(null);
+export function DealType(props: { setData?: Function; defData?: number }) {
+  const [active, setActive] = useState<null | number>(
+    props.defData !== undefined ? props.defData : null
+  );
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (active !== null) {
-      dispatch(updateDeal(active));
+      if (!props.setData) {
+        dispatch(updateDeal(active));
+      } else {
+        props.setData(active);
+      }
     }
   }, [active]);
   return (
     <div className="flex flex-col">
       <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-        გარიგების ტიპი
+        გარიგების ტიპი *
       </p>
       <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         {projectDealTypes.map((e: string, i: number) => (
           <button
             key={i}
-            onClick={() => setActive(e)}
+            onClick={() => setActive(i)}
             className={`  p-2 px-4 rounded-xl transition-colors ${
-              active == e ? "bg-main" : "bg-mainClear"
+              active == i ? "bg-main" : "bg-mainClear"
             }`}
           >
             <p
               className={`text-Asmall tracking-wide ${
-                active == e ? "text-buttonText" : "text-main"
+                active == i ? "text-buttonText" : "text-main"
               }`}
             >
               {e}
@@ -492,21 +562,38 @@ export function DealType() {
     </div>
   );
 }
-export function EstateStatus({ productData }: { productData: any }) {
-  const [active, setActive] = useState<null | string>(null);
+export function EstateStatus({
+  productData,
+  setData,
+  defData,
+  estateType,
+}: {
+  productData: any;
+  setData?: Function;
+  defData?: string;
+  estateType?: number;
+}) {
+  const [active, setActive] = useState<null | string>(
+    defData !== undefined ? defData : null
+  );
   const [DealTypes, setDealTypes] = useState<string[]>([
     "ახალი აშენებული",
     "ძველი აშენებული",
     "მშენებარე",
   ]);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (active !== null) {
-      dispatch(updateStatus(active));
+      if (!setData) {
+        dispatch(updateStatus(active));
+      } else {
+        setData(active);
+      }
     }
   }, [active]);
   useEffect(() => {
-    if (productData.estateType == 3) {
+    if (productData.estateType == 3 || (estateType && estateType == 3)) {
       setDealTypes([
         "სასოფლო სამეურნეო",
         "არა სასოფლო სამეურნეო",
@@ -514,7 +601,7 @@ export function EstateStatus({ productData }: { productData: any }) {
         "სპეციალური",
         "საინვესტიციო/სამშენებლო",
       ]);
-    } else if (productData.estateType == 2) {
+    } else if (productData.estateType == 2 || (estateType && estateType == 2)) {
       setDealTypes([
         "საოფისე",
         "სავაჭრო",
@@ -533,13 +620,17 @@ export function EstateStatus({ productData }: { productData: any }) {
     } else {
       setDealTypes(["ახალი აშენებული", "ძველი აშენებული", "მშენებარე"]);
     }
-
-    setActive(null);
-  }, [productData.estateType]);
+    if (defData == undefined) {
+      setActive(null);
+    }
+    if (defData !== undefined && estateType) {
+      setActive(null);
+    }
+  }, [productData.estateType, estateType]);
   return (
     <div className="flex flex-col">
       <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-        სტატუსი
+        სტატუსი *
       </p>
       <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
         {DealTypes.map((e, i) => (
@@ -602,22 +693,58 @@ export function EstateAddress(props: { error: boolean }) {
   );
 }
 
-export function EstateInformation(props: { error: boolean; productData: any }) {
-  const [size, setSize] = useState<null | number>(null);
-  const [landSize, setLandSize] = useState<null | number>(null);
+export function EstateInformation(props: {
+  error?: boolean;
+  productData: any;
+  setData?: Function;
+  defData?: TinfoDefData;
+}) {
+  const [size, setSize] = useState<null | number>(
+    props.defData ? props.defData.size : null
+  );
+  const [landSize, setLandSize] = useState<null | number>(
+    props.defData ? props.defData.landSize : null
+  );
   const [openDeal, setOpenDeal] = useState(false);
-  const [currency, setCurrency] = useState(0);
-  const [fullPrice, setFullPrice] = useState(0);
-  const [sizePrice, setSizePrice] = useState(0);
+  const [currency, setCurrency] = useState(
+    props.defData ? props.defData.currency : 0
+  );
+  const [fullPrice, setFullPrice] = useState(
+    props.defData ? props.defData.fullPrice : 0
+  );
+  const [sizePrice, setSizePrice] = useState(
+    props.defData ? props.defData.sizePrice : 0
+  );
+  const [floor, setFloor] = useState(
+    props.defData ? `${props.defData.floor}` : ""
+  );
+  const [floors, setFloors] = useState(
+    props.defData ? `${props.defData.floors}` : ""
+  );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (fullPrice > 0) {
-      dispatch(updateFullPrice(fullPrice));
+    if (!props.setData) {
+      if (fullPrice > 0) {
+        dispatch(updateFullPrice(fullPrice));
+      }
+    } else {
+      props.setData((state: TinfoDefData) => ({
+        ...state,
+        fullPrice: fullPrice,
+      }));
     }
   }, [fullPrice]);
   useEffect(() => {
-    dispatch(updateCurrency(currency));
+    if (!props.setData) {
+      dispatch(updateCurrency(currency));
+    } else {
+      props.setData((state: TinfoDefData) => ({
+        ...state,
+        currency: currency,
+      }));
+    }
   }, [currency]);
   const calculateSizePrice = (price: number) => {
     if (size && size > 0) {
@@ -653,7 +780,7 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
         <div className="flex gap-6 flex-col pl-3 mt-4 mobile:pl-0">
           <div className="flex items-center mobileSmall:flex-col  mobileSmall:items-stretch">
             <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
-              ფართი (მ²)
+              ფართი (მ²) *
             </p>{" "}
             <div className="w-full flex justify-end">
               <input
@@ -662,7 +789,14 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                 placeholder={"ფართი"}
                 onChange={(e) => {
                   setSize(e.target.valueAsNumber);
-                  dispatch(updateSize(e.target.valueAsNumber));
+                  if (!props.setData) {
+                    dispatch(updateSize(e.target.valueAsNumber));
+                  } else {
+                    props.setData((state: TinfoDefData) => ({
+                      ...state,
+                      size: e.target.valueAsNumber,
+                    }));
+                  }
                 }}
                 value={size ? size : ""}
               />{" "}
@@ -680,7 +814,14 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                   placeholder={"ეზოს ფართი"}
                   onChange={(e) => {
                     setLandSize(e.target.valueAsNumber);
-                    dispatch(updateLandSize(e.target.valueAsNumber));
+                    if (!props.setData) {
+                      dispatch(updateLandSize(e.target.valueAsNumber));
+                    } else {
+                      props.setData((state: TinfoDefData) => ({
+                        ...state,
+                        landSize: e.target.valueAsNumber,
+                      }));
+                    }
                   }}
                   value={landSize ? landSize : ""}
                 />{" "}
@@ -697,7 +838,7 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
               ) : null}
               <div className="flex items-center justify-between mediumSmall:flex-col mediumSmall:justify-center mediumSmall:gap-3">
                 <p className="text-textDesc font-mainMedium w-[60px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileSmall:mb-3 mobileSmall:text-center mobileSmall:w-full mobileSmall:mt-3">
-                  ფასი
+                  ფასი *
                 </p>{" "}
                 {/* <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
                 ფასი
@@ -712,6 +853,7 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                   <div className="relative mobile:w-full">
                     <button
                       onClick={() => setOpenDeal((state) => !state)}
+                      type="button"
                       className="bg-main mobile:w-full flex items-center w-[150px] justify-center py-[8px] rounded-lg text-buttonText tracking-widest font-mainMedium text-Asmall"
                     >
                       {currency == 0 ? "$ დოლარი" : "₾ ლარი"}
@@ -727,6 +869,7 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                           setOpenDeal(false);
                           setCurrency(1);
                         }}
+                        type="button"
                         className={`h-[40px]  w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
                           currency == 0 && "bg-whiteHover"
                         }`}
@@ -738,6 +881,7 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                           setOpenDeal(false);
                           setCurrency(0);
                         }}
+                        type="button"
                         className={`h-[40px] w-full flex justify-center items-center text-textHead transition-colors hover:bg-whiteHover ${
                           currency == 0 && "bg-whiteHover"
                         }`}
@@ -786,23 +930,43 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                 <>
                   <div className="flex items-start mobileTab:flex-col h-auto   mobileTab:items-stretch">
                     <p className="text-textDesc font-mainMedium w-[200px] min-w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileTab:mb-3 mobileTab:text-center mobileTab:w-full mobileTab:mt-3">
-                      პროექტის ტიპი
+                      პროექტის ტიპი *
                     </p>
                     <BubbleSelector
                       itemList={projectTypes}
-                      setData={(item: any) => dispatch(updateProject(item))}
+                      defData={props.defData?.project}
+                      setData={(item: any) => {
+                        if (!props.setData) {
+                          dispatch(updateProject(item));
+                        } else {
+                          props.setData((state: TinfoDefData) => ({
+                            ...state,
+                            project: item,
+                          }));
+                        }
+                      }}
                     />
                   </div>
                 </>
               ) : null}
               <div className="flex items-center mobileTab:flex-col   mobileTab:items-stretch ">
                 <p className="text-textDesc font-mainMedium w-[200px] mobileTab:text-[14px] mobileTab:min-w-[auto] mobileTab:mb-3 mobileTab:text-center mobileTab:w-full mobileTab:mt-3">
-                  მდგომარეობა
+                  მდგომარეობა *
                 </p>
 
                 <BubbleSelector
                   itemList={projectStatuses}
-                  setData={(item: any) => dispatch(updateCondition(item))}
+                  defData={props.defData?.projectStatus}
+                  setData={(item: any) => {
+                    if (!props.setData) {
+                      dispatch(updateCondition(item));
+                    } else {
+                      props.setData((state: TinfoDefData) => ({
+                        ...state,
+                        projectStatus: item,
+                      }));
+                    }
+                  }}
                 />
               </div>
 
@@ -815,16 +979,34 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
                     type="number"
                     className="AddProductInput"
                     placeholder="სართულები"
+                    value={floor}
                     onChange={(e) => {
-                      dispatch(updateFloor(e.target.valueAsNumber));
+                      if (!props.setData) {
+                        dispatch(updateFloor(e.target.valueAsNumber));
+                      } else {
+                        props.setData((state: TinfoDefData) => ({
+                          ...state,
+                          floors: e.target.valueAsNumber,
+                        }));
+                      }
+                      setFloor(e.target.value);
                     }}
                   />{" "}
                   <input
                     type="number"
                     className="AddProductInput"
                     placeholder="სართული სულ"
+                    value={floors}
                     onChange={(e) => {
-                      dispatch(updateFloors(e.target.valueAsNumber));
+                      if (!props.setData) {
+                        dispatch(updateFloors(e.target.valueAsNumber));
+                      } else {
+                        props.setData((state: TinfoDefData) => ({
+                          ...state,
+                          allFloors: e.target.valueAsNumber,
+                        }));
+                      }
+                      setFloors(e.target.value);
                     }}
                   />
                 </div>
@@ -832,26 +1014,62 @@ export function EstateInformation(props: { error: boolean; productData: any }) {
 
               <div className="flex items-center mobileTab:flex-col">
                 <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
-                  ოთახები
+                  ოთახები *
                 </p>
                 <div className="w-full flex justify-end mobileTab:justify-center">
-                  <SelectNumbers setDataDispatch={updateRooms} name="" />
+                  <SelectNumbers
+                    setDataDispatch={updateRooms}
+                    defData={props.defData?.rooms}
+                    setData={(e: number) => {
+                      if (props.setData) {
+                        props.setData((state: TinfoDefData) => ({
+                          ...state,
+                          rooms: e,
+                        }));
+                      }
+                    }}
+                    name=""
+                  />
                 </div>
               </div>
               <div className="flex items-center mobileTab:flex-col">
                 <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
-                  საძინებელი
+                  საძინებელი *
                 </p>{" "}
                 <div className="w-full flex justify-end mobileTab:justify-center">
-                  <SelectNumbers setDataDispatch={updateBedrooms} name="" />{" "}
+                  <SelectNumbers
+                    setDataDispatch={updateBedrooms}
+                    defData={props.defData?.bedroom}
+                    setData={(e: number) => {
+                      if (props.setData) {
+                        props.setData((state: TinfoDefData) => ({
+                          ...state,
+                          bedroom: e,
+                        }));
+                      }
+                    }}
+                    name=""
+                  />{" "}
                 </div>
               </div>
               <div className="flex items-center mobileTab:flex-col">
                 <p className="text-textDesc font-mainMedium w-[200px] mobileTab:w-full mobileTab:mb-3 mobileTab:mt-5 mobileTab:text-center">
-                  სველი წერტილი
+                  სველი წერტილი *
                 </p>{" "}
                 <div className="w-full flex justify-end mobileTab:justify-center">
-                  <SelectNumbers setDataDispatch={updateBathrooms} name="" />{" "}
+                  <SelectNumbers
+                    setDataDispatch={updateBathrooms}
+                    defData={props.defData?.bathroom}
+                    setData={(e: number) => {
+                      if (props.setData) {
+                        props.setData((state: TinfoDefData) => ({
+                          ...state,
+                          bathroom: e,
+                        }));
+                      }
+                    }}
+                    name=""
+                  />{" "}
                 </div>
               </div>
             </>

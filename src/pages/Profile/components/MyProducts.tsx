@@ -9,6 +9,7 @@ import { Tuser } from "../../../store/data/userSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { Helmet } from "react-helmet";
+import PopEditBlock from "./components/PopEditBlock";
 
 export type TProductData = {
   id: number;
@@ -17,14 +18,13 @@ export type TProductData = {
   estate_description: string;
   estate_type: number;
   estate_deal: number;
-  estate_status: number;
+  estate_status: string;
   estate_city: string;
   estate_address: string;
   estate_exact_address: string;
   estate_ipcode: string;
   estate_size: number;
   estate_land_size: number;
-
   estate_project: number;
   estate_condition: number;
   estate_floor: number;
@@ -61,6 +61,11 @@ function MyProducts() {
   const [popbuy, setPopbuy] = useState<{ id: null | number }>({ id: null });
   const [choice, setChoice] = useState<number>(0);
   const [search, setSearch] = useState<string>("");
+  const [editBlock, setEditBlock] = useState<{
+    id: number | null;
+    productData: TProductData | null;
+  }>({ id: null, productData: null });
+
   const [myProducts, setMyProducts] = useState<any[] | null>(null);
   const [popAlert, setPopAlert] = useState<TAlertPop>({
     open: false,
@@ -146,6 +151,13 @@ function MyProducts() {
       <Helmet>
         <title>ჩემი განცხადებები - OnHome</title>
       </Helmet>
+      {editBlock.id && editBlock.productData ? (
+        <PopEditBlock
+          fetchProducts={fetchProducts}
+          productData={editBlock.productData}
+          close={() => setEditBlock({ id: null, productData: null })}
+        />
+      ) : null}
       {popAlert.open ? (
         <PopAlertBlock
           close={() =>
@@ -250,6 +262,7 @@ function MyProducts() {
                   setPopAlert={setPopAlert}
                   userData={userData}
                   fetchProducts={fetchProducts}
+                  setEditBlock={setEditBlock}
                 />
               ))
             ) : myProducts && myProducts.length === 0 ? (
@@ -298,6 +311,7 @@ function MyProducts() {
                   setPopAlert={setPopAlert}
                   userData={userData}
                   fetchProducts={fetchProducts}
+                  setEditBlock={setEditBlock}
                 />
               ))}
         </div>

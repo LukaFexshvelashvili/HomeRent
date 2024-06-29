@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DropDownIcon } from "../../../assets/icons/Icons";
 import { TOffer } from "../../../assets/lists/offers";
 import { OutsideClickClose } from "../../../components/global/OutsideClickClose";
@@ -14,10 +14,17 @@ export default function DaysDropdown({
 }) {
   const SelectValues = [1, 2, 3, 4, 5, 6, 7, 10, 15, 20, 30];
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    setValue(1);
+    return () => {
+      setValue(null);
+    };
+  }, []);
+
   return (
     <OutsideClickClose activePop={open} setActivePop={setOpen}>
       <div
-        className="flex items-center justify-between font-mainBold rounded-lg py-2 px-3 mt-5"
+        className="flex items-center justify-between font-mainBold rounded-lg relative py-2 px-3 mt-5 z-10"
         style={{ backgroundColor: offerData.secondColor }}
       >
         <p className="text-Asmall " style={{ color: offerData.mainColor }}>

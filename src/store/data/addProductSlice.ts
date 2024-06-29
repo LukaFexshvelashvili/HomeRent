@@ -4,7 +4,7 @@ export type TproductInfoStart = {
   estateTitle: null | string;
   estateDescription: null | string;
   estateType: null | number;
-  estateDeal: null | string;
+  estateDeal: null | number;
   estateStatus: null | string;
   estateCity: null | string;
   estateAddress: null | string;
@@ -71,7 +71,7 @@ const addProductSlice = createSlice({
     updateDescription: (state, action: PayloadAction<string | null>) => {
       state.estateDescription = action.payload;
     },
-    updateDeal: (state, action: PayloadAction<string | null>) => {
+    updateDeal: (state, action: PayloadAction<number | null>) => {
       state.estateDeal = action.payload;
     },
     updateStatus: (state, action: PayloadAction<string | null>) => {

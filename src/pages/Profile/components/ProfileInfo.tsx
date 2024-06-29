@@ -9,7 +9,6 @@ import { Helmet } from "react-helmet";
 import HoverTitle from "../../../components/global/HoverTitle";
 import {
   EditIcon,
-  MailIcon,
   PhoneIcon,
   PopupCloseIcon,
 } from "../../../assets/icons/Icons";
@@ -87,14 +86,14 @@ export default function ProfileInfo() {
           ))}
           <button
             onClick={() => setEditInfo((state) => !state)}
-            className="group relative h-[45px] aspect-square flex justify-center items-center rounded-[5px] bg-mainClear cursor-pointer transition-colors hover:bg-mainClearHover"
+            className="group relative h-[45px] aspect-square flex justify-center items-center rounded-[5px] bg-mainClear cursor-pointer transition-colors hover:bg-mainClearActive"
           >
             <EditIcon className=" h-[22px] aspect-square [&>path]:fill-main" />
             <HoverTitle title="რედაქტირება" />
           </button>
         </div>
         <div className="flex items-center gap-4  flex-wrap justify-center">
-          <div className="h-[50px] w-[270px] productsBg rounded-lg flex flex-col justify-center px-3 ">
+          <div className="h-[50px] w-[270px] bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg flex flex-col justify-center px-3 ">
             <p className=" text-[13px] text-[rgba(255,255,255,0.9)] leading-[15px] font-mainBold tracking-wider">
               განცხადებების რაოდენობა
             </p>
@@ -102,7 +101,7 @@ export default function ProfileInfo() {
               {data?.products_count ? data.products_count : "..."}
             </p>
           </div>
-          <div className="h-[50px] w-[270px] balanceBg rounded-lg flex flex-col justify-center px-3 ">
+          <div className="h-[50px] w-[270px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg flex flex-col justify-center px-3 ">
             <p className=" text-[13px] text-[rgba(255,255,255,0.9)] leading-[15px] font-mainBold tracking-wider">
               ბალანსი
             </p>
@@ -114,7 +113,7 @@ export default function ProfileInfo() {
                 : "..."}
             </p>
           </div>
-          <div className="h-[50px] w-[270px] spentMoneyBg rounded-lg flex flex-col justify-center px-3 ">
+          <div className="h-[50px] w-[270px] bg-gradient-to-r from-indigo-500 from-0%  to-emerald-500 to-100% rounded-lg flex flex-col justify-center px-3 ">
             <p className=" text-[13px] text-[rgba(255,255,255,0.9)] leading-[15px] font-mainBold tracking-wider">
               დახარჯული თანხა
             </p>
@@ -146,12 +145,25 @@ export default function ProfileInfo() {
             <div className=" w-4/12">გააქტიურდა</div>
             <div className=" w-3/12">თარიღი</div>
           </div>
-          <div className="overflow-auto max-h-[300px]">
-            {data?.payments
-              ? data.payments.map((e: TuserCardInfoPayments) => (
-                  <PaymentCard key={e.id} paymentData={e} />
-                ))
-              : "იტვირთება"}
+          <div
+            className={`relative overflow-auto max-h-[300px] ${
+              data?.payments ? null : "min-h-[100px]"
+            }`}
+          >
+            {data?.payments ? (
+              data?.payments.length == 0 ? (
+                <p className="text-textDescCard text-[14px] text-center mt-5">
+                  გადახდების ისტორია ცარიელია
+                </p>
+              ) : null
+            ) : null}
+            {data?.payments ? (
+              data.payments.map((e: TuserCardInfoPayments) => (
+                <PaymentCard key={e.id} paymentData={e} />
+              ))
+            ) : (
+              <ContentLoader />
+            )}
           </div>
         </div>
       </div>
@@ -337,7 +349,7 @@ function ChangeUserInfo(props: { setError: Function; close: Function }) {
       ) : status == 0 ? (
         <div className="w-[550px] mx-auto  max-w-[100%] ">
           <h2 className="text-redI font-mainBold text-center text-[18px]  mb-4">
-            წარმოიშვა შეცდომა შეცდომა
+            წარმოიშვა შეცდომა
           </h2>
           <p className="text-textDesc  text-center text-[14px] mt-2">
             სერვერზე შეფერხებაა სცადეთ მოგვიანებით

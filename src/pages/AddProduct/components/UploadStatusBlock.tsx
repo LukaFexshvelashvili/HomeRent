@@ -40,7 +40,7 @@ export default function statusBlock({
   return (
     <>
       {status === 100 ? (
-        <UploadSuccessed />
+        <UploadSuccessed close={closeAlert} />
       ) : status == 12 ? (
         <ErrorBlock
           title="არასაკმარისი თანხა"
@@ -152,7 +152,7 @@ function ExceedImageSize({ close }: { close: () => void }) {
   );
 }
 
-function UploadSuccessed() {
+function UploadSuccessed({ close }: { close: () => void }) {
   return (
     <>
       <h2 className="text-greenI text-center text-[20px] font-mainBold">
@@ -162,7 +162,7 @@ function UploadSuccessed() {
         განცხადება წარმატებით დამატდა მონაცემთა ბაზაში, მის გამოჩენას შესაძლოა
         დაჭირდეს რამოდენიმე წუთი
       </p>
-      <div className="flex items-center gap-5 justify-center mt-5">
+      <div className="flex items-center gap-5 justify-center mt-5 flex-wrap">
         <Link to={"/Profile/MyProducts"}>
           <button className="px-4 py-2 rounded-md text-buttonText bg-main tracking-wider text-[14px] transition-colors hover:bg-mainHover">
             განცხადებების ნახვა
@@ -173,6 +173,14 @@ function UploadSuccessed() {
             მთავარ გვერდზე დაბრუნება
           </button>{" "}
         </Link>
+        <button
+          onClick={() => {
+            close();
+          }}
+          className="px-4 py-2 rounded-md text-buttonText bg-main tracking-wider text-[14px] transition-colors hover:bg-mainHover"
+        >
+          ახალი განცხადების დამატება
+        </button>{" "}
       </div>
     </>
   );

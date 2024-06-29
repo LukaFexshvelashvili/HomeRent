@@ -8,13 +8,16 @@ import { currencyConvertor } from "../../../components/convertors/convertors";
 export function SelectNumbers(props: {
   name?: string;
   setData?: Function;
+  defData?: number;
   setDataDispatch?: Function;
   changeParams?: boolean;
   engName?: string;
 }) {
   const [params, setParams] = useSearchParams();
   const dispatch = useDispatch();
-  const [active, setActive] = useState(-1);
+  const [active, setActive] = useState(
+    props.defData !== undefined ? props.defData : -1
+  );
   const Length = [0, 1, 2, 3, 4, 5, 6, 7, 7];
   useEffect(() => {
     if (props.setDataDispatch) {

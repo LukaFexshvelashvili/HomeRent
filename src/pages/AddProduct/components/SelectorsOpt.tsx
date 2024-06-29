@@ -8,15 +8,19 @@ import { RootState } from "../../../store/store";
 import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
 import OfferCard from "../../../components/global/OfferCard";
 
-export function EstateTitle(props: { error: boolean }) {
-  const [title, setTitle] = useState("");
+export function EstateTitle(props: {
+  error?: boolean;
+  setData?: Function;
+  defData?: string;
+}) {
+  const [title, setTitle] = useState(props.defData ? props.defData : "");
   const dispatch = useDispatch();
 
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2 mobile:flex-col">
         <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-          განცხადების სათაური
+          განცხადების სათაური *
         </p>{" "}
         <span className="text-Asmall text-textDescCard ">
           (მაქსიმალური სიგრძე: 30)
@@ -40,10 +44,14 @@ export function EstateTitle(props: { error: boolean }) {
             onChange={(e) => {
               if (e.target.value.length <= 30) {
                 setTitle(e.target.value);
-                if (e.target.value == "") {
-                  dispatch(updateTitle(null));
+                if (!props.setData) {
+                  if (e.target.value == "") {
+                    dispatch(updateTitle(null));
+                  } else {
+                    dispatch(updateTitle(e.target.value));
+                  }
                 } else {
-                  dispatch(updateTitle(e.target.value));
+                  props.setData(e.target.value);
                 }
               }
             }}
@@ -56,8 +64,13 @@ export function EstateTitle(props: { error: boolean }) {
     </div>
   );
 }
-export function EstateDescription() {
-  const [description, setDescription] = useState("");
+export function EstateDescription(props: {
+  setData?: Function;
+  defData?: string;
+}) {
+  const [description, setDescription] = useState(
+    props.defData ? props.defData : ""
+  );
   const dispatch = useDispatch();
 
   return (
@@ -80,10 +93,14 @@ export function EstateDescription() {
             onChange={(e) => {
               if (e.target.value.length <= 600) {
                 setDescription(e.target.value);
-                if (e.target.value == "") {
-                  dispatch(updateDescription(null));
+                if (!props.setData) {
+                  if (e.target.value == "") {
+                    dispatch(updateDescription(null));
+                  } else {
+                    dispatch(updateDescription(e.target.value));
+                  }
                 } else {
-                  dispatch(updateDescription(e.target.value));
+                  props.setData(e.target.value);
                 }
               }
             }}
