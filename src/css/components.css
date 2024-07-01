@@ -96,6 +96,7 @@
 .noScrollBar::-webkit-scrollbar {
   display: none;
 }
+
 .Loader {
   height: 70px;
   aspect-ratio: 1 / 1;

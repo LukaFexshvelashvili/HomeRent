@@ -1,4 +1,4 @@
-import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { PopupCloseIcon, SearchIcon } from "../../assets/icons/Icons";
 import {
   PriceSlider,
@@ -20,12 +20,11 @@ import {
 import { deleteParams, updateParams } from "../../hooks/routerHooks";
 import { useSearchParams } from "react-router-dom";
 import {
-  getCacheItem,
   getSearchCache,
-  setCacheItem,
   setSearchCache,
 } from "../../components/cache/cacheFunctions";
 import { Helmet } from "react-helmet";
+import SearchPlace from "../../components/placeSelector/SearchPlace";
 function Search() {
   const [searched, setSearched] = useState<any>(null);
   const [vipSearched, setVipSearched] = useState<any[] | null>(null);
@@ -48,25 +47,6 @@ function Search() {
   });
   const debouncedSearch = useDebounce(location.search, 300, setLoader);
   const [citiesAPI, setCitiesAPI] = useState([]);
-  const firstRender = useRef<boolean>(true);
-  useLayoutEffect(() => {
-    getCacheItem("cities").then((cachedCities) => {
-      if (cachedCities == undefined && firstRender.current) {
-        firstRender.current = false;
-        axiosCall.get("locations/get_cities").then((res) => {
-          if (res.status == 200) {
-            setCitiesAPI(res.data.subLocs.map((item: any) => item.name.ka));
-            setCacheItem(
-              "cities",
-              res.data.subLocs.map((item: any) => item.name.ka)
-            );
-          }
-        });
-      } else {
-        setCitiesAPI(cachedCities);
-      }
-    });
-  }, []);
 
   const afterSearchActions = (fetchedData: any) => {
     setSearched(fetchedData.products);
@@ -231,10 +211,7 @@ function Search() {
         </div>
 
         <div className="flex  gap-5 mediumSmallXl:flex-col">
-          <FiltersSection
-            citiesAPI={citiesAPI}
-            setSearchTitle={setSearchTitle}
-          />
+          <FiltersSection setSearchTitle={setSearchTitle} />
           <ResponsiveFiltersSection
             openFilters={openFilters}
             setOpenFilters={setOpenFilters}
@@ -280,6 +257,10 @@ function ResponsiveFiltersSection(props: {
   openFilters: boolean;
   setOpenFilters: Function;
 }) {
+  const [params, setParams] = useSearchParams();
+
+  const [openLocations, setOpenLocations] = useState(false);
+
   useEffect(() => {
     if (props.openFilters) {
       document.body.classList.add("no-scroll");
@@ -292,6 +273,32 @@ function ResponsiveFiltersSection(props: {
   }, [props.openFilters]);
   return (
     <section className="hidden mediumSmallXl:block shadow-none ">
+      {openLocations ? (
+        <>
+          <div
+            onClick={() => setOpenLocations(false)}
+            className="fixed h-full w-full aspect-square bg-blackFade top-0 left-0 z-20 "
+          ></div>
+          <div
+            className={`fixed left-2/4 -translate-x-2/4 -translate-y-2/4 top-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4  ${
+              openLocations ? "max-w-[1200px]" : "max-w-[800px]"
+            } w-[90%] mx-auto small:top-2/4 small:-translate-y-2/4 z-40`}
+          >
+            <button
+              onClick={() => setOpenLocations(false)}
+              className="h-[26px] aspect-square  absolute top-3 right-3 flex justify-center items-center p-1"
+            >
+              <PopupCloseIcon className=" [&>path]:fill-whiteCont" />
+            </button>
+            <SearchPlace
+              setData={(locations: any) => {
+                updateParams(params, setParams, locations);
+              }}
+              closeWindow={() => setOpenLocations(false)}
+            />
+          </div>
+        </>
+      ) : null}
       <div className={`overflow-hidden`}>
         <div
           onClick={() => props.setOpenFilters(false)}
@@ -324,12 +331,19 @@ function ResponsiveFiltersSection(props: {
                   ადგილმდებარეობა
                 </p>
 
-                <DropDownSelector
-                  name="არჩევა"
-                  itemsList={props.citiesAPI}
-                  engName={"city"}
-                  changeParams={true}
-                />
+                <div
+                  onClick={() => setOpenLocations(true)}
+                  className="cursor-pointer rounded-lg h-[40px] w-[300px] gap-2 flex items-center bg-whiteMain border-2 mt-2 text-textDesc text-[14px] border-lineBg font-mainRegular px-2"
+                >
+                  <div className=" w-[50%] overflow-hidden max-w-[50%] text-nowrap text-ellipsis">
+                    ქალაქი: {params.get("city") ? params.get("city") : "*"}{" "}
+                  </div>
+                  <div className="h-[50%] w-[2px] bg-lineBg "></div>
+                  <div className=" w-[50%] overflow-hidden max-w-[50%] text-nowrap text-ellipsis">
+                    რაიონი:{" "}
+                    {params.get("district") ? params.get("district") : "*"}{" "}
+                  </div>
+                </div>
               </div>
               <div className="flex flex-col items-center">
                 <p className=" text-textHead tracking-wider font-mainBold ">
@@ -381,8 +395,9 @@ function ResponsiveFiltersSection(props: {
   );
 }
 
-function FiltersSection(props: { citiesAPI: any; setSearchTitle: Function }) {
+function FiltersSection(props: { setSearchTitle: Function }) {
   const [params, setParams] = useSearchParams();
+  const [openLocations, setOpenLocations] = useState(false);
 
   return (
     <section className=" mediumSmallXl:hidden relative flex-[1.5] large:flex-[2] bg-whiteMain mediumSmallXl:rounded-[10px] rounded-[18px] shadow-sectionShadow mediumSmallXl:shadow-none">
@@ -415,13 +430,45 @@ function FiltersSection(props: { citiesAPI: any; setSearchTitle: Function }) {
             <p className=" text-textHead tracking-wider font-mainBold ">
               ადგილმდებარეობა
             </p>
+            <div
+              onClick={() => setOpenLocations(true)}
+              className="cursor-pointer rounded-lg h-[40px] w-[300px] gap-2 flex items-center bg-whiteMain border-2 mt-2 text-textDesc text-[14px] border-lineBg font-mainRegular px-2"
+            >
+              <div className=" w-[50%] overflow-hidden max-w-[50%] text-nowrap text-ellipsis">
+                ქალაქი: {params.get("city") ? params.get("city") : "*"}{" "}
+              </div>
+              <div className="h-[50%] w-[2px] bg-lineBg "></div>
+              <div className=" w-[50%] overflow-hidden max-w-[50%] text-nowrap text-ellipsis">
+                რაიონი: {params.get("district") ? params.get("district") : "*"}{" "}
+              </div>
+            </div>
+            {openLocations ? (
+              <>
+                <div
+                  onClick={() => setOpenLocations(false)}
+                  className="fixed h-full w-full aspect-square bg-blackFade top-0 left-0 z-20 "
+                ></div>
 
-            <DropDownSelector
-              name="არჩევა"
-              itemsList={props.citiesAPI}
-              engName={"city"}
-              changeParams={true}
-            />
+                <div
+                  className={`fixed left-2/4 -translate-x-2/4 -translate-y-2/4 top-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4  ${
+                    openLocations ? "max-w-[1200px]" : "max-w-[800px]"
+                  } w-[90%] mx-auto z-[21] small:top-2/4 small:-translate-y-2/4`}
+                >
+                  <button
+                    onClick={() => setOpenLocations(false)}
+                    className="h-[26px] aspect-square  absolute top-3 right-3 flex justify-center items-center p-1"
+                  >
+                    <PopupCloseIcon className=" [&>path]:fill-whiteCont" />
+                  </button>
+                  <SearchPlace
+                    setData={(locations: any) => {
+                      updateParams(params, setParams, locations);
+                    }}
+                    closeWindow={() => setOpenLocations(false)}
+                  />
+                </div>
+              </>
+            ) : null}
           </div>
           <div className="flex flex-col items-center">
             <p className=" text-textHead tracking-wider font-mainBold ">

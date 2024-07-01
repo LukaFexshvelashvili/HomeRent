@@ -51,6 +51,9 @@ textarea {
 ::-webkit-scrollbar-thumb {
   background-color: var(--main);
 }
+.smScroll::-webkit-scrollbar {
+  width: 5px;
+}
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {

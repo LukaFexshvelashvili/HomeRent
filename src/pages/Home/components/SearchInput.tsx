@@ -21,12 +21,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { SelectNumbers } from "../../Search/components/Filters";
 import searchBg from "../../../assets/images/estates/searchBg.webp";
-import axiosCall from "../../../hooks/axiosCall";
-import {
-  getCacheItem,
-  setCacheItem,
-} from "../../../components/cache/cacheFunctions";
 import HoverTitle from "../../../components/global/HoverTitle";
+import SearchPlace from "../../../components/placeSelector/SearchPlace";
 
 type TPriceGet = {
   start: number;
@@ -39,7 +35,10 @@ function SearchInput() {
   const [inputSelect, setInputSelect] = useState<null | number>(null);
   const [getType, setGetType] = useState<null | string>(null);
   const [getDeal, setGetDeal] = useState<null | number>(null);
-  const [getCity, setGetCity] = useState<null | string>(null);
+  const [getLocation, setGetLoaction] = useState<{
+    city: string;
+    district: string;
+  }>({ city: "", district: "" });
   const [searchTitle, setSearchTitle] = useState<string>("");
   const [getSizes, setGetSizes] = useState<null | number[]>(null);
   const [getRooms, setGetRooms] = useState<number | null>(null);
@@ -55,7 +54,9 @@ function SearchInput() {
         params.append("estate_type", JSON.stringify(TypeIndex));
       }
     }
-    getCity && params.append("city", getCity);
+    getLocation.city !== "" && params.append("city", getLocation.city);
+    getLocation.district !== "" &&
+      params.append("district", getLocation.district);
     searchTitle !== "" && params.append("title", searchTitle);
     getSizes && params.append("sizes", JSON.stringify(getSizes));
     getRooms && params.append("rooms", JSON.stringify(getRooms));
@@ -64,7 +65,16 @@ function SearchInput() {
     getPrices && params.append("prices", JSON.stringify(getPrices));
     navigate(`/search?${params.toString()}`);
   };
-
+  useEffect(() => {
+    if (inputSelect !== null) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [inputSelect]);
   return (
     <div className="w-full my-4 overflow-hidden  bg-whiteMain rounded-[25px] shadow-sectionShadow">
       <div className="w-full relative  flex gap-3 small:w-auto small:h-auto small:flex-col small:gap-1 flex-wrap mx-auto py-[20px] px-[25px] ">
@@ -132,12 +142,16 @@ function SearchInput() {
             >
               <FilterPlaceIcon className=" h-[16px] [&>path]:fill-white" />{" "}
               <p className="max-w-[150px] text-[14px] font-mainRegular text-[#ffffffd3]">
-                {getCity ? getCity : "მდებარეობა"}
+                {getLocation.city !== ""
+                  ? getLocation.district
+                    ? getLocation.district
+                    : getLocation.city
+                  : "მდებარეობა"}
               </p>
             </div>
-            {getCity && (
+            {getLocation.city !== "" && (
               <button
-                onClick={() => setGetCity(null)}
+                onClick={() => setGetLoaction({ city: "", district: "" })}
                 className="h-[20px] aspect-square absolute right-2 flex justify-center items-center p-1 z-10"
               >
                 <PopupCloseIcon className=" [&>path]:fill-white" />
@@ -207,7 +221,11 @@ function SearchInput() {
           </div>
 
           {inputSelect && (
-            <div className="fixed left-2/4 -translate-x-2/4 -translate-y-2/4 top-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4 max-w-[800px] w-[90%] mx-auto z-[21] small:top-2/4 small:-translate-y-2/4">
+            <div
+              className={`fixed left-2/4 -translate-x-2/4 -translate-y-2/4 top-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4  ${
+                inputSelect == 2 ? "max-w-[1200px]" : "max-w-[800px]"
+              } w-[90%] mx-auto z-[21] small:top-2/4 small:-translate-y-2/4`}
+            >
               <button
                 onClick={() => setInputSelect(null)}
                 className="h-[26px] aspect-square  absolute top-3 right-3 flex justify-center items-center p-1"
@@ -227,10 +245,10 @@ function SearchInput() {
               ) : inputSelect == 2 ? (
                 <>
                   <p className="text-textHead text-[14px] w-full text-center small:text-center small:w-full small:mt-6 small:mb-2">
-                    აირჩიეთ ქალაქი
+                    აირჩიეთ მდებარეობა
                   </p>
-                  <SelectCity
-                    setData={setGetCity}
+                  <SearchPlace
+                    setData={setGetLoaction}
                     closeWindow={setInputSelect}
                   />
                 </>
@@ -294,64 +312,6 @@ function SearchInput() {
   );
 }
 export default memo(SearchInput);
-function SelectCity(props: { setData: Function; closeWindow: Function }) {
-  const [search, setSearch] = useState("");
-  const firstRender = useRef<boolean>(true);
-
-  const [citiesAPI, setCitiesAPI] = useState([]);
-  useLayoutEffect(() => {
-    getCacheItem("cities").then((cachedCities) => {
-      if (cachedCities == undefined && firstRender.current) {
-        firstRender.current = false;
-        axiosCall.get("locations/get_cities").then((res) => {
-          if (res.status == 200) {
-            setCitiesAPI(res.data.subLocs.map((item: any) => item.name.ka));
-            setCacheItem(
-              "cities",
-              res.data.subLocs.map((item: any) => item.name.ka)
-            );
-          }
-        });
-      } else {
-        setCitiesAPI(cachedCities);
-      }
-    });
-  }, []);
-
-  return (
-    <>
-      <input
-        type="text"
-        placeholder="მოძებნა"
-        className="text-blackMain mt-6 text-[14px] h-[40px] w-full bg-LoginInput outline-none rounded-lg px-4 transition-colors focus:bg-LoginInputActive my-3"
-        onChange={(e) => setSearch(e.target.value)}
-        value={search}
-      />
-      <div className="flex flex-col   mobileTab:overflow-x-hidden mobileTab:overflow-y-scroll mobileTab:flex-nowrap  flex-wrap gap-x-10 h-[420px] overflow-x-scroll mt-6 gap-y-2">
-        {citiesAPI !== undefined &&
-        citiesAPI.length > 1 &&
-        citiesAPI.filter((name: string) => name.includes(search)).length > 0 ? (
-          citiesAPI
-            .filter((name: string) => name.includes(search))
-            .map((e: string, i: number) => (
-              <div
-                onClick={() => {
-                  props.setData(e);
-                  props.closeWindow(null);
-                }}
-                className=" h-[26px] mobileTab:h-auto min-h-[30px] cursor-pointer transition-colors px-2 min-w-[150px] rounded-md hover:bg-whiteHover text-textHeadBlack"
-                key={i}
-              >
-                {e}
-              </div>
-            ))
-        ) : (
-          <p className="text-textHead text-center">შედეგი ვერ მოიძებნა...</p>
-        )}
-      </div>
-    </>
-  );
-}
 
 function SelectRooms(props: { setData: Function; closeWindow: Function }) {
   const [room, setRoom] = useState<number>(-2);
