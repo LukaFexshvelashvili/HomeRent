@@ -141,10 +141,10 @@ function SearchInput() {
               className="flex h-full items-center gap-3  px-6 w-full small:h-[52px]"
             >
               <FilterPlaceIcon className=" h-[16px] [&>path]:fill-white" />{" "}
-              <p className="max-w-[150px] text-[14px] font-mainRegular text-[#ffffffd3]">
+              <p className="max-w-[150px] text-[14px] font-mainRegular text-[#ffffffd3] overflow-hidden text-nowrap text-ellipsis">
                 {getLocation.city !== ""
                   ? getLocation.district
-                    ? getLocation.district
+                    ? getLocation.city + " > " + getLocation.district
                     : getLocation.city
                   : "მდებარეობა"}
               </p>

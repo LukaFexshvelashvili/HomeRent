@@ -85,7 +85,7 @@ export default function SelectPlace(props: {
       ) : (
         <p className=" text-center text-textHead my-5">იტვირთება...</p>
       )}
-      <div className="h-[50px] w-full flex items-center justify-start">
+      <div className="h-[70px] w-full flex items-center justify-start flex-col gap-3">
         <p className="text-center text-textHead text-[12px] font-mainRegular translate-y-1">
           {city !== ""
             ? district !== ""
@@ -101,7 +101,7 @@ export default function SelectPlace(props: {
               props.closeWindow();
             }
           }}
-          className=" absolute DefButton left-2/4 translate-x-[-50%]"
+          className=" DefButton"
         >
           დადასტურება
         </button>
@@ -122,7 +122,10 @@ function GetDistricts(props: {
       {props.city !== "" &&
         props.locationsAPI
           .filter((cities: any) => cities.display_name == props.city)[0]
-          .districts.map((item: any) => (
+          .districts.filter((district: any) =>
+            district.display_name.includes(props.search)
+          )
+          .map((item: any) => (
             <div
               className="flex flex-col h-min justify-start items-start"
               key={item.id}
@@ -150,7 +153,7 @@ function GetDistricts(props: {
                       state !== urban.display_name ? urban.display_name : ""
                     )
                   }
-                  className={`flex items-center rounded-lg px-2 py-1 min-h-[26px] text-textDescCard font-mainRegular text-[12px] cursor-pointer transition-colors ${
+                  className={`flex items-center rounded-lg  px-2 py-1 min-h-[26px] text-textDescCard font-mainRegular text-[12px] cursor-pointer transition-colors ${
                     props.district == urban.display_name
                       ? "bg-whiteHover"
                       : "bg-whiteMani"
