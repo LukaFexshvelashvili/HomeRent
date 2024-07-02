@@ -30,7 +30,7 @@ function Search() {
   const [vipSearched, setVipSearched] = useState<any[] | null>(null);
   const [params, setParams] = useSearchParams();
   const [loader, setLoader] = useState<boolean>(false);
-  const [pages, setPages] = useState<number>(0);
+  const [pages, setPages] = useState<number>(1);
   const [openFilters, setOpenFilters] = useState<boolean>(false);
 
   const cachedFirst = useRef<any[]>([]);
@@ -38,7 +38,7 @@ function Search() {
   const lastDebouncedSearch = useRef<string | null>(null);
   const [activePage, setActivePage] = useState<number>(() => {
     const page = params.get("page");
-    return page !== null ? parseInt(page) : 0;
+    return page !== null ? parseInt(page) : 1;
   });
 
   const [searchTitle, setSearchTitle] = useState<string>(() => {
@@ -54,13 +54,13 @@ function Search() {
     } else if (fetchedData.vipProducts) {
       setVipSearched(fetchedData.vipProducts);
     }
-    setPages(Math.floor(fetchedData.length / fetchedData.per_page_length));
+    setPages(Math.ceil(fetchedData.length / fetchedData.per_page_length));
 
     getFullCount.current = fetchedData.length;
     if (
       (activePage < 1 ||
         activePage >
-          Math.floor(fetchedData.length / fetchedData.per_page_length)) &&
+          Math.ceil(fetchedData.length / fetchedData.per_page_length)) &&
       params.get("page")
     ) {
       deleteParams(params, setParams, "page");
@@ -116,26 +116,29 @@ function Search() {
   }, [activePage]);
   const fetchPageButtons = () => {
     const buttons = []; // Create an array to hold the buttons
+    if (pages > 1) {
+      for (let i = 1; i <= pages; i++) {
+        buttons.push(
+          <button
+            key={i}
+            className={`h-[32px] aspect-square text-[15px] text-buttonText ${
+              activePage == i ? "bg-main" : "bg-whiteHover"
+            } rounded-md flex items-center justify-center`}
+            onClick={() => {
+              window.scrollTo(0, 0);
 
-    for (let i = 1; i <= pages; i++) {
-      buttons.push(
-        <button
-          key={i}
-          className={`h-[32px] aspect-square text-[15px] text-buttonText ${
-            activePage == i ? "bg-main" : "bg-whiteHover"
-          } rounded-md flex items-center justify-center`}
-          onClick={() => {
-            if (i == 1) {
-              deleteParams(params, setParams, "page");
-            } else {
-              updateParams(params, setParams, { page: i });
-            }
-            setActivePage(i);
-          }}
-        >
-          {i}
-        </button>
-      );
+              if (i == 1) {
+                deleteParams(params, setParams, "page");
+              } else {
+                updateParams(params, setParams, { page: i });
+              }
+              setActivePage(i);
+            }}
+          >
+            {i}
+          </button>
+        );
+      }
     }
 
     return buttons; // Return the array of buttons after the loop
