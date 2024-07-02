@@ -46,7 +46,7 @@ function CardSlider({
           9: { spaceBetween: 8, slidesPerView: 1 },
         }}
       >
-        {products ? (
+        {!products ? (
           <>
             {products.map((item: TProductCard) =>
               item.id !== -8 ? (
@@ -64,19 +64,19 @@ function CardSlider({
         ) : (
           <>
             <SwiperSlide>
-              <CardSkeleton autoWidth={false} />
+              <CardSkeleton fixedWidth={true} />
             </SwiperSlide>
             <SwiperSlide>
-              <CardSkeleton autoWidth={false} />
+              <CardSkeleton fixedWidth={true} />
             </SwiperSlide>
             <SwiperSlide>
-              <CardSkeleton autoWidth={false} />
+              <CardSkeleton fixedWidth={true} />
             </SwiperSlide>
             <SwiperSlide>
-              <CardSkeleton autoWidth={false} />
+              <CardSkeleton fixedWidth={true} />
             </SwiperSlide>
             <SwiperSlide>
-              <CardSkeleton autoWidth={false} />
+              <CardSkeleton fixedWidth={true} />
             </SwiperSlide>
           </>
         )}

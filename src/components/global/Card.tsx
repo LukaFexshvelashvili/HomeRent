@@ -179,10 +179,12 @@ export default function Card(props: {
     </>
   );
 }
-export function CardSkeleton() {
+export function CardSkeleton(props: { fixedWidth?: boolean }) {
   return (
     <div
-      className={`h-full w-full absolute top-0 left-0 bg-whiteMain border-2 border-cardBorder rounded-[10px] pb-14 z-10`}
+      className={` ${
+        props.fixedWidth ? "h-auto w-[280px]" : "absolute h-full w-full"
+      }  top-0 left-0 bg-whiteMain border-2 border-cardBorder rounded-[10px] pb-14 z-10`}
     >
       <div className="w-full h-[200px] rounded-normal bg-whiteLoad relative overflow-hidden skeletonLoad">
         <div className="absolute bottom-2 left-2 flex items center gap-2">
