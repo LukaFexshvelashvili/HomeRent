@@ -44,7 +44,7 @@ export default function EstateConfirm(props: {
   let offerData = ActiveOffers.filter((item) => item.id == activeOffer)[0];
   let sendAddress = {
     city: data.estateCity,
-    address: data.estateAddress,
+    address: data.estateDistrict,
     exactAddress: data.estateExactAddress,
   };
   return (

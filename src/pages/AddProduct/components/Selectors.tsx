@@ -74,7 +74,8 @@ export const submitProduct = (
     formData.append("estateDeal", productData.estateDeal);
     formData.append("estateStatus", productData.estateStatus);
     formData.append("estateCity", productData.estateCity);
-    formData.append("estateAddress", productData.estateAddress);
+    formData.append("estateDistrict", productData.estateDistrict);
+    formData.append("estateUrban", productData.estateUrban);
     formData.append("estateExactAddress", productData.estateExactAddress);
     formData.append("estateIpcode", productData.estateIpcode);
     formData.append("estateSize", productData.estateSize);

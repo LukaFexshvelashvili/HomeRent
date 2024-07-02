@@ -7,7 +7,6 @@ export type TproductInfoStart = {
   estateDeal: null | number;
   estateStatus: null | string;
   estateCity: null | string;
-  estateAddress: null | string;
   estateDistrict: null | string;
   estateUrban: null | string;
   estateExactAddress: null | string;
@@ -38,7 +37,7 @@ const initialState: TproductInfoStart = {
   estateDeal: null,
   estateStatus: null,
   estateCity: null,
-  estateAddress: null,
+
   estateDistrict: null,
   estateUrban: null,
   estateExactAddress: null,
@@ -91,9 +90,7 @@ const addProductSlice = createSlice({
     updateCity: (state, action: PayloadAction<string | null>) => {
       state.estateCity = action.payload;
     },
-    updateAddress: (state, action: PayloadAction<string | null>) => {
-      state.estateAddress = action.payload;
-    },
+
     updateExactAddress: (state, action: PayloadAction<string | null>) => {
       state.estateExactAddress = action.payload;
     },
@@ -179,7 +176,6 @@ export const {
   updateDeal,
   updateStatus,
   updateCity,
-  updateAddress,
   updateExactAddress,
   updateIpcode,
   updateActiveImage,
