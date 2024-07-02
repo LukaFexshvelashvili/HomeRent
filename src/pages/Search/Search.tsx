@@ -46,7 +46,6 @@ function Search() {
     return title !== null ? title : "";
   });
   const debouncedSearch = useDebounce(location.search, 300, setLoader);
-  const [citiesAPI, setCitiesAPI] = useState([]);
 
   const afterSearchActions = (fetchedData: any) => {
     setSearched(fetchedData.products);
@@ -215,7 +214,6 @@ function Search() {
           <ResponsiveFiltersSection
             openFilters={openFilters}
             setOpenFilters={setOpenFilters}
-            citiesAPI={citiesAPI}
           />
           <section className="flex-[3]  rounded-normal">
             <p className="text-Asmall text-textDesc tracking-wider font-mainBold m-3 mt-0">
@@ -253,7 +251,6 @@ function Search() {
 export default memo(Search);
 
 function ResponsiveFiltersSection(props: {
-  citiesAPI: any;
   openFilters: boolean;
   setOpenFilters: Function;
 }) {
@@ -293,6 +290,11 @@ function ResponsiveFiltersSection(props: {
             <SearchPlace
               setData={(locations: any) => {
                 updateParams(params, setParams, locations);
+              }}
+              defData={{
+                city: params.get("city") ? params.get("city") : "",
+                district: params.get("district") ? params.get("district") : "",
+                urban: params.get("urban") ? params.get("urban") : "",
               }}
               closeWindow={() => setOpenLocations(false)}
             />
@@ -463,6 +465,13 @@ function FiltersSection(props: { setSearchTitle: Function }) {
                   <SearchPlace
                     setData={(locations: any) => {
                       updateParams(params, setParams, locations);
+                    }}
+                    defData={{
+                      city: params.get("city") ? params.get("city") : "",
+                      district: params.get("district")
+                        ? params.get("district")
+                        : "",
+                      urban: params.get("urban") ? params.get("urban") : "",
                     }}
                     closeWindow={() => setOpenLocations(false)}
                   />

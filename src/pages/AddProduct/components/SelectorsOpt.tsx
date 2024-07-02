@@ -1,12 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Tlocation,
+  updateDeal,
   updateDescription,
+  updateExactAddress,
+  updateIpcode,
+  updateLocations,
+  updateStatus,
   updateTitle,
 } from "../../../store/data/addProductSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RootState } from "../../../store/store";
 import { ActiveOffers, TOffer } from "../../../assets/lists/offers";
 import OfferCard from "../../../components/global/OfferCard";
+import SearchPlace from "../../../components/placeSelector/SearchPlace";
+import { projectDealTypes } from "../../../assets/lists/productAddons";
+import { PopupCloseIcon } from "../../../assets/icons/Icons";
 
 export function EstateTitle(props: {
   error?: boolean;
@@ -131,6 +140,247 @@ export function EstateOption() {
         {ActiveOffers.map((e: TOffer, i: number) => (
           <OfferCard offerData={e} activeStatus={status} key={i} />
         ))}
+      </div>
+    </div>
+  );
+}
+
+export function DealType(props: { setData?: Function; defData?: number }) {
+  const [active, setActive] = useState<null | number>(
+    props.defData !== undefined ? props.defData : null
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (active !== null) {
+      if (!props.setData) {
+        dispatch(updateDeal(active));
+      } else {
+        props.setData(active);
+      }
+    }
+  }, [active]);
+  return (
+    <div className="flex flex-col">
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+        გარიგების ტიპი *
+      </p>
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
+        {projectDealTypes.map((e: string, i: number) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`  p-2 px-4 rounded-xl transition-colors ${
+              active == i ? "bg-main" : "bg-mainClear"
+            }`}
+          >
+            <p
+              className={`text-Asmall tracking-wide ${
+                active == i ? "text-buttonText" : "text-main"
+              }`}
+            >
+              {e}
+            </p>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+export function EstateStatus({
+  productData,
+  setData,
+  defData,
+  estateType,
+}: {
+  productData: any;
+  setData?: Function;
+  defData?: string;
+  estateType?: number;
+}) {
+  const [active, setActive] = useState<null | string>(
+    defData !== undefined ? defData : null
+  );
+  const [DealTypes, setDealTypes] = useState<string[]>([
+    "ახალი აშენებული",
+    "ძველი აშენებული",
+    "მშენებარე",
+  ]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (active !== null) {
+      if (!setData) {
+        dispatch(updateStatus(active));
+      } else {
+        setData(active);
+      }
+    }
+  }, [active]);
+  useEffect(() => {
+    if (productData.estateType == 3 || (estateType && estateType == 3)) {
+      setDealTypes([
+        "სასოფლო სამეურნეო",
+        "არა სასოფლო სამეურნეო",
+        "კომერციული",
+        "სპეციალური",
+        "საინვესტიციო/სამშენებლო",
+      ]);
+    } else if (productData.estateType == 2 || (estateType && estateType == 2)) {
+      setDealTypes([
+        "საოფისე",
+        "სავაჭრო",
+        "სასაწყობე",
+        "საწარმოო ფართი",
+        "უნივერსალური",
+        "სპეციალური",
+        "კვების ობიექტები",
+        "ავტოფარეხი",
+        "სარდაფი",
+        "ნახევარსარდაფი",
+        "მთლიანი შენობა",
+        "ავტოსამრეცხაო",
+        "ავტოსერვისი",
+      ]);
+    } else {
+      setDealTypes(["ახალი აშენებული", "ძველი აშენებული", "მშენებარე"]);
+    }
+    if (defData == undefined) {
+      setActive(null);
+    }
+    if (defData !== undefined && estateType) {
+      setActive(null);
+    }
+  }, [productData.estateType, estateType]);
+  return (
+    <div className="flex flex-col">
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+        სტატუსი *
+      </p>
+      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
+        {DealTypes.map((e, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(e)}
+            className={`  p-2 px-4 rounded-xl transition-colors ${
+              active == e ? "bg-main" : "bg-mainClear"
+            }`}
+          >
+            <p
+              className={`text-Asmall tracking-wide ${
+                active == e ? "text-buttonText" : "text-main"
+              }`}
+            >
+              {e}
+            </p>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+export function EstateAddress(props: { error: boolean }) {
+  const [openLocations, setOpenLocations] = useState<boolean>(false);
+  const [locations, setLocations] = useState<Tlocation>({
+    city: "",
+    district: "",
+    urban: "",
+  });
+  const getInput = useRef<any>(null);
+  const dispatch = useDispatch();
+  const [ipAddress, setIpAddress] = useState<string>("");
+
+  useEffect(() => {
+    dispatch(
+      updateLocations({
+        city: locations.city !== "" ? locations.city : null,
+        district: locations.district !== "" ? locations.district : null,
+        urban: locations.urban !== "" ? locations.urban : null,
+      })
+    );
+  }, [locations]);
+
+  return (
+    <div className="flex flex-col relative z-10">
+      {openLocations ? (
+        <>
+          <div
+            onClick={() => setOpenLocations(false)}
+            className="fixed h-full w-full aspect-square bg-blackFade top-0 left-0 z-20 "
+          ></div>
+          <div
+            className={`fixed left-2/4 -translate-x-2/4 -translate-y-2/4 top-2/4 bg-whiteMain rounded-section shadow-sectionShadow p-4  ${
+              openLocations ? "max-w-[1200px]" : "max-w-[800px]"
+            } w-[90%] mx-auto small:top-2/4 small:-translate-y-2/4 z-40`}
+          >
+            <button
+              onClick={() => setOpenLocations(false)}
+              className="h-[26px] aspect-square  absolute top-3 right-3 flex justify-center items-center p-1"
+            >
+              <PopupCloseIcon className=" [&>path]:fill-whiteCont" />
+            </button>
+            <SearchPlace
+              setData={setLocations}
+              defData={locations}
+              closeWindow={() => setOpenLocations(false)}
+            />
+          </div>
+        </>
+      ) : null}
+      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
+        მისამართი*
+      </p>
+      {locations.city == "" && props.error && (
+        <div className=" rounded-xl text-pinkI bg-pinkClear py-3 px-4 text-sm tracking-wider mt-2 text-center">
+          {" "}
+          სავალდებულოა შეავსოთ ქალაქის ველი
+        </div>
+      )}
+      <div
+        onClick={() => setOpenLocations(true)}
+        className="cursor-pointer rounded-lg h-[40px] w-[600px] gap-2 flex items-center bg-whiteMain border-2 mt-2 text-textDesc text-[14px] border-lineBg font-mainRegular px-2"
+      >
+        <div className=" w-[33%] overflow-hidden max-w-[33%] text-nowrap text-ellipsis">
+          ქალაქი: {locations.city ? locations.city : "*"}{" "}
+        </div>
+        <div className="h-[50%] w-[2px] bg-lineBg "></div>
+        <div className=" w-[33%] overflow-hidden max-w-[33%] text-nowrap text-ellipsis">
+          რაიონი: {locations.district ? locations.district : "*"}{" "}
+        </div>
+        <div className="h-[50%] w-[2px] bg-lineBg "></div>
+
+        <div className=" w-[33%] overflow-hidden max-w-[33%] text-nowrap text-ellipsis">
+          უბანი: {locations.urban ? locations.urban : "*"}{" "}
+        </div>
+      </div>
+      <div className="flex gap-3 flex-wrap mt-4 mobile:justify-center mobile:pl-0">
+        <div className="relative">
+          <input
+            onChange={(e) => {
+              dispatch(updateExactAddress(e.target.value));
+            }}
+            type="text"
+            className="AddProductInput"
+            placeholder="ზუსტი მისამართი"
+          />
+        </div>
+
+        <input
+          type="text"
+          ref={getInput}
+          className="AddProductInput "
+          placeholder="საკადასტრო კოდი"
+          onChange={(e) => {
+            let filteredValue = e.target.value.replace(/[^0-9.]/g, "");
+            if (filteredValue == "") {
+              dispatch(updateIpcode(null));
+            } else {
+              setIpAddress(filteredValue);
+              dispatch(updateIpcode(filteredValue));
+            }
+          }}
+          value={ipAddress}
+        />
       </div>
     </div>
   );

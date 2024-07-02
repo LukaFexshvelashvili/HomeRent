@@ -8,6 +8,8 @@ export type TproductInfoStart = {
   estateStatus: null | string;
   estateCity: null | string;
   estateAddress: null | string;
+  estateDistrict: null | string;
+  estateUrban: null | string;
   estateExactAddress: null | string;
   estateIpcode: null | string;
   estateActiveImage: null | string;
@@ -37,6 +39,8 @@ const initialState: TproductInfoStart = {
   estateStatus: null,
   estateCity: null,
   estateAddress: null,
+  estateDistrict: null,
+  estateUrban: null,
   estateExactAddress: null,
   estateIpcode: null,
   estateActiveImage: null,
@@ -56,6 +60,12 @@ const initialState: TproductInfoStart = {
   estateCurrency: 0,
   estateVip: 0,
   estateVipDays: null,
+};
+export type Tlocation = { city: string; district: string; urban: string };
+type TlocationN = {
+  city: string | null;
+  district: string | null;
+  urban: string | null;
 };
 
 const addProductSlice = createSlice({
@@ -109,6 +119,19 @@ const addProductSlice = createSlice({
     },
     updateCondition: (state, action: PayloadAction<string | null>) => {
       state.estateCondition = action.payload;
+    },
+    updateDistrict: (state, action: PayloadAction<string | null>) => {
+      state.estateDistrict = action.payload;
+    },
+    updateLocations: (state, action: PayloadAction<TlocationN | null>) => {
+      state.estateCity = action.payload?.city ? action.payload?.city : "";
+      state.estateDistrict = action.payload?.district
+        ? action.payload?.district
+        : "";
+      state.estateUrban = action.payload?.urban ? action.payload?.urban : "";
+    },
+    updateUrban: (state, action: PayloadAction<string | null>) => {
+      state.estateUrban = action.payload;
     },
     updateFloor: (state, action: PayloadAction<number | null>) => {
       state.estateFloor = action.payload;
@@ -176,6 +199,9 @@ export const {
   updateCurrency,
   updateVip,
   updateEstateVipDays,
+  updateDistrict,
+  updateUrban,
+  updateLocations,
   clearAddProduct,
 } = addProductSlice.actions;
 

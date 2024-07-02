@@ -99,16 +99,21 @@ function MyProducts() {
   }, []);
   useEffect(() => {
     if (saveProducts.current !== null) {
-      if (choice !== choices.length - 1) {
+      if (choice == 2) {
+        setMyProducts(
+          saveProducts.current.filter((item: TProductData) => item.banned == 1)
+        );
+      } else if (choice !== choices.length - 1) {
         setMyProducts(
           saveProducts.current.filter(
-            (item: TProductData) => item.product_status == choice
+            (item: TProductData) =>
+              item.product_status == choice && item.banned == 0
           )
         );
       } else {
         setMyProducts(
           saveProducts.current.filter(
-            (item: TProductData) => item.macler_status !== 0
+            (item: TProductData) => item.macler_status !== 0 && item.banned == 0
           )
         );
       }
@@ -119,28 +124,27 @@ function MyProducts() {
     `აქტიური (${
       saveProducts.current
         ? saveProducts.current.filter(
-            (item: TProductData) => item.product_status == 0
+            (item: TProductData) => item.product_status == 0 && item.banned == 0
           ).length
         : ""
     })`,
     `დამალული (${
       saveProducts.current
         ? saveProducts.current.filter(
-            (item: TProductData) => item.product_status == 1
+            (item: TProductData) => item.product_status == 1 && item.banned == 0
           ).length
         : ""
     })`,
     `დაბლოკილი (${
       saveProducts.current
-        ? saveProducts.current.filter(
-            (item: TProductData) => item.product_status == 2
-          ).length
+        ? saveProducts.current.filter((item: TProductData) => item.banned == 1)
+            .length
         : ""
     })`,
     `სააგენტოს მოთხოვნები (${
       saveProducts.current
         ? saveProducts.current.filter(
-            (item: TProductData) => item.macler_status !== 0
+            (item: TProductData) => item.macler_status !== 0 && item.banned == 0
           ).length
         : ""
     })`,

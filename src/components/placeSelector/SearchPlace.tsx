@@ -1,16 +1,29 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getCacheItem, setCacheItem } from "../cache/cacheFunctions";
 import axiosCall from "../../hooks/axiosCall";
+import { Tlocation } from "../../store/data/addProductSlice";
 
-export default function SelectPlace(props: {
+function SelectPlace(props: {
   setData: Function;
   closeWindow?: Function;
+  defData?: Tlocation | any;
 }) {
-  const [districtSearch, setDistrictSearch] = useState<string>("");
-  const [citySearch, setCitySearch] = useState<string>("");
+  const [districtSearch, setDistrictSearch] = useState<string>(
+    props.defData?.district ? props.defData.district : ""
+  );
+  const [citySearch, setCitySearch] = useState<string>(
+    props.defData?.city ? props.defData.city : ""
+  );
   const firstRender = useRef<boolean>(true);
-  const [city, setCity] = useState<string>("");
-  const [district, setDistrict] = useState<string>("");
+  const [city, setCity] = useState<string>(
+    props.defData?.city ? props.defData.city : ""
+  );
+  const [urban, setUrban] = useState<string>(
+    props.defData?.urban ? props.defData.urban : ""
+  );
+  const [district, setDistrict] = useState<string>(
+    props.defData?.district ? props.defData.district : ""
+  );
 
   const [locationsAPI, setLocationsAPI] = useState<any>([]);
   useLayoutEffect(() => {
@@ -33,9 +46,27 @@ export default function SelectPlace(props: {
     });
   }, []);
   useEffect(() => {
+    setDistrict("");
     setDistrictSearch("");
+    setUrban("");
   }, [city]);
-
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        submitLocations();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [city, district, urban]);
+  const submitLocations = () => {
+    props.setData({ city: city, district: district, urban: urban });
+    if (props.closeWindow) {
+      props.closeWindow();
+    }
+  };
   return (
     <>
       {locationsAPI && locationsAPI.length > 1 ? (
@@ -72,8 +103,10 @@ export default function SelectPlace(props: {
                 <GetDistricts
                   search={districtSearch}
                   district={district}
+                  urban={urban}
                   city={city}
-                  setdistrict={setDistrict}
+                  setDistrict={setDistrict}
+                  setUrban={setUrban}
                   locationsAPI={locationsAPI}
                 />
               </div>
@@ -89,20 +122,14 @@ export default function SelectPlace(props: {
         <p className="text-center text-textHead text-[12px] font-mainRegular translate-y-1">
           {city !== ""
             ? district !== ""
-              ? city + " > " + district
+              ? urban
+                ? city + " > " + district + " > " + urban
+                : city + " > " + district
               : city
             : null}
         </p>
 
-        <button
-          onClick={() => {
-            props.setData({ city: city, district: district });
-            if (props.closeWindow) {
-              props.closeWindow();
-            }
-          }}
-          className=" DefButton"
-        >
+        <button onClick={submitLocations} className=" DefButton">
           დადასტურება
         </button>
       </div>
@@ -110,9 +137,13 @@ export default function SelectPlace(props: {
   );
 }
 
+export default memo(SelectPlace);
+
 function GetDistricts(props: {
-  setdistrict: Function;
+  setDistrict: Function;
+  setUrban: Function;
   district: string;
+  urban: string;
   city: string;
   search: string;
   locationsAPI: any;
@@ -127,12 +158,12 @@ function GetDistricts(props: {
           )
           .map((item: any) => (
             <div
-              className="flex flex-col h-min justify-start items-start"
+              className="flex flex-col h-min justify-start items-start select-none"
               key={item.id}
             >
               <div
                 onClick={() =>
-                  props.setdistrict((state: string) =>
+                  props.setDistrict((state: string) =>
                     state !== item.display_name ? item.display_name : ""
                   )
                 }
@@ -145,21 +176,24 @@ function GetDistricts(props: {
                 {item.display_name}
               </div>
 
-              {item.urbans.map((urban: any) => (
+              {item.urbans.map((urban_item: any) => (
                 <div
-                  key={urban.id}
-                  onClick={() =>
-                    props.setdistrict((state: string) =>
-                      state !== urban.display_name ? urban.display_name : ""
-                    )
-                  }
+                  key={urban_item.id}
+                  onClick={() => {
+                    props.setDistrict(item.display_name);
+                    props.setUrban((state: string) =>
+                      state !== urban_item.display_name
+                        ? urban_item.display_name
+                        : ""
+                    );
+                  }}
                   className={`flex items-center rounded-lg  px-2 py-1 min-h-[26px] text-textDescCard font-mainRegular text-[12px] cursor-pointer transition-colors ${
-                    props.district == urban.display_name
+                    props.urban == urban_item.display_name
                       ? "bg-whiteHover"
                       : "bg-whiteMani"
                   } duration-150 hover:bg-whiteHover`}
                 >
-                  {urban.display_name}
+                  {urban_item.display_name}
                 </div>
               ))}
             </div>
@@ -186,7 +220,7 @@ function GetCities(props: {
                 state !== item.display_name ? item.display_name : ""
               )
             }
-            className={`flex items-center rounded-lg px-2 py-2 min-h-[30px] text-textHead font-mainRegular text-[14px] cursor-pointer transition-colors ${
+            className={`select-none flex items-center rounded-lg px-2 py-2 min-h-[30px] text-textHead font-mainRegular text-[14px] cursor-pointer transition-colors ${
               props.city == item.display_name ? "bg-whiteHover" : "bg-whiteMani"
             } duration-150 hover:bg-whiteHover`}
           >

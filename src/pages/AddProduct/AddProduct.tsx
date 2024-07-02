@@ -1,13 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import EstateConfirm from "./components/EstateConfirm";
 import {
-  DealType,
   EstateAddons,
-  EstateAddress,
   EstateClosePlaces,
   EstateImages,
   EstateInformation,
-  EstateStatus,
   EstateType,
 } from "./components/Selectors";
 import { RootState } from "../../store/store";
@@ -16,8 +13,11 @@ import ContentLoader from "../../components/global/ContentLoader";
 import { useNavigate } from "react-router-dom";
 import { updateLandSize, updateStatus } from "../../store/data/addProductSlice";
 import {
+  DealType,
+  EstateAddress,
   EstateDescription,
   EstateOption,
+  EstateStatus,
   EstateTitle,
 } from "./components/SelectorsOpt";
 import UploadStatusBlock from "./components/UploadStatusBlock";

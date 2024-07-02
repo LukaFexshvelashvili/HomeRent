@@ -2,15 +2,15 @@ import { FormEvent, useEffect, useState } from "react";
 import { TProductData } from "../MyProducts";
 import { PopupCloseIcon } from "../../../../assets/icons/Icons";
 import {
-  DealType,
   EstateAddons,
   EstateClosePlaces,
   EstateInformation,
-  EstateStatus,
   EstateType,
 } from "../../../AddProduct/components/Selectors";
 import {
+  DealType,
   EstateDescription,
+  EstateStatus,
   EstateTitle,
 } from "../../../AddProduct/components/SelectorsOpt";
 import { setWebLoader } from "../../../../store/data/webUISlice";

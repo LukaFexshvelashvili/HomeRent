@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { RealEstateTypes } from "../../Search/components/FiltersArray";
 import {
   CheckIcon,
@@ -12,7 +12,6 @@ import {
   productAddonsList,
   productAddonsListForHotel,
   productAddonsListForLand,
-  projectDealTypes,
   projectStatuses,
   projectTypes,
 } from "../../../assets/lists/productAddons";
@@ -30,20 +29,16 @@ import {
   updateClosePlaces,
   updateCondition,
   updateCurrency,
-  updateDeal,
   updateFloor,
   updateFloors,
   updateFullPrice,
   updateImages,
-  updateIpcode,
   updateLandSize,
   updateProject,
   updateRooms,
   updateSize,
-  updateStatus,
   updateType,
 } from "../../../store/data/addProductSlice";
-import { SearchCityFilter } from "../../Search/components/SearchFilters";
 import { RootState } from "../../../store/store";
 import axiosCall from "../../../hooks/axiosCall";
 import BubbleSelector from "../../../components/global/BubbleSelector";
@@ -515,179 +510,6 @@ export function EstateType(props: { setData?: Function; defData?: number }) {
             </p>
           </button>
         ))}
-      </div>
-    </div>
-  );
-}
-
-export function DealType(props: { setData?: Function; defData?: number }) {
-  const [active, setActive] = useState<null | number>(
-    props.defData !== undefined ? props.defData : null
-  );
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (active !== null) {
-      if (!props.setData) {
-        dispatch(updateDeal(active));
-      } else {
-        props.setData(active);
-      }
-    }
-  }, [active]);
-  return (
-    <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-        გარიგების ტიპი *
-      </p>
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
-        {projectDealTypes.map((e: string, i: number) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            className={`  p-2 px-4 rounded-xl transition-colors ${
-              active == i ? "bg-main" : "bg-mainClear"
-            }`}
-          >
-            <p
-              className={`text-Asmall tracking-wide ${
-                active == i ? "text-buttonText" : "text-main"
-              }`}
-            >
-              {e}
-            </p>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-export function EstateStatus({
-  productData,
-  setData,
-  defData,
-  estateType,
-}: {
-  productData: any;
-  setData?: Function;
-  defData?: string;
-  estateType?: number;
-}) {
-  const [active, setActive] = useState<null | string>(
-    defData !== undefined ? defData : null
-  );
-  const [DealTypes, setDealTypes] = useState<string[]>([
-    "ახალი აშენებული",
-    "ძველი აშენებული",
-    "მშენებარე",
-  ]);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (active !== null) {
-      if (!setData) {
-        dispatch(updateStatus(active));
-      } else {
-        setData(active);
-      }
-    }
-  }, [active]);
-  useEffect(() => {
-    if (productData.estateType == 3 || (estateType && estateType == 3)) {
-      setDealTypes([
-        "სასოფლო სამეურნეო",
-        "არა სასოფლო სამეურნეო",
-        "კომერციული",
-        "სპეციალური",
-        "საინვესტიციო/სამშენებლო",
-      ]);
-    } else if (productData.estateType == 2 || (estateType && estateType == 2)) {
-      setDealTypes([
-        "საოფისე",
-        "სავაჭრო",
-        "სასაწყობე",
-        "საწარმოო ფართი",
-        "უნივერსალური",
-        "სპეციალური",
-        "კვების ობიექტები",
-        "ავტოფარეხი",
-        "სარდაფი",
-        "ნახევარსარდაფი",
-        "მთლიანი შენობა",
-        "ავტოსამრეცხაო",
-        "ავტოსერვისი",
-      ]);
-    } else {
-      setDealTypes(["ახალი აშენებული", "ძველი აშენებული", "მშენებარე"]);
-    }
-    if (defData == undefined) {
-      setActive(null);
-    }
-    if (defData !== undefined && estateType) {
-      setActive(null);
-    }
-  }, [productData.estateType, estateType]);
-  return (
-    <div className="flex flex-col">
-      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-        სტატუსი *
-      </p>
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
-        {DealTypes.map((e, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(e)}
-            className={`  p-2 px-4 rounded-xl transition-colors ${
-              active == e ? "bg-main" : "bg-mainClear"
-            }`}
-          >
-            <p
-              className={`text-Asmall tracking-wide ${
-                active == e ? "text-buttonText" : "text-main"
-              }`}
-            >
-              {e}
-            </p>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-export function EstateAddress(props: { error: boolean }) {
-  const [city, setCity] = useState("");
-  const getInput = useRef<any>(null);
-  const dispatch = useDispatch();
-  const [ipAddress, setIpAddress] = useState<string>("");
-  return (
-    <div className="flex flex-col relative z-10">
-      <p className=" text-textHead tracking-wider font-mainBold  mobile:text-[15px]  mobile:text-center ">
-        მისამართი
-      </p>
-      {city == "" && props.error && (
-        <div className=" rounded-xl text-pinkI bg-pinkClear py-3 px-4 text-sm tracking-wider mt-2 text-center">
-          {" "}
-          სავალდებულოა შეავსოთ ქალაქის ველი
-        </div>
-      )}
-      <div className="flex gap-3 flex-wrap pl-3 mt-4 mobile:justify-center mobile:pl-0">
-        <SearchCityFilter setCity={setCity} />
-        <input
-          type="text"
-          ref={getInput}
-          className="AddProductInput "
-          placeholder="საკადასტრო კოდი"
-          onChange={(e) => {
-            let filteredValue = e.target.value.replace(/[^0-9.]/g, "");
-            if (filteredValue == "") {
-              dispatch(updateIpcode(null));
-            } else {
-              setIpAddress(filteredValue);
-              dispatch(updateIpcode(filteredValue));
-            }
-          }}
-          value={ipAddress}
-        />
       </div>
     </div>
   );

@@ -111,9 +111,7 @@ function ProductBanner(props: { product: TProductData; rerender: Function }) {
       <div className="w-[160px] h-[90px] rounded-lg bg-whiteLoad relative overflow-hidden small:w-[100%] small:aspect-video small:h-auto">
         <div className="absolute w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.1)] z-[2]"></div>
         <img
-          src={
-            "http://localhost/ONHOMEServer/" + props.product.estate_active_image
-          }
+          src={"http://api.onhome.ge/" + props.product.estate_active_image}
           className="absolute h-full w-full object-cover  top-0 left-0"
         />
       </div>
